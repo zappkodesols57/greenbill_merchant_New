@@ -126,15 +126,13 @@ class RechargeState extends State<Recharge> {
   _launchPayURL(amount,name)async {
     String key="IUZdcF";
     String salt="7ViVXMy1";
-    String surl="https://apiplayground-response.herokuapp.com/";
-    String furl="https://apiplayground-response.herokuapp.com/";
 
     var uuid = Uuid();
     var txId=(uuid.v4());
     var bytes = utf8.encode("$key|$txId|$amount|$name|$nameOfBuss|$emailAddress|||||||||||$salt"); // data being hashed
     var digest = sha512.convert(bytes);
-    print(digest);
-    print("Vinay $amount| $txId|$name|$nameOfBuss|$emailAddress|$number|$digest");
+
+
 
 
     final paramss={
@@ -154,7 +152,7 @@ class RechargeState extends State<Recharge> {
       "accept":"application/json",
       "Content-Type":"application/x-www-form-urlencoded",
     },body: paramss);
-    print(responses.headers);
+
     launch(responses.headers.values.elementAt(10));
 
 
