@@ -60,7 +60,6 @@ class _HomePageState extends State<HomePage> {
     super.dispose();
     _controller.dispose();
   }
-
   getCredentials() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     setState(() {

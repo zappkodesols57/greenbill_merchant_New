@@ -82,6 +82,7 @@ class BillInfoState extends State<BillInfo> {
         key: _scaffoldKey,
         backgroundColor: Colors.white,
         body: Column(
+
           children: [
             Container(
               width: size.width * 0.99,
@@ -160,7 +161,7 @@ class BillInfoState extends State<BillInfo> {
                   Container(
                     width: 50.0,
                     child: Text(
-                      "Sms ",
+                      "SMS ",
                       textAlign: TextAlign.center,
                       style: TextStyle(
                           color: Colors.white, fontFamily: "PoppinsBold"),
@@ -282,8 +283,8 @@ class BillInfoState extends State<BillInfo> {
                                         ),
                                         Container(
                                             width: 70.0,
-                                            child: Text(
-                                                "₹ ${snapshot.data[index].amount+"0"}",
+                                            child: Text(snapshot.data[index].amount.contains(".")?
+                                                "₹ ${snapshot.data[index].amount.split(".").first+".00"}":"₹ ${snapshot.data[index].amount+".00"}",
                                                 style: TextStyle(
                                                     fontWeight:
                                                         FontWeight.bold))),

@@ -15,6 +15,7 @@ import 'package:greenbill_merchant/src/ui/MySubcription/newSubFile.dart';
 import 'package:greenbill_merchant/src/ui/MySubcription/tabbarsubscription.dart';
 import 'package:greenbill_merchant/src/ui/PayLinks/paylinks.dart';
 import 'package:greenbill_merchant/src/ui/Profile/personalInfo.dart';
+import 'package:greenbill_merchant/src/ui/Promotions/offersList.dart';
 import 'package:greenbill_merchant/src/ui/Promotions/tabBarPromotions.dart';
 import 'package:greenbill_merchant/src/ui/drawer/CustomerInfo/customerInfo.dart';
 import 'package:greenbill_merchant/src/ui/drawer/DM/dmEnquiry.dart';
@@ -242,8 +243,7 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
                         (snapshot.data[index].mBusinessLogo != null)
                             ? CircleAvatar(
                           backgroundColor: kPrimaryColorBlue,
-                          backgroundImage: NetworkImage(
-                              "http://157.230.228.250${snapshot.data[index].mBusinessLogo}"),
+                          backgroundImage: NetworkImage(snapshot.data[index].mBusinessLogo),
                         )
                             : CircleAvatar(
                           backgroundColor: kPrimaryColorBlue,
@@ -305,7 +305,7 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
                 ? CircleAvatar(
                     backgroundColor: Colors.white,
                     backgroundImage:
-                        NetworkImage("http://157.230.228.250$businessLogo"),
+                        NetworkImage("${profile.text}"),
                   )
                 : CircleAvatar(
                     backgroundColor: Colors.white,
@@ -684,6 +684,27 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
                     Navigator.of(context).pop();
                     Navigator.push(context,
                         MaterialPageRoute(builder: (context) => subUpdated()));
+                  }
+              ),
+              ListTile(
+                  dense: false,
+                  title: Text("Offers"),
+                  leading: Container(
+                    width: 35.0,
+                    height: 35.0,
+                    margin: const EdgeInsets.only(right: 10.0),
+                    decoration: new BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: new BorderRadius.circular(25.0),
+                    ),
+                    alignment: Alignment.center,
+                    child: new Icon(CupertinoIcons.gift,
+                        color: kPrimaryColorBlue, size: 25.0),
+                  ),
+                  onTap: () {
+                    Navigator.of(context).pop();
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => OffersList()));
                   }
               ),
               if(storeCatID == "12")

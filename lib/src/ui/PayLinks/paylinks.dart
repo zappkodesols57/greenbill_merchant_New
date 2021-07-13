@@ -355,10 +355,10 @@ class _PayLinksState extends State<PayLinks> {
         amountController.clear();
         decController.clear();
         showInSnackBar("Link Created Successfully");
-      } else showInSnackBar(data.status);
+      } else showInSnackBar("Payment Integration not activated for your account. Kindly update settings");
     } else {
       print(data.status);
-      showInSnackBar(data.status);
+      showInSnackBar("Payment Integration not activated for your account. Kindly update settings");
       return null;
     }
 

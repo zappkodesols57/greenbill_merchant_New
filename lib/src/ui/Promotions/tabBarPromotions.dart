@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:greenbill_merchant/src/ui/Promotions/offersList.dart';
 import '../../constants.dart';
 import 'couponsList.dart';
+import 'offerForMerchant.dart';
 
 class TabBarPromotions extends StatelessWidget {
   const TabBarPromotions({Key key}) : super(key: key);
@@ -17,15 +18,19 @@ class TabBarPromotions extends StatelessWidget {
             backgroundColor:  kPrimaryColorBlue,
             bottom: TabBar(
               tabs: [
-                Tab(text: 'Coupons'),
-                Tab(text: 'Offers'),
+
+                Tab(text: 'My Coupons'),
+                Tab(text: 'My Offers'),
               ],
             ),
           ),
           body: TabBarView(
             children: [
+
               CouponsList(),
-              OffersList(),
+              MyOfferList(),
+
+
             ],
           ),
         ),

@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:greenbill_merchant/src/Services/historyServices.dart';
 import 'package:greenbill_merchant/src/constants.dart';
+import 'package:greenbill_merchant/src/ui/BillInfo/ViewBill.dart';
 import 'package:sticky_headers/sticky_headers.dart';
 import 'package:greenbill_merchant/src/models/model_History.dart';
 import 'package:http/http.dart' as http;
@@ -24,9 +25,9 @@ class HistoryState extends State<History> {
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
   String token, id, storeID;
   String amount="0";
-  int totalTran=1;
+  int totalTran=0;
   int subTotal;
-  String total;
+  String total="0";
   final ScrollController _controller = ScrollController();
   File media;
   Dio dio = new Dio();
@@ -55,6 +56,31 @@ class HistoryState extends State<History> {
       storeID = prefs.getString("businessID");
     });
     print('$token\n$id\n$storeID');
+    getInfo();
+  }
+
+   getInfo() async {
+    final param = {
+      "merchant_business_id": storeID,
+    };
+    final res = await http.post("http://157.230.228.250/merchant-get-payment-history-api/",
+        body: param, headers: {HttpHeaders.authorizationHeader: "Token $token"});
+
+    print(res.body);
+    print(res.statusCode);
+    if (200 == res.statusCode) {
+      setState(() {
+        total=paymentHistoryFromJson(res.body).totalAmountSpent;
+        totalTran=paymentHistoryFromJson(res.body).totalTransactionCount;
+      });
+      print(paymentHistoryFromJson(res.body).data.length);
+
+      print("Vinay"+total);
+      print(totalTran);
+
+    } else {
+      throw Exception('Failed to load List');
+    }
   }
 
 
@@ -65,8 +91,8 @@ class HistoryState extends State<History> {
     final res = await http.post("http://157.230.228.250/merchant-get-payment-history-api/",
         body: param, headers: {HttpHeaders.authorizationHeader: "Token $token"});
 
-    print(res.body);
-    print(res.statusCode);
+    //print(res.body);
+   // print(res.statusCode);
     if (200 == res.statusCode) {
       print(paymentHistoryFromJson(res.body).data.length);
       total=paymentHistoryFromJson(res.body).totalAmountSpent;
@@ -77,8 +103,6 @@ class HistoryState extends State<History> {
     }
   }
 
-
-
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -87,8 +111,108 @@ class HistoryState extends State<History> {
         backgroundColor: Colors.white,
         body: Column(
           children: [
+            Container(
+              padding: EdgeInsets.fromLTRB(10.00, 10.00, 10.00, 0),
+              width: double.maxFinite,
+              child: Container(
+                width: size.width * 0.9,
+                child: Row(
+                  children: [
+                    Container(
+                      child:Card(
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10.0),
+                        ),
+                        elevation:10,
+                        child:Container(
+                          height: 60,
+                          width: size.width * 0.45,
+                          padding: EdgeInsets.only(
+                              top: 10.0, bottom: 5.0, left: 5.0, right: 10.0),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: <Widget>[
+                              Container(
+                                alignment: Alignment.center,
+                                width: size.width * 0.4,
+                                child: Text(
+                                  "Total Amount",
+                                  style: TextStyle(
+                                      color: Colors.black,
+                                      fontSize: 12.0,
+                                      fontFamily: "PoppinsBold"),
+                                ),
+                              ),
+                              Container(
+                                alignment: Alignment.center,
+                                width: size.width * 0.4,
+                                child: Text(": "+"₹"+total.toString()
+                                  ,
+                                  style: TextStyle(
+                                      color: Colors.black,
+                                      fontSize: 12.0,
+                                      fontFamily: "PoppinsBold"),
+                                ),
+                              ),
+                            ],),
+                        ),
+
+                      ),
+                    ),
+                    Container(
+
+                      child:Card(
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10.0),
+                        ),
+                        elevation:10,
+                        child:Container(
+                          height: 60,
+                          width: size.width * 0.45,
+                          padding: EdgeInsets.only(
+                              top: 10.0, bottom: 5.0, left: 5.0, right: 10.0),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: <Widget>[
+                              Container(
+                                alignment: Alignment.center,
+                                width: size.width * 0.4,
+                                child: Text(
+                                  "Total Transaction",
+                                  style: TextStyle(
+                                      color: Colors.black,
+                                      fontSize: 12.0,
+                                      fontFamily: "PoppinsBold"),
+                                ),
+                              ),
+                              Container(
+                                alignment: Alignment.center,
+                                width: size.width * 0.4,
+                                child: Text(": "+totalTran.toString()
+                                  ,
+                                  style: TextStyle(
+                                      color: Colors.black,
+                                      fontSize: 12.0,
+                                      fontFamily: "PoppinsBold"),
+                                ),
+                              ),
+
+                            ],),
+                        ),
+
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+
             Expanded(
+
               child: FutureBuilder<List<Datum>>(
+
                 future: getBillInfoList(),
                 builder: (BuildContext context,
                     AsyncSnapshot<List<Datum>> snapshot) {
@@ -106,285 +230,72 @@ class HistoryState extends State<History> {
                   } else {
                     if (snapshot.connectionState == ConnectionState.done &&
                         snapshot.hasData) {
-                      return new  StickyHeader(
-                        header: Container(
-                          padding: EdgeInsets.fromLTRB(10.00, 10.00, 10.00, 0),
-                          width: double.maxFinite,
-                          child: Container(
-                            width: size.width * 0.9,
-                            child: Row(
-                              children: [
-                                Container(
-                                  child:Card(
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(10.0),
-                                    ),
-                                    elevation:10,
-                                    child:Container(
-                                      height: 60,
-                                      width: size.width * 0.45,
-                                      padding: EdgeInsets.only(
-                                          top: 10.0, bottom: 5.0, left: 5.0, right: 10.0),
-                                      child: Column(
-                                        crossAxisAlignment: CrossAxisAlignment.center,
-                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                        children: <Widget>[
-                                          Container(
-                                            alignment: Alignment.center,
-                                            width: size.width * 0.4,
-                                            child: Text(
-                                              "Total Amount Spent",
-                                              style: TextStyle(
-                                                  color: Colors.black,
-                                                  fontSize: 12.0,
-                                                  fontFamily: "PoppinsBold"),
-                                            ),
-                                          ),
-                                          Container(
-                                            alignment: Alignment.center,
-                                            width: size.width * 0.4,
-                                            child: Text(":-"+total.toString()
-                                              ,
-                                              style: TextStyle(
-                                                  color: Colors.black,
-                                                  fontSize: 12.0,
-                                                  fontFamily: "PoppinsBold"),
-                                            ),
-                                          ),
-                                        ],),
-                                    ),
-
-                                  ),
-                                ),
-                                Container(
-                                  child:Card(
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(10.0),
-                                    ),
-                                    elevation:10,
-                                    child:Container(
-
-                                      height: 60,
-                                      width: size.width * 0.45,
-                                      padding: EdgeInsets.only(
-                                          top: 10.0, bottom: 5.0, left: 5.0, right: 10.0),
-                                      child: Column(
-                                        crossAxisAlignment: CrossAxisAlignment.center,
-                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                        children: <Widget>[
-                                          Container(
-                                            alignment: Alignment.center,
-                                            width: size.width * 0.4,
-                                            child: Text(
-                                              "Total Transaction Count",
-                                              style: TextStyle(
-                                                  color: Colors.black,
-                                                  fontSize: 12.0,
-                                                  fontFamily: "PoppinsBold"),
-                                            ),
-                                          ),
-                                          Container(
-                                            alignment: Alignment.center,
-                                            width: size.width * 0.4,
-                                            child: Text(":- "+totalTran.toString()
-                                              ,
-                                              style: TextStyle(
-                                                  color: Colors.black,
-                                                  fontSize: 12.0,
-                                                  fontFamily: "PoppinsBold"),
-                                            ),
-                                          ),
-
-                                        ],),
-                                    ),
-
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                        content:ListView.builder(
+                      return Scrollbar(
+                        isAlwaysShown: true,
+                        controller: _controller,
+                        thickness: 3.0,
+                        child:ListView.builder(
+                            padding: EdgeInsets.only(
+                                top: 10.0, bottom: 0.0, left: 5.0, right: 5.0),
                             controller: _controller,
                             reverse: false,
                             shrinkWrap: true,
                             itemCount: snapshot.data.length,
-                            padding:EdgeInsets.fromLTRB(0, 70.00, 0, 0) ,
                             itemBuilder: (BuildContext context, int index) {
+                              return
+                                 Card(
+                                  elevation: 2.0,
+                                  child: Center(
+                                    child: ListTile(
 
-                              return Container(padding: EdgeInsets.fromLTRB(10, 10.00, 10, 0),
+                                      dense: true,
+                                      title: Text(
+                                          snapshot.data[index].subscriptionName,
+                                          style: TextStyle(fontSize: 15.0, fontFamily: "PoppinsMedium", fontWeight: FontWeight.bold)
+                                      ),
+                                      subtitle: Text('Purchase Date : ${snapshot.data[index].purchaseDate }\nTransaction Id : ${snapshot.data[index].transactionId}',
+                                          style: TextStyle(fontSize: 10.0)) ,
+                                      trailing: Wrap(
+                                        spacing: 10, // space between two icons
+                                        crossAxisAlignment:
+                                        WrapCrossAlignment.center,
+                                        children: <Widget>[
 
-                                width: double.maxFinite,
-                                child: Card(
-                                  color: kPrimaryColorBlue,
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(20.0),
+                                          if((snapshot.data[index].isSubscriptionPlan))
+                                          Text('Green Bill ',
+                                              style: TextStyle(fontSize: 10.0,color: Colors.black)),
+                                          if((snapshot.data[index].isPromotionalSmsPlan))
+                                            Text('Promotional Sms',
+                                                style: TextStyle(fontSize: 10.0,color: Colors.black)),
+                                          if((snapshot.data[index].isAddOnPlan))
+                                            Text('Add On ',
+                                                style: TextStyle(fontSize: 10.0,color: Colors.black)),
+                                          if((snapshot.data[index].isTransactionalSmsPlan))
+                                            Text('Transactional Sms',
+                                                style: TextStyle(fontSize: 10.0,color: Colors.black)),
+
+                                          Text(
+                                              "₹ ${snapshot.data[index].cost}",
+                                              style: TextStyle(fontSize: 15.0, fontFamily: "PoppinsMedium", fontWeight: FontWeight.bold)
+                                          ),
+                                        ],
+                                      ),
+                                      onTap: () {
+                                        Navigator.of(context).push(
+                                          PageRouteBuilder(
+                                            opaque: false,
+                                            pageBuilder: (_, animation, __) {
+                                              return FadeTransition(
+                                                opacity: animation,
+                                                child: ViewBill("","",snapshot.data[index].subscriptionBillUrl,"","",""),
+                                              );
+                                            },
+                                          ),
+                                        );
+                                      },
+                                    ),
                                   ),
 
-                                  child: Column(
-                                    children: <Widget>[
-                                      Container(
-                                        width: size.width * 0.9,
-                                        padding: EdgeInsets.only(
-                                            top: 10.0, bottom: 5.0, left: 5.0, right: 5.0),
-                                        child: Row(
-                                          crossAxisAlignment: CrossAxisAlignment.center,
-                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                          children: <Widget>[
-
-                                            Container(
-                                              padding: EdgeInsets.only(
-                                                  top: 10.0, bottom: 5.0, left: 5.0, right: 5.0),
-                                              width: size.width * 0.3,
-                                              child: Text(
-                                                "Product Name",
-                                                style: TextStyle(
-                                                    color: Colors.white,
-                                                    fontSize: 12.0,
-                                                    fontFamily: "PoppinsBold"),
-                                              ),
-                                            ),
-
-                                            Container(
-                                              padding: EdgeInsets.only(
-                                                  top: 10.0, bottom: 5.0, left: 5.0, right: 5.0),
-                                              width: size.width * 0.5,
-                                              child: Text(
-                                                snapshot.data[index].subscriptionName.toString(),
-                                                textAlign: TextAlign.center,
-                                                style: TextStyle(
-                                                    color: Colors.white,
-                                                    fontSize: 12.0,
-                                                    fontFamily: "PoppinsBold"),
-                                              ),
-                                            ),
-
-                                          ],
-                                        ),
-                                      ),
-                                      Container(
-                                        width: size.width * 0.9,
-                                        padding: EdgeInsets.only(
-                                            top: 0.0, bottom: 5.0, left: 5.0, right: 5.0),
-                                        child: Row(
-                                          crossAxisAlignment: CrossAxisAlignment.center,
-                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                          children: <Widget>[
-                                            Container(
-                                              padding: EdgeInsets.only(
-                                                  top: 0.0, bottom: 5.0, left: 5.0, right: 5.0),
-                                              width: size.width * 0.3,
-                                              child: Text(
-                                                "Transaction ID",
-                                                style: TextStyle(
-                                                    color: Colors.white,
-                                                    fontSize: 12.0,
-                                                    fontFamily: "PoppinsBold"),
-                                              ),
-                                            ),
-
-                                            Container(
-                                              padding: EdgeInsets.only(
-                                                  top: 0.0, bottom: 5.0, left: 5.0, right: 5.0),
-                                              width: size.width * 0.5,
-                                              child: Text(
-                                                snapshot.data[index].transactionId.toString(),
-                                                textAlign: TextAlign.center,
-                                                style: TextStyle(
-                                                    color: Colors.white,
-                                                    fontSize: 12.0,
-                                                    fontFamily: "PoppinsBold"),
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-
-                                      Container(
-                                        width: size.width * 0.9,
-                                        padding: EdgeInsets.only(
-                                            top: 0.0, bottom: 5.0, left: 5.0, right: 5.0),
-                                        child: Row(
-                                          crossAxisAlignment: CrossAxisAlignment.center,
-                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                          children: <Widget>[
-
-                                            Container(
-                                              padding: EdgeInsets.only(
-                                                  top: 0.0, bottom: 5.0, left: 5.0, right: 5.0),
-                                              width: size.width * 0.4,
-                                              child: Text(
-                                                "Total Cost",
-
-                                                style: TextStyle(
-                                                    color: Colors.white,
-                                                    fontSize: 12.0,
-                                                    fontFamily: "PoppinsBold"),
-                                              ),
-                                            ),
-
-                                            Container(
-                                              padding: EdgeInsets.only(
-                                                  top: 0.0, bottom: 5.0, left: 5.0, right: 5.0),
-                                              width: size.width * 0.4,
-                                              child: Text(
-                                                "₹ "+snapshot.data[index].cost.toString()+"0",
-                                                textAlign: TextAlign.center,
-                                                style: TextStyle(
-                                                    color: Colors.white,
-                                                    fontSize: 12.0,
-                                                    fontFamily: "PoppinsBold"),
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-
-                                      Container(
-                                        width: size.width * 0.9,
-                                        padding: EdgeInsets.only(
-                                            top: 0.0, bottom: 5.0, left: 5.0, right: 5.0),
-                                        child: Row(
-                                          crossAxisAlignment: CrossAxisAlignment.center,
-                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                          children: <Widget>[
-
-                                            Container(
-                                              padding: EdgeInsets.only(
-                                                  top: 0.0, bottom: 5.0, left: 5.0, right: 5.0),
-                                              width: size.width * 0.4,
-                                              child: Text(
-                                                "Purchase Date",
-
-                                                style: TextStyle(
-                                                    color: Colors.white,
-                                                    fontSize: 12.0,
-                                                    fontFamily: "PoppinsBold"),
-                                              ),
-                                            ),
-
-                                            Container(
-                                              padding: EdgeInsets.only(
-                                                  top: 0.0, bottom: 5.0, left: 5.0, right: 5.0),
-                                              width: size.width * 0.4,
-                                              child: Text(
-                                                snapshot.data[index].purchaseDate.toString(),
-                                                textAlign: TextAlign.center,
-                                                style: TextStyle(
-                                                    color: Colors.white,
-                                                    fontSize: 12.0,
-                                                    fontFamily: "PoppinsBold"),
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-
-
-                                    ],
-                                  ),
-
-                                ),
                               );
                             }
                         ),

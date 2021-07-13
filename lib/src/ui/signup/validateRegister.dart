@@ -56,11 +56,11 @@ class ValidateRegistrationState extends State<ValidateRegistration> {
   TextEditingController otpController = new TextEditingController();
 
 
-  int _counter = 15;
+  int _counter = 60;
   Timer _timer ;
 
   void _startTimer(){
-    _counter = 15;
+    _counter = 60;
     if(_timer != null){
       _timer.cancel();
     }

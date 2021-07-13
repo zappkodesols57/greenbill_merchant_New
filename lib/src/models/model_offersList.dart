@@ -1,12 +1,12 @@
 // To parse this JSON data, do
 //
-//     final offersList = offersListFromJson(jsonString);
+//     final offersListModel = offersListModelFromJson(jsonString);
 
 import 'dart:convert';
 
-OffersListModel offersListFromJson(String str) => OffersListModel.fromJson(json.decode(str));
+OffersListModel offersListModelFromJson(String str) => OffersListModel.fromJson(json.decode(str));
 
-String offersListToJson(OffersListModel data) => json.encode(data.toJson());
+String offersListModelToJson(OffersListModel data) => json.encode(data.toJson());
 
 class OffersListModel {
   OffersListModel({
@@ -42,8 +42,6 @@ class Datum {
     this.offerBusinessCategory,
     this.createdDate,
     this.offerPanel,
-    this.merchantUser,
-    this.merchantBusinessId,
     this.mBusinessLogo,
     this.mBusinessName,
   });
@@ -60,8 +58,6 @@ class Datum {
   String offerBusinessCategory;
   DateTime createdDate;
   String offerPanel;
-  int merchantUser;
-  int merchantBusinessId;
   String mBusinessLogo;
   String mBusinessName;
 
@@ -78,8 +74,6 @@ class Datum {
     offerBusinessCategory: json["offer_business_category"],
     createdDate: DateTime.parse(json["created_date"]),
     offerPanel: json["offer_panel"],
-    merchantUser: json["merchant_user"],
-    merchantBusinessId: json["merchant_business_id"],
     mBusinessLogo: json["m_business_logo"],
     mBusinessName: json["m_business_name"],
   );
@@ -97,8 +91,6 @@ class Datum {
     "offer_business_category": offerBusinessCategory,
     "created_date": createdDate.toIso8601String(),
     "offer_panel": offerPanel,
-    "merchant_user": merchantUser,
-    "merchant_business_id": merchantBusinessId,
     "m_business_logo": mBusinessLogo,
     "m_business_name": mBusinessName,
   };

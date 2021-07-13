@@ -240,20 +240,15 @@ class BillRejectedState extends State<BillRejected> {
                                         Container(
                                             width: 70.0,
                                             child: Text(
-                                                "₹ ${snapshot.data[index].amount+"0"}",
+                                                snapshot.data[index].amount.characters.contains(".")?
+                                                "₹ ${snapshot.data[index].amount.split(".").first+".00"}":"₹ ${snapshot.data[index].amount+".00"}",
                                                 style: TextStyle(
                                                     fontWeight:
                                                     FontWeight.bold))),
                                       ],
                                     ),
                                     onTap: () {
-                                      Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) => ViewBill(snapshot.data[index].billId.toString(), snapshot.data[index].invoiceNo,
-                                                snapshot.data[index].billFile, snapshot.data[index].billDate, snapshot.data[index].dbTable,
-                                                snapshot.data[index].mobileNo)),
-                                      );
+
                                     },
                                   ),
                                 ),

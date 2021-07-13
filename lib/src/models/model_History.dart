@@ -60,14 +60,19 @@ class Datum {
     this.expiryDate,
     this.transactionId,
     this.payuTransactionId,
+    this.invoiceNo,
+    this.mode,
+    this.chequeNo,
+    this.bankTransactionId,
     this.merchantId,
+    this.subscriptionBillUrl,
   });
 
   int id;
   String subscriptionPlanId;
   String subscriptionName;
   String businessIds;
-  dynamic validForMonth;
+  String validForMonth;
   String perBillCost;
   String perReceiptCost;
   String perCashMemoCost;
@@ -80,19 +85,24 @@ class Datum {
   bool isPromotionalSmsPlan;
   bool isTransactionalSmsPlan;
   bool isAddOnPlan;
-  double cost;
+  String cost;
   String purchaseDate;
-  dynamic expiryDate;
+  String expiryDate;
   String transactionId;
   String payuTransactionId;
+  String invoiceNo;
+  dynamic mode;
+  dynamic chequeNo;
+  dynamic bankTransactionId;
   int merchantId;
+  String subscriptionBillUrl;
 
   factory Datum.fromJson(Map<String, dynamic> json) => Datum(
     id: json["id"],
     subscriptionPlanId: json["subscription_plan_id"],
     subscriptionName: json["subscription_name"],
     businessIds: json["business_ids"],
-    validForMonth: json["valid_for_month"],
+    validForMonth: json["valid_for_month"] == null ? null : json["valid_for_month"],
     perBillCost: json["per_bill_cost"] == null ? null : json["per_bill_cost"],
     perReceiptCost: json["per_receipt_cost"] == null ? null : json["per_receipt_cost"],
     perCashMemoCost: json["per_cash_memo_cost"] == null ? null : json["per_cash_memo_cost"],
@@ -107,10 +117,15 @@ class Datum {
     isAddOnPlan: json["is_add_on_plan"],
     cost: json["cost"],
     purchaseDate: json["purchase_date"],
-    expiryDate: json["expiry_date"],
+    expiryDate: json["expiry_date"] == null ? null : json["expiry_date"],
     transactionId: json["transaction_id"],
     payuTransactionId: json["payu_transaction_id"],
+    invoiceNo: json["invoice_no"],
+    mode: json["mode"],
+    chequeNo: json["cheque_no"],
+    bankTransactionId: json["bank_transaction_id"],
     merchantId: json["merchant_id"],
+    subscriptionBillUrl: json["subscription_bill_url"],
   );
 
   Map<String, dynamic> toJson() => {
@@ -118,7 +133,7 @@ class Datum {
     "subscription_plan_id": subscriptionPlanId,
     "subscription_name": subscriptionName,
     "business_ids": businessIds,
-    "valid_for_month": validForMonth,
+    "valid_for_month": validForMonth == null ? null : validForMonth,
     "per_bill_cost": perBillCost == null ? null : perBillCost,
     "per_receipt_cost": perReceiptCost == null ? null : perReceiptCost,
     "per_cash_memo_cost": perCashMemoCost == null ? null : perCashMemoCost,
@@ -133,9 +148,14 @@ class Datum {
     "is_add_on_plan": isAddOnPlan,
     "cost": cost,
     "purchase_date": purchaseDate,
-    "expiry_date": expiryDate,
+    "expiry_date": expiryDate == null ? null : expiryDate,
     "transaction_id": transactionId,
     "payu_transaction_id": payuTransactionId,
+    "invoice_no": invoiceNo,
+    "mode": mode,
+    "cheque_no": chequeNo,
+    "bank_transaction_id": bankTransactionId,
     "merchant_id": merchantId,
+    "subscription_bill_url": subscriptionBillUrl,
   };
 }

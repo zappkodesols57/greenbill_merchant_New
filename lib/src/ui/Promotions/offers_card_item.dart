@@ -40,7 +40,7 @@ class OffersCardState extends State<OffersCard> {
   Widget build(BuildContext context) {
     double cardDimenWidth = widget.size.width * 0.43;
     double cardDimenHeight = widget.size.width * 0.43;
-    double cardTitle = cardDimenWidth * 0.115;
+    double cardTitle = cardDimenWidth * 0.105;
     double cardSubTitle = cardDimenWidth * 0.075;
     double iconDimen = cardDimenWidth * 0.25;
     double iconSize = iconDimen * 0.6;
@@ -79,12 +79,8 @@ class OffersCardState extends State<OffersCard> {
                       child: new Container(
                         padding: const EdgeInsets.only(
                             bottom: 20.0, right: 10.0, left: 60.0),
-                        child: new Image(
-                          width: 100.0,
-                          height: 100.0,
-                          image: AssetImage("assets/images/prize.png"),
+                        child:  Image.network(widget.data.offerImage, height: 100.0, width: 100.0,),
                         ),
-                      ),
                     ),
                   ),
                 ),
@@ -98,7 +94,7 @@ class OffersCardState extends State<OffersCard> {
                         padding: EdgeInsets.only(top: 5.0, left: 10.0, right: 0.0),
                         child:
                         Text(
-                          "${widget.data.offerName}",
+                          "${widget.data.offerName}"+" at "+" ${widget.data.mBusinessName} ",
                           style: TextStyle(
                             fontSize: cardTitle,
                             fontFamily: "PoppinsMedium",
@@ -120,35 +116,35 @@ class OffersCardState extends State<OffersCard> {
                               backgroundColor: Colors.white,
                               shadowColor: softShadowColor,
                               highlightColor: highlightColor,
-                              child: Image.network(widget.data.offerImage, height: iconSize, width: iconSize,),
+                              child: Image.network(widget.data.mBusinessLogo, height: iconSize, width: iconSize,),
                             ),
                           ),
-                          if(widget.data.status != null)
-                            Container(
-                              padding: EdgeInsets.only(left: 10.0),
-                              height: 40.0,
-                              width: cardDimenWidth * 0.65,
-                              decoration: BoxDecoration(
-                                  color: Color(0xFFF7F7F7),
-                                  borderRadius: BorderRadius.all(Radius.circular(25.0))
-                              ),
-                              child: Row(
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  Text(
-                                    widget.data.status,
-                                    style: TextStyle(
-                                      fontSize: 13.0,
-                                      color: Colors.black54,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
-                                  Expanded(
-                                    child: Container(),
-                                  ),
-                                ],
-                              ),
-                            )
+                         // if(widget.data.status != null)
+                           // Container(
+                            //  padding: EdgeInsets.only(left: 10.0),
+                           //   height: 40.0,
+                            //  width: cardDimenWidth * 0.65,
+                            //  decoration: BoxDecoration(
+                             //     color: Color(0xFFF7F7F7),
+                               //   borderRadius: BorderRadius.all(Radius.circular(25.0))
+                              //),
+                             // child: Row(
+                              //  crossAxisAlignment: CrossAxisAlignment.center,
+                             //   children: [
+                             //     Text(
+                              //      widget.data.status,
+                             //       style: TextStyle(
+                              //        fontSize: 13.0,
+                             //         color: Colors.black54,
+                             //         fontWeight: FontWeight.bold,
+                               //     ),
+                             //     ),
+                              //    Expanded(
+                               //     child: Container(),
+                              //    ),
+                               // ],
+                             // ),
+                            //)
                         ],
                       ),
                     ],

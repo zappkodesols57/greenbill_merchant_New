@@ -1,9 +1,11 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
+import 'dart:math';
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:greenbill_merchant/src/constants.dart';
 import 'package:greenbill_merchant/src/models/model_Common.dart';
@@ -11,6 +13,7 @@ import 'package:greenbill_merchant/src/models/model_IncomingBills.dart';
 import 'package:greenbill_merchant/src/models/model_billInfoList.dart';
 import 'package:http/http.dart' as http;
 import 'package:open_file/open_file.dart';
+import 'package:image_downloader/image_downloader.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -26,6 +29,7 @@ class BillIncomingState extends State<BillIncoming> {
   String token, id, storeID;
   final ScrollController _controller = ScrollController();
   File media;
+  final path = '/storage/emulated/0/Download';
   Dio dio = new Dio();
   TextEditingController query = new TextEditingController();
 
@@ -157,6 +161,7 @@ class BillIncomingState extends State<BillIncoming> {
                 ),
               ),
               trailing:
+
                   Container(
                     width: 100.0,
                     child: Text(
@@ -235,12 +240,13 @@ class BillIncomingState extends State<BillIncoming> {
                                       crossAxisAlignment:
                                       WrapCrossAlignment.center,
                                       children: <Widget>[
+
                                         
 
                                         Container(
                                             width: 70.0,
-                                            child: Text(
-                                                "₹ ${snapshot.data[index].billAmount+"0"}",
+                                            child: Text(snapshot.data[index].billAmount.characters.contains(".")?
+                                                "₹ ${snapshot.data[index].billAmount.split(".").first+".00"}":"₹ ${snapshot.data[index].billAmount+".00"}",
                                                 style: TextStyle(
                                                     fontWeight:
                                                     FontWeight.bold))),
@@ -250,7 +256,7 @@ class BillIncomingState extends State<BillIncoming> {
                                       Navigator.push(
                                         context,
                                         MaterialPageRoute(
-                                            builder: (context) => ViewBill(snapshot.data[index].billId.toString(), snapshot.data[index].invoiceNo,
+                                            builder: (context) => ViewBill("0", snapshot.data[index].billImage,
                                                 snapshot.data[index].billUrl, snapshot.data[index].billDate, snapshot.data[index].billAmount,
                                                 snapshot.data[index].businessName)),
                                       );
@@ -347,6 +353,32 @@ class BillIncomingState extends State<BillIncoming> {
       print(e);
     }
   }
+  Future<File> urlToFile(String imageUrl,String billFile) async {
+// generate random number.
+    var rng = new Random();
+// get temporary directory of device.
+    Directory tempDir = await getTemporaryDirectory();
+// get temporary path from temporary directory.
+    String tempPath = tempDir.path;
+    String fullPath='$tempPath'+ (rng.nextInt(100)).toString() +'.jpg';
+// create a new file in temporary path with random file name.
+    File file = new File(fullPath);
+// call http.get method and pass imageUrl into it to get response.
+    http.Response response = await http.get(imageUrl);
+// write bodyBytes received in response to file.
+    await file.writeAsBytes(response.bodyBytes);
+    download2(dio, billFile, fullPath);
+// now return the file which is created with random name in
+// temporary directory and image bytes from response is written to // that file.
+    print(file);
+
+    return file;
+
+  }
+
+
+
+
 
   void showDownloadProgress(received, total) {
     if (total != -1) {

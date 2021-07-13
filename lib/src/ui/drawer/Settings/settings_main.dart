@@ -12,6 +12,7 @@ import 'package:package_info/package_info.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'Help&Support/helpAndSupport.dart';
+import 'cancelledCheck.dart';
 
 class Settings extends StatefulWidget {
   @override
@@ -158,6 +159,13 @@ class SettingsState extends State<Settings> {
           _buildListItem("Suggest a brand", CupertinoIcons.shopping_cart, () {
             Navigator.push(context,
                 MaterialPageRoute(builder: (context) => SuggestABrand()));
+          }),
+          Divider(
+            thickness: 1.0,
+          ),
+          _buildListItem("Cancelled Cheque Photo",Icons.photo, () {
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) => CancelledCheck()));
           }),
           Divider(
             thickness: 1.0,

@@ -50,8 +50,10 @@ class Datum {
     this.merchantName,
     this.customizedPlanFor,
     this.customizedPlan,
+    this.suitedFor,
     this.createdDate,
     this.isActive,
+    this.isOffer,
   });
 
   int id;
@@ -74,32 +76,36 @@ class Datum {
   String merchantName;
   String customizedPlanFor;
   bool customizedPlan;
+  String suitedFor;
   DateTime createdDate;
   bool isActive;
+  bool isOffer;
 
   factory Datum.fromJson(Map<String, dynamic> json) => Datum(
     id: json["id"],
     subscriptionName: json["subscription_name"],
     validForMonth: json["valid_for_month"],
     perBillCost: json["per_bill_cost"],
-    perReceiptCost: json["per_receipt_cost"],
-    perCashMemoCost: json["per_cash_memo_cost"],
+    perReceiptCost: json["per_receipt_cost"] == null ? null : json["per_receipt_cost"],
+    perCashMemoCost: json["per_cash_memo_cost"] == null ? null : json["per_cash_memo_cost"],
     perDigitalBillCost: json["per_digital_bill_cost"],
-    perDigitalReceiptCost: json["per_digital_receipt_cost"],
-    perDigitalCashMemoCost: json["per_digital_cash_memo_cost"],
+    perDigitalReceiptCost: json["per_digital_receipt_cost"] == null ? null : json["per_digital_receipt_cost"],
+    perDigitalCashMemoCost: json["per_digital_cash_memo_cost"] == null ? null : json["per_digital_cash_memo_cost"],
     softwareMaintainaceCost: json["software_maintainace_cost"],
     rechargeAmount: json["recharge_amount"],
     discountIn: json["discount_in"],
-    discountPercentage: json["discount_percentage"] == null ? null : json["discount_percentage"],
-    discountAmount: json["discount_amount"] == null ? null : json["discount_amount"],
+    discountPercentage: json["discount_percentage"],
+    discountAmount: json["discount_amount"],
     userType: json["user_type"],
     subscriptionPlanCost: json["subscription_plan_cost"],
     businessCategory: json["business_category"],
     merchantName: json["merchant_name"],
     customizedPlanFor: json["customized_plan_for"],
     customizedPlan: json["customized_plan"],
+    suitedFor: json["suited_for"],
     createdDate: DateTime.parse(json["created_date"]),
     isActive: json["is_active"],
+    isOffer: json["is_offer"],
   );
 
   Map<String, dynamic> toJson() => {
@@ -107,23 +113,25 @@ class Datum {
     "subscription_name": subscriptionName,
     "valid_for_month": validForMonth,
     "per_bill_cost": perBillCost,
-    "per_receipt_cost": perReceiptCost,
-    "per_cash_memo_cost": perCashMemoCost,
+    "per_receipt_cost": perReceiptCost == null ? null : perReceiptCost,
+    "per_cash_memo_cost": perCashMemoCost == null ? null : perCashMemoCost,
     "per_digital_bill_cost": perDigitalBillCost,
-    "per_digital_receipt_cost": perDigitalReceiptCost,
-    "per_digital_cash_memo_cost": perDigitalCashMemoCost,
+    "per_digital_receipt_cost": perDigitalReceiptCost == null ? null : perDigitalReceiptCost,
+    "per_digital_cash_memo_cost": perDigitalCashMemoCost == null ? null : perDigitalCashMemoCost,
     "software_maintainace_cost": softwareMaintainaceCost,
     "recharge_amount": rechargeAmount,
     "discount_in": discountIn,
-    "discount_percentage": discountPercentage == null ? null : discountPercentage,
-    "discount_amount": discountAmount == null ? null : discountAmount,
+    "discount_percentage": discountPercentage,
+    "discount_amount": discountAmount,
     "user_type": userType,
     "subscription_plan_cost": subscriptionPlanCost,
     "business_category": businessCategory,
     "merchant_name": merchantName,
     "customized_plan_for": customizedPlanFor,
     "customized_plan": customizedPlan,
+    "suited_for": suitedFor,
     "created_date": createdDate.toIso8601String(),
     "is_active": isActive,
+    "is_offer": isOffer,
   };
 }

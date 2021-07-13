@@ -52,9 +52,9 @@ class _OffersListState extends State<OffersList> {
     print(res.body);
     print(res.statusCode);
     if(200 == res.statusCode){
-      print(offersListFromJson(res.body).data.length);
-      return offersListFromJson(res.body).data.where((element) =>
-      element.offerBusinessCategory.toString().toLowerCase().contains(query.text.toLowerCase()) ||
+      print(offersListModelFromJson(res.body).data.length);
+      return offersListModelFromJson(res.body).data.where((element) =>
+      element.offerName.toString().toLowerCase().contains(query.text.toLowerCase()) ||
           element.mBusinessName.toString().toLowerCase().contains(query.text.toLowerCase())).toList();
     } else{
       throw Exception('Failed to load List');
@@ -65,6 +65,16 @@ class _OffersListState extends State<OffersList> {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
+      appBar: AppBar(
+        title: Text("Offers"),
+        elevation: 0,
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back_ios),
+          onPressed: () {
+            Navigator.pop(context);
+          },
+        ),
+      ),
       body: Column(
         children: [
           Container(
@@ -131,6 +141,7 @@ class _OffersListState extends State<OffersList> {
                         )),
                   );
                 else if (snapshot.hasError) {
+                  print(snapshot.error);
                   return Center(
                     child: Text("No Offers Found"),
                   );

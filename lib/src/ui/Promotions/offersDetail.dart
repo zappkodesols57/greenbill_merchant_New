@@ -48,7 +48,7 @@ class _OffersDetailsState extends State<OffersDetails> {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     _panelHeightClosed = size.height * 0.45;
-    _panelHeightOpen = size.height * 0.7;
+    _panelHeightOpen = size.height * 0.5;
     return Scaffold(
       key: _scaffoldKey,
       backgroundColor: Colors.black87,
@@ -174,7 +174,7 @@ class _OffersDetailsState extends State<OffersDetails> {
                   Padding(
                       padding: const EdgeInsets.only(top: 10.0, bottom: 5.0, left: 25.0, right: 25.0),
                       child: Text(
-                        widget.data.offerName,
+                        widget.data.offerName +" at \n"+widget.data.mBusinessName,
                         style: TextStyle(
                           fontSize: 20.0,
                           fontFamily: "PoppinsMedium",
@@ -234,8 +234,8 @@ class _OffersDetailsState extends State<OffersDetails> {
   }
 
   Widget _body(Size size){
-    double cardDimenWidth = size.width * 0.55;
-    double cardDimenHeight = size.width * 0.55;
+    double cardDimenWidth = size.width * 0.6;
+    double cardDimenHeight = size.width * 0.6;
     double iconDimen = cardDimenWidth * 0.06;
     double iconSize = iconDimen * 0.6;
     return Column(
@@ -260,7 +260,7 @@ class _OffersDetailsState extends State<OffersDetails> {
             height: cardDimenHeight,
             width: cardDimenWidth,
             decoration: BoxDecoration(
-              color: Colors.primaries[Random().nextInt(Colors.primaries.length)].withOpacity(0.4),
+
               borderRadius: BorderRadius.all(Radius.circular(10)),
               border: Border.all(color: Colors.white12, width: 0.5),
             ),
@@ -268,23 +268,10 @@ class _OffersDetailsState extends State<OffersDetails> {
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Expanded(child: Container()),
-                Container(
-                  height: size.width * 0.1,
-                  width: size.height * 0.1,
-                  decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: Colors.black
-                  ),
-                  child: NeuomorphicCircle(
-                    innerShadow: false,
-                    outerShadow: false,
-                    backgroundColor: Colors.white,
-                    shadowColor: softShadowColor,
-                    highlightColor: highlightColor,
-                    child: Image.network(widget.data.mBusinessLogo, height: size.width * 0.06, width: size.width * 0.06,),
-                  ),
-                ),
+                Expanded(child: Container(
+                  child:Image.network(widget.data.offerImage, height: cardDimenHeight, width:cardDimenWidth,),
+                )),
+
               ],
             ),
           ),

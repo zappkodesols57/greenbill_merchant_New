@@ -4,8 +4,10 @@ import 'dart:io';
 import 'dart:math';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:greenbill_merchant/src/animations/hero_dialog_route.dart';
 import 'package:greenbill_merchant/src/constants.dart';
 import 'package:greenbill_merchant/src/models/model_Common.dart';
 import 'package:greenbill_merchant/src/models/model_subscription.dart';
@@ -29,6 +31,11 @@ class subUpdatedState extends State<subUpdated> {
   final ScrollController _controller = ScrollController();
   final ScrollController _controller2 = ScrollController();
   TextEditingController query = new TextEditingController();
+  bool _onTapBox1 = true;
+  bool _onTapBox2 = false;
+  Color _colorMerchantContainer = Colors.white;
+  Color _colorMerchantText = kPrimaryColorBlue;
+  bool _onTapBox3=false;
 
   @override
   void initState() {
@@ -113,14 +120,72 @@ class subUpdatedState extends State<subUpdated> {
       throw Exception('Failed to load List');
     }
   }
+  Future<List<TransactionalSmsDatum>>getTrans() async {
+    final param = {
+      "m_business_id":busId,
+    };
+    final res = await http.post("http://157.230.228.250/merchant-get-subscription-details-api/",
+        body: param, headers: {HttpHeaders.authorizationHeader: "Token $token"});
+
+    print(res.body);
+    print(res.statusCode);
+    if (200 == res.statusCode) {
+      print(subscriptionFromJson(res.body));
+      return subscriptionFromJson(res.body).transactionalSmsData;
+
+    } else {
+      throw Exception('Failed to load List');
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
       key: _scaffoldKey,
+      floatingActionButton: AnimatedContainer(
+          duration: Duration(milliseconds: 400),
+          curve: Curves.easeInOut,
+          child: RawMaterialButton(
+              elevation: 5.0,
+              shape:  RoundedRectangleBorder(
+                  borderRadius: BorderRadius.all(Radius.circular(25.0))),
+
+              onPressed: () async{
+                SharedPreferences prefs = await SharedPreferences.getInstance();
+                // File file = await downloadPicture(prefs.getString("businessLogo"));
+                Navigator.push(context,
+                    HeroDialogRoute(builder: (context) => Recharge()));
+
+              },
+              fillColor: kPrimaryColorBlue,
+              child: Padding(
+                padding: const EdgeInsets.all(12.0),
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    const Icon(
+                       FontAwesomeIcons.plusCircle,
+                      color: Colors.white,
+                    ),
+                    SizedBox(
+                      width: 5.0,
+                    ),
+                    Text(
+                      "Recharge",
+                      style: TextStyle(
+                          color: Colors.white,
+                          fontFamily: "PoppinsMedium",
+                          fontWeight: FontWeight.bold
+                      ),
+                    )
+                  ],
+                )
+
+
+              ))),
       appBar: AppBar(
-        title: Text("My Subscription"),
+        title: Text("Active Subscription"),
         elevation: 0,
         leading: IconButton(
           icon: Icon(Icons.arrow_back_ios),
@@ -131,690 +196,964 @@ class subUpdatedState extends State<subUpdated> {
       ),
       body:Column(
         children: <Widget>[
+          SizedBox(
+            height: 5,
+          ),
           Container(
-           child: Scrollbar(isAlwaysShown: true,
-           controller: _controller,
-           thickness: 3.0,
-           child: Container(
-            padding: EdgeInsets.fromLTRB(10, 10, 10, 5),
-            width: double.maxFinite,
-             child:Column(
-               children: <Widget>[
-                 Container(
-                   width: size.width,
-                   child: Row(
-                     children: [
-                       Container(
-                         child:Card(
-                           shape: RoundedRectangleBorder(
-                             borderRadius: BorderRadius.circular(10.0),
-                           ),
-                           elevation:10,
-                           child:Container(
-                             width: size.width * 0.45,
-                             padding: EdgeInsets.only(
-                                 top: 10.0, bottom: 5.0, left: 0.0, right: 0.0),
-                             child: Column(
-                               crossAxisAlignment: CrossAxisAlignment.center,
-                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                               children: <Widget>[
-                                 Container(
-                                   alignment: Alignment.center,
-                                   width: size.width * 0.4,
-                                   child: Text(
-                                     "Subscription Balance",
-                                     style: TextStyle(
-                                         color: kPrimaryColorBlue,
-                                         fontSize: 14.0,
-                                         fontFamily: "PoppinsBold"),
-                                   ),
-                                 ),
-                                 Divider(thickness: 1,
-                                     color: Colors.black,height: 10, indent: 0,
-                                     endIndent: 0),
-                                 Container(
-                                   padding: EdgeInsets.only(
-                                       top: 0.0, bottom: 10.0, left: 0.0, right: 0.0),
-                                   alignment: Alignment.topLeft,
-                                   width: size.width * 0.4,
-                                   child: Text("Green Bill Subscription"
-                                     ,
-                                     style: TextStyle(
-                                         color: kPrimaryColorBlue,
-                                         fontSize: 12.0,
-                                         fontFamily: "PoppinsLight"),
-                                   ),
-                                 ),
-                                 Container(
-                                   alignment: Alignment.centerLeft,
-                                   padding: EdgeInsets.only(
-                                       top: 0.0, bottom: 0.0, left: 10.0, right: 0.0),
-                                   child: Text("Amount Balance : "+"₹ "+totalAmountAvail.toString()+"0"
-                                     ,
-                                     style: TextStyle(
-                                         color: Colors.black,
-                                         fontSize: 12.0,
-                                         fontFamily: "PoppinsLight"),
-                                   ),
-                                 ),
-                                 Container(
-                                   child: Row(
-                                     children:<Widget> [
-                                       Container(
-                                         alignment: Alignment.centerLeft,
-                                         padding: EdgeInsets.only(
-                                             top: 0.0, bottom: 0.0, left: 10.0, right: 0.0),
-                                         child: Text("Check Usages"
-                                           ,
-                                           style: TextStyle(
-                                               color: Colors.black,
-                                               fontSize: 12.0,
-                                               fontFamily: "PoppinsLight"),
-                                         ),
-                                       ),
-                                       Container(
-                                           alignment: Alignment.topRight,
-                                           padding: EdgeInsets.only(
-                                               top: 0.0, bottom: 0.0, left: 10.0, right: 0.0),
-                                           child: IconButton(
+            width: size.width ,
+            height: 30,
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.all(Radius.circular(40))),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                InkWell(
+                  child:Container(
+                    decoration: BoxDecoration(
+                        color: _onTapBox1?kPrimaryColorBlue:_colorMerchantContainer,
+                        border: Border.all(color: kPrimaryColorBlue),
+                        borderRadius: BorderRadius.all(Radius.circular(40))),
+                    width: size.width * 0.30,
+                    child: Center(
+                        child: Text(
+                          'Green Bill',
+                          style: TextStyle(color: _onTapBox1?Colors.white :_colorMerchantText),
+                        )),
+                  ),
+                  onTap:(){
+                    setState(() {
+                      _onTapBox2=false;
+                      _onTapBox3=false;
+                      _onTapBox1=true;
 
-                                             icon: const Icon(Icons.arrow_forward_ios),
-                                             color: kPrimaryColorBlue,
-                                             onPressed: () {},
-                                           )
-                                       ),
-                                     ],
-                                   ),
-                                 )
-                               ],),
-                           ),
+                    });
+                  } ,
 
-                         ),
-                       ),
-                       Container(
-                         child:Card(
-                           shape: RoundedRectangleBorder(
-                             borderRadius: BorderRadius.circular(10.0),
-                           ),
-                           elevation:10,
-                           child:Container(
-                             width: size.width * 0.45,
-                             padding: EdgeInsets.only(
-                                 top: 10.0, bottom: 5.0, left: 0.0, right: 0.0),
-                             child: Column(
-                               crossAxisAlignment: CrossAxisAlignment.center,
-                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                               children: <Widget>[
-                                 Container(
-                                   alignment: Alignment.center,
-                                   width: size.width * 0.4,
-                                   child: Text(
-                                     "SMS Plan Balance",
-                                     style: TextStyle(
-                                         color: kPrimaryColorBlue,
-                                         fontSize: 14.0,
-                                         fontFamily: "PoppinsBold"),
-                                   ),
-                                 ),
-                                 Divider(thickness: 1,
-                                     color: Colors.black,height: 10, indent: 0,
-                                     endIndent: 0),
-                                 Container(
-                                   padding: EdgeInsets.only(
-                                       top: 0.0, bottom: 10.0, left: 0.0, right: 0.0),
-                                   alignment: Alignment.topLeft,
-                                   width: size.width * 0.4,
-                                   child: Text("Bulk SMS Subscription",
-                                     style: TextStyle(
-                                         color: kPrimaryColorBlue,
-                                         fontSize: 12.0,
-                                         fontFamily: "PoppinsLight"),
-                                   ),
-                                 ),
-                                 Container(
-                                   alignment: Alignment.centerLeft,
-                                   padding: EdgeInsets.only(
-                                       top: 0.0, bottom: 0.0, left: 10.0, right: 0.0),
-                                   child: Text("SMS Balance : "+totalSmsAvail.toString()
-                                     ,
-                                     style: TextStyle(
-                                         color: Colors.black,
-                                         fontSize: 12.0,
-                                         fontFamily: "PoppinsLight"),
-                                   ),
-                                 ),
-                                 Container(
-                                   child: Row(
-                                     children:<Widget> [
-                                       Container(
-                                         alignment: Alignment.centerLeft,
-                                         padding: EdgeInsets.only(
-                                             top: 0.0, bottom: 0.0, left: 10.0, right: 0.0),
-                                         child: Text("Check Usages"
-                                           ,
-                                           style: TextStyle(
-                                               color: Colors.black,
-                                               fontSize: 12.0,
-                                               fontFamily: "PoppinsLight"),
-                                         ),
-                                       ),
-                                       Container(
-                                           alignment: Alignment.topRight,
-                                           padding: EdgeInsets.only(
-                                               top: 0.0, bottom: 0.0, left: 10.0, right: 0.0),
-                                           child: IconButton(
+                ),
+                InkWell(
 
-                                             icon: const Icon(Icons.arrow_forward_ios),
-                                             color: kPrimaryColorBlue,
-                                             onPressed: () {},
-                                           )
-                                       ),
-                                     ],
-                                   ),
-                                 )
-                               ],),
-                           ),
+                  child:Container(
+                    decoration: BoxDecoration(
+                        color: _onTapBox2?kPrimaryColorBlue:_colorMerchantContainer,
+                        border: Border.all(color: kPrimaryColorBlue),
+                        borderRadius: BorderRadius.all(Radius.circular(20))),
+                    width: size.width * 0.30,
+                    child: Center(
+                        child: Text(
+                          'Promotional',
+                          style: TextStyle(color: _onTapBox2?Colors.white :_colorMerchantText),
+                        )),
+                  ),
+                  onTap:(){
+                    setState(() {
+                      _onTapBox3=false;
+                      _onTapBox1=false;
+                      _onTapBox2=true;
+                    });
+                  } ,
+                ),
+                InkWell(
 
-                         ),
-                       ),
-                     ],
-                   ),
-                 ),
-                 Container(
-                   width: size.width,
-                   child: Column(
-                       children: [
-                         Container(
-                           width: size.width ,
-                           child: Card(
-                             shape: RoundedRectangleBorder(
-                               borderRadius: BorderRadius.circular(10.0),
-                             ),
-                             elevation:10,
-                             child:Container(
-                               child: Column(
-                                 children: <Widget>[
-                                   Container(
-                                     padding: EdgeInsets.only(
-                                         top: 10.0, bottom: 10.0, left: 10.0, right: 10.0),
-                                     alignment: Alignment.centerLeft,
-                                     child:Text(
-                                       "My Plans :",
-                                       style: TextStyle(
-                                           color:kPrimaryColorBlue,
-                                           fontSize: 20.0,
-                                           fontFamily: "PoppinsBold"),
-                                     ),
-                                   ),
-                                   Container(
-                                     child: Row(
-                                       children: <Widget>[
-                                         Container(
-                                           width: size.width * 0.45,
-                                           child:FutureBuilder<List<SubscriptionDatum>>(
-                                             future: getLists(),
-                                             builder: (BuildContext context, AsyncSnapshot<List<SubscriptionDatum>> snapshot) {
-                                               if (snapshot.connectionState == ConnectionState.waiting)
-                                                 return Center(child: CircularProgressIndicator(valueColor:AlwaysStoppedAnimation<Color>(kPrimaryColorBlue),));
-                                               else if (snapshot.hasError ||snapshot.data.isEmpty) {
-                                                 print(snapshot.hasError);
-                                                 print(snapshot.error);
-                                                 return Center(
-                                                   child: Text("You don’t have any Active Subscription"),
-                                                 );
-                                               } else {
-                                                 if (snapshot.connectionState == ConnectionState.done &&
-                                                     snapshot.hasData) {
-                                                   WidgetsBinding.instance.addPostFrameCallback((_) {
-                                                     if (_controller.hasClients) {
-                                                       _controller.animateTo(
-                                                           _controller.position.minScrollExtent,
-                                                           duration: Duration(milliseconds: 500),
-                                                           curve: Curves.fastOutSlowIn);
-                                                     } else {
-                                                       setState(() => null);
-                                                     }
-                                                   });
+                  child:Container(
+                    decoration: BoxDecoration(
+                        color: _onTapBox3?kPrimaryColorBlue:_colorMerchantContainer,
+                        border: Border.all(color: kPrimaryColorBlue),
+                        borderRadius: BorderRadius.all(Radius.circular(20))),
+                    width: size.width * 0.30,
+                    child: Center(
+                        child: Text(
+                          'Transactional ',
+                          style: TextStyle(color: _onTapBox3?Colors.white :_colorMerchantText),
+                        )),
+                  ),
+                  onTap:(){
+                    setState(() {
+                      _onTapBox1=false;
+                      _onTapBox2=false;
+                      _onTapBox3=true;
 
-                                                   return Scrollbar(
-                                                     isAlwaysShown: true,
-                                                     controller: _controller,
-                                                     thickness: 3.0,
-                                                     child:ListView.builder(
-                                                         itemCount: snapshot.data.length,
-                                                         shrinkWrap: true,
-                                                         reverse: false,
-                                                         controller: _controller,
-                                                         itemBuilder: (BuildContext context, int index) {
-                                                           return Container(padding: EdgeInsets.fromLTRB(10, 10, 10, 0),
-                                                             width: double.maxFinite,
-                                                             child:Container(
-                                                               width: size.width * 0.45,
-                                                               padding: EdgeInsets.only(
-                                                                   top: 0.0, bottom: 5.0, left: 0.0, right: 0.0),
-                                                               child: Column(
-                                                                 crossAxisAlignment: CrossAxisAlignment.center,
-                                                                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                                 children: <Widget>[
-                                                                   Container(
-                                                                     alignment: Alignment.centerLeft,
-                                                                     width: size.width * 0.4,
-                                                                     child: Text(
-                                                                       "Green Bill Plans",
-                                                                       style: TextStyle(
-                                                                           color: kPrimaryColorBlue,
-                                                                           fontSize: 14.0,
-                                                                           fontFamily: "PoppinsBold"),
-                                                                     ),
-                                                                   ),
-                                                                   Divider(thickness: 1,
-                                                                       color: Colors.black,height: 10, indent: 0,
-                                                                       endIndent: 0),
+                    });
+                  } ,
+                ),
 
-                                                                   Container(
-                                                                     alignment: Alignment.centerLeft,
-                                                                     padding: EdgeInsets.only(
-                                                                         top: 0.0, bottom: 0.0, left: 10.0, right: 0.0),
-                                                                     child: Text("Plan Name : "+ snapshot.data[index].subscriptionName
-                                                                       ,
-                                                                       style: TextStyle(
-                                                                           color: Colors.black,
-                                                                           fontSize: 12.0,
-                                                                           fontFamily: "PoppinsLight"),
-                                                                     ),
-                                                                   ),
-                                                                   Container(
-                                                                     alignment: Alignment.centerLeft,
-                                                                     padding: EdgeInsets.only(
-                                                                         top: 0.0, bottom: 0.0, left: 10.0, right: 0.0),
-                                                                     child: Text("Amount : " +"₹ "+snapshot.data[index].purchaseCost.toString()+"0"
-                                                                       ,
-                                                                       style: TextStyle(
-                                                                           color: Colors.black,
-                                                                           fontSize: 12.0,
-                                                                           fontFamily: "PoppinsLight"),
-                                                                     ),
-                                                                   ),
-                                                                   Container(
-                                                                     alignment: Alignment.centerLeft,
-                                                                     padding: EdgeInsets.only(
-                                                                         top: 0.0, bottom: 0.0, left: 10.0, right: 0.0),
-                                                                     child: Text("Expires On : "+snapshot.data[index].expiryDate.toString()
-                                                                       ,
-                                                                       style: TextStyle(
-                                                                           color: Colors.black,
-                                                                           fontSize: 12.0,
-                                                                           fontFamily: "PoppinsLight"),
-                                                                     ),
-                                                                   ),
-                                                                   Container(
-                                                                     child: Row(
-                                                                       children:<Widget> [
-                                                                         Container(
-                                                                           alignment: Alignment.centerLeft,
-                                                                           padding: EdgeInsets.only(
-                                                                               top: 0.0, bottom: 0.0, left: 10.0, right: 0.0),
-                                                                           child: Text("View Details"
-                                                                             ,
-                                                                             style: TextStyle(
-                                                                                 color: Colors.black,
-                                                                                 fontSize: 12.0,
-                                                                                 fontFamily: "PoppinsLight"),
-                                                                           ),
-                                                                         ),
-                                                                         Container(
-                                                                             alignment: Alignment.topRight,
-                                                                             padding: EdgeInsets.only(
-                                                                                 top: 0.0, bottom: 0.0, left: 10.0, right: 0.0),
-                                                                             child: IconButton(
-
-                                                                               icon: const Icon(Icons.arrow_forward_ios),
-                                                                               color: kPrimaryColorBlue,
-                                                                               onPressed: () {
-                                                                                 showDialog(
-                                                                                   context: context,
-                                                                                   builder: (BuildContext context) => _buildPopupDialog(context,snapshot.data[index]),
-                                                                                 );
-                                                                               },
-                                                                             )
-                                                                         ),
-                                                                       ],
-                                                                     ),
-                                                                   )
-                                                                 ],),
-                                                             ),
-
-
-                                                           );
-                                                         }
-                                                     ),
-
-                                                   );
-
-                                                 } else {
-                                                   return Center(child: Text("No Data Found"));
-                                                 }
-                                               }
-
-                                             },
-                                           ),
-
-                                         ),
-                                         Container(
-                                           width: size.width * 0.45,
-                                           child:FutureBuilder<List<PromotionalSmsDatum>>(
-                                             future: getBulk(),
-                                             builder: (BuildContext context, AsyncSnapshot<List<PromotionalSmsDatum>> snapshot) {
-                                               if (snapshot.connectionState == ConnectionState.waiting)
-                                                 return Center(child: CircularProgressIndicator(valueColor:AlwaysStoppedAnimation<Color>(kPrimaryColorBlue),));
-                                               else if (snapshot.hasError) {
-                                                 return Center(
-                                                   child: Text("You don’t have any Active Subscription"),
-                                                 );
-                                               } else {
-                                                 if (snapshot.connectionState == ConnectionState.done &&
-                                                     snapshot.hasData) {
-                                                   WidgetsBinding.instance.addPostFrameCallback((_) {
-                                                     if (_controller.hasClients) {
-                                                       _controller.animateTo(
-                                                           _controller.position.minScrollExtent,
-                                                           duration: Duration(milliseconds: 500),
-                                                           curve: Curves.fastOutSlowIn);
-                                                     } else {
-                                                       setState(() => null);
-                                                     }
-                                                   });
-
-                                                   return Scrollbar(
-                                                     isAlwaysShown: true,
-                                                     controller: _controller,
-                                                     thickness: 3.0,
-                                                     child:ListView.builder(
-                                                         itemCount: snapshot.data.length,
-                                                         shrinkWrap: true,
-                                                         reverse: false,
-                                                         controller: _controller,
-                                                         itemBuilder: (BuildContext context, int index) {
-                                                           return Container(padding: EdgeInsets.fromLTRB(10, 10, 10, 0),
-                                                             width: double.maxFinite,
-                                                             child:Container(
-                                                               width: size.width * 0.45,
-                                                               padding: EdgeInsets.only(
-                                                                   top: 0.0, bottom: 5.0, left: 0.0, right: 0.0),
-                                                               child: Column(
-                                                                 crossAxisAlignment: CrossAxisAlignment.center,
-                                                                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                                 children: <Widget>[
-                                                                   Container(
-                                                                     alignment: Alignment.centerLeft,
-                                                                     width: size.width * 0.4,
-                                                                     child: Text(
-                                                                       "Bulk SMS Plans",
-                                                                       style: TextStyle(
-                                                                           color: kPrimaryColorBlue,
-                                                                           fontSize: 14.0,
-                                                                           fontFamily: "PoppinsBold"),
-                                                                     ),
-                                                                   ),
-                                                                   Divider(thickness: 1,
-                                                                       color: Colors.black,height: 10, indent: 0,
-                                                                       endIndent: 0),
-
-                                                                   Container(
-                                                                     alignment: Alignment.centerLeft,
-                                                                     padding: EdgeInsets.only(
-                                                                         top: 0.0, bottom: 0.0, left: 10.0, right: 0.0),
-                                                                     child: Text("Plan Name : "+ snapshot.data[index].promotionalSmsSubscriptionName
-                                                                       ,
-                                                                       style: TextStyle(
-                                                                           color: Colors.black,
-                                                                           fontSize: 12.0,
-                                                                           fontFamily: "PoppinsLight"),
-                                                                     ),
-                                                                   ),
-                                                                   Container(
-                                                                     alignment: Alignment.centerLeft,
-                                                                     padding: EdgeInsets.only(
-                                                                         top: 0.0, bottom: 0.0, left: 10.0, right: 0.0),
-                                                                     child: Text("Amount : " +"₹ "+snapshot.data[index].promotionalSmsPurchaseCost.toString()+"0"
-                                                                       ,
-                                                                       style: TextStyle(
-                                                                           color: Colors.black,
-                                                                           fontSize: 12.0,
-                                                                           fontFamily: "PoppinsLight"),
-                                                                     ),
-                                                                   ),
-                                                                   Container(
-                                                                     alignment: Alignment.centerLeft,
-                                                                     padding: EdgeInsets.only(
-                                                                         top: 0.0, bottom: 0.0, left: 10.0, right: 0.0),
-                                                                     child: Text("Purchase On :"+snapshot.data[index].promotionalSmsPurchaseDate.toString()
-                                                                       ,
-                                                                       style: TextStyle(
-                                                                           color: Colors.black,
-                                                                           fontSize: 12.0,
-                                                                           fontFamily: "PoppinsLight"),
-                                                                     ),
-                                                                   ),
-                                                                   Container(
-                                                                     child: Row(
-                                                                       children:<Widget> [
-                                                                         Container(
-                                                                           alignment: Alignment.centerLeft,
-                                                                           padding: EdgeInsets.only(
-                                                                               top: 0.0, bottom: 0.0, left: 10.0, right: 0.0),
-                                                                           child: Text("View Details"
-                                                                             ,
-                                                                             style: TextStyle(
-                                                                                 color: Colors.black,
-                                                                                 fontSize: 12.0,
-                                                                                 fontFamily: "PoppinsLight"),
-                                                                           ),
-                                                                         ),
-                                                                         Container(
-                                                                             alignment: Alignment.topRight,
-                                                                             padding: EdgeInsets.only(
-                                                                                 top: 0.0, bottom: 0.0, left: 10.0, right: 0.0),
-                                                                             child: IconButton(
-
-                                                                               icon: const Icon(Icons.arrow_forward_ios),
-                                                                               color: kPrimaryColorBlue,
-                                                                               onPressed: () {
-                                                                                 showDialog(
-                                                                                   context: context,
-                                                                                   builder: (BuildContext context) => _buildPopupForSms(context,snapshot.data[index]),
-                                                                                 );
-                                                                               },
-                                                                             )
-                                                                         ),
-                                                                       ],
-                                                                     ),
-                                                                   )
-                                                                 ],),
-                                                             ),
-
-
-                                                           );
-                                                         }
-                                                     ),
-
-                                                   );
-
-                                                 } else {
-                                                   return Center(child: Text("No Data Found"));
-                                                 }
-                                               }
-
-                                             },
-                                           ),
-                                         ),
-                                       ],
-                                     ),
-                                   ),
-                                 ],
-                               ),
-
-                             ),
-
-                         ),
-                         ),
-                       ],),
-                 ),
-                 Container(
-                   child:Card(
-                     shape: RoundedRectangleBorder(
-                       borderRadius: BorderRadius.circular(10.0),
-                     ),
-                     elevation:10,
-                     child:Container(
-                       width: size.width ,
-                       padding: EdgeInsets.only(
-                           top: 10.0, bottom: 5.0, left: 0.0, right: 0.0),
-                       child: Column(
-                         crossAxisAlignment: CrossAxisAlignment.center,
-                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                         children: <Widget>[
-                           Container(
-                             alignment: Alignment.center,
-                             width: size.width * 0.4,
-                             child: Text(
-                               "Recharge",
-                               style: TextStyle(
-                                   color: kPrimaryColorBlue,
-                                   fontSize: 20.0,
-                                   fontFamily: "PoppinsBold"),
-                             ),
-                           ),
-
-                           Container(
-                            child: Column(
-                              children: <Widget>[
-                                Container(
-                                  child: Row(
+              ],
+            ),
+          ),
+          SizedBox(
+            height: 5,
+          ),
+          if(_onTapBox1)
+          Expanded(
+            child: FutureBuilder<List<SubscriptionDatum>>(
+              future: getLists(),
+              builder: (BuildContext context, AsyncSnapshot<List<SubscriptionDatum>> snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting)
+                  return Center(child: CircularProgressIndicator(valueColor:AlwaysStoppedAnimation<Color>(kPrimaryColorBlue),));
+                else if (snapshot.hasError) {
+                  return Center(
+                    child: Text("You don’t have any Active Subscription"),
+                  );
+                }
+                else if (snapshot.data.isEmpty) {
+                  return Center(
+                    child: Text("You don’t have any Active Green Bill Subscription"),
+                  );
+                } else {
+                  if (snapshot.connectionState == ConnectionState.done &&
+                      snapshot.hasData) {
+                    WidgetsBinding.instance.addPostFrameCallback((_) {
+                      if (_controller.hasClients) {
+                        _controller.animateTo(
+                            _controller.position.minScrollExtent,
+                            duration: Duration(milliseconds: 500),
+                            curve: Curves.fastOutSlowIn);
+                      } else {
+                        setState(() => null);
+                      }
+                    });
+                    return Scrollbar(
+                      isAlwaysShown: true,
+                      controller: _controller,
+                      thickness: 3.0,
+                      child: ListView.builder(
+                          itemCount: snapshot.data.length,
+                          shrinkWrap: true,
+                          reverse: false,
+                          controller: _controller,
+                          itemBuilder: (BuildContext context, int index) {
+                            return Container(padding: EdgeInsets.fromLTRB(10, 10, 10, 0),
+                              width: double.maxFinite,
+                              child: Card(
+                                elevation: 5.0,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.only(topLeft: Radius.elliptical(30, 20),bottomRight:  Radius.elliptical(30, 20)),
+                                ),
+                                child: Center(
+                                  child: Column(
                                     children: <Widget>[
+                                     // Container(
+                                       // width: size.width * 0.9,
+                                      //  padding: EdgeInsets.only(
+                                       //     top: 10.0, bottom: 5.0, left: 5.0, right: 5.0),
+                                      //  child: Row(
+                                      //    crossAxisAlignment: CrossAxisAlignment.center,
+                                      //    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                       //   children: <Widget>[
+
+
+                                         //   Container(
+                                           //   padding: EdgeInsets.only(
+                                            //      top: 10.0, bottom: 5.0, left: 5.0, right: 5.0),
+                                            //  width: size.width * 0.4,
+                                            //  child: Text(
+                                            //    "Subscription Name",
+                                            //    style: TextStyle(
+                                            //        color: Colors.black,
+                                            //        fontSize: 12.0,
+                                             //       fontFamily: "PoppinsBold"),
+                                             // ),
+                                            //),
+                                            //Container(
+                                            //  padding: EdgeInsets.only(
+                                             //     top: 10.0, bottom: 5.0, left: 5.0, right: 5.0),
+                                             // width: size.width * 0.4,
+                                              //child: Text(
+                                              //  snapshot.data[index].subscriptionName.toString(),
+                                                //textAlign: TextAlign.center,
+                                                //style: TextStyle(
+                                                //    color: kPrimaryColorBlue,
+                                               //     fontSize: 12.0,
+                                               //     fontFamily: "PoppinsBold"),
+                                             // ),
+                                           // ),
+
+                                          //],
+                                        //),
+                                      //),
                                       Container(
-                                        width: size.width*0.45,
-                                        alignment: Alignment.topLeft,
+                                        width: size.width * 0.9,
                                         padding: EdgeInsets.only(
-                                            top: 0.0, bottom: 0.0, left: 20.0, right: 0.0),
-                                        child: Text("Recharge"
-                                          ,
-                                          style: TextStyle(
-                                              color: Colors.black,
-                                              fontSize: 15.0,
-                                              fontFamily: "PoppinsBold"),
+                                            top: 10.0, bottom: 5.0, left: 5.0, right: 5.0),
+                                        child: Row(
+                                          crossAxisAlignment: CrossAxisAlignment.center,
+                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                          children: <Widget>[
+
+
+                                            Container(
+                                              padding: EdgeInsets.only(
+                                                  top: 10.0, bottom: 5.0, left: 5.0, right: 5.0),
+                                              width: size.width * 0.4,
+                                              child: Text(
+                                                "Cost",
+                                                style: TextStyle(
+                                                    color: Colors.black,
+                                                    fontSize: 12.0,
+                                                    fontFamily: "PoppinsBold"),
+                                              ),
+                                            ),
+                                            Container(
+                                              padding: EdgeInsets.only(
+                                                  top: 10.0, bottom: 5.0, left: 5.0, right: 5.0),
+                                              width: size.width * 0.4,
+                                              child: Text(
+                                                "₹ "+snapshot.data[index].purchaseCost.toString()+"0",
+                                                textAlign: TextAlign.center,
+                                                style: TextStyle(
+                                                    color: kPrimaryColorBlue,
+                                                    fontSize: 12.0,
+                                                    fontFamily: "PoppinsBold"),
+                                              ),
+                                            ),
+
+                                          ],
                                         ),
                                       ),
                                       Container(
-                                          width: size.width*0.45,
-                                          alignment: Alignment.center,
-                                          padding: EdgeInsets.only(
-                                              top: 0.0, bottom: 0.0, left: 10.0, right: 0.0),
-                                          child: IconButton(
-
-                                            icon: const Icon(Icons.arrow_forward_ios),
-                                            color: kPrimaryColorBlue,
-                                            onPressed: () {
-                                              Navigator.of(context).pop();
-                                              Navigator.push(context,
-                                                  MaterialPageRoute(builder: (context) => Recharge()));
-                                            },
-                                          )
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                                Container(
-                                  child: Row(
-                                    children: <Widget>[
-                                      Container(
-                                        width: size.width*0.45,
-                                        alignment: Alignment.topLeft,
+                                        width: size.width * 0.9,
                                         padding: EdgeInsets.only(
-                                            top: 0.0, bottom: 0.0, left: 20.0, right: 0.0),
-                                        child: Text("Recharge History"
-                                          ,
-                                          style: TextStyle(
-                                              color: Colors.black,
-                                              fontSize: 15.0,
-                                              fontFamily: "PoppinsBold"),
+                                            top: 0.0, bottom: 5.0, left: 5.0, right: 5.0),
+                                        child: Row(
+                                          crossAxisAlignment: CrossAxisAlignment.center,
+                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                          children: <Widget>[
+
+                                            Container(
+                                              padding: EdgeInsets.only(
+                                                  top: 0.0, bottom: 5.0, left: 5.0, right: 5.0),
+                                              width: size.width * 0.4,
+                                              child: Text(
+                                                "Purchase Date",
+
+                                                style: TextStyle(
+                                                    color: Colors.black,
+                                                    fontSize: 12.0,
+                                                    fontFamily: "PoppinsBold"),
+                                              ),
+                                            ),
+
+                                            Container(
+                                              padding: EdgeInsets.only(
+                                                  top: 0.0, bottom: 5.0, left: 5.0, right: 5.0),
+                                              width: size.width * 0.4,
+                                              child: Text(
+                                                snapshot.data[index].purchaseDate,
+                                                textAlign: TextAlign.center,
+                                                style: TextStyle(
+                                                    color: kPrimaryColorBlue,
+                                                    fontSize: 12.0,
+                                                    fontFamily: "PoppinsBold"),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+
+                                      Container(
+                                        width: size.width * 0.9,
+                                        padding: EdgeInsets.only(
+                                            top: 0.0, bottom: 5.0, left: 5.0, right: 5.0),
+                                        child: Row(
+                                          crossAxisAlignment: CrossAxisAlignment.center,
+                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                          children: <Widget>[
+
+                                            Container(
+                                              padding: EdgeInsets.only(
+                                                  top: 0.0, bottom: 5.0, left: 5.0, right: 5.0),
+                                              width: size.width * 0.4,
+                                              child: Text(
+                                                "Expiry Date",
+
+                                                style: TextStyle(
+                                                    color: Colors.black,
+                                                    fontSize: 12.0,
+                                                    fontFamily: "PoppinsBold"),
+                                              ),
+                                            ),
+
+                                            Container(
+                                              padding: EdgeInsets.only(
+                                                  top: 0.0, bottom: 5.0, left: 5.0, right: 5.0),
+                                              width: size.width * 0.4,
+                                              child: Text(
+                                                snapshot.data[index].expiryDate,
+                                                textAlign: TextAlign.center,
+                                                style: TextStyle(
+                                                    color: kPrimaryColorBlue,
+                                                    fontSize: 12.0,
+                                                    fontFamily: "PoppinsBold"),
+                                              ),
+                                            ),
+                                          ],
                                         ),
                                       ),
                                       Container(
-                                          width: size.width*0.45,
-                                          alignment: Alignment.center,
-                                          padding: EdgeInsets.only(
-                                              top: 0.0, bottom: 0.0, left: 10.0, right: 0.0),
-                                          child: IconButton(
-
-                                            icon: const Icon(Icons.arrow_forward_ios),
-                                            color: kPrimaryColorBlue,
-                                            onPressed: () {
-                                              Navigator.of(context).pop();
-                                              Navigator.push(context,
-                                                  MaterialPageRoute(builder: (context) => subHistory()));
-                                            },
-                                          )
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                                Container(
-                                  child: Row(
-                                    children: <Widget>[
-                                      Container(
-                                        width: size.width*0.45,
-                                        alignment: Alignment.topLeft,
+                                        width: size.width * 0.9,
                                         padding: EdgeInsets.only(
-                                            top: 0.0, bottom: 0.0, left: 20.0, right: 0.0),
-                                        child: Text("Download Invoice"
-                                          ,
-                                          style: TextStyle(
-                                              color: Colors.black,
-                                              fontSize: 15.0,
-                                              fontFamily: "PoppinsBold"),
+                                            top: 0.0, bottom: 5.0, left: 5.0, right: 5.0),
+                                        child: Row(
+                                          crossAxisAlignment: CrossAxisAlignment.center,
+                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                          children: <Widget>[
+
+                                            Container(
+                                              padding: EdgeInsets.only(
+                                                  top: 0.0, bottom: 5.0, left: 5.0, right: 5.0),
+                                              width: size.width * 0.4,
+                                              child: Text(
+                                                "Per Bill Cost",
+
+                                                style: TextStyle(
+                                                    color: Colors.black,
+                                                    fontSize: 12.0,
+                                                    fontFamily: "PoppinsBold"),
+                                              ),
+                                            ),
+
+                                            Container(
+                                              padding: EdgeInsets.only(
+                                                  top: 0.0, bottom: 5.0, left: 5.0, right: 5.0),
+                                              width: size.width * 0.4,
+                                              child: Text(
+                                                "₹ "+snapshot.data[index].perBillCost,
+                                                textAlign: TextAlign.center,
+                                                style: TextStyle(
+                                                    color: kPrimaryColorBlue,
+                                                    fontSize: 12.0,
+                                                    fontFamily: "PoppinsBold"),
+                                              ),
+                                            ),
+                                          ],
                                         ),
                                       ),
                                       Container(
-                                          width: size.width*0.45,
-                                          alignment: Alignment.center,
-                                          padding: EdgeInsets.only(
-                                              top: 0.0, bottom: 0.0, left: 10.0, right: 0.0),
-                                          child: IconButton(
+                                        width: size.width * 0.9,
+                                        padding: EdgeInsets.only(
+                                            top: 0.0, bottom: 5.0, left: 5.0, right: 5.0),
+                                        child: Row(
+                                          crossAxisAlignment: CrossAxisAlignment.center,
+                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                          children: <Widget>[
 
-                                            icon: const Icon(Icons.arrow_forward_ios),
-                                            color: kPrimaryColorBlue,
-                                            onPressed: () {},
-                                          )
+                                            Container(
+                                              padding: EdgeInsets.only(
+                                                  top: 0.0, bottom: 5.0, left: 5.0, right: 5.0),
+                                              width: size.width * 0.4,
+                                              child: Text(
+                                                "Per digital Bill Cost",
+
+                                                style: TextStyle(
+                                                    color: Colors.black,
+                                                    fontSize: 12.0,
+                                                    fontFamily: "PoppinsBold"),
+                                              ),
+                                            ),
+
+                                            Container(
+                                              padding: EdgeInsets.only(
+                                                  top: 0.0, bottom: 5.0, left: 5.0, right: 5.0),
+                                              width: size.width * 0.4,
+                                              child: Text(
+                                                "₹ "+snapshot.data[index].perDigitalBillCost,
+                                                textAlign: TextAlign.center,
+                                                style: TextStyle(
+                                                    color: kPrimaryColorBlue,
+                                                    fontSize: 12.0,
+                                                    fontFamily: "PoppinsBold"),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
                                       ),
+                                      Container(
+                                        width: size.width * 0.9,
+                                        padding: EdgeInsets.only(
+                                            top: 0.0, bottom: 5.0, left: 5.0, right: 5.0),
+                                        child: Row(
+                                          crossAxisAlignment: CrossAxisAlignment.center,
+                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                          children: <Widget>[
+
+                                            Container(
+                                              padding: EdgeInsets.only(
+                                                  top: 0.0, bottom: 5.0, left: 5.0, right: 5.0),
+                                              width: size.width * 0.4,
+                                              child: Text(
+                                                "Amount Balance",
+
+                                                style: TextStyle(
+                                                    color: Colors.black,
+                                                    fontSize: 12.0,
+                                                    fontFamily: "PoppinsBold"),
+                                              ),
+                                            ),
+
+                                            Container(
+                                              padding: EdgeInsets.only(
+                                                  top: 0.0, bottom: 5.0, left: 5.0, right: 5.0),
+                                              width: size.width * 0.4,
+                                              child: Text(
+                                                  "₹ "+snapshot.data[index].totalAmountAvilable.toString().split(".").first+"."+snapshot.data[index].totalAmountAvilable.toString().split(".").last.substring(0,2),
+                                                textAlign: TextAlign.center,
+                                                style: TextStyle(
+                                                    color: kPrimaryColorBlue,
+                                                    fontSize: 12.0,
+                                                    fontFamily: "PoppinsBold"),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+
                                     ],
                                   ),
                                 ),
-                              ],
-                            ),
-                           ),
+                              ),
+                            );
+                          }
+                      ),
+                    );
 
+                  } else {
+                    return Center(child: Text("No Data Found"));
+                  }
+                }
 
+              },
+            ),
+          ),
 
-                         ],),
-                     ),
+          if(_onTapBox2)
+            Expanded(
+              child: FutureBuilder<List<PromotionalSmsDatum>>(
+                future: getBulk(),
+                builder: (BuildContext context, AsyncSnapshot<List<PromotionalSmsDatum>> snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting)
+                    return Center(child: CircularProgressIndicator(valueColor:AlwaysStoppedAnimation<Color>(kPrimaryColorBlue),));
+                  else if (snapshot.hasError) {
+                    return Center(
+                      child: Text("You don’t have any Active Promotional SMS Subscription"),
+                    );
+                  }
+                  else if (snapshot.data.isEmpty) {
+                    return Center(
+                      child: Text("You don’t have any Active Promotional SMS Subscription"),
+                    );
+                  } else {
+                    if (snapshot.connectionState == ConnectionState.done &&
+                        snapshot.hasData) {
+                      WidgetsBinding.instance.addPostFrameCallback((_) {
+                        if (_controller.hasClients) {
+                          _controller.animateTo(
+                              _controller.position.minScrollExtent,
+                              duration: Duration(milliseconds: 500),
+                              curve: Curves.fastOutSlowIn);
+                        } else {
+                          setState(() => null);
+                        }
+                      });
+                      return Scrollbar(
+                        isAlwaysShown: true,
+                        controller: _controller,
+                        thickness: 3.0,
+                        child: ListView.builder(
+                            itemCount: snapshot.data.length,
+                            shrinkWrap: true,
+                            reverse: false,
+                            controller: _controller,
+                            itemBuilder: (BuildContext context, int index) {
+                              return Container(padding: EdgeInsets.fromLTRB(10, 10, 10, 0),
+                                width: double.maxFinite,
+                                child: Card(
+                                  elevation: 5.0,
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.only(topLeft: Radius.elliptical(30, 20),bottomRight:  Radius.elliptical(30, 20)),
+                                  ),
+                                  child: Center(
+                                    child: Column(
+                                      children: <Widget>[
 
-                   ),
-                 ),
+                                        Container(
+                                          width: size.width * 0.9,
+                                          padding: EdgeInsets.only(
+                                              top: 10.0, bottom: 5.0, left: 5.0, right: 5.0),
+                                          child: Row(
+                                            crossAxisAlignment: CrossAxisAlignment.center,
+                                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                            children: <Widget>[
+
+                                              Container(
+                                                padding: EdgeInsets.only(
+                                                    top: 10.0, bottom: 5.0, left: 5.0, right: 5.0),
+                                                width: size.width * 0.4,
+                                                child: Text(
+                                                  "Cost",
+                                                  style: TextStyle(
+                                                      color: Colors.black,
+                                                      fontSize: 12.0,
+                                                      fontFamily: "PoppinsBold"),
+                                                ),
+                                              ),
+                                              Container(
+                                                padding: EdgeInsets.only(
+                                                    top: 10.0, bottom: 5.0, left: 5.0, right: 5.0),
+                                                width: size.width * 0.4,
+                                                child: Text(
+                                                  "₹ "+snapshot.data[index].promotionalSmsPurchaseCost.toString().split(".").first+"00",
+                                                  textAlign: TextAlign.center,
+                                                  style: TextStyle(
+                                                      color: kPrimaryColorBlue,
+                                                      fontSize: 12.0,
+                                                      fontFamily: "PoppinsBold"),
+                                                ),
+                                              ),
+
+                                            ],
+                                          ),
+                                        ),
+                                        Container(
+                                          width: size.width * 0.9,
+                                          padding: EdgeInsets.only(
+                                              top: 0.0, bottom: 5.0, left: 5.0, right: 5.0),
+                                          child: Row(
+                                            crossAxisAlignment: CrossAxisAlignment.center,
+                                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                            children: <Widget>[
+
+                                              Container(
+                                                padding: EdgeInsets.only(
+                                                    top: 0.0, bottom: 5.0, left: 5.0, right: 5.0),
+                                                width: size.width * 0.4,
+                                                child: Text(
+                                                  "Purchase Date",
+
+                                                  style: TextStyle(
+                                                      color: Colors.black,
+                                                      fontSize: 12.0,
+                                                      fontFamily: "PoppinsBold"),
+                                                ),
+                                              ),
+
+                                              Container(
+                                                padding: EdgeInsets.only(
+                                                    top: 0.0, bottom: 5.0, left: 5.0, right: 5.0),
+                                                width: size.width * 0.4,
+                                                child: Text(
+                                                  snapshot.data[index].promotionalSmsPurchaseDate,
+                                                  textAlign: TextAlign.center,
+                                                  style: TextStyle(
+                                                      color: kPrimaryColorBlue,
+                                                      fontSize: 12.0,
+                                                      fontFamily: "PoppinsBold"),
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+
+                                        Container(
+                                          width: size.width * 0.9,
+                                          padding: EdgeInsets.only(
+                                              top: 0.0, bottom: 5.0, left: 5.0, right: 5.0),
+                                          child: Row(
+                                            crossAxisAlignment: CrossAxisAlignment.center,
+                                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                            children: <Widget>[
+
+                                              Container(
+                                                padding: EdgeInsets.only(
+                                                    top: 0.0, bottom: 5.0, left: 5.0, right: 5.0),
+                                                width: size.width * 0.4,
+                                                child: Text(
+                                                  "Total SMS",
+
+                                                  style: TextStyle(
+                                                      color: Colors.black,
+                                                      fontSize: 12.0,
+                                                      fontFamily: "PoppinsBold"),
+                                                ),
+                                              ),
+
+                                              Container(
+                                                padding: EdgeInsets.only(
+                                                    top: 0.0, bottom: 5.0, left: 5.0, right: 5.0),
+                                                width: size.width * 0.4,
+                                                child: Text(
+                                                  snapshot.data[index].promotionalSmsTotalSms.toString(),
+                                                  textAlign: TextAlign.center,
+                                                  style: TextStyle(
+                                                      color: kPrimaryColorBlue,
+                                                      fontSize: 12.0,
+                                                      fontFamily: "PoppinsBold"),
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                        Container(
+                                          width: size.width * 0.9,
+                                          padding: EdgeInsets.only(
+                                              top: 0.0, bottom: 5.0, left: 5.0, right: 5.0),
+                                          child: Row(
+                                            crossAxisAlignment: CrossAxisAlignment.center,
+                                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                            children: <Widget>[
+
+                                              Container(
+                                                padding: EdgeInsets.only(
+                                                    top: 0.0, bottom: 5.0, left: 5.0, right: 5.0),
+                                                width: size.width * 0.4,
+                                                child: Text(
+                                                  "Per SMS Cost",
+
+                                                  style: TextStyle(
+                                                      color: Colors.black,
+                                                      fontSize: 12.0,
+                                                      fontFamily: "PoppinsBold"),
+                                                ),
+                                              ),
+
+                                              Container(
+                                                padding: EdgeInsets.only(
+                                                    top: 0.0, bottom: 5.0, left: 5.0, right: 5.0),
+                                                width: size.width * 0.4,
+                                                child: Text(
+                                                  "₹ "+snapshot.data[index].promotionalSmsPerSmsCost,
+                                                  textAlign: TextAlign.center,
+                                                  style: TextStyle(
+                                                      color: kPrimaryColorBlue,
+                                                      fontSize: 12.0,
+                                                      fontFamily: "PoppinsBold"),
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                        Container(
+                                          width: size.width * 0.9,
+                                          padding: EdgeInsets.only(
+                                              top: 0.0, bottom: 5.0, left: 5.0, right: 5.0),
+                                          child: Row(
+                                            crossAxisAlignment: CrossAxisAlignment.center,
+                                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                            children: <Widget>[
+
+                                              Container(
+                                                padding: EdgeInsets.only(
+                                                    top: 0.0, bottom: 5.0, left: 5.0, right: 5.0),
+                                                width: size.width * 0.4,
+                                                child: Text(
+                                                  "SMS Balance",
+
+                                                  style: TextStyle(
+                                                      color: Colors.black,
+                                                      fontSize: 12.0,
+                                                      fontFamily: "PoppinsBold"),
+                                                ),
+                                              ),
+
+                                              Container(
+                                                padding: EdgeInsets.only(
+                                                    top: 0.0, bottom: 5.0, left: 5.0, right: 5.0),
+                                                width: size.width * 0.4,
+                                                child: Text(
+                                                  snapshot.data[index].promotionalSmsTotalSmsAvilable.toString(),
+                                                  textAlign: TextAlign.center,
+                                                  style: TextStyle(
+                                                      color: kPrimaryColorBlue,
+                                                      fontSize: 12.0,
+                                                      fontFamily: "PoppinsBold"),
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              );
+                            }
+                        ),
+                      );
+
+                    } else {
+                      return Center(child: Text("No Data Found"));
+                    }
+                  }
+
+                },
+              ),
+            ),
+          if(_onTapBox3)
+            Expanded(
+              child: FutureBuilder<List<TransactionalSmsDatum>>(
+                future: getTrans(),
+                builder: (BuildContext context, AsyncSnapshot<List<TransactionalSmsDatum>> snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting)
+                    return Center(child: CircularProgressIndicator(valueColor:AlwaysStoppedAnimation<Color>(kPrimaryColorBlue),));
+                  else if (snapshot.hasError) {
+                    return Center(
+                      child: Text("You don’t have any Active Subscription"),
+                    );
+                  }
+                  else if (snapshot.data.isEmpty) {
+                    return Center(
+                      child: Text("You don’t have any Active Transactional SMS Subscription"),
+                    );
+                  } else {
+                    if (snapshot.connectionState == ConnectionState.done &&
+                        snapshot.hasData) {
+                      WidgetsBinding.instance.addPostFrameCallback((_) {
+                        if (_controller.hasClients) {
+                          _controller.animateTo(
+                              _controller.position.minScrollExtent,
+                              duration: Duration(milliseconds: 500),
+                              curve: Curves.fastOutSlowIn);
+                        } else {
+                          setState(() => null);
+                        }
+                      });
+                      return Scrollbar(
+                        isAlwaysShown: true,
+                        controller: _controller,
+                        thickness: 3.0,
+                        child: ListView.builder(
+                            itemCount: snapshot.data.length,
+                            shrinkWrap: true,
+                            reverse: false,
+                            controller: _controller,
+                            itemBuilder: (BuildContext context, int index) {
+                              return Container(padding: EdgeInsets.fromLTRB(10, 10, 10, 0),
+                                width: double.maxFinite,
+                                child: Card(
+                                  elevation: 5.0,
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.only(topLeft: Radius.elliptical(30, 20),bottomRight:  Radius.elliptical(30, 20)),
+                                  ),
+                                  child: Center(
+                                    child: Column(
+                                      children: <Widget>[
+
+                                        Container(
+                                          width: size.width * 0.9,
+                                          padding: EdgeInsets.only(
+                                              top: 10.0, bottom: 5.0, left: 5.0, right: 5.0),
+                                          child: Row(
+                                            crossAxisAlignment: CrossAxisAlignment.center,
+                                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                            children: <Widget>[
+
+                                              Container(
+                                                padding: EdgeInsets.only(
+                                                    top: 10.0, bottom: 5.0, left: 5.0, right: 5.0),
+                                                width: size.width * 0.4,
+                                                child: Text(
+                                                  "Cost",
+                                                  style: TextStyle(
+                                                      color: Colors.black,
+                                                      fontSize: 12.0,
+                                                      fontFamily: "PoppinsBold"),
+                                                ),
+                                              ),
+                                              Container(
+                                                padding: EdgeInsets.only(
+                                                    top: 0.0, bottom: 5.0, left: 5.0, right: 5.0),
+                                                width: size.width * 0.4,
+                                                child: Text(
+                                                  "₹ "+snapshot.data[index].transactionalSmsPurchaseCost.toString(),
+                                                  textAlign: TextAlign.center,
+                                                  style: TextStyle(
+                                                      color: kPrimaryColorBlue,
+                                                      fontSize: 12.0,
+                                                      fontFamily: "PoppinsBold"),
+                                                ),
+                                              ),
+
+                                            ],
+                                          ),
+                                        ),
+                                        Container(
+                                          width: size.width * 0.9,
+                                          padding: EdgeInsets.only(
+                                              top: 0.0, bottom: 5.0, left: 5.0, right: 5.0),
+                                          child: Row(
+                                            crossAxisAlignment: CrossAxisAlignment.center,
+                                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                            children: <Widget>[
+
+                                              Container(
+                                                padding: EdgeInsets.only(
+                                                    top: 0.0, bottom: 5.0, left: 5.0, right: 5.0),
+                                                width: size.width * 0.4,
+                                                child: Text(
+                                                  "Purchase Date",
+
+                                                  style: TextStyle(
+                                                      color: Colors.black,
+                                                      fontSize: 12.0,
+                                                      fontFamily: "PoppinsBold"),
+                                                ),
+                                              ),
+
+                                              Container(
+                                                padding: EdgeInsets.only(
+                                                    top: 0.0, bottom: 5.0, left: 5.0, right: 5.0),
+                                                width: size.width * 0.4,
+                                                child: Text(
+                                                  snapshot.data[index].transactionalSmsPurchaseDate,
+                                                  textAlign: TextAlign.center,
+                                                  style: TextStyle(
+                                                      color: kPrimaryColorBlue,
+                                                      fontSize: 12.0,
+                                                      fontFamily: "PoppinsBold"),
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+
+                                        Container(
+                                          width: size.width * 0.9,
+                                          padding: EdgeInsets.only(
+                                              top: 0.0, bottom: 5.0, left: 5.0, right: 5.0),
+                                          child: Row(
+                                            crossAxisAlignment: CrossAxisAlignment.center,
+                                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                            children: <Widget>[
+
+                                              Container(
+                                                padding: EdgeInsets.only(
+                                                    top: 0.0, bottom: 5.0, left: 5.0, right: 5.0),
+                                                width: size.width * 0.4,
+                                                child: Text(
+                                                  "Total SMS",
+
+                                                  style: TextStyle(
+                                                      color: Colors.black,
+                                                      fontSize: 12.0,
+                                                      fontFamily: "PoppinsBold"),
+                                                ),
+                                              ),
+
+                                              Container(
+                                                padding: EdgeInsets.only(
+                                                    top: 0.0, bottom: 5.0, left: 5.0, right: 5.0),
+                                                width: size.width * 0.4,
+                                                child: Text(
+                                                  snapshot.data[index].transactionalSmsTotalSms.toString(),
+                                                  textAlign: TextAlign.center,
+                                                  style: TextStyle(
+                                                      color: kPrimaryColorBlue,
+                                                      fontSize: 12.0,
+                                                      fontFamily: "PoppinsBold"),
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                        Container(
+                                          width: size.width * 0.9,
+                                          padding: EdgeInsets.only(
+                                              top: 0.0, bottom: 5.0, left: 5.0, right: 5.0),
+                                          child: Row(
+                                            crossAxisAlignment: CrossAxisAlignment.center,
+                                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                            children: <Widget>[
+
+                                              Container(
+                                                padding: EdgeInsets.only(
+                                                    top: 0.0, bottom: 5.0, left: 5.0, right: 5.0),
+                                                width: size.width * 0.4,
+                                                child: Text(
+                                                  "Per SMS Cost",
+
+                                                  style: TextStyle(
+                                                      color: Colors.black,
+                                                      fontSize: 12.0,
+                                                      fontFamily: "PoppinsBold"),
+                                                ),
+                                              ),
+
+                                              Container(
+                                                padding: EdgeInsets.only(
+                                                    top: 0.0, bottom: 5.0, left: 5.0, right: 5.0),
+                                                width: size.width * 0.4,
+                                                child: Text(
+                                                  "₹ "+snapshot.data[index].transactionalSmsPerSmsCost,
+                                                  textAlign: TextAlign.center,
+                                                  style: TextStyle(
+                                                      color: kPrimaryColorBlue,
+                                                      fontSize: 12.0,
+                                                      fontFamily: "PoppinsBold"),
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                        Container(
+                                          width: size.width * 0.9,
+                                          padding: EdgeInsets.only(
+                                              top: 0.0, bottom: 5.0, left: 5.0, right: 5.0),
+                                          child: Row(
+                                            crossAxisAlignment: CrossAxisAlignment.center,
+                                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                            children: <Widget>[
+
+                                              Container(
+                                                padding: EdgeInsets.only(
+                                                    top: 0.0, bottom: 5.0, left: 5.0, right: 5.0),
+                                                width: size.width * 0.4,
+                                                child: Text(
+                                                  "SMS Balance",
+
+                                                  style: TextStyle(
+                                                      color: Colors.black,
+                                                      fontSize: 12.0,
+                                                      fontFamily: "PoppinsBold"),
+                                                ),
+                                              ),
+
+                                              Container(
+                                                padding: EdgeInsets.only(
+                                                    top: 0.0, bottom: 5.0, left: 5.0, right: 5.0),
+                                                width: size.width * 0.4,
+                                                child: Text(
+                                                  snapshot.data[index].transactionalSmsTotalSmsAvilable.toString().split(".").first,
+                                                  textAlign: TextAlign.center,
+                                                  style: TextStyle(
+                                                      color: kPrimaryColorBlue,
+                                                      fontSize: 12.0,
+                                                      fontFamily: "PoppinsBold"),
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              );
+                            }
+                        ),
+                      );
+
+                    } else {
+                      return Center(child: Text("No Data Found"));
+                    }
+                  }
+
+                },
+              ),
+            ),
+
                ],
              ),
-
-
-
-         ),
-         ),
-        ),
-
-        ],
-      ),
-
-
-    );
+         );
   }
 
 

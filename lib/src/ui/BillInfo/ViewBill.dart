@@ -7,6 +7,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:open_file/open_file.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
@@ -18,8 +19,8 @@ import '../../constants.dart';
 class ViewBill extends StatefulWidget {
 
 
-  final String id, invoiceNo, billUrl, billDate, billAmount, businessName;
-  ViewBill(this.id, this.invoiceNo, this.billUrl, this.billDate, this.billAmount,
+  final String id, biiImage, billUrl, billDate, billAmount, businessName;
+  ViewBill(this.id, this.biiImage, this.billUrl, this.billDate, this.billAmount,
       this.businessName);
 
  
@@ -34,6 +35,7 @@ class _ViewBillState extends State<ViewBill> {
   String token, id, format, fileName, downloadStatus = "Downloading...";
   String bid, file, amt, date, cadded, tagID, tag, cmt, cstore, store, storeID, catID, cat;
   File media;
+  String Invoice;
   Dio dio = new Dio();
   bool downloadProgress, _isVisible,_hideDownload,_showProgress;
 
@@ -77,6 +79,7 @@ class _ViewBillState extends State<ViewBill> {
       id = prefs.getInt("userID").toString();
     });
     print('$token\n$id');
+    Invoice=widget.billUrl;
 
   }
 
@@ -84,9 +87,7 @@ class _ViewBillState extends State<ViewBill> {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
-    return Hero(
-      tag: widget.id,
-      child: Scaffold(
+    return  Scaffold(
           key: _scaffoldKey,
           backgroundColor: Colors.white,
           appBar: AppBar(
@@ -100,10 +101,29 @@ class _ViewBillState extends State<ViewBill> {
             ),
             actions: <Widget>[
               Wrap(
-                spacing: 0.0,
+                spacing: 10.0,
                 crossAxisAlignment: WrapCrossAlignment.center,
                 alignment: WrapAlignment.center,
                 children: [
+                  if(widget.id=="0")
+                  IconButton(
+                   tooltip: "Download Bill",
+                  onPressed: () async {
+                    try {
+                      await ImageDownloader.downloadImage("http://157.230.228.250/"+widget.biiImage).then((context) => showInSnackBar("Download Complete"));
+                    }
+                    on PlatformException catch (error) {
+                      print(error);
+                    }
+                      // downloadFile().then((value) => showInSnackBar("Download Complete"));
+                   // openBill(
+                     //     widget.billUrl,widget.billUrl
+                      // .split("/")
+                   //       .last
+                    //     );
+                   },
+                   icon: Icon(CupertinoIcons.cloud_download),
+                  ),
 
 
                 ],
@@ -126,32 +146,17 @@ class _ViewBillState extends State<ViewBill> {
               ),
             ],
           )
-      ),
+
     );
   }
 
 
-  Future<File> urlToFile(String imageUrl) async {
-    // if (media != null) {
-    //   await OpenFile.open(media.path);
-    //   return null;
-    // }
-    _showLoaderDialog(context);
-    var tempDir = await getTemporaryDirectory();
-    String fullPath = tempDir.path + "/$fileName";
-    File file = new File(fullPath);
-    print('full path ${fullPath}');
-    download2(dio, imageUrl, fullPath);
-    // setState(() {
-    //   media = file;
-    // });
-  }
 
   Future download2(Dio dio, String url, String savePath) async {
     try {
       Response response = await dio.get(
         url,
-        // onReceiveProgress: showDownloadProgress,
+        onReceiveProgress: showDownloadProgress,
         options: Options(
             responseType: ResponseType.bytes,
             followRedirects: false,
@@ -165,14 +170,15 @@ class _ViewBillState extends State<ViewBill> {
       raf.writeFromSync(response.data);
       await raf.close();
       print(file.path);
-      // Navigator.of(context, rootNavigator: true).pop();
-      // final result = await OpenFile.open(file.path);
-      // print(
-      //     "==========================================================> ${result.message} ${result.type.index}");
+      Navigator.of(context, rootNavigator: true).pop();
+      final result = await OpenFile.open(file.path);
+      print(
+          "==========================================================> ${result.message} ${result.type.index}");
     } catch (e) {
       print(e);
     }
   }
+
 
 
 
@@ -220,6 +226,19 @@ class _ViewBillState extends State<ViewBill> {
       duration: Duration(seconds: 2),
     ));
   }
+  Future<void> openBill(String billFile, String fileName) async {
+    _showLoaderDialog(context);
+    var tempDir = await getTemporaryDirectory();
+    String fullPath = tempDir.path + "/$fileName";
+    File file = new File(fullPath);
+    print('full path ${fullPath}');
+    download2(dio, billFile, fullPath);
+    setState(() {
+      media = file;
+    });
+  }
+
+
 
 
 }

@@ -309,7 +309,7 @@ class FlagBillsState extends State<FlagBills> {
                                       children: <Widget>[
                                         Container(
                                           width: 60.0,
-                                          child: Text("₹ ${snapshot[index].amount}", style: TextStyle(fontWeight: FontWeight.bold)),
+                                          child: Text(snapshot[index].amount.contains(".")?"₹ ${snapshot[index].amount.split(".").first+".00"}":"₹ ${snapshot[index].amount+".00"}", style: TextStyle(fontWeight: FontWeight.bold)),
                                         ),
                                       ],
                                     ),
