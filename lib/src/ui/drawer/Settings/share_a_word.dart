@@ -74,7 +74,7 @@ class _ShareAWordState extends State<ShareAWord> {
               padding: const EdgeInsets.all(10.0),
               child: Container(
                 padding: EdgeInsets.only(top: 50.0, left: 10.0, right: 10.0, bottom: 10.0),
-                height: size.height * 0.35,
+                height: size.height * 0.60,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.all(Radius.circular(10)),
                   color: Colors.white,
@@ -115,19 +115,23 @@ class _ShareAWordState extends State<ShareAWord> {
                       child: Container(
                         width: size.width,
                         padding: EdgeInsets.all(10.0),
-                        child: TextField(
-                          controller: wordController,
-                          autofocus: false,
-                          maxLines: 10,
-                          style: TextStyle(
-                              fontSize: 15.0, color: Colors.black),
-                          decoration: InputDecoration(
-                            hintText: "Enter your message here...",
-                            border: InputBorder.none,
-                            counterText: "",
-                            contentPadding: const EdgeInsets.symmetric(vertical: 13.0, horizontal: 5),
-                          ),
-                        ),
+                        child: Text("Hey,\n\nI have found this amazing App where you can send Bills, Cash memo, Receipts digitally and also track your business analytics at lower cost.  Also you can  engage with your customers and earn money with GreenBill.\n\n\nDownload GreenBill Merchant App now :\nPlay store :link\nIos: link\nWebsite :https://www.greenbill.in",
+                        style: TextStyle(
+                            fontSize: 15.0, color: Colors.black),
+                      ),
+                        // TextField(
+                        //   controller: wordController,
+                        //   autofocus: false,
+                        //   maxLines: 10,
+                        //   style: TextStyle(
+                        //       fontSize: 15.0, color: Colors.black),
+                        //   decoration: InputDecoration(
+                        //     hintText: "Enter your message here...",
+                        //     border: InputBorder.none,
+                        //     counterText: "",
+                        //     contentPadding: const EdgeInsets.symmetric(vertical: 13.0, horizontal: 5),
+                        //   ),
+                        // ),
                       ),
                     ),
                     Container(
@@ -219,11 +223,11 @@ class _ShareAWordState extends State<ShareAWord> {
   }
 
   share() async {
-    if (wordController.text.isEmpty) {
-      showInSnackBar("Please enter Message");
-      return null;
-    }
-    Share.share("${wordController.text}\nHey,\n\nI have found this amazing App where you can Manage all your bills, receipts and track all of your expenses for free. Also you can avail various exciting offers, discounts near by.\n\nDownload it now :\nPlay store :link\nIos: link\nWebsite :link");
+    // if (wordController.text.isEmpty) {
+    //   showInSnackBar("Please enter Message");
+    //   return null;
+    // }
+    Share.share("Hey,\n\nI have found this amazing App where you can send Bills, Cash memo, Receipts digitally and also track your business analytics at lower cost.  Also you can  engage with your customers and earn money with GreenBill.\n\n\nDownload GreenBill Merchant App now :\nPlay store :link\nIos: link\nWebsite :https://www.greenbill.in");
 
   }
 }
