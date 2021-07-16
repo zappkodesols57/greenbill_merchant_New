@@ -60,7 +60,7 @@ class CashMemoListState extends State<CashMemoList> {
     if (200 == res.statusCode) {
       print(cashMemoFromJson(res.body).data.length);
       return cashMemoFromJson(res.body).data.where((element) => element.name.toLowerCase().contains(query.text) ||
-          element.total.toLowerCase().contains(query.text)).toList();
+          element.total.toString().toLowerCase().contains(query.text)).toList();
 
     } else {
       throw Exception('Failed to load List');
@@ -227,7 +227,7 @@ class CashMemoListState extends State<CashMemoList> {
                                             Container(
                                                 width: 50.0,
                                                 child: Text(
-                                                    "₹ ${snapshot.data[index].total}",
+                                                    "₹ ${snapshot.data[index].total.toString()}",
                                                     style: TextStyle(
                                                         fontWeight:
                                                         FontWeight.bold))),

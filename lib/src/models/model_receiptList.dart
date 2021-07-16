@@ -34,21 +34,21 @@ class Datum {
     this.receiptNo,
     this.mobileNumber,
     this.date,
-    this.grandTotal,
+    this.total,
   });
 
   int id;
   String receiptNo;
   String mobileNumber;
   String date;
-  String grandTotal;
+  double total;
 
   factory Datum.fromJson(Map<String, dynamic> json) => Datum(
     id: json["id"],
     receiptNo: json["receipt_no"],
     mobileNumber: json["mobile_number"],
     date: json["date"],
-    grandTotal: json["grand_total"],
+    total: json["total"],
   );
 
   Map<String, dynamic> toJson() => {
@@ -56,6 +56,6 @@ class Datum {
     "receipt_no": receiptNo,
     "mobile_number": mobileNumber,
     "date": date,
-    "grand_total": grandTotal,
+    "total": total,
   };
 }

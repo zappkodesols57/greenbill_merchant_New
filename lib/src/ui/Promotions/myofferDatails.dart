@@ -98,11 +98,11 @@ class _MyOffersDetailsState extends State<MyOffersDetails> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Icon(CupertinoIcons.pencil_ellipsis_rectangle, color: Colors.white,),
+                    Icon(CupertinoIcons.clear, color: Colors.white,),
                     SizedBox(width: 5.0,),
                     Center(
                       child: Text(
-                        "Edit",
+                        "Close",
                         style: TextStyle(
                           fontSize: 12.0,
                           color: Colors.white,
@@ -120,7 +120,7 @@ class _MyOffersDetailsState extends State<MyOffersDetails> {
                     shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(90)))
                 ),
                 onPressed: () {
-                  editCoupon(data);
+                  Navigator.pop(context, value);
                 },
               ),
               decoration: BoxDecoration(
@@ -194,7 +194,7 @@ class _MyOffersDetailsState extends State<MyOffersDetails> {
                       padding: const EdgeInsets.only(top: 10.0, bottom: 10.0, left: 25.0, right: 25.0),
                       child:
                       Text(
-                        "${data.offerName} at \n$storeName",
+                        "${data.offerName} at $storeName",
                         style: TextStyle(
                           fontSize: 20.0,
                           fontFamily: "PoppinsMedium",
@@ -219,7 +219,7 @@ class _MyOffersDetailsState extends State<MyOffersDetails> {
                       children: [
 
                         Text(
-                          "Offer  valid for ${data.offerType} user",
+                          "Offer  valid for ${data.offerType}",
                           style: TextStyle(
                             fontSize: 13.0,
                             fontFamily: "PoppinsMedium",
@@ -231,40 +231,40 @@ class _MyOffersDetailsState extends State<MyOffersDetails> {
                       ],
                     ),
                   ),
-                  Padding(
-                      padding: const EdgeInsets.only(top: 10.0, bottom: 0.0, left: 25.0, right: 25.0),
-                      child: Text(
-                        (data.status=="0")?'Status : Waiting For Approval ':'Status : Approved',
-                        style: TextStyle(
-                          fontSize: 14.0,
-                          fontFamily: "PoppinsMedium",
-                          fontWeight: FontWeight.bold,
-                        ),
-                      )
-                  ),
-                  Padding(
-                      padding: const EdgeInsets.only(top: 0.0, bottom: 0.0, left: 25.0, right: 25.0),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            "Valid From",
-                            style: TextStyle(
-                              fontSize: 14.0,
-                              fontFamily: "PoppinsMedium",
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                          Text(
-                            getDate(data.validFrom),
-                            style: TextStyle(
-                              fontSize: 12.0,
-                              fontFamily: "PoppinsMedium",
-                            ),
-                          )
-                        ],
-                      )
-                  ),
+                  // Padding(
+                  //     padding: const EdgeInsets.only(top: 10.0, bottom: 0.0, left: 25.0, right: 25.0),
+                  //     child: Text(
+                  //       (data.status=="0")?'Status : Waiting For Approval ':'Status : Approved',
+                  //       style: TextStyle(
+                  //         fontSize: 14.0,
+                  //         fontFamily: "PoppinsMedium",
+                  //         fontWeight: FontWeight.bold,
+                  //       ),
+                  //     )
+                  // ),
+                  // Padding(
+                  //     padding: const EdgeInsets.only(top: 0.0, bottom: 0.0, left: 25.0, right: 25.0),
+                  //     child: Column(
+                  //       crossAxisAlignment: CrossAxisAlignment.start,
+                  //       children: [
+                  //         Text(
+                  //           "Valid From",
+                  //           style: TextStyle(
+                  //             fontSize: 14.0,
+                  //             fontFamily: "PoppinsMedium",
+                  //             fontWeight: FontWeight.bold,
+                  //           ),
+                  //         ),
+                  //         Text(
+                  //           getDate(data.validFrom),
+                  //           style: TextStyle(
+                  //             fontSize: 12.0,
+                  //             fontFamily: "PoppinsMedium",
+                  //           ),
+                  //         )
+                  //       ],
+                  //     )
+                  // ),
                   Padding(
                       padding: const EdgeInsets.only(top: 0.0, bottom: 0.0, left: 25.0, right: 25.0),
                       child: Column(

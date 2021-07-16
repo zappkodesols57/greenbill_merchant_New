@@ -46,7 +46,7 @@ class Datum {
   String address;
   String mobileNumber;
   String date;
-  String total;
+  double total;
   String memoUrl;
 
   factory Datum.fromJson(Map<String, dynamic> json) => Datum(

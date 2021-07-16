@@ -33,7 +33,7 @@ class _CouponsDetailsState extends State<CouponsDetails> {
   double _panelHeightClosed;
   bool value = false;
   String storeName;
-  
+
   final Datum data;
   _CouponsDetailsState(this.data);
 
@@ -78,7 +78,7 @@ class _CouponsDetailsState extends State<CouponsDetails> {
           Positioned(
             top: _fabHeight,
             child: Container(
-              height: size.width * 0.5,
+                height: size.width * 0.5,
                 width: size.width * 0.5,
                 child: CardItem(size, data, null)
             ),
@@ -94,11 +94,11 @@ class _CouponsDetailsState extends State<CouponsDetails> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Icon(CupertinoIcons.pencil_ellipsis_rectangle, color: Colors.white,),
+                    Icon(CupertinoIcons.clear, color: Colors.white,),
                     SizedBox(width: 5.0,),
                     Center(
                       child: Text(
-                        "Edit",
+                        "Close",
                         style: TextStyle(
                           fontSize: 12.0,
                           color: Colors.white,
@@ -116,7 +116,7 @@ class _CouponsDetailsState extends State<CouponsDetails> {
                     shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(90)))
                 ),
                 onPressed: () {
-                  editCoupon(data);
+                  Navigator.pop(context, value);
                 },
               ),
               decoration: BoxDecoration(
@@ -165,7 +165,7 @@ class _CouponsDetailsState extends State<CouponsDetails> {
                         width: size.height * 0.1,
                         decoration: BoxDecoration(
                             shape: BoxShape.circle,
-                          color: Colors.black
+                            color: Colors.black
                         ),
                         child: NeuomorphicCircle(
                           innerShadow: false,
@@ -177,9 +177,9 @@ class _CouponsDetailsState extends State<CouponsDetails> {
                         ),
                       ),
                       Text(
-                          storeName.toUpperCase(),
+                        "${storeName}".toUpperCase(),
                         style: TextStyle(
-                            fontSize: 16.0,
+                          fontSize: 16.0,
                           fontFamily: "PoppinsMedium",
                           fontWeight: FontWeight.bold,
                         ),
@@ -187,22 +187,22 @@ class _CouponsDetailsState extends State<CouponsDetails> {
                     ],
                   ),
                   Padding(
-                    padding: const EdgeInsets.only(top: 10.0, bottom: 10.0, left: 25.0, right: 25.0),
-                    child: (data.amountIn == "percentage") ?
-                    Text(
-                      "${data.couponValue} off on\n$storeName",
-                      style: TextStyle(
-                        fontSize: 20.0,
-                        fontFamily: "PoppinsMedium",
-                      ),
-                    ) :
-                    Text(
-                      "₹${data.couponValue} off on\n$storeName",
-                      style: TextStyle(
-                        fontSize: 20.0,
-                        fontFamily: "PoppinsMedium",
-                      ),
-                    )
+                      padding: const EdgeInsets.only(top: 10.0, bottom: 10.0, left: 25.0, right: 25.0),
+                      child: (data.amountIn == "percentage") ?
+                      Text(
+                        "${data.couponValue} off on $storeName",
+                        style: TextStyle(
+                          fontSize: 20.0,
+                          fontFamily: "PoppinsMedium",
+                        ),
+                      ) :
+                      Text(
+                        "₹${data.couponValue} off on $storeName",
+                        style: TextStyle(
+                          fontSize: 20.0,
+                          fontFamily: "PoppinsMedium",
+                        ),
+                      )
                   ),
                   Container(
                     padding: EdgeInsets.only(left: 25.0, right: 25.0),
@@ -275,7 +275,7 @@ class _CouponsDetailsState extends State<CouponsDetails> {
                   Padding(
                       padding: const EdgeInsets.only(top: 10.0, bottom: 0.0, left: 25.0, right: 25.0),
                       child: Text(
-                        "Green Points ${data.greenPoint}",
+                        "Green Points : ${data.greenPoint}",
                         style: TextStyle(
                           fontSize: 14.0,
                           fontFamily: "PoppinsMedium",
@@ -283,29 +283,21 @@ class _CouponsDetailsState extends State<CouponsDetails> {
                         ),
                       )
                   ),
-                  Padding(
-                      padding: const EdgeInsets.only(top: 0.0, bottom: 0.0, left: 25.0, right: 25.0),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            "Valid From",
-                            style: TextStyle(
-                              fontSize: 14.0,
-                              fontFamily: "PoppinsMedium",
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                          Text(
-                            getDate(data.validFrom),
-                            style: TextStyle(
-                              fontSize: 12.0,
-                              fontFamily: "PoppinsMedium",
-                            ),
-                          )
-                        ],
-                      )
-                  ),
+                  // Padding(
+                  //     padding: const EdgeInsets.only(top: 0.0, bottom: 0.0, left: 25.0, right: 25.0),
+                  //     child: Column(
+                  //       crossAxisAlignment: CrossAxisAlignment.start,
+                  //       children: [
+                  //         Text(
+                  //           "Valid From : ${data.validFrom}",
+                  //           style: TextStyle(
+                  //             fontSize: 14.0,
+                  //             fontFamily: "PoppinsMedium",
+                  //           ),
+                  //         ),
+                  //       ],
+                  //     )
+                  // ),
                   Padding(
                       padding: const EdgeInsets.only(top: 0.0, bottom: 0.0, left: 25.0, right: 25.0),
                       child: Column(
