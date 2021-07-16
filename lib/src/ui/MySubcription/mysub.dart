@@ -473,7 +473,7 @@ class RechargeState extends State<Recharge> {
                                                  top: 0.0, bottom: 5.0, left: 5.0, right: 5.0),
                                              width: size.width * 0.4,
                                              child: Text(
-                                               "Validity",
+                                               "Users Up To",
 
                                                style: TextStyle(
                                                    color: Colors.black,
@@ -487,7 +487,7 @@ class RechargeState extends State<Recharge> {
                                                  top: 0.0, bottom: 5.0, left: 5.0, right: 5.0),
                                              width: size.width * 0.4,
                                              child: Text(
-                                               snapshot.data[index].validForMonth+" Months",
+                                               snapshot.data[index].numberOfUsers,
                                                textAlign: TextAlign.center,
                                                style: TextStyle(
                                                    color: kPrimaryColorBlue,
@@ -513,7 +513,7 @@ class RechargeState extends State<Recharge> {
                                                  top: 0.0, bottom: 5.0, left: 5.0, right: 5.0),
                                              width: size.width * 0.4,
                                              child: Text(
-                                               "Amount",
+                                               "Monthly Charges",
 
                                                style: TextStyle(
                                                    color: Colors.black,
@@ -527,7 +527,7 @@ class RechargeState extends State<Recharge> {
                                                  top: 0.0, bottom: 5.0, left: 5.0, right: 5.0),
                                              width: size.width * 0.4,
                                              child: Text(
-                                               "₹ "+snapshot.data[index].rechargeAmount+".00",
+                                               "₹ "+snapshot.data[index].subscriptionPlanCost+".00",
                                                textAlign: TextAlign.center,
                                                style: TextStyle(
                                                    color: kPrimaryColorBlue,
@@ -1240,7 +1240,7 @@ class RechargeState extends State<Recharge> {
                                                    top: 0.0, bottom: 5.0, left: 5.0, right: 5.0),
                                                width: size.width * 0.4,
                                                child: Text(
-                                                 "Amount",
+                                                 "Recharge Amount",
 
                                                  style: TextStyle(
                                                      color: Colors.black,
@@ -1362,7 +1362,7 @@ class RechargeState extends State<Recharge> {
                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
                            children: <Widget>[
                              Text(
-                               "₹ "+data.rechargeAmount+".00",
+                               "₹ "+data.subscriptionPlanCost+".00",
                                textAlign: TextAlign.center,
                                style: TextStyle(
                                    color: Colors.white,
@@ -1407,7 +1407,6 @@ class RechargeState extends State<Recharge> {
                   //width:MediaQuery.of(context).size.width* 0.5,
                   child: Text(
                     "Subscription Name",
-
                     style: TextStyle(
                         color: Colors.black,
                         fontSize: 12.0,
@@ -1486,7 +1485,7 @@ class RechargeState extends State<Recharge> {
                       top: 0.0, bottom: 5.0, left: 5.0, right: 5.0),
                   //width:MediaQuery.of(context).size.width* 0.5,
                   child: Text(
-                    "Per Bill  Cost",
+                    "Per Bill Cost",
 
                     style: TextStyle(
                         color: Colors.black,
@@ -1552,31 +1551,81 @@ class RechargeState extends State<Recharge> {
             ),
           ),
 
-
-
           SizedBox(
-            height: MediaQuery.of(context).size.width * 0.01,
+            height: MediaQuery.of(context).size.width * 0.05,
           ),
-          //Container(
-          //  padding: EdgeInsets.only(
-          //      top: 10.0, bottom: 5.0, left: 5.0, right: 5.0),
-          //  child: Row(
-           //     crossAxisAlignment: CrossAxisAlignment.center,
-           //     mainAxisAlignment: MainAxisAlignment.spaceAround,
-            //    children: <Widget>[
+          Container(
+            //width: MediaQuery.of(context).size.width,
+            padding: EdgeInsets.only(
+                top: 0.0, bottom: 5.0, left: 5.0, right: 5.0),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: <Widget>[
 
-             //     Text("(Software Maintainance Cost :"+"₹ "+
-              //      data.softwareMaintainaceCost.toString()+")",
-              //      style: TextStyle(
-                //        color: Colors.red,
-                //        fontSize: 12.0,
-                  //      fontFamily: "PoppinsBold"),
-                //  ),
+                Container(
+                  padding: EdgeInsets.only(
+                      top: 0.0, bottom: 5.0, left: 5.0, right: 5.0),
+                  //width:MediaQuery.of(context).size.width* 0.5,
+                  child: Text(
+                    "Number Of Users",
 
-              //  ]
-           // ),
+                    style: TextStyle(
+                        color: Colors.red,
+                        fontSize: 12.0),
+                  ),
+                ),
 
-         // ),
+                Container(
+                  padding: EdgeInsets.only(
+                      top: 0.0, bottom: 5.0, left: 5.0, right: 5.0),
+                  // width:MediaQuery.of(context).size.width* 0.5,
+                  child: Text(data.numberOfUsers.toString(),
+                    textAlign: TextAlign.end,
+                    style: TextStyle(
+                        color: Colors.red,
+                        fontSize: 12.0),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          Container(
+            //width: MediaQuery.of(context).size.width,
+            padding: EdgeInsets.only(
+                top: 0.0, bottom: 5.0, left: 5.0, right: 5.0),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: <Widget>[
+
+                Container(
+                  padding: EdgeInsets.only(
+                      top: 0.0, bottom: 5.0, left: 5.0, right: 5.0),
+                  //width:MediaQuery.of(context).size.width* 0.5,
+                  child: Text(
+                    "Cost Per User",
+
+                    style: TextStyle(
+                        color: Colors.red,
+                        fontSize: 12.0),
+                  ),
+                ),
+
+                Container(
+                  padding: EdgeInsets.only(
+                      top: 0.0, bottom: 5.0, left: 5.0, right: 5.0),
+                  // width:MediaQuery.of(context).size.width* 0.5,
+                  child: Text("₹ "+data.costPerUser.toString(),
+                    textAlign: TextAlign.end,
+                    style: TextStyle(
+                        color: Colors.red,
+                        fontSize: 12.0),
+                  ),
+                ),
+              ],
+            ),
+          ),
         ],
       ),
       actions: <Widget>[
