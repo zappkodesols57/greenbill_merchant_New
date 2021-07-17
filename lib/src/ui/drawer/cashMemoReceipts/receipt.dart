@@ -157,6 +157,7 @@ class _ReceiptState extends State<Receipt>{
                             curve: Curves.fastLinearToSlowEaseIn);
                       } else {
                         setState(() => null);
+
                       }
                     });
                     return Scrollbar(
