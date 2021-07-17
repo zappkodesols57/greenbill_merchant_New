@@ -165,6 +165,7 @@ class _ReceiptState extends State<Receipt>{
                       controller: _controller,
                       thickness: 3.0,
                       child: ListView.builder(
+                          padding: const EdgeInsets.only(bottom: kFloatingActionButtonMargin + 48),
                           itemCount: snapshot.data.length,
                           shrinkWrap: true,
                           reverse: false,

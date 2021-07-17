@@ -316,6 +316,7 @@ class subUpdatedState extends State<subUpdated> {
                       controller: _controller,
                       thickness: 3.0,
                       child: ListView.builder(
+                          padding: const EdgeInsets.only(bottom: kFloatingActionButtonMargin + 48),
                           itemCount: snapshot.data.length,
                           shrinkWrap: true,
                           reverse: false,
@@ -658,6 +659,7 @@ class subUpdatedState extends State<subUpdated> {
                         controller: _controller,
                         thickness: 3.0,
                         child: ListView.builder(
+                            padding: const EdgeInsets.only(bottom: kFloatingActionButtonMargin + 48),
                             itemCount: snapshot.data.length,
                             shrinkWrap: true,
                             reverse: false,
@@ -921,6 +923,7 @@ class subUpdatedState extends State<subUpdated> {
                         controller: _controller,
                         thickness: 3.0,
                         child: ListView.builder(
+                            padding: const EdgeInsets.only(bottom: kFloatingActionButtonMargin + 48),
                             itemCount: snapshot.data.length,
                             shrinkWrap: true,
                             reverse: false,

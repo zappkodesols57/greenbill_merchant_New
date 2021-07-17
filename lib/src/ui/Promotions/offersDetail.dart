@@ -47,7 +47,7 @@ class _OffersDetailsState extends State<OffersDetails> {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
-    _panelHeightClosed = size.height * 0.45;
+    _panelHeightClosed = size.height * 0.40;
     _panelHeightOpen = size.height * 0.5;
     return Scaffold(
       key: _scaffoldKey,
@@ -203,27 +203,27 @@ class _OffersDetailsState extends State<OffersDetails> {
                         ),
                       )
                   ),
-                  Padding(
-                      padding: const EdgeInsets.only(top: 20.0, bottom: 5.0, left: 25.0, right: 25.0),
-                      child: Text(
-                        "Details",
-                        style: TextStyle(
-                          fontSize: 13.0,
-                          fontFamily: "PoppinsMedium",
-                            fontWeight: FontWeight.bold
-                        ),
-                      )
-                  ),
-                  Padding(
-                      padding: const EdgeInsets.only(top: 0.0, bottom: 5.0, left: 25.0, right: 25.0),
-                      child: Text(
-                        "Category: ${widget.data.offerBusinessCategory}",
-                        style: TextStyle(
-                          fontSize: 15.0,
-                          fontFamily: "PoppinsMedium",
-                        ),
-                      )
-                  ),
+                  // Padding(
+                  //     padding: const EdgeInsets.only(top: 20.0, bottom: 5.0, left: 25.0, right: 25.0),
+                  //     child: Text(
+                  //       "Details",
+                  //       style: TextStyle(
+                  //         fontSize: 13.0,
+                  //         fontFamily: "PoppinsMedium",
+                  //           fontWeight: FontWeight.bold
+                  //       ),
+                  //     )
+                  // ),
+                  // Padding(
+                  //     padding: const EdgeInsets.only(top: 0.0, bottom: 5.0, left: 25.0, right: 25.0),
+                  //     child: Text(
+                  //       "Caption: ${widget.data.offerCaption}",
+                  //       style: TextStyle(
+                  //         fontSize: 15.0,
+                  //         fontFamily: "PoppinsMedium",
+                  //       ),
+                  //     )
+                  // ),
                   SizedBox(height: 70.0,)
                 ],
               ),

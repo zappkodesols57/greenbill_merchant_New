@@ -344,8 +344,7 @@ class _OffersState extends State<Offers> {
                 child: TextField(
                   maxLength: 15,
                   controller: cnController,
-                  inputFormatters: [new WhitelistingTextInputFormatter(RegExp("[a-z A-Z]")),
-                  LengthLimitingTextInputFormatter(20)],
+                  inputFormatters: [new WhitelistingTextInputFormatter(RegExp("[a-z A-Z]")),],
                   style: TextStyle(
                       fontFamily: "PoppinsLight",
                       fontSize: 17.0,
@@ -385,7 +384,6 @@ class _OffersState extends State<Offers> {
                 child: TextField(
                   maxLength: 20,
                   controller: ccController,
-                  inputFormatters: [LengthLimitingTextInputFormatter(30)],
                   style: TextStyle(
                       fontFamily: "PoppinsLight",
                       fontSize: 17.0,
@@ -520,7 +518,7 @@ class _OffersState extends State<Offers> {
                   ],
                 ),
               ),
-            
+
               SizedBox(
                 height: 10.0,
               ),
@@ -590,60 +588,60 @@ class _OffersState extends State<Offers> {
                 ),
               ),
               if(custom)
-              Container(
-                width: size.width * 0.95,
-                padding: EdgeInsets.only(
-                    top: 10.0, bottom: 10.0, left: 0.0, right: 0.0),
-                child: TextField(
-                  keyboardType: TextInputType.text,
-                  enableInteractiveSelection:
-                  false, // will disable paste operation
-                  focusNode: new AlwaysDisabledFocusNode(),
-                  controller: catController,
-                  onTap: () {
-                    showCategoryDialog(context, size);
-                  },
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontSize: 17,
-                    fontStyle: FontStyle.normal,
-                    fontWeight: FontWeight.w400,
-                  ),
-                  decoration: InputDecoration(
-                    labelText: "Select Category *",
-                    labelStyle: TextStyle(
-                      fontFamily: "PoppinsLight",
-                      fontSize: 13.0,
-                      color: kPrimaryColorBlue,
+                Container(
+                  width: size.width * 0.95,
+                  padding: EdgeInsets.only(
+                      top: 10.0, bottom: 10.0, left: 0.0, right: 0.0),
+                  child: TextField(
+                    keyboardType: TextInputType.text,
+                    enableInteractiveSelection:
+                    false, // will disable paste operation
+                    focusNode: new AlwaysDisabledFocusNode(),
+                    controller: catController,
+                    onTap: () {
+                      showCategoryDialog(context, size);
+                    },
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 17,
+                      fontStyle: FontStyle.normal,
+                      fontWeight: FontWeight.w400,
                     ),
-                    border: new OutlineInputBorder(
-                      borderSide: new BorderSide(
-                          color: Theme.of(context).primaryColor),
-                    ),
-                    counterText: "",
-                    contentPadding: const EdgeInsets.symmetric(
-                        vertical: 13.0, horizontal: 5),
-                    enabledBorder: OutlineInputBorder(
-                      borderSide: BorderSide(
-                          color: kPrimaryColorBlue, width: 0.5),
-                      borderRadius: const BorderRadius.all(
-                          Radius.circular(35.0)),
-                    ),
-                    focusedBorder: new OutlineInputBorder(
-                      borderSide: BorderSide(
-                          color: kPrimaryColorBlue, width: 0.5),
-                      borderRadius: const BorderRadius.all(
-                          Radius.circular(35.0)),
-                    ),
+                    decoration: InputDecoration(
+                      labelText: "Select Category *",
+                      labelStyle: TextStyle(
+                        fontFamily: "PoppinsLight",
+                        fontSize: 13.0,
+                        color: kPrimaryColorBlue,
+                      ),
+                      border: new OutlineInputBorder(
+                        borderSide: new BorderSide(
+                            color: Theme.of(context).primaryColor),
+                      ),
+                      counterText: "",
+                      contentPadding: const EdgeInsets.symmetric(
+                          vertical: 13.0, horizontal: 5),
+                      enabledBorder: OutlineInputBorder(
+                        borderSide: BorderSide(
+                            color: kPrimaryColorBlue, width: 0.5),
+                        borderRadius: const BorderRadius.all(
+                            Radius.circular(35.0)),
+                      ),
+                      focusedBorder: new OutlineInputBorder(
+                        borderSide: BorderSide(
+                            color: kPrimaryColorBlue, width: 0.5),
+                        borderRadius: const BorderRadius.all(
+                            Radius.circular(35.0)),
+                      ),
 
-                    prefixIcon: Icon(
-                      FontAwesomeIcons.list,
-                      color: kPrimaryColorBlue,
-                      size: 20.0,
+                      prefixIcon: Icon(
+                        FontAwesomeIcons.list,
+                        color: kPrimaryColorBlue,
+                        size: 20.0,
+                      ),
                     ),
                   ),
                 ),
-              ),
               //Text('$radioItem', style: TextStyle(fontSize: 23),)
             ],
           ),
@@ -661,40 +659,40 @@ class _OffersState extends State<Offers> {
 
   Future<Null> _cropImage(File picture) async {
     File croppedFile = await ImageCropper.cropImage(
-      sourcePath: picture.path,
-      compressQuality: 50,
-      aspectRatioPresets: Platform.isAndroid
-          ? [
+        sourcePath: picture.path,
+        compressQuality: 50,
+        aspectRatioPresets: Platform.isAndroid
+        ? [
         CropAspectRatioPreset.square,
         CropAspectRatioPreset.ratio3x2,
         CropAspectRatioPreset.original,
         CropAspectRatioPreset.ratio4x3,
         CropAspectRatioPreset.ratio16x9,
-      ]
-          : [
+        ]
+            : [
         CropAspectRatioPreset.square,
         CropAspectRatioPreset.ratio3x2,
         CropAspectRatioPreset.ratio4x3,
         CropAspectRatioPreset.ratio5x3,
         CropAspectRatioPreset.ratio5x4,
-        CropAspectRatioPreset.ratio7x5,
-        CropAspectRatioPreset.ratio16x9
-      ],
-      androidUiSettings: AndroidUiSettings(
-          toolbarTitle: 'Crop',
-          toolbarColor: kPrimaryColorBlue,
-          toolbarWidgetColor: Colors.white,
-          activeControlsWidgetColor: kPrimaryColorGreen,
-          initAspectRatio: CropAspectRatioPreset.square,
-          lockAspectRatio: false),
+    CropAspectRatioPreset.ratio7x5,
+    CropAspectRatioPreset.ratio16x9
+    ],
+    androidUiSettings: AndroidUiSettings(
+    toolbarTitle: 'Crop',
+    toolbarColor: kPrimaryColorBlue,
+    toolbarWidgetColor: Colors.white,
+    activeControlsWidgetColor: kPrimaryColorGreen,
+    initAspectRatio: CropAspectRatioPreset.square,
+        lockAspectRatio: false),
     );
     if (croppedFile != null) {
-      setState(() {
-        _imageFile = croppedFile;
-        _isFileAvailable = true;
-      });
-      // await Future.delayed(Duration(milliseconds: 1000), null);
-      // showInSnackBar("Tap on Cancel button to select another picture", 5);
+    setState(() {
+    _imageFile = croppedFile;
+    _isFileAvailable = true;
+    });
+    // await Future.delayed(Duration(milliseconds: 1000), null);
+    // showInSnackBar("Tap on Cancel button to select another picture", 5);
     }
   }
 

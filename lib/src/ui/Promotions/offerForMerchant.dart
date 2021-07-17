@@ -140,7 +140,6 @@ class _MyOfferListState extends State<MyOfferList> {
             if (snapshot.connectionState == ConnectionState.waiting)
               return Center(child: CircularProgressIndicator(valueColor:AlwaysStoppedAnimation<Color>(kPrimaryColorBlue),));
             else if (snapshot.hasError) {
-              print(snapshot.error);
               return Center(
                 child: Text("No Offer Created"),
               );
@@ -162,6 +161,7 @@ class _MyOfferListState extends State<MyOfferList> {
                   controller: _controller,
                   thickness: 3.0,
                   child: ListView.builder(
+                      padding: const EdgeInsets.only(bottom: kFloatingActionButtonMargin + 48),
                       itemCount: snapshot.data.length,
                       shrinkWrap: true,
                       reverse: false,
@@ -176,7 +176,7 @@ class _MyOfferListState extends State<MyOfferList> {
                                 dense: true,
                                 title: Text(
                                     "Audience : "+snapshot.data[index].offerType.toString(),
-                                    style: TextStyle(fontSize: 15.0, fontFamily: "PoppinsMedium", fontWeight: FontWeight.bold)
+                                    style: TextStyle(fontSize: 13.0, fontFamily: "PoppinsMedium", fontWeight: FontWeight.bold)
                                 ),
                                 subtitle: Text((snapshot.data[index].status=="0")?'Status : Waiting For Approval \nValid Till : ${snapshot.data[index].validThrough}':'Status :Approved \nValid Till : ${snapshot.data[index].validThrough}',
                                     style: TextStyle(fontSize: 10.0)) ,

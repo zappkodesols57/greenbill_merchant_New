@@ -158,6 +158,7 @@ class _CouponsListState extends State<CouponsList> {
                   controller: _controller,
                   thickness: 3.0,
                   child: ListView.builder(
+                      padding: const EdgeInsets.only(bottom: kFloatingActionButtonMargin + 58),
                       itemCount: snapshot.data.length,
                       shrinkWrap: true,
                       reverse: false,
