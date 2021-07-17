@@ -508,6 +508,7 @@ class DmEnquiryState extends State<DmEnquiry> {
       showInSnackBar("Please enter Comments");
       return null;
     }
+    print(_items);
 
     _showLoaderDialog(context);
     final param = {
@@ -539,6 +540,7 @@ class DmEnquiryState extends State<DmEnquiry> {
         print(data.message);
         nameController.clear();
         mobController.clear();
+        _items.clear();
         emailController.clear();
         _chosenName = null;
         _chosenValue = null;

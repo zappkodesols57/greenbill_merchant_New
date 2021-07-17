@@ -59,7 +59,7 @@ class CashMemoListState extends State<CashMemoList> {
     print(res.statusCode);
     if (200 == res.statusCode) {
       print(cashMemoFromJson(res.body).data.length);
-      return cashMemoFromJson(res.body).data.where((element) => element.name.toLowerCase().contains(query.text) ||
+      return cashMemoFromJson(res.body).data.where((element) => element.mobileNumber.toLowerCase().contains(query.text) ||
           element.total.toLowerCase().contains(query.text)).toList();
 
     } else {
@@ -72,7 +72,16 @@ class CashMemoListState extends State<CashMemoList> {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
         key: _scaffoldKey,
-        backgroundColor: Colors.white,
+      backgroundColor: Colors.white,
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          Navigator.push(context, MaterialPageRoute(builder: (context) => CreateMemo()))
+              .then((value) => (value??false) ? showInSnackBar("Created Successfully") : null);
+        },
+        child: const Icon(Icons.add),
+        backgroundColor: kPrimaryColorBlue,
+      ),
+
 
         body: Column(
           children: [
@@ -130,7 +139,7 @@ class CashMemoListState extends State<CashMemoList> {
               ),
 
             ),
-            Flexible(
+            Expanded(
               child: FutureBuilder<List<Datum>>(
                 future: getPassLists(),
                 builder: (BuildContext context, AsyncSnapshot<List<Datum>> snapshot) {
@@ -225,9 +234,9 @@ class CashMemoListState extends State<CashMemoList> {
                                               },
                                             ),
                                             Container(
-                                                width: 50.0,
+                                                width: 80.0,
                                                 child: Text(
-                                                    "₹ ${snapshot.data[index].total}",
+                                                    "₹ ${snapshot.data[index].total+".00"}",
                                                     style: TextStyle(
                                                         fontWeight:
                                                         FontWeight.bold))),
@@ -255,13 +264,7 @@ class CashMemoListState extends State<CashMemoList> {
             )
           ],
         ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          Navigator.push(context, MaterialPageRoute(builder: (context) => CreateMemo()));
-        },
-        child: const Icon(Icons.add),
-        backgroundColor: kPrimaryColorBlue,
-      ),
+
     );
   }
 

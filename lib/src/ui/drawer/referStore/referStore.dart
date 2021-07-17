@@ -58,7 +58,7 @@ class _ReferralPageState extends State<ReferralPage> {
 
   void share(BuildContext context) {
     String text = "Hi,\nHere's my Green Bill Business Referral Code $codeResponse\nClick on the link below and go Paper Less\n"
-        "http://157.230.228.250/merchant-index/";
+        "https://www.greenbill.in/";
     Share.share(text);
   }
 

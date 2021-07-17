@@ -152,8 +152,10 @@ class _CouponsState extends State<Coupons> {
             children: [
               Container(
                 width: size.width * 0.95,
+
                 padding: EdgeInsets.only(top: 10.0, bottom: 10.0, left: 0.0, right: 0.0),
                 child: TextField(
+                  maxLength: 15,
                   controller: cnController,
                   inputFormatters: [new WhitelistingTextInputFormatter(RegExp("[a-z A-Z]")),],
                   style: TextStyle(
@@ -194,6 +196,7 @@ class _CouponsState extends State<Coupons> {
                 padding: EdgeInsets.only(top: 0.0, bottom: 10.0, left: 0.0, right: 0.0),
                 child: TextField(
                   controller: ccController,
+                  maxLength: 8,
                   style: TextStyle(
                       fontFamily: "PoppinsLight",
                       fontSize: 17.0,
@@ -433,6 +436,7 @@ class _CouponsState extends State<Coupons> {
                 width: size.width * 0.95,
                 padding: EdgeInsets.only(top: 10.0, bottom: 0.0, left: 0.0, right: 0.0),
                 child: TextField(
+                  maxLength: 20,
                   controller: captionController,
                   style: TextStyle(
                       fontFamily: "PoppinsLight",
@@ -536,6 +540,7 @@ class _CouponsState extends State<Coupons> {
                   width: size.width * 0.95,
                   padding: EdgeInsets.only(top: 10.0, bottom: 10.0, left: 0.0, right: 0.0),
                   child: TextField(
+                    maxLength: 3,
                     controller: perController,
                     keyboardType: TextInputType.number,
                     inputFormatters: <TextInputFormatter>[
@@ -583,6 +588,7 @@ class _CouponsState extends State<Coupons> {
                   width: size.width * 0.95,
                   padding: EdgeInsets.only(top: 10.0, bottom: 10.0, left: 0.0, right: 0.0),
                   child: TextField(
+                    maxLength: 8,
                     controller: amtController,
                     keyboardType: TextInputType.number,
                     inputFormatters: <TextInputFormatter>[
@@ -629,6 +635,7 @@ class _CouponsState extends State<Coupons> {
                 width: size.width * 0.95,
                 padding: EdgeInsets.only(top: 0.0, bottom: 10.0, left: 0.0, right: 0.0),
                 child: TextField(
+                  maxLength: 5,
                   controller: quantityController,
                   keyboardType: TextInputType.number,
                   inputFormatters: <TextInputFormatter>[

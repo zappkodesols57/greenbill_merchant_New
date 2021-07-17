@@ -223,7 +223,7 @@ class _ShareAWordState extends State<ShareAWord> {
       showInSnackBar("Please enter Message");
       return null;
     }
-    Share.share("${wordController.text}\nHey,\n\nI have found this amazing App where you can Manage all your bills, receipts and track all of your expenses for free. Also you can avail various exciting offers, discounts near by.\n\nDownload it now :\nPlay store :link\nIos: link\nWebsite :link");
+    Share.share("\nHey,\n\nI have found this amazing App where you can send Bills, Cash memo, Receipts digitally and also track your business analytics at lower cost. Also you can  engage with your customers and earn money with GreenBill .\n\nDownload GreenBill Merchant App :\nAndroid :link\nios: link\nWebsite :https://www.greenbill.in");
 
   }
 }

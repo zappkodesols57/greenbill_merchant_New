@@ -60,7 +60,7 @@ class _ReceiptState extends State<Receipt>{
     if(200 == res.statusCode){
       print(receiptListFromJson(res.body).data.length);
       return receiptListFromJson(res.body).data.where((element) =>
-          element.mobileNumber.toLowerCase().toString().contains(query.text.toLowerCase().toString())).toList();
+          element.mobileNumber.toLowerCase().toString().contains(query.text.toLowerCase().toString())|| element.total.toString().contains(query.text.toLowerCase().toString()) ).toList();
     } else{
       throw Exception('Failed to load List');
     }
@@ -205,9 +205,9 @@ class _ReceiptState extends State<Receipt>{
                                         },
                                       ),
                                       Container(
-                                          width: 70.0,
+                                          width: 80.0,
                                           child: Text(
-                                              "₹ ${snapshot.data[index].grandTotal}",
+                                              "₹ ${snapshot.data[index].total.toString()+".00"}",
                                               style: TextStyle(fontWeight: FontWeight.bold))),
                                     ],
                                   ),
