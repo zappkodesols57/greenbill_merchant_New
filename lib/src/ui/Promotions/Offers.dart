@@ -44,6 +44,7 @@ class _OffersState extends State<Offers> {
   bool _isFileAvailable, _isFilePdf;
   String token, id, mob, storeID;
   File image;
+  bool custom=false;
   bool  couponType = true, amountType = true;
 
 
@@ -341,6 +342,7 @@ class _OffersState extends State<Offers> {
                 width: size.width * 0.95,
                 padding: EdgeInsets.only(top: 10.0, bottom: 10.0, left: 0.0, right: 0.0),
                 child: TextField(
+                  maxLength: 15,
                   controller: cnController,
                   inputFormatters: [new WhitelistingTextInputFormatter(RegExp("[a-z A-Z]")),
                   LengthLimitingTextInputFormatter(20)],
@@ -381,6 +383,7 @@ class _OffersState extends State<Offers> {
                 width: size.width * 0.95,
                 padding: EdgeInsets.only(top: 0.0, bottom: 10.0, left: 0.0, right: 0.0),
                 child: TextField(
+                  maxLength: 20,
                   controller: ccController,
                   inputFormatters: [LengthLimitingTextInputFormatter(30)],
                   style: TextStyle(
@@ -517,6 +520,76 @@ class _OffersState extends State<Offers> {
                   ],
                 ),
               ),
+            
+              SizedBox(
+                height: 10.0,
+              ),
+              Container(
+                width: size.width,
+                padding: EdgeInsets.only(left: 20.0),
+                child: RichText(
+                  text: TextSpan(
+                      text: 'Select Audience',
+                      style: TextStyle(
+                        fontFamily: "PoppinsLight",
+                        fontSize: 13.0,
+                        color: kPrimaryColorBlue,
+                        fontWeight: FontWeight.bold,
+                      ),
+                      children: <TextSpan>[
+                        TextSpan(
+                          text: '*',
+                          style: TextStyle(
+                            color: kPrimaryColorBlue,
+                            fontStyle: FontStyle.normal,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                      ]),
+                ),
+              ),
+              Container(
+                width: size.width * 0.95,
+                padding: EdgeInsets.only(
+                    top: 0.0, bottom: 10.0, left: 0.0, right: 0.0),
+                child: Row(
+                  children: <Widget>[
+                    Container(
+                      width: size.width * 0.45,
+                      child: RadioListTile(
+                        groupValue: radioItem,
+                        title: Text('Merchant',style: TextStyle(
+                            fontFamily: "PoppinsLight", fontSize: 15.0, color: kPrimaryColorBlue),),
+
+                        value: 'Merchant',
+                        onChanged: (val) {
+                          setState(() {
+                            radioItem = val;
+                            custom=true;
+
+                          });
+                        },
+                      ),
+                    ),
+                    Container(
+                      width: size.width * 0.45,
+                      child:RadioListTile(
+                        groupValue: radioItem,
+                        title: Text('Customer',style: TextStyle(
+                            fontFamily: "PoppinsLight", fontSize: 15.0, color: kPrimaryColorBlue),),
+                        value: 'Customer',
+                        onChanged: (val) {
+                          setState(() {
+                            custom=false;
+                            radioItem = val;
+                          });
+                        },
+                      ),
+                    )
+                  ],
+                ),
+              ),
+              if(custom)
               Container(
                 width: size.width * 0.95,
                 padding: EdgeInsets.only(
@@ -569,73 +642,6 @@ class _OffersState extends State<Offers> {
                       size: 20.0,
                     ),
                   ),
-                ),
-              ),
-              SizedBox(
-                height: 10.0,
-              ),
-              Container(
-                width: size.width,
-                padding: EdgeInsets.only(left: 20.0),
-                child: RichText(
-                  text: TextSpan(
-                      text: 'Select Audience',
-                      style: TextStyle(
-                        fontFamily: "PoppinsLight",
-                        fontSize: 13.0,
-                        color: kPrimaryColorBlue,
-                        fontWeight: FontWeight.bold,
-                      ),
-                      children: <TextSpan>[
-                        TextSpan(
-                          text: '*',
-                          style: TextStyle(
-                            color: kPrimaryColorBlue,
-                            fontStyle: FontStyle.normal,
-                            fontWeight: FontWeight.w600,
-                          ),
-                        ),
-                      ]),
-                ),
-              ),
-              Container(
-                width: size.width * 0.95,
-                padding: EdgeInsets.only(
-                    top: 0.0, bottom: 10.0, left: 0.0, right: 0.0),
-                child: Row(
-                  children: <Widget>[
-                    Container(
-                      width: size.width * 0.45,
-                      child: RadioListTile(
-                        groupValue: radioItem,
-                        title: Text('Merchant',style: TextStyle(
-                            fontFamily: "PoppinsLight", fontSize: 15.0, color: kPrimaryColorBlue),),
-
-                        value: 'Merchant',
-                        onChanged: (val) {
-                          setState(() {
-                            radioItem = val;
-
-
-                          });
-                        },
-                      ),
-                    ),
-                    Container(
-                      width: size.width * 0.45,
-                      child:RadioListTile(
-                        groupValue: radioItem,
-                        title: Text('Customer',style: TextStyle(
-                            fontFamily: "PoppinsLight", fontSize: 15.0, color: kPrimaryColorBlue),),
-                        value: 'Customer',
-                        onChanged: (val) {
-                          setState(() {
-                            radioItem = val;
-                          });
-                        },
-                      ),
-                    )
-                  ],
                 ),
               ),
               //Text('$radioItem', style: TextStyle(fontSize: 23),)
@@ -872,14 +878,17 @@ class _OffersState extends State<Offers> {
       showInSnackBar("Please select To Date");
       return null;
     }
-    if(catController.text.isEmpty){
-      showInSnackBar("Please select Category");
-      return null;
-    }
     if (radioItem.isEmpty) {
       showInSnackBar("Please select Audience");
       return null;
     }
+    if(custom){
+      if(catController.text.isEmpty) {
+        showInSnackBar("Please select Category");
+        return null;
+      }
+    }
+
 
     _showLoaderDialog(context);
     final SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -909,7 +918,7 @@ class _OffersState extends State<Offers> {
     request.fields['user'] = '$radioItem';
     request.fields['valid_from'] = fDateController.text;
     request.fields['valid_through'] = tDateController.text;
-    request.fields['offer_business_category'] = catController.text;
+    request.fields['offer_business_category'] = custom? catController.text:"";
     request.headers.addAll(headers);
 
 
