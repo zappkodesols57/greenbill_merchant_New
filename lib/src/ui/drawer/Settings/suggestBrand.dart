@@ -109,6 +109,7 @@ class _SuggestABrandState extends State<SuggestABrand> {
                   width: size.width * 0.95,
                   padding: EdgeInsets.only(left: 0.0, right: 0.0, bottom: 10.0, top: 20.0),
                   child: new TextField(
+                    maxLength: 20,
                     focusNode: myFocusNodeName,
                     controller: nameController,
                     style: TextStyle(

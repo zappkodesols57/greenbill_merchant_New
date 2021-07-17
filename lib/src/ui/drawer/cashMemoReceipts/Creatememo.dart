@@ -38,13 +38,43 @@ class _CreateReceiptsState extends State<CreateMemo> {
   TextEditingController newAmount = new TextEditingController();
   TextEditingController newQuantity = new TextEditingController();
 
+  TextEditingController newDisc2 = new TextEditingController();
+  TextEditingController newRate2 = new TextEditingController();
+  TextEditingController newQuantity2 = new TextEditingController();
+
+
+  TextEditingController newDisc3 = new TextEditingController();
+  TextEditingController newRate3 = new TextEditingController();
+  TextEditingController newQuantity3 = new TextEditingController();
+
+  TextEditingController term1 = new TextEditingController();
+  TextEditingController term2 = new TextEditingController();
+  TextEditingController term3 = new TextEditingController();
+
   String dropdownValue = "Select Cash Memo Template";
   String template = "", templateID;
   String token, id, mob, storeID;
-  bool addItem=true;
-  bool showButton=true;
+
+  bool showButton=false;
   //bool showButton=false;
-  bool removeButton=true;
+
+  bool removeButton1=false;
+  bool removeButton2=false;
+  bool removeButton3=false;
+  bool removeButton4=false;
+  bool showButton2=false;
+  bool showButton3=false;
+  bool showButton4=false;
+  bool addItem1=false;
+  bool addItem2=false;
+  bool addItem3=false;
+  bool addItem4=false;
+
+  List<String> discAll = [];
+  List<String> rateAll = [];
+  List<String> quanAll = [];
+
+
 
 
   @override
@@ -86,7 +116,7 @@ class _CreateReceiptsState extends State<CreateMemo> {
     showDatePicker(
       context: context,
       initialDate: DateTime.now(),
-      firstDate: DateTime(1950, 1),
+      firstDate: DateTime.now(),
       lastDate: DateTime.now(),
     ).then((pickedDate) {
       dateController.text = DateFormat('dd-MM-yyyy').format(pickedDate);
@@ -167,6 +197,7 @@ class _CreateReceiptsState extends State<CreateMemo> {
                 child: TextField(
                   controller: crfController,
                   inputFormatters: [new WhitelistingTextInputFormatter(RegExp("[a-z A-Z]")),],
+                  maxLength: 25,
                   style: TextStyle(
                       fontFamily: "PoppinsLight",
                       fontSize: 17.0,
@@ -206,6 +237,7 @@ class _CreateReceiptsState extends State<CreateMemo> {
                 child: TextField(
                   controller: addressController,
                   keyboardType: TextInputType.text,
+                  maxLength: 20,
 
                   style: TextStyle(
                       fontFamily: "PoppinsLight",
@@ -240,557 +272,6 @@ class _CreateReceiptsState extends State<CreateMemo> {
                   ),
                 ),
               ),
-              Container(
-                width: size.width * 0.95,
-                padding: EdgeInsets.only(top: 0.0, bottom: 10.0, left: 0.0, right: 0.0),
-                child: TextField(
-                  controller: rsController,
-                  keyboardType: TextInputType.phone,
-                  inputFormatters: <TextInputFormatter>[
-                    FilteringTextInputFormatter.digitsOnly
-                  ],
-                  style: TextStyle(
-                      fontFamily: "PoppinsLight",
-                      fontSize: 17.0,
-                      color: Colors.black87),
-                  decoration: InputDecoration(
-                    border: InputBorder.none,
-                    counterStyle: TextStyle(height: double.minPositive,),
-                    counterText: "",
-                    contentPadding: const EdgeInsets.symmetric(vertical: 0.0),
-                    enabledBorder: OutlineInputBorder(
-                      borderSide: BorderSide(
-                          color: kPrimaryColorBlue,
-                          width: 0.5
-                      ),
-                      borderRadius: const BorderRadius.all(Radius.circular(35.0)),
-                    ),
-                    focusedBorder: new OutlineInputBorder(
-                      borderSide: BorderSide(
-                          color: kPrimaryColorBlue,
-                          width: 0.5),
-                      borderRadius: const BorderRadius.all(Radius.circular(35.0)),
-                    ),
-                    prefixIcon: Icon(
-                      Icons.attach_money,
-                      color: kPrimaryColorBlue,
-                      size: 23.0,
-                    ),
-                    labelText: "Total Amount *",
-                    labelStyle: TextStyle(
-                        fontFamily: "PoppinsLight", fontSize: 13.0, color: kPrimaryColorBlue),
-                  ),
-                ),
-              ),
-              Container(
-                width: size.width * 0.95,
-                padding: EdgeInsets.only(top: 0.0, bottom: 10.0, left: 0.0, right: 0.0),
-                child: TextField(
-                  controller: totalInWordController,
-                  inputFormatters: [new WhitelistingTextInputFormatter(RegExp("[a-z A-Z]")),],
-                  style: TextStyle(
-                      fontFamily: "PoppinsLight",
-                      fontSize: 17.0,
-                      color: Colors.black87),
-                  decoration: InputDecoration(
-                    border: InputBorder.none,
-                    counterStyle: TextStyle(height: double.minPositive,),
-                    counterText: "",
-                    contentPadding: const EdgeInsets.symmetric(vertical: 0.0),
-                    enabledBorder: OutlineInputBorder(
-                      borderSide: BorderSide(
-                          color: kPrimaryColorBlue,
-                          width: 0.5
-                      ),
-                      borderRadius: const BorderRadius.all(Radius.circular(35.0)),
-                    ),
-                    focusedBorder: new OutlineInputBorder(
-                      borderSide: BorderSide(
-                          color: kPrimaryColorBlue,
-                          width: 0.5),
-                      borderRadius: const BorderRadius.all(Radius.circular(35.0)),
-                    ),
-                    prefixIcon: Icon(
-                      CupertinoIcons.textformat,
-                      color: kPrimaryColorBlue,
-                      size: 23.0,
-                    ),
-                    labelText: "Total in Words*",
-                    labelStyle: TextStyle(
-                        fontFamily: "PoppinsLight", fontSize: 13.0, color: kPrimaryColorBlue),
-                  ),
-                ),
-              ),
-              Container(
-                  width: size.width,
-                  padding: EdgeInsets.only(
-                      top: 0.0, bottom: 10.0, left: 0.0, right: 0.0),
-                  child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-
-                        Container(
-                          padding: EdgeInsets.only(top: 0.0, bottom: 0.0, left: 10.0, right: 10.0),
-                          width: size.width * 0.5,
-                          child: TextField(
-                            controller: amtForController,
-                            inputFormatters: [new WhitelistingTextInputFormatter(RegExp("[a-z A-Z]")),],
-                            style: TextStyle(
-                                fontFamily: "PoppinsLight",
-                                fontSize: 17.0,
-                                color: Colors.black87),
-                            decoration: InputDecoration(
-                              border: InputBorder.none,
-                              counterStyle: TextStyle(height: double.minPositive,),
-                              counterText: "",
-                              contentPadding: const EdgeInsets.symmetric(vertical: 0.0),
-                              enabledBorder: OutlineInputBorder(
-                                borderSide: BorderSide(
-                                    color: kPrimaryColorBlue,
-                                    width: 0.5
-                                ),
-                                borderRadius: const BorderRadius.all(Radius.circular(35.0)),
-                              ),
-                              focusedBorder: new OutlineInputBorder(
-                                borderSide: BorderSide(
-                                    color: kPrimaryColorBlue,
-                                    width: 0.5),
-                                borderRadius: const BorderRadius.all(Radius.circular(35.0)),
-                              ),
-                              prefixIcon: Icon(
-                                CupertinoIcons.bubble_left,
-                                color: kPrimaryColorBlue,
-                                size: 23.0,
-                              ),
-                              labelText: "Description Of Item*",
-                              labelStyle: TextStyle(
-                                  fontFamily: "PoppinsLight", fontSize: 13.0, color: kPrimaryColorBlue),
-                            ),
-                          ),
-                        ),
-                        Container(
-                          padding: EdgeInsets.only(top: 0.0, bottom: 0.0, left: 10.0, right: 10.0),
-                          width: size.width * 0.5,
-                          child: TextField(
-                            controller: totalController,
-                            keyboardType: TextInputType.phone,
-                            inputFormatters: <TextInputFormatter>[
-                              FilteringTextInputFormatter.digitsOnly
-                            ],
-                            style: TextStyle(
-                                fontFamily: "PoppinsLight",
-                                fontSize: 17.0,
-                                color: Colors.black87),
-                            decoration: InputDecoration(
-                              border: InputBorder.none,
-                              counterStyle: TextStyle(height: double.minPositive,),
-                              counterText: "",
-                              contentPadding: const EdgeInsets.symmetric(vertical: 0.0),
-                              enabledBorder: OutlineInputBorder(
-                                borderSide: BorderSide(
-                                    color: kPrimaryColorBlue,
-                                    width: 0.5
-                                ),
-                                borderRadius: const BorderRadius.all(Radius.circular(35.0)),
-                              ),
-                              focusedBorder: new OutlineInputBorder(
-                                borderSide: BorderSide(
-                                    color: kPrimaryColorBlue,
-                                    width: 0.5),
-                                borderRadius: const BorderRadius.all(Radius.circular(35.0)),
-                              ),
-                              prefixIcon: Icon(
-                                CupertinoIcons.doc_append,
-                                color: kPrimaryColorBlue,
-                                size: 23.0,
-                              ),
-                              labelText: "Rate *",
-                              labelStyle: TextStyle(
-                                  fontFamily: "PoppinsLight", fontSize: 13.0, color: kPrimaryColorBlue),
-                            ),
-                          ),
-                        ),
-
-                      ],
-                  ),
-
-              ),
-              Container(
-
-                  width: size.width,
-                  padding: EdgeInsets.only(
-                      top: 0.0, bottom: 10.0, left: 0.0, right: 0.0),
-                  child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        Container(
-                          padding: EdgeInsets.only(top: 0.0, bottom: 0.0, left: 10.0, right: 10.0),
-                          width: size.width * 0.5,
-                          child: TextField(
-                            controller: gtController,
-                            keyboardType: TextInputType.phone,
-                            inputFormatters: <TextInputFormatter>[
-                              FilteringTextInputFormatter.digitsOnly
-                            ],
-                            style: TextStyle(
-                                fontFamily: "PoppinsLight",
-                                fontSize: 17.0,
-                                color: Colors.black87),
-                            decoration: InputDecoration(
-                              border: InputBorder.none,
-                              counterStyle: TextStyle(height: double.minPositive,),
-                              counterText: "",
-                              contentPadding: const EdgeInsets.symmetric(vertical: 0.0),
-                              enabledBorder: OutlineInputBorder(
-                                borderSide: BorderSide(
-                                    color: kPrimaryColorBlue,
-                                    width: 0.5
-                                ),
-                                borderRadius: const BorderRadius.all(Radius.circular(35.0)),
-                              ),
-                              focusedBorder: new OutlineInputBorder(
-                                borderSide: BorderSide(
-                                    color: kPrimaryColorBlue,
-                                    width: 0.5),
-                                borderRadius: const BorderRadius.all(Radius.circular(35.0)),
-                              ),
-                              prefixIcon: Icon(
-                                CupertinoIcons.doc_richtext,
-                                color: kPrimaryColorBlue,
-                                size: 23.0,
-                              ),
-                              labelText: "Amount*",
-                              labelStyle: TextStyle(
-                                  fontFamily: "PoppinsLight", fontSize: 13.0, color: kPrimaryColorBlue),
-                            ),
-                          ),
-                        ),
-                        Container(
-                          padding: EdgeInsets.only(top: 0.0, bottom: 0.0, left: 10.0, right: 10.0),
-                          width: size.width * 0.5,
-                          child: TextField(
-                            controller: quantityController,
-                            keyboardType: TextInputType.phone,
-                            inputFormatters: <TextInputFormatter>[
-                              FilteringTextInputFormatter.digitsOnly
-                            ],
-                            style: TextStyle(
-                                fontFamily: "PoppinsLight",
-                                fontSize: 17.0,
-                                color: Colors.black87),
-                            decoration: InputDecoration(
-                              border: InputBorder.none,
-                              counterStyle: TextStyle(height: double.minPositive,),
-                              counterText: "",
-                              contentPadding: const EdgeInsets.symmetric(vertical: 0.0),
-                              enabledBorder: OutlineInputBorder(
-                                borderSide: BorderSide(
-                                    color: kPrimaryColorBlue,
-                                    width: 0.5
-                                ),
-                                borderRadius: const BorderRadius.all(Radius.circular(35.0)),
-                              ),
-                              focusedBorder: new OutlineInputBorder(
-                                borderSide: BorderSide(
-                                    color: kPrimaryColorBlue,
-                                    width: 0.5),
-                                borderRadius: const BorderRadius.all(Radius.circular(35.0)),
-                              ),
-                              prefixIcon: Icon(
-                                Icons.show_chart_sharp,
-                                color: kPrimaryColorBlue,
-                                size: 23.0,
-                              ),
-                              labelText: "Quantity*",
-                              labelStyle: TextStyle(
-                                  fontFamily: "PoppinsLight", fontSize: 13.0, color: kPrimaryColorBlue),
-                            ),
-                          ),
-                        ),
-                      ],
-                  ),
-
-              ),
-
-
-
-
-              if(!showButton)
-
-              Container(
-                height: 50.0,
-                width: size.width ,
-                margin: EdgeInsets.only(top: 0.0, bottom: 0.0, left: 0.0, right: 10.0),
-                alignment: Alignment.bottomRight,
-
-
-
-                child: ElevatedButton(
-
-                  child: Text(
-                    "Add Item",
-
-
-                    style: TextStyle(
-                        fontFamily: "PoppinsMedium",
-                        fontWeight: FontWeight.bold,
-                        color: addItem ? Colors.black : Colors.white
-                    ),
-
-
-                  ),
-                  style: ElevatedButton.styleFrom(
-                      elevation: addItem ? 0.0 : 3.0,
-                      primary: addItem ? Colors.grey[300] : kPrimaryColorBlue,
-                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(90)))),
-
-                  onPressed: () {
-                    setState(() {
-                      addItem = false;
-                      removeButton=false;
-                      showButton=true;
-                    });
-                  },
-
-                ),
-              ),
-              if(!removeButton)
-
-              Container(
-                height: 50.0,
-                width: size.width ,
-                margin: EdgeInsets.only(top: 0.0, bottom: 0.0, left: 0.0, right: 10.0),
-                alignment: Alignment.bottomRight,
-
-
-
-                child: ElevatedButton(
-
-                  child: Text(
-                    "Remove Item",
-
-
-                    style: TextStyle(
-                        fontFamily: "PoppinsMedium",
-                        fontWeight: FontWeight.bold,
-                        color: addItem ? Colors.black : Colors.white
-                    ),
-
-
-                  ),
-                  style: ElevatedButton.styleFrom(
-                      elevation: addItem ? 0.0 : 3.0,
-                      primary: addItem ? Colors.grey[300] : kPrimaryColorBlue,
-                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(90)))),
-
-                  onPressed: () {
-                    setState(() {
-                      removeButton=true;
-                      showButton=false;
-                      addItem = true;
-                    });
-                  },
-
-                ),
-              ),
-
-              if(!addItem)
-                Container(
-                  width: size.width,
-                  padding: EdgeInsets.only(
-                      top: 0.0, bottom: 10.0, left: 0.0, right: 0.0),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        Container(
-                          width: size.width * 0.5,
-                          padding: EdgeInsets.only(top: 0.0, bottom: 0.0, left: 10.0, right: 0.0),
-                          child: TextField(
-
-                            controller: newDisc,
-                            keyboardType: TextInputType.text,
-                            style: TextStyle(
-                                fontFamily: "PoppinsLight",
-                                fontSize: 13.0,
-                                color: kPrimaryColorBlue),
-                            decoration: InputDecoration(
-                              border: InputBorder.none,
-                              contentPadding:
-                              const EdgeInsets.symmetric(vertical: 13.0),
-                              enabledBorder: OutlineInputBorder(
-                                borderSide: BorderSide(
-                                    color: kPrimaryColorBlue, width: 0.5),
-                                borderRadius:
-                                const BorderRadius.all(Radius.circular(35.0)),
-                              ),
-                              focusedBorder: new OutlineInputBorder(
-                                borderSide: BorderSide(
-                                    color: kPrimaryColorBlue, width: 0.5),
-                                borderRadius:
-                                const BorderRadius.all(Radius.circular(35.0)),
-                              ),
-                              prefixIcon: Icon(
-                                CupertinoIcons.bubble_left,
-                                color: kPrimaryColorBlue,
-                                size: 20.0,
-                              ),
-                              labelText: "Description Of item",
-                              labelStyle: TextStyle(
-                                  fontFamily: "PoppinsLight",
-                                  fontSize: 13.0,
-                                  color: kPrimaryColorBlue),
-                            ),
-                          ),
-                        ),
-
-
-
-
-                        Container(
-                          width: size.width * 0.5,
-                          padding: EdgeInsets.only(top: 0.0, bottom: 0.0, left: 10.0, right: 10.0),
-                          child: TextField(
-
-                            controller: newAmount,
-                            keyboardType: TextInputType.number,
-                            style: TextStyle(
-                                fontFamily: "PoppinsLight",
-                                fontSize: 13.0,
-                                color: kPrimaryColorBlue),
-                            decoration: InputDecoration(
-                              border: InputBorder.none,
-                              contentPadding:
-                              const EdgeInsets.symmetric(vertical: 13.0),
-                              enabledBorder: OutlineInputBorder(
-                                borderSide: BorderSide(
-                                    color: kPrimaryColorBlue, width: 0.5),
-                                borderRadius:
-                                const BorderRadius.all(Radius.circular(35.0)),
-                              ),
-                              focusedBorder: new OutlineInputBorder(
-                                borderSide: BorderSide(
-                                    color: kPrimaryColorBlue, width: 0.5),
-                                borderRadius:
-                                const BorderRadius.all(Radius.circular(35.0)),
-                              ),
-                              prefixIcon: Icon(
-                                CupertinoIcons.doc_richtext,
-                                color: kPrimaryColorBlue,
-                                size: 20.0,
-                              ),
-                              labelText: "Amount",
-                              labelStyle: TextStyle(
-                                  fontFamily: "PoppinsLight",
-                                  fontSize: 13.0,
-                                  color: kPrimaryColorBlue),
-                            ),
-                          ),
-                        ),
-
-                      ],
-                    ),
-                ),
-
-
-              if(!addItem)
-                Container(
-                  width: size.width,
-                  padding: EdgeInsets.only(
-                      top: 0.0, bottom: 10.0, left: 0.0, right: 0.0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      Container(
-                        width: size.width * 0.5,
-                        padding: EdgeInsets.only(top: 0.0, bottom: 0.0, left: 10.0, right: 0.0),
-                        child: TextField(
-
-                          controller: newRate,
-                          keyboardType: TextInputType.number,
-                          style: TextStyle(
-                              fontFamily: "PoppinsLight",
-                              fontSize: 13.0,
-                              color: kPrimaryColorBlue),
-                          decoration: InputDecoration(
-                            border: InputBorder.none,
-                            contentPadding:
-                            const EdgeInsets.symmetric(vertical: 13.0),
-                            enabledBorder: OutlineInputBorder(
-                              borderSide: BorderSide(
-                                  color: kPrimaryColorBlue, width: 0.5),
-                              borderRadius:
-                              const BorderRadius.all(Radius.circular(35.0)),
-                            ),
-                            focusedBorder: new OutlineInputBorder(
-                              borderSide: BorderSide(
-                                  color: kPrimaryColorBlue, width: 0.5),
-                              borderRadius:
-                              const BorderRadius.all(Radius.circular(35.0)),
-                            ),
-                            prefixIcon: Icon(
-                              CupertinoIcons.doc_append,
-                              color: kPrimaryColorBlue,
-                              size: 20.0,
-                            ),
-                            labelText: "Rate",
-                            labelStyle: TextStyle(
-                                fontFamily: "PoppinsLight",
-                                fontSize: 13.0,
-                                color: kPrimaryColorBlue),
-                          ),
-                        ),
-                      ),
-
-                      Container(
-                        width: size.width * 0.5,
-                        padding: EdgeInsets.only(top: 0.0, bottom: 0.0, left: 10.0, right: 10.0),
-                        child: TextField(
-
-                          controller: newQuantity,
-                          keyboardType: TextInputType.number,
-                          style: TextStyle(
-                              fontFamily: "PoppinsLight",
-                              fontSize: 13.0,
-                              color: kPrimaryColorBlue),
-                          decoration: InputDecoration(
-                            border: InputBorder.none,
-                            contentPadding:
-                            const EdgeInsets.symmetric(vertical: 13.0),
-                            enabledBorder: OutlineInputBorder(
-                              borderSide: BorderSide(
-                                  color: kPrimaryColorBlue, width: 0.5),
-                              borderRadius:
-                              const BorderRadius.all(Radius.circular(35.0)),
-                            ),
-                            focusedBorder: new OutlineInputBorder(
-                              borderSide: BorderSide(
-                                  color: kPrimaryColorBlue, width: 0.5),
-                              borderRadius:
-                              const BorderRadius.all(Radius.circular(35.0)),
-                            ),
-                            prefixIcon: Icon(
-                              Icons.show_chart_sharp,
-                              color: kPrimaryColorBlue,
-                              size: 20.0,
-                            ),
-                            labelText: "Quantity",
-                            labelStyle: TextStyle(
-                                fontFamily: "PoppinsLight",
-                                fontSize: 13.0,
-                                color: kPrimaryColorBlue),
-                          ),
-                        ),
-                      ),
-
-                    ],
-                  ),
-                ),
-
-
               Container(
                 width: size.width * 0.95,
                 padding: EdgeInsets.only(top: 0.0, bottom: 10.0, left: 0.0, right: 0.0),
@@ -834,6 +315,850 @@ class _CreateReceiptsState extends State<CreateMemo> {
                   ),
                 ),
               ),
+
+              Container(
+                width: size.width,
+                padding: EdgeInsets.only(
+                    top: 0.0, bottom: 10.0, left: 0.0, right: 0.0),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+
+                    Container(
+                      padding: EdgeInsets.only(top: 0.0, bottom: 10.0, left: 10.0, right: 10.0),
+                      width: size.width,
+                      child: TextField(
+                        maxLength: 15,
+                        controller: amtForController,
+                        inputFormatters: [new WhitelistingTextInputFormatter(RegExp("[a-z A-Z]")),],
+                        style: TextStyle(
+                            fontFamily: "PoppinsLight",
+                            fontSize: 17.0,
+                            color: Colors.black87),
+                        decoration: InputDecoration(
+                          border: InputBorder.none,
+                          counterStyle: TextStyle(height: double.minPositive,),
+                          counterText: "",
+                          contentPadding: const EdgeInsets.symmetric(vertical: 0.0),
+                          enabledBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                                color: kPrimaryColorBlue,
+                                width: 0.5
+                            ),
+                            borderRadius: const BorderRadius.all(Radius.circular(35.0)),
+                          ),
+                          focusedBorder: new OutlineInputBorder(
+                            borderSide: BorderSide(
+                                color: kPrimaryColorBlue,
+                                width: 0.5),
+                            borderRadius: const BorderRadius.all(Radius.circular(35.0)),
+                          ),
+                          prefixIcon: Icon(
+                            CupertinoIcons.bubble_left,
+                            color: kPrimaryColorBlue,
+                            size: 23.0,
+                          ),
+                          labelText: "Description Of Item*",
+                          labelStyle: TextStyle(
+                              fontFamily: "PoppinsLight", fontSize: 13.0, color: kPrimaryColorBlue),
+                        ),
+                      ),
+                    ),
+                    Container(
+
+                      width: size.width,
+                      padding: EdgeInsets.only(
+                          top: 0.0, bottom: 10.0, left: 0.0, right: 0.0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          Container(
+                            padding: EdgeInsets.only(top: 0.0, bottom: 0.0, left: 10.0, right: 10.0),
+                            width: size.width * 0.5,
+                            child: TextField(
+                              maxLength: 10,
+                              controller: totalController,
+                              keyboardType: TextInputType.phone,
+                              inputFormatters: <TextInputFormatter>[
+                                FilteringTextInputFormatter.digitsOnly
+                              ],
+                              style: TextStyle(
+                                  fontFamily: "PoppinsLight",
+                                  fontSize: 17.0,
+                                  color: Colors.black87),
+                              decoration: InputDecoration(
+                                border: InputBorder.none,
+                                counterStyle: TextStyle(height: double.minPositive,),
+                                counterText: "",
+                                contentPadding: const EdgeInsets.symmetric(vertical: 0.0),
+                                enabledBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                      color: kPrimaryColorBlue,
+                                      width: 0.5
+                                  ),
+                                  borderRadius: const BorderRadius.all(Radius.circular(35.0)),
+                                ),
+                                focusedBorder: new OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                      color: kPrimaryColorBlue,
+                                      width: 0.5),
+                                  borderRadius: const BorderRadius.all(Radius.circular(35.0)),
+                                ),
+                                prefixIcon: Icon(
+                                  CupertinoIcons.doc_append,
+                                  color: kPrimaryColorBlue,
+                                  size: 23.0,
+                                ),
+                                labelText: "Rate *",
+                                labelStyle: TextStyle(
+                                    fontFamily: "PoppinsLight", fontSize: 13.0, color: kPrimaryColorBlue),
+                              ),
+                            ),
+                          ),
+                          Container(
+                            padding: EdgeInsets.only(top: 0.0, bottom: 0.0, left: 10.0, right: 10.0),
+                            width: size.width * 0.5,
+                            child: TextField(
+                              controller: quantityController,
+                              keyboardType: TextInputType.phone,
+                              inputFormatters: <TextInputFormatter>[
+                                FilteringTextInputFormatter.digitsOnly
+                              ],
+                              maxLength: 10,
+                              style: TextStyle(
+                                  fontFamily: "PoppinsLight",
+                                  fontSize: 17.0,
+                                  color: Colors.black87),
+                              decoration: InputDecoration(
+                                border: InputBorder.none,
+                                counterStyle: TextStyle(height: double.minPositive,),
+                                counterText: "",
+                                contentPadding: const EdgeInsets.symmetric(vertical: 0.0),
+                                enabledBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                      color: kPrimaryColorBlue,
+                                      width: 0.5
+                                  ),
+                                  borderRadius: const BorderRadius.all(Radius.circular(35.0)),
+                                ),
+                                focusedBorder: new OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                      color: kPrimaryColorBlue,
+                                      width: 0.5),
+                                  borderRadius: const BorderRadius.all(Radius.circular(35.0)),
+                                ),
+                                prefixIcon: Icon(
+                                  Icons.show_chart_sharp,
+                                  color: kPrimaryColorBlue,
+                                  size: 23.0,
+                                ),
+                                labelText: "Quantity*",
+                                labelStyle: TextStyle(
+                                    fontFamily: "PoppinsLight", fontSize: 13.0, color: kPrimaryColorBlue),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+
+                    ),
+
+
+                  ],
+                ),
+
+              ),
+
+              if(!showButton)
+
+                Container(
+                  height: 50.0,
+                  width: size.width ,
+                  margin: EdgeInsets.only(top: 0.0, bottom: 0.0, left: 0.0, right: 10.0),
+                  alignment: Alignment.bottomRight,
+
+
+
+                  child: ElevatedButton(
+                    child: Text(
+                      "Add Item",
+                      style: TextStyle(
+                          fontFamily: "PoppinsMedium",
+                          fontWeight: FontWeight.bold,
+                          color: addItem1 ? Colors.black : Colors.white
+                      ),
+
+
+                    ),
+                    style: ElevatedButton.styleFrom(
+                        elevation: addItem1 ? 0.0 : 3.0,
+                        primary: addItem1 ? Colors.grey[300] : kPrimaryColorBlue,
+                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(90)))),
+
+                    onPressed: () {
+                      setState(() {
+                        addItem1 = true;
+                        removeButton1=true;
+                        showButton=true;
+                      });
+                    },
+
+                  ),
+                ),
+              if(removeButton1)
+
+                Container(
+                  height: 50.0,
+                  width: size.width ,
+                  margin: EdgeInsets.only(top: 0.0, bottom: 0.0, left: 0.0, right: 10.0),
+                  alignment: Alignment.bottomRight,
+
+
+
+                  child: ElevatedButton(
+
+                    child: Text(
+                      "Remove Item",
+
+                      style: TextStyle(
+                          fontFamily: "PoppinsMedium",
+                          fontWeight: FontWeight.bold,
+                          color: addItem1 ? Colors.black : Colors.white
+                      ),
+
+
+                    ),
+                    style: ElevatedButton.styleFrom(
+                        elevation: addItem1 ? 0.0 : 3.0,
+                        primary: addItem1 ? Colors.grey[300] : kPrimaryColorBlue,
+                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(90)))),
+
+                    onPressed: () {
+                      setState(() {
+                        removeButton1=false;
+                        showButton=false;
+                        addItem1 = false;
+                      });
+                    },
+
+                  ),
+                ),
+
+              if(addItem1)
+                Container(
+                  width: size.width,
+                  padding: EdgeInsets.only(
+                      top: 0.0, bottom: 10.0, left: 0.0, right: 0.0),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+
+                      Container(
+                        padding: EdgeInsets.only(top: 0.0, bottom: 10.0, left: 10.0, right: 10.0),
+                        width: size.width,
+                        child: TextField(
+                          maxLength: 15,
+                          controller: newDisc,
+                          inputFormatters: [new WhitelistingTextInputFormatter(RegExp("[a-z A-Z]")),],
+                          style: TextStyle(
+                              fontFamily: "PoppinsLight",
+                              fontSize: 17.0,
+                              color: Colors.black87),
+                          decoration: InputDecoration(
+                            border: InputBorder.none,
+                            counterStyle: TextStyle(height: double.minPositive,),
+                            counterText: "",
+                            contentPadding: const EdgeInsets.symmetric(vertical: 0.0),
+                            enabledBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                  color: kPrimaryColorBlue,
+                                  width: 0.5
+                              ),
+                              borderRadius: const BorderRadius.all(Radius.circular(35.0)),
+                            ),
+                            focusedBorder: new OutlineInputBorder(
+                              borderSide: BorderSide(
+                                  color: kPrimaryColorBlue,
+                                  width: 0.5),
+                              borderRadius: const BorderRadius.all(Radius.circular(35.0)),
+                            ),
+                            prefixIcon: Icon(
+                              CupertinoIcons.bubble_left,
+                              color: kPrimaryColorBlue,
+                              size: 23.0,
+                            ),
+                            labelText: "Description Of Item*",
+                            labelStyle: TextStyle(
+                                fontFamily: "PoppinsLight", fontSize: 13.0, color: kPrimaryColorBlue),
+                          ),
+                        ),
+                      ),
+                      Container(
+
+                        width: size.width,
+                        padding: EdgeInsets.only(
+                            top: 0.0, bottom: 10.0, left: 0.0, right: 0.0),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: <Widget>[
+                            Container(
+                              padding: EdgeInsets.only(top: 0.0, bottom: 0.0, left: 10.0, right: 10.0),
+                              width: size.width * 0.5,
+                              child: TextField(
+                                maxLength: 10,
+                                controller: newRate,
+                                keyboardType: TextInputType.phone,
+                                inputFormatters: <TextInputFormatter>[
+                                  FilteringTextInputFormatter.digitsOnly
+                                ],
+                                style: TextStyle(
+                                    fontFamily: "PoppinsLight",
+                                    fontSize: 17.0,
+                                    color: Colors.black87),
+                                decoration: InputDecoration(
+                                  border: InputBorder.none,
+                                  counterStyle: TextStyle(height: double.minPositive,),
+                                  counterText: "",
+                                  contentPadding: const EdgeInsets.symmetric(vertical: 0.0),
+                                  enabledBorder: OutlineInputBorder(
+                                    borderSide: BorderSide(
+                                        color: kPrimaryColorBlue,
+                                        width: 0.5
+                                    ),
+                                    borderRadius: const BorderRadius.all(Radius.circular(35.0)),
+                                  ),
+                                  focusedBorder: new OutlineInputBorder(
+                                    borderSide: BorderSide(
+                                        color: kPrimaryColorBlue,
+                                        width: 0.5),
+                                    borderRadius: const BorderRadius.all(Radius.circular(35.0)),
+                                  ),
+                                  prefixIcon: Icon(
+                                    CupertinoIcons.doc_append,
+                                    color: kPrimaryColorBlue,
+                                    size: 23.0,
+                                  ),
+                                  labelText: "Rate *",
+                                  labelStyle: TextStyle(
+                                      fontFamily: "PoppinsLight", fontSize: 13.0, color: kPrimaryColorBlue),
+                                ),
+                              ),
+                            ),
+                            Container(
+                              padding: EdgeInsets.only(top: 0.0, bottom: 0.0, left: 10.0, right: 10.0),
+                              width: size.width * 0.5,
+                              child: TextField(
+                                controller: newQuantity,
+                                keyboardType: TextInputType.phone,
+                                inputFormatters: <TextInputFormatter>[
+                                  FilteringTextInputFormatter.digitsOnly
+                                ],
+                                maxLength: 10,
+                                style: TextStyle(
+                                    fontFamily: "PoppinsLight",
+                                    fontSize: 17.0,
+                                    color: Colors.black87),
+                                decoration: InputDecoration(
+                                  border: InputBorder.none,
+                                  counterStyle: TextStyle(height: double.minPositive,),
+                                  counterText: "",
+                                  contentPadding: const EdgeInsets.symmetric(vertical: 0.0),
+                                  enabledBorder: OutlineInputBorder(
+                                    borderSide: BorderSide(
+                                        color: kPrimaryColorBlue,
+                                        width: 0.5
+                                    ),
+                                    borderRadius: const BorderRadius.all(Radius.circular(35.0)),
+                                  ),
+                                  focusedBorder: new OutlineInputBorder(
+                                    borderSide: BorderSide(
+                                        color: kPrimaryColorBlue,
+                                        width: 0.5),
+                                    borderRadius: const BorderRadius.all(Radius.circular(35.0)),
+                                  ),
+                                  prefixIcon: Icon(
+                                    Icons.show_chart_sharp,
+                                    color: kPrimaryColorBlue,
+                                    size: 23.0,
+                                  ),
+                                  labelText: "Quantity*",
+                                  labelStyle: TextStyle(
+                                      fontFamily: "PoppinsLight", fontSize: 13.0, color: kPrimaryColorBlue),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+
+                      ),
+
+                      if(!showButton2)
+                        Container(
+                          height: 50.0,
+                          width: size.width ,
+                          margin: EdgeInsets.only(top: 0.0, bottom: 0.0, left: 0.0, right: 10.0),
+                          alignment: Alignment.bottomRight,
+
+
+
+                          child: ElevatedButton(
+                            child: Text(
+                              "Add Item",
+                              style: TextStyle(
+                                  fontFamily: "PoppinsMedium",
+                                  fontWeight: FontWeight.bold,
+                                  color: addItem2 ? Colors.black : Colors.white
+                              ),
+
+
+                            ),
+                            style: ElevatedButton.styleFrom(
+                                elevation: addItem2 ? 0.0 : 3.0,
+                                primary: addItem2 ? Colors.grey[300] : kPrimaryColorBlue,
+                                shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(90)))),
+
+                            onPressed: () {
+                              setState(() {
+                                showButton2=true;
+                                addItem2 = true;
+                                removeButton2=true;
+                              });
+                            },
+
+                          ),
+                        ),
+
+                      if(removeButton2)
+                        Container(
+                          height: 50.0,
+                          width: size.width ,
+                          margin: EdgeInsets.only(top: 0.0, bottom: 0.0, left: 0.0, right: 10.0),
+                          alignment: Alignment.bottomRight,
+
+
+
+                          child: ElevatedButton(
+
+                            child: Text(
+                              "Remove Item",
+                              style: TextStyle(
+                                  fontFamily: "PoppinsMedium",
+                                  fontWeight: FontWeight.bold,
+                                  color: addItem1 ? Colors.black : Colors.white
+                              ),
+
+
+                            ),
+                            style: ElevatedButton.styleFrom(
+                                elevation: addItem2 ? 0.0 : 3.0,
+                                primary: addItem2 ? Colors.grey[300] : kPrimaryColorBlue,
+                                shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(90)))),
+
+                            onPressed: () {
+                              setState(() {
+                                removeButton2=false;
+                                showButton2=false;
+                                addItem2 = false;
+                              });
+                            },
+
+                          ),
+                        ),
+                    ],
+                  ),
+                ),
+
+              if(addItem2)
+
+                Container(
+                  width: size.width,
+                  padding: EdgeInsets.only(
+                      top: 0.0, bottom: 10.0, left: 0.0, right: 0.0),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+
+                      Container(
+                        padding: EdgeInsets.only(top: 0.0, bottom: 10.0, left: 10.0, right: 10.0),
+                        width: size.width,
+                        child: TextField(
+                          maxLength: 15,
+                          controller: newDisc2,
+                          inputFormatters: [new WhitelistingTextInputFormatter(RegExp("[a-z A-Z]")),],
+                          style: TextStyle(
+                              fontFamily: "PoppinsLight",
+                              fontSize: 17.0,
+                              color: Colors.black87),
+                          decoration: InputDecoration(
+                            border: InputBorder.none,
+                            counterStyle: TextStyle(height: double.minPositive,),
+                            counterText: "",
+                            contentPadding: const EdgeInsets.symmetric(vertical: 0.0),
+                            enabledBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                  color: kPrimaryColorBlue,
+                                  width: 0.5
+                              ),
+                              borderRadius: const BorderRadius.all(Radius.circular(35.0)),
+                            ),
+                            focusedBorder: new OutlineInputBorder(
+                              borderSide: BorderSide(
+                                  color: kPrimaryColorBlue,
+                                  width: 0.5),
+                              borderRadius: const BorderRadius.all(Radius.circular(35.0)),
+                            ),
+                            prefixIcon: Icon(
+                              CupertinoIcons.bubble_left,
+                              color: kPrimaryColorBlue,
+                              size: 23.0,
+                            ),
+                            labelText: "Description Of Item*",
+                            labelStyle: TextStyle(
+                                fontFamily: "PoppinsLight", fontSize: 13.0, color: kPrimaryColorBlue),
+                          ),
+                        ),
+                      ),
+                      Container(
+
+                        width: size.width,
+                        padding: EdgeInsets.only(
+                            top: 0.0, bottom: 10.0, left: 0.0, right: 0.0),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: <Widget>[
+                            Container(
+                              padding: EdgeInsets.only(top: 0.0, bottom: 0.0, left: 10.0, right: 10.0),
+                              width: size.width * 0.5,
+                              child: TextField(
+                                maxLength: 10,
+                                controller: newRate2,
+                                keyboardType: TextInputType.phone,
+                                inputFormatters: <TextInputFormatter>[
+                                  FilteringTextInputFormatter.digitsOnly
+                                ],
+                                style: TextStyle(
+                                    fontFamily: "PoppinsLight",
+                                    fontSize: 17.0,
+                                    color: Colors.black87),
+                                decoration: InputDecoration(
+                                  border: InputBorder.none,
+                                  counterStyle: TextStyle(height: double.minPositive,),
+                                  counterText: "",
+                                  contentPadding: const EdgeInsets.symmetric(vertical: 0.0),
+                                  enabledBorder: OutlineInputBorder(
+                                    borderSide: BorderSide(
+                                        color: kPrimaryColorBlue,
+                                        width: 0.5
+                                    ),
+                                    borderRadius: const BorderRadius.all(Radius.circular(35.0)),
+                                  ),
+                                  focusedBorder: new OutlineInputBorder(
+                                    borderSide: BorderSide(
+                                        color: kPrimaryColorBlue,
+                                        width: 0.5),
+                                    borderRadius: const BorderRadius.all(Radius.circular(35.0)),
+                                  ),
+                                  prefixIcon: Icon(
+                                    CupertinoIcons.doc_append,
+                                    color: kPrimaryColorBlue,
+                                    size: 23.0,
+                                  ),
+                                  labelText: "Rate *",
+                                  labelStyle: TextStyle(
+                                      fontFamily: "PoppinsLight", fontSize: 13.0, color: kPrimaryColorBlue),
+                                ),
+                              ),
+                            ),
+                            Container(
+                              padding: EdgeInsets.only(top: 0.0, bottom: 0.0, left: 10.0, right: 10.0),
+                              width: size.width * 0.5,
+                              child: TextField(
+                                controller: newQuantity2,
+                                keyboardType: TextInputType.phone,
+                                inputFormatters: <TextInputFormatter>[
+                                  FilteringTextInputFormatter.digitsOnly
+                                ],
+                                maxLength: 10,
+                                style: TextStyle(
+                                    fontFamily: "PoppinsLight",
+                                    fontSize: 17.0,
+                                    color: Colors.black87),
+                                decoration: InputDecoration(
+                                  border: InputBorder.none,
+                                  counterStyle: TextStyle(height: double.minPositive,),
+                                  counterText: "",
+                                  contentPadding: const EdgeInsets.symmetric(vertical: 0.0),
+                                  enabledBorder: OutlineInputBorder(
+                                    borderSide: BorderSide(
+                                        color: kPrimaryColorBlue,
+                                        width: 0.5
+                                    ),
+                                    borderRadius: const BorderRadius.all(Radius.circular(35.0)),
+                                  ),
+                                  focusedBorder: new OutlineInputBorder(
+                                    borderSide: BorderSide(
+                                        color: kPrimaryColorBlue,
+                                        width: 0.5),
+                                    borderRadius: const BorderRadius.all(Radius.circular(35.0)),
+                                  ),
+                                  prefixIcon: Icon(
+                                    Icons.show_chart_sharp,
+                                    color: kPrimaryColorBlue,
+                                    size: 23.0,
+                                  ),
+                                  labelText: "Quantity*",
+                                  labelStyle: TextStyle(
+                                      fontFamily: "PoppinsLight", fontSize: 13.0, color: kPrimaryColorBlue),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+
+                      ),
+
+                      if(!showButton3)
+                        Container(
+                          height: 50.0,
+                          width: size.width ,
+                          margin: EdgeInsets.only(top: 0.0, bottom: 0.0, left: 0.0, right: 10.0),
+                          alignment: Alignment.bottomRight,
+
+
+
+                          child: ElevatedButton(
+                            child: Text(
+                              "Add Item",
+                              style: TextStyle(
+                                  fontFamily: "PoppinsMedium",
+                                  fontWeight: FontWeight.bold,
+                                  color: addItem3 ? Colors.black : Colors.white
+                              ),
+
+
+                            ),
+                            style: ElevatedButton.styleFrom(
+                                elevation: addItem3 ? 0.0 : 3.0,
+                                primary: addItem3 ? Colors.grey[300] : kPrimaryColorBlue,
+                                shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(90)))),
+
+                            onPressed: () {
+                              setState(() {
+                                showButton3=true;
+                                addItem3 = true;
+                                removeButton3=true;
+                              });
+                            },
+
+                          ),
+                        ),
+
+                      if(removeButton3)
+                        Container(
+                          height: 50.0,
+                          width: size.width ,
+                          margin: EdgeInsets.only(top: 0.0, bottom: 0.0, left: 0.0, right: 10.0),
+                          alignment: Alignment.bottomRight,
+                          child: ElevatedButton(
+
+                            child: Text(
+                              "Remove Item",
+                              style: TextStyle(
+                                  fontFamily: "PoppinsMedium",
+                                  fontWeight: FontWeight.bold,
+                                  color: addItem2 ? Colors.black : Colors.white
+                              ),
+
+
+                            ),
+                            style: ElevatedButton.styleFrom(
+                                elevation: addItem2 ? 0.0 : 3.0,
+                                primary: addItem2 ? Colors.grey[300] : kPrimaryColorBlue,
+                                shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(90)))),
+
+                            onPressed: () {
+                              setState(() {
+                                removeButton3=false;
+                                showButton3=false;
+                                addItem3 = false;
+                              });
+                            },
+
+                          ),
+                        ),
+                    ],
+                  ),
+
+
+                ),
+
+              if(addItem3)
+
+                Container(
+                  width: size.width,
+                  padding: EdgeInsets.only(
+                      top: 0.0, bottom: 10.0, left: 0.0, right: 0.0),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+
+                      Container(
+                        padding: EdgeInsets.only(top: 0.0, bottom: 10.0, left: 10.0, right: 10.0),
+                        width: size.width,
+                        child: TextField(
+                          maxLength: 15,
+                          controller: newDisc3,
+                          inputFormatters: [new WhitelistingTextInputFormatter(RegExp("[a-z A-Z]")),],
+                          style: TextStyle(
+                              fontFamily: "PoppinsLight",
+                              fontSize: 17.0,
+                              color: Colors.black87),
+                          decoration: InputDecoration(
+                            border: InputBorder.none,
+                            counterStyle: TextStyle(height: double.minPositive,),
+                            counterText: "",
+                            contentPadding: const EdgeInsets.symmetric(vertical: 0.0),
+                            enabledBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                  color: kPrimaryColorBlue,
+                                  width: 0.5
+                              ),
+                              borderRadius: const BorderRadius.all(Radius.circular(35.0)),
+                            ),
+                            focusedBorder: new OutlineInputBorder(
+                              borderSide: BorderSide(
+                                  color: kPrimaryColorBlue,
+                                  width: 0.5),
+                              borderRadius: const BorderRadius.all(Radius.circular(35.0)),
+                            ),
+                            prefixIcon: Icon(
+                              CupertinoIcons.bubble_left,
+                              color: kPrimaryColorBlue,
+                              size: 23.0,
+                            ),
+                            labelText: "Description Of Item*",
+                            labelStyle: TextStyle(
+                                fontFamily: "PoppinsLight", fontSize: 13.0, color: kPrimaryColorBlue),
+                          ),
+                        ),
+                      ),
+                      Container(
+
+                        width: size.width,
+                        padding: EdgeInsets.only(
+                            top: 0.0, bottom: 10.0, left: 0.0, right: 0.0),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: <Widget>[
+                            Container(
+                              padding: EdgeInsets.only(top: 0.0, bottom: 0.0, left: 10.0, right: 10.0),
+                              width: size.width * 0.5,
+                              child: TextField(
+                                maxLength: 10,
+                                controller: newRate3,
+                                keyboardType: TextInputType.phone,
+                                inputFormatters: <TextInputFormatter>[
+                                  FilteringTextInputFormatter.digitsOnly
+                                ],
+                                style: TextStyle(
+                                    fontFamily: "PoppinsLight",
+                                    fontSize: 17.0,
+                                    color: Colors.black87),
+                                decoration: InputDecoration(
+                                  border: InputBorder.none,
+                                  counterStyle: TextStyle(height: double.minPositive,),
+                                  counterText: "",
+                                  contentPadding: const EdgeInsets.symmetric(vertical: 0.0),
+                                  enabledBorder: OutlineInputBorder(
+                                    borderSide: BorderSide(
+                                        color: kPrimaryColorBlue,
+                                        width: 0.5
+                                    ),
+                                    borderRadius: const BorderRadius.all(Radius.circular(35.0)),
+                                  ),
+                                  focusedBorder: new OutlineInputBorder(
+                                    borderSide: BorderSide(
+                                        color: kPrimaryColorBlue,
+                                        width: 0.5),
+                                    borderRadius: const BorderRadius.all(Radius.circular(35.0)),
+                                  ),
+                                  prefixIcon: Icon(
+                                    CupertinoIcons.doc_append,
+                                    color: kPrimaryColorBlue,
+                                    size: 23.0,
+                                  ),
+                                  labelText: "Rate *",
+                                  labelStyle: TextStyle(
+                                      fontFamily: "PoppinsLight", fontSize: 13.0, color: kPrimaryColorBlue),
+                                ),
+                              ),
+                            ),
+                            Container(
+                              padding: EdgeInsets.only(top: 0.0, bottom: 0.0, left: 10.0, right: 10.0),
+                              width: size.width * 0.5,
+                              child: TextField(
+                                controller: newQuantity3,
+                                keyboardType: TextInputType.phone,
+                                inputFormatters: <TextInputFormatter>[
+                                  FilteringTextInputFormatter.digitsOnly
+                                ],
+                                maxLength: 10,
+                                style: TextStyle(
+                                    fontFamily: "PoppinsLight",
+                                    fontSize: 17.0,
+                                    color: Colors.black87),
+                                decoration: InputDecoration(
+                                  border: InputBorder.none,
+                                  counterStyle: TextStyle(height: double.minPositive,),
+                                  counterText: "",
+                                  contentPadding: const EdgeInsets.symmetric(vertical: 0.0),
+                                  enabledBorder: OutlineInputBorder(
+                                    borderSide: BorderSide(
+                                        color: kPrimaryColorBlue,
+                                        width: 0.5
+                                    ),
+                                    borderRadius: const BorderRadius.all(Radius.circular(35.0)),
+                                  ),
+                                  focusedBorder: new OutlineInputBorder(
+                                    borderSide: BorderSide(
+                                        color: kPrimaryColorBlue,
+                                        width: 0.5),
+                                    borderRadius: const BorderRadius.all(Radius.circular(35.0)),
+                                  ),
+                                  prefixIcon: Icon(
+                                    Icons.show_chart_sharp,
+                                    color: kPrimaryColorBlue,
+                                    size: 23.0,
+                                  ),
+                                  labelText: "Quantity*",
+                                  labelStyle: TextStyle(
+                                      fontFamily: "PoppinsLight", fontSize: 13.0, color: kPrimaryColorBlue),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+
+                      ),
+
+
+
+
+                    ],
+                  ),
+
+
+                ),
+
+
               Container(
                 width: size.width * 0.95,
                 padding: EdgeInsets.only(
@@ -937,6 +1262,132 @@ class _CreateReceiptsState extends State<CreateMemo> {
                   padding: EdgeInsets.only(top: 0.0, bottom: 10.0, left: 0.0, right: 0.0),
                   child: Image.network(template),
                 ),
+              Container(
+                width: size.width * 0.95,
+                padding: EdgeInsets.only(top: 0.0, bottom: 10.0, left: 0.0, right: 0.0),
+                child: TextField(
+                  maxLength: 28,
+                  controller: term1,
+                  inputFormatters: <TextInputFormatter>[
+
+                  ],
+                  style: TextStyle(
+                      fontFamily: "PoppinsLight",
+                      fontSize: 17.0,
+                      color: Colors.black87),
+                  decoration: InputDecoration(
+                    border: InputBorder.none,
+                    counterStyle: TextStyle(height: double.minPositive,),
+                    counterText: "",
+                    contentPadding: const EdgeInsets.symmetric(vertical: 0.0),
+                    enabledBorder: OutlineInputBorder(
+                      borderSide: BorderSide(
+                          color: kPrimaryColorBlue,
+                          width: 0.5
+                      ),
+                      borderRadius: const BorderRadius.all(Radius.circular(35.0)),
+                    ),
+                    focusedBorder: new OutlineInputBorder(
+                      borderSide: BorderSide(
+                          color: kPrimaryColorBlue,
+                          width: 0.5),
+                      borderRadius: const BorderRadius.all(Radius.circular(35.0)),
+                    ),
+                    prefixIcon: Icon(
+                      CupertinoIcons.doc_richtext,
+                      color: kPrimaryColorBlue,
+                      size: 23.0,
+                    ),
+                    labelText: "Terms and Conditions 1",
+                    labelStyle: TextStyle(
+                        fontFamily: "PoppinsLight", fontSize: 13.0, color: kPrimaryColorBlue),
+                  ),
+                ),
+              ),
+              Container(
+                width: size.width * 0.95,
+                padding: EdgeInsets.only(top: 0.0, bottom: 10.0, left: 0.0, right: 0.0),
+                child: TextField(
+                  maxLength: 28,
+                  controller: term2,
+                  inputFormatters: <TextInputFormatter>[
+
+                  ],
+                  style: TextStyle(
+                      fontFamily: "PoppinsLight",
+                      fontSize: 17.0,
+                      color: Colors.black87),
+                  decoration: InputDecoration(
+                    border: InputBorder.none,
+                    counterStyle: TextStyle(height: double.minPositive,),
+                    counterText: "",
+                    contentPadding: const EdgeInsets.symmetric(vertical: 0.0),
+                    enabledBorder: OutlineInputBorder(
+                      borderSide: BorderSide(
+                          color: kPrimaryColorBlue,
+                          width: 0.5
+                      ),
+                      borderRadius: const BorderRadius.all(Radius.circular(35.0)),
+                    ),
+                    focusedBorder: new OutlineInputBorder(
+                      borderSide: BorderSide(
+                          color: kPrimaryColorBlue,
+                          width: 0.5),
+                      borderRadius: const BorderRadius.all(Radius.circular(35.0)),
+                    ),
+                    prefixIcon: Icon(
+                      CupertinoIcons.doc_richtext,
+                      color: kPrimaryColorBlue,
+                      size: 23.0,
+                    ),
+                    labelText: "Terms and Conditions 1",
+                    labelStyle: TextStyle(
+                        fontFamily: "PoppinsLight", fontSize: 13.0, color: kPrimaryColorBlue),
+                  ),
+                ),
+              ),
+              Container(
+                width: size.width * 0.95,
+                padding: EdgeInsets.only(top: 0.0, bottom: 10.0, left: 0.0, right: 0.0),
+                child: TextField(
+                  maxLength: 28,
+                  controller: term3,
+                  inputFormatters: <TextInputFormatter>[
+
+                  ],
+                  style: TextStyle(
+                      fontFamily: "PoppinsLight",
+                      fontSize: 17.0,
+                      color: Colors.black87),
+                  decoration: InputDecoration(
+                    border: InputBorder.none,
+                    counterStyle: TextStyle(height: double.minPositive,),
+                    counterText: "",
+                    contentPadding: const EdgeInsets.symmetric(vertical: 0.0),
+                    enabledBorder: OutlineInputBorder(
+                      borderSide: BorderSide(
+                          color: kPrimaryColorBlue,
+                          width: 0.5
+                      ),
+                      borderRadius: const BorderRadius.all(Radius.circular(35.0)),
+                    ),
+                    focusedBorder: new OutlineInputBorder(
+                      borderSide: BorderSide(
+                          color: kPrimaryColorBlue,
+                          width: 0.5),
+                      borderRadius: const BorderRadius.all(Radius.circular(35.0)),
+                    ),
+                    prefixIcon: Icon(
+                      CupertinoIcons.doc_richtext,
+                      color: kPrimaryColorBlue,
+                      size: 23.0,
+                    ),
+                    labelText: "Terms and Conditions 1",
+                    labelStyle: TextStyle(
+                        fontFamily: "PoppinsLight", fontSize: 13.0, color: kPrimaryColorBlue),
+                  ),
+                ),
+              ),
             ],
           ),
         ),
@@ -985,6 +1436,9 @@ class _CreateReceiptsState extends State<CreateMemo> {
   }
 
   createTemplate() async {
+
+
+
     if(mobController.text.length < 10){
       showInSnackBar("Please enter Valid Mobile No.");
       return null;
@@ -1001,30 +1455,8 @@ class _CreateReceiptsState extends State<CreateMemo> {
       showInSnackBar("Please enter Customer Address");
       return null;
     }
-    if(rsController.text.isEmpty){
-      showInSnackBar("Please enter Total Amount");
-      return null;
-    }
-    if(totalInWordController.text.isEmpty){
-      showInSnackBar("Please enter Total in Word");
-      return null;
-    }
-    if(amtForController.text.isEmpty){
-      showInSnackBar("Please enter Amount For");
-      return null;
-    }
-    if(totalController.text.isEmpty){
-      showInSnackBar("Please enter Rate Of Item");
-      return null;
-    }
-    if(gtController.text.isEmpty){
-      showInSnackBar("Please enter Payable Amount");
-      return null;
-    }
-    if(quantityController.text.isEmpty){
-      showInSnackBar("Please enter item quantity");
-      return null;
-    }
+
+
     if(dateController.text.isEmpty){
       showInSnackBar("Please Select Date");
       return null;
@@ -1034,9 +1466,70 @@ class _CreateReceiptsState extends State<CreateMemo> {
       return null;
     }
 
+
+    if(amtForController.text.isNotEmpty){
+      discAll.add(amtForController.text.toString());
+    }
+
+    if(newDisc.text.isNotEmpty){
+      discAll.add(newDisc.text.toString());
+    }
+
+    if(newDisc2.text.isNotEmpty){
+      discAll.add(newDisc2.text.toString());
+    }
+    if(newDisc3.text.isNotEmpty){
+      discAll.add(newDisc3.text.toString());
+    }
+    print(discAll);
+
+
+    if(totalController.text.isNotEmpty){
+      rateAll.add(totalController.text.toString());
+    }
+    if(newRate.text.isNotEmpty){
+      rateAll.add(newRate.text.toString());
+    }
+    if(newRate2.text.isNotEmpty){
+      rateAll.add(newRate2.text.toString());
+    }
+    if(newRate3.text.isNotEmpty){
+      rateAll.add(newRate3.text.toString());
+    }
+
+
+    if(quantityController.text.isNotEmpty){
+      quanAll.add(quantityController.text.toString());
+    }
+
+    if(newQuantity.text.isNotEmpty){
+      quanAll.add(newQuantity.text.toString());
+    }
+    if(newQuantity2.text.isNotEmpty){
+      quanAll.add(newQuantity2.text.toString());
+    }
+    if(newQuantity3.text.isNotEmpty){
+      quanAll.add(newQuantity3.text.toString());
+    }
+
+    if(discAll.isEmpty){
+      showInSnackBar("Please Enter Item Description");
+      return null;
+    }
+    if(rateAll.isEmpty){
+      showInSnackBar("Please Enter Item Rate");
+      return null;
+    }
+    if(quanAll.isEmpty){
+      showInSnackBar("Please Enter Item Quantity");
+      return null;
+    }
+
+    print(quanAll);
+
     _showLoaderDialog(context);
 
-   print(id);
+    print(id);
     print(storeID);
     print(crfController.text);
     print(addressController.text);
@@ -1050,26 +1543,20 @@ class _CreateReceiptsState extends State<CreateMemo> {
     print(gtController.text);
     print(id);
 
-
-
-
-
-
-
     final param = {
       "user_id":id ,
       "m_business_id": storeID,
       "name":crfController.text,
       "address": addressController.text,
       "mobile_number":mobController.text,
-      "total": rsController.text,
-      "total_in_words": totalInWordController.text,
       "date":  dateController.text,
       "template_choice": templateID,
-      "description":amtForController.text,
-      "quantity":quantityController.text,
-      "rate": totalController.text,
-      "amount": gtController.text,
+      "description":(discAll.isEmpty) ? "" : discAll.reduce((value, element) => value + ',' + element),
+      "quantity":(quanAll.isEmpty) ? "" : quanAll.reduce((value, element) => value + ',' + element),
+      "rate":(rateAll.isEmpty) ? "" : rateAll.reduce((value, element) => value + ',' + element),
+      "term_and_condition1":term1.text,
+      "term_and_condition2":term2.text,
+      "term_and_condition3":term3.text,
 
     };
     final response = await http.post(
@@ -1095,18 +1582,16 @@ class _CreateReceiptsState extends State<CreateMemo> {
 
     if (response.statusCode == 200) {
       print("Submit Successful");
-
-      if (data.status == "success") {
-        showInSnackBar("Created Successfully");
+      print(data.status);
+      if(data.status == "success"){
         Navigator.of(context, rootNavigator: true).pop();
         Navigator.pop(context, true);
-
-      } else {
-        print(data.status);
-
-      }
+      } else showInSnackBar(data.status);
     } else {
+      Navigator.of(context, rootNavigator: true).pop();
       print(data.status);
+      showInSnackBar(data.status);
+      return null;
 
     }
   }
@@ -1117,4 +1602,3 @@ class AlwaysDisabledFocusNode extends FocusNode {
   @override
   bool get hasFocus => false;
 }
-

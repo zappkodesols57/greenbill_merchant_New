@@ -342,7 +342,8 @@ class _OffersState extends State<Offers> {
                 padding: EdgeInsets.only(top: 10.0, bottom: 10.0, left: 0.0, right: 0.0),
                 child: TextField(
                   controller: cnController,
-                  inputFormatters: [new WhitelistingTextInputFormatter(RegExp("[a-z A-Z]")),],
+                  inputFormatters: [new WhitelistingTextInputFormatter(RegExp("[a-z A-Z]")),
+                  LengthLimitingTextInputFormatter(20)],
                   style: TextStyle(
                       fontFamily: "PoppinsLight",
                       fontSize: 17.0,
@@ -381,6 +382,7 @@ class _OffersState extends State<Offers> {
                 padding: EdgeInsets.only(top: 0.0, bottom: 10.0, left: 0.0, right: 0.0),
                 child: TextField(
                   controller: ccController,
+                  inputFormatters: [LengthLimitingTextInputFormatter(30)],
                   style: TextStyle(
                       fontFamily: "PoppinsLight",
                       fontSize: 17.0,

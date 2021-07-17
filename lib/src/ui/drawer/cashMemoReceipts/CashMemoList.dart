@@ -1,3 +1,4 @@
+
 import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
@@ -59,7 +60,7 @@ class CashMemoListState extends State<CashMemoList> {
     print(res.statusCode);
     if (200 == res.statusCode) {
       print(cashMemoFromJson(res.body).data.length);
-      return cashMemoFromJson(res.body).data.where((element) => element.name.toLowerCase().contains(query.text) ||
+      return cashMemoFromJson(res.body).data.where((element) => element.mobileNumber.toLowerCase().contains(query.text) ||
           element.total.toString().toLowerCase().contains(query.text)).toList();
 
     } else {
@@ -71,197 +72,201 @@ class CashMemoListState extends State<CashMemoList> {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
-        key: _scaffoldKey,
-        backgroundColor: Colors.white,
+      key: _scaffoldKey,
+      backgroundColor: Colors.white,
 
-        body: Column(
-          children: [
-            Container(
-              width: size.width * 0.99,
-              padding: EdgeInsets.only(
-                  top: 10.0, bottom: 10.0, left: 0.0, right: 0.0),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(32),
-              ),
-              child: TextField(
-                controller: query,
-                onChanged: (value) {
-                  getPassLists();
-                  setState(() {});
-                },
-                style: TextStyle(
-                    fontFamily: "PoppinsMedium",
-                    fontSize: 15.0,
-                    color: kPrimaryColorBlue),
-                decoration: InputDecoration(
-                  border: InputBorder.none,
-                  counterStyle: TextStyle(
-                    height: double.minPositive,
-                  ),
-                  counterText: "",
-                  contentPadding: const EdgeInsets.symmetric(
-                      vertical: 13.0, horizontal: 20.0),
-                  enabledBorder: OutlineInputBorder(
-                    borderSide:
-                    BorderSide(color: kPrimaryColorBlue, width: 1.0),
-                    borderRadius:
-                    const BorderRadius.all(Radius.circular(35.0)),
-                  ),
-                  focusedBorder: new OutlineInputBorder(
-                    borderSide:
-                    BorderSide(color: kPrimaryColorBlue, width: 1.0),
-                    borderRadius:
-                    const BorderRadius.all(Radius.circular(35.0)),
-                  ),
-                  suffixIcon: GestureDetector(
-                    onTap: () {},
-                    child: Icon(
-                      CupertinoIcons.search,
-                      color: kPrimaryColorBlue,
-                      size: 25.0,
-                    ),
-                  ),
-                  hintText: "Search Cash Memo",
-                  hintStyle: TextStyle(
-                      fontFamily: "PoppinsMedium",
-                      fontSize: 15.0,
-                      color: kPrimaryColorBlue),
-                ),
-              ),
-
-            ),
-            Flexible(
-              child: FutureBuilder<List<Datum>>(
-                future: getPassLists(),
-                builder: (BuildContext context, AsyncSnapshot<List<Datum>> snapshot) {
-                  if (snapshot.connectionState == ConnectionState.waiting)
-                    return Center(
-                      child: Center(
-                          child: CircularProgressIndicator(
-                            valueColor: AlwaysStoppedAnimation<Color>(kPrimaryColorBlue),
-                          )),
-                    );
-                  else if (snapshot.hasError) {
-                    return Center(
-                      child: Text("No Cash Memos Created"),
-                    );
-                  } else {
-                    if (snapshot.hasData && snapshot.data.isNotEmpty) {
-                      WidgetsBinding.instance.addPostFrameCallback((_) {
-                        if (_controller.hasClients) {
-                          _controller.animateTo(_controller.position.minScrollExtent,
-                              duration: Duration(milliseconds: 500),
-                              curve: Curves.fastLinearToSlowEaseIn);
-                        } else {
-                          setState(() => null);
-                        }
-                      });
-                      return Scrollbar(
-                        isAlwaysShown: true,
-                        controller: _controller,
-                        thickness: 3.0,
-                        child: ListView.builder(
-                            itemCount: snapshot.data.length,
-                            shrinkWrap: true,
-                            reverse: false,
-                            controller: _controller,
-                            itemBuilder: (BuildContext context, int index) {
-                              return  Card(
-                                      elevation: 1.0,
-                                      child: ListTile(
-                                        dense: true,
-                                        title: Text(
-                                            snapshot.data[index].mobileNumber,
-                                            style: TextStyle(fontSize: 15.0)),
-                                        subtitle: Text('Date : ${snapshot.data[index].date}\nMemo No. : ${snapshot.data[index].memoNo}'),
-
-                                        // leading: Container(
-                                        //   width: 35.0,
-                                        //   height: 35.0,
-                                        //   decoration: new BoxDecoration(
-                                        //     color: Colors.primaries[Random()
-                                        //         .nextInt(
-                                        //         Colors.primaries.length)]
-                                        //         .withOpacity(0.6),
-                                        //     borderRadius:
-                                        //     new BorderRadius.circular(25.0),
-                                        //   ),
-                                        //   alignment: Alignment.center,
-                                        //   child: new Text(
-                                        //     snapshot.data[index].name
-                                        //         .substring(0, 1)
-                                        //         .toUpperCase(),
-                                        //     style: TextStyle(
-                                        //       fontSize: 23.0,
-                                        //       color: Colors.white,
-                                        //       fontWeight: FontWeight.normal,
-                                        //       fontFamily: "PoppinsLight",
-                                        //     ),
-                                        //   ),
-                                        // ),
-                                        trailing: Wrap(
-                                          spacing: 10, // space between two icons
-                                          crossAxisAlignment:
-                                          WrapCrossAlignment.center,
-                                          children: <Widget>[
-                                            IconButton(
-                                              icon: Icon(
-                                                Icons.sms_outlined,
-                                                color: Colors.black,
-                                              ),
-                                              onPressed: () {
-                                                sendSms(
-                                                    snapshot.data[index].id,
-                                                    snapshot.data[index].mobileNumber);
-                                              },
-                                            ),
-                                            IconButton(
-                                              icon: Icon(
-                                                Icons.delete_outline,
-                                                color: kPrimaryColorRed,
-                                              ),
-                                              onPressed: () {
-                                                delete(snapshot.data[index].id);
-                                              },
-                                            ),
-                                            Container(
-                                                width: 50.0,
-                                                child: Text(
-                                                    "₹ ${snapshot.data[index].total.toString()}",
-                                                    style: TextStyle(
-                                                        fontWeight:
-                                                        FontWeight.bold))),
-                                          ],
-                                        ),
-                                        // onTap: () {
-                                        //   Navigator.push(
-                                        //     context,
-                                        //     MaterialPageRoute(
-                                        //         builder: (context) => WebViewScreen("View Memo", snapshot.data[index].memoUrl)),
-                                        //   );
-                                        //
-                                        // },
-                                      ),
-                                    );
-                            }),
-                      );
-                    } else //`snapShot.hasData` can be false if the `snapshot.data` is null
-                      return Center(
-                        child: Text("No Cash Memos Created"),
-                      );
-                  }
-                },
-              ),
-            )
-          ],
-        ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          Navigator.push(context, MaterialPageRoute(builder: (context) => CreateMemo()));
+          Navigator.push(context, MaterialPageRoute(builder: (context) => CreateMemo()))
+              .then((value) => (value??false) ? showInSnackBar("Created Successfully") : null);
         },
         child: const Icon(Icons.add),
         backgroundColor: kPrimaryColorBlue,
       ),
+
+
+      body: Column(
+        children: [
+          Container(
+            width: size.width * 0.99,
+            padding: EdgeInsets.only(
+                top: 10.0, bottom: 10.0, left: 0.0, right: 0.0),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(32),
+            ),
+            child: TextField(
+              controller: query,
+              onChanged: (value) {
+                getPassLists();
+                setState(() {});
+              },
+              style: TextStyle(
+                  fontFamily: "PoppinsMedium",
+                  fontSize: 15.0,
+                  color: kPrimaryColorBlue),
+              decoration: InputDecoration(
+                border: InputBorder.none,
+                counterStyle: TextStyle(
+                  height: double.minPositive,
+                ),
+                counterText: "",
+                contentPadding: const EdgeInsets.symmetric(
+                    vertical: 13.0, horizontal: 20.0),
+                enabledBorder: OutlineInputBorder(
+                  borderSide:
+                  BorderSide(color: kPrimaryColorBlue, width: 1.0),
+                  borderRadius:
+                  const BorderRadius.all(Radius.circular(35.0)),
+                ),
+                focusedBorder: new OutlineInputBorder(
+                  borderSide:
+                  BorderSide(color: kPrimaryColorBlue, width: 1.0),
+                  borderRadius:
+                  const BorderRadius.all(Radius.circular(35.0)),
+                ),
+                suffixIcon: GestureDetector(
+                  onTap: () {},
+                  child: Icon(
+                    CupertinoIcons.search,
+                    color: kPrimaryColorBlue,
+                    size: 25.0,
+                  ),
+                ),
+                hintText: "Search Cash Memo",
+                hintStyle: TextStyle(
+                    fontFamily: "PoppinsMedium",
+                    fontSize: 15.0,
+                    color: kPrimaryColorBlue),
+              ),
+            ),
+
+          ),
+          Expanded(
+            child: FutureBuilder<List<Datum>>(
+              future: getPassLists(),
+              builder: (BuildContext context, AsyncSnapshot<List<Datum>> snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting)
+                  return Center(
+                    child: Center(
+                        child: CircularProgressIndicator(
+                          valueColor: AlwaysStoppedAnimation<Color>(kPrimaryColorBlue),
+                        )),
+                  );
+                else if (snapshot.hasError) {
+                  return Center(
+                    child: Text("No Cash Memos Created"),
+                  );
+                } else {
+                  if (snapshot.hasData && snapshot.data.isNotEmpty) {
+                    WidgetsBinding.instance.addPostFrameCallback((_) {
+                      if (_controller.hasClients) {
+                        _controller.animateTo(_controller.position.minScrollExtent,
+                            duration: Duration(milliseconds: 500),
+                            curve: Curves.fastLinearToSlowEaseIn);
+                      } else {
+                        setState(() => null);
+                      }
+                    });
+                    return Scrollbar(
+                      isAlwaysShown: true,
+                      controller: _controller,
+                      thickness: 3.0,
+                      child: ListView.builder(
+                          itemCount: snapshot.data.length,
+                          shrinkWrap: true,
+                          reverse: false,
+                          controller: _controller,
+                          itemBuilder: (BuildContext context, int index) {
+                            return  Card(
+                              elevation: 1.0,
+                              child: ListTile(
+                                dense: true,
+                                title: Text(
+                                    snapshot.data[index].mobileNumber,
+                                    style: TextStyle(fontSize: 15.0)),
+                                subtitle: Text('Date : ${snapshot.data[index].date}\nMemo No. : ${snapshot.data[index].memoNo}'),
+
+                                // leading: Container(
+                                //   width: 35.0,
+                                //   height: 35.0,
+                                //   decoration: new BoxDecoration(
+                                //     color: Colors.primaries[Random()
+                                //         .nextInt(
+                                //         Colors.primaries.length)]
+                                //         .withOpacity(0.6),
+                                //     borderRadius:
+                                //     new BorderRadius.circular(25.0),
+                                //   ),
+                                //   alignment: Alignment.center,
+                                //   child: new Text(
+                                //     snapshot.data[index].name
+                                //         .substring(0, 1)
+                                //         .toUpperCase(),
+                                //     style: TextStyle(
+                                //       fontSize: 23.0,
+                                //       color: Colors.white,
+                                //       fontWeight: FontWeight.normal,
+                                //       fontFamily: "PoppinsLight",
+                                //     ),
+                                //   ),
+                                // ),
+                                trailing: Wrap(
+                                  spacing: 10, // space between two icons
+                                  crossAxisAlignment:
+                                  WrapCrossAlignment.center,
+                                  children: <Widget>[
+                                    IconButton(
+                                      icon: Icon(
+                                        Icons.sms_outlined,
+                                        color: Colors.black,
+                                      ),
+                                      onPressed: () {
+                                        sendSms(
+                                            snapshot.data[index].id,
+                                            snapshot.data[index].mobileNumber);
+                                      },
+                                    ),
+                                    IconButton(
+                                      icon: Icon(
+                                        Icons.delete_outline,
+                                        color: kPrimaryColorRed,
+                                      ),
+                                      onPressed: () {
+                                        delete(snapshot.data[index].id);
+                                      },
+                                    ),
+                                    Container(
+                                        width: 80.0,
+                                        child: Text(
+                                            "₹ ${snapshot.data[index].total}",
+                                            style: TextStyle(
+                                                fontWeight:
+                                                FontWeight.bold))),
+                                  ],
+                                ),
+                                // onTap: () {
+                                //   Navigator.push(
+                                //     context,
+                                //     MaterialPageRoute(
+                                //         builder: (context) => WebViewScreen("View Memo", snapshot.data[index].memoUrl)),
+                                //   );
+                                //
+                                // },
+                              ),
+                            );
+                          }),
+                    );
+                  } else //`snapShot.hasData` can be false if the `snapshot.data` is null
+                    return Center(
+                      child: Text("No Cash Memos Created"),
+                    );
+                }
+              },
+            ),
+          )
+        ],
+      ),
+
     );
   }
 

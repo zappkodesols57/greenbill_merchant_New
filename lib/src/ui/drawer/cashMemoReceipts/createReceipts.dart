@@ -28,8 +28,17 @@ class _CreateReceiptsState extends State<CreateReceipts> {
   TextEditingController gtController = new TextEditingController();
   TextEditingController dateController = new TextEditingController();
 
+  TextEditingController term1 = new TextEditingController();
+  TextEditingController term2 = new TextEditingController();
+  TextEditingController term3 = new TextEditingController();
+
   String dropdownValue = "Select Receipt Template";
   String template = "", templateID;
+  String radioItem1;
+  String val1="";
+  String val2="";
+  String val3="";
+
   String token, id, mob, storeID;
 
   @override
@@ -48,6 +57,9 @@ class _CreateReceiptsState extends State<CreateReceipts> {
     totalController.dispose();
     gtController.dispose();
     dateController.dispose();
+    term1.dispose();
+    term2.dispose();
+    term3.dispose();
   }
 
   getCredentials() async {
@@ -63,9 +75,10 @@ class _CreateReceiptsState extends State<CreateReceipts> {
   Future<void> _selectDate(BuildContext context) async {
     showDatePicker(
       context: context,
+
       initialDate: DateTime.now(),
-      firstDate: DateTime(1950, 1),
-      lastDate: DateTime.now(),
+      firstDate: DateTime.now(),
+      lastDate:  DateTime.now(),
     ).then((pickedDate) {
       dateController.text = DateFormat('dd-MM-yyyy').format(pickedDate);
     });
@@ -144,6 +157,7 @@ class _CreateReceiptsState extends State<CreateReceipts> {
                 padding: EdgeInsets.only(top: 0.0, bottom: 10.0, left: 0.0, right: 0.0),
                 child: TextField(
                   controller: crfController,
+                  maxLength: 25,
                   inputFormatters: [new WhitelistingTextInputFormatter(RegExp("[a-z A-Z]")),],
                   style: TextStyle(
                       fontFamily: "PoppinsLight",
@@ -178,52 +192,12 @@ class _CreateReceiptsState extends State<CreateReceipts> {
                   ),
                 ),
               ),
+
               Container(
                 width: size.width * 0.95,
                 padding: EdgeInsets.only(top: 0.0, bottom: 10.0, left: 0.0, right: 0.0),
                 child: TextField(
-                  controller: rsController,
-                  keyboardType: TextInputType.phone,
-                  inputFormatters: <TextInputFormatter>[
-                    FilteringTextInputFormatter.digitsOnly
-                  ],
-                  style: TextStyle(
-                      fontFamily: "PoppinsLight",
-                      fontSize: 17.0,
-                      color: Colors.black87),
-                  decoration: InputDecoration(
-                    border: InputBorder.none,
-                    counterStyle: TextStyle(height: double.minPositive,),
-                    counterText: "",
-                    contentPadding: const EdgeInsets.symmetric(vertical: 0.0),
-                    enabledBorder: OutlineInputBorder(
-                      borderSide: BorderSide(
-                          color: kPrimaryColorBlue,
-                          width: 0.5
-                      ),
-                      borderRadius: const BorderRadius.all(Radius.circular(35.0)),
-                    ),
-                    focusedBorder: new OutlineInputBorder(
-                      borderSide: BorderSide(
-                          color: kPrimaryColorBlue,
-                          width: 0.5),
-                      borderRadius: const BorderRadius.all(Radius.circular(35.0)),
-                    ),
-                    prefixIcon: Icon(
-                      CupertinoIcons.arrow_down_right,
-                      color: kPrimaryColorBlue,
-                      size: 23.0,
-                    ),
-                    labelText: "Rs *",
-                    labelStyle: TextStyle(
-                        fontFamily: "PoppinsLight", fontSize: 13.0, color: kPrimaryColorBlue),
-                  ),
-                ),
-              ),
-              Container(
-                width: size.width * 0.95,
-                padding: EdgeInsets.only(top: 0.0, bottom: 10.0, left: 0.0, right: 0.0),
-                child: TextField(
+                  maxLength: 20,
                   controller: amtForController,
                   inputFormatters: [new WhitelistingTextInputFormatter(RegExp("[a-z A-Z]")),],
                   style: TextStyle(
@@ -263,6 +237,7 @@ class _CreateReceiptsState extends State<CreateReceipts> {
                 width: size.width * 0.95,
                 padding: EdgeInsets.only(top: 0.0, bottom: 10.0, left: 0.0, right: 0.0),
                 child: TextField(
+                  maxLength: 10,
                   controller: totalController,
                   keyboardType: TextInputType.phone,
                   inputFormatters: <TextInputFormatter>[
@@ -301,48 +276,7 @@ class _CreateReceiptsState extends State<CreateReceipts> {
                   ),
                 ),
               ),
-              Container(
-                width: size.width * 0.95,
-                padding: EdgeInsets.only(top: 0.0, bottom: 10.0, left: 0.0, right: 0.0),
-                child: TextField(
-                  controller: gtController,
-                  keyboardType: TextInputType.phone,
-                  inputFormatters: <TextInputFormatter>[
-                    FilteringTextInputFormatter.digitsOnly
-                  ],
-                  style: TextStyle(
-                      fontFamily: "PoppinsLight",
-                      fontSize: 17.0,
-                      color: Colors.black87),
-                  decoration: InputDecoration(
-                    border: InputBorder.none,
-                    counterStyle: TextStyle(height: double.minPositive,),
-                    counterText: "",
-                    contentPadding: const EdgeInsets.symmetric(vertical: 0.0),
-                    enabledBorder: OutlineInputBorder(
-                      borderSide: BorderSide(
-                          color: kPrimaryColorBlue,
-                          width: 0.5
-                      ),
-                      borderRadius: const BorderRadius.all(Radius.circular(35.0)),
-                    ),
-                    focusedBorder: new OutlineInputBorder(
-                      borderSide: BorderSide(
-                          color: kPrimaryColorBlue,
-                          width: 0.5),
-                      borderRadius: const BorderRadius.all(Radius.circular(35.0)),
-                    ),
-                    prefixIcon: Icon(
-                      CupertinoIcons.doc_richtext,
-                      color: kPrimaryColorBlue,
-                      size: 23.0,
-                    ),
-                    labelText: "Grand Total *",
-                    labelStyle: TextStyle(
-                        fontFamily: "PoppinsLight", fontSize: 13.0, color: kPrimaryColorBlue),
-                  ),
-                ),
-              ),
+
               Container(
                 width: size.width * 0.95,
                 padding: EdgeInsets.only(top: 0.0, bottom: 10.0, left: 0.0, right: 0.0),
@@ -384,6 +318,90 @@ class _CreateReceiptsState extends State<CreateReceipts> {
                     labelStyle: TextStyle(
                         fontFamily: "PoppinsLight", fontSize: 13.0, color: kPrimaryColorBlue),
                   ),
+                ),
+              ),
+              SizedBox(
+                height: 10.0,
+              ),
+              Container(
+                width: size.width,
+                padding: EdgeInsets.only(left: 20.0),
+                child: RichText(
+                  text: TextSpan(
+                      text: 'Payment Received in',
+                      style: TextStyle(
+                        fontFamily: "PoppinsLight",
+                        fontSize: 13.0,
+                        color: kPrimaryColorBlue,
+                        fontWeight: FontWeight.bold,
+                      ),
+                      children: <TextSpan>[
+                        TextSpan(
+                          text: '*',
+                          style: TextStyle(
+                            color: kPrimaryColorBlue,
+                            fontStyle: FontStyle.normal,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                      ]),
+                ),
+              ),
+              Container(
+                width: size.width * 0.95,
+                padding: EdgeInsets.only(
+                    top: 0.0, bottom: 0.0, left: 0.0, right: 0.0),
+                child: Row(
+                  children: <Widget>[
+                    Container(
+                      width: size.width * 0.45,
+                      child: RadioListTile(
+                        groupValue: radioItem1,
+                        title: Text('Cash',style: TextStyle(
+                            fontFamily: "PoppinsLight", fontSize: 15.0, color: kPrimaryColorBlue),),
+
+                        value: 'cash',
+                        onChanged: (val) {
+                          setState(() {
+                            radioItem1 = val;
+                          });
+                        },
+                      ),
+                    ),
+                    Container(
+                      width: size.width * 0.45,
+                      child:RadioListTile(
+                        groupValue: radioItem1,
+                        title: Text('Cheque',style: TextStyle(
+                            fontFamily: "PoppinsLight", fontSize: 15.0, color: kPrimaryColorBlue),),
+                        value: 'Cheque',
+                        onChanged: (val) {
+                          setState(() {
+                            radioItem1 = val;
+                          });
+                        },
+                      ),
+                    ),
+
+                  ],
+                ),
+
+              ),
+              Container(
+                width: size.width * 0.95,
+                padding: EdgeInsets.only(
+                    top: 0.0, bottom: 10.0, left: 0.0, right: 0.0),
+
+                child:RadioListTile(
+                  groupValue: radioItem1,
+                  title: Text('Other',style: TextStyle(
+                      fontFamily: "PoppinsLight", fontSize: 15.0, color: kPrimaryColorBlue),),
+                  value: 'other',
+                  onChanged: (val) {
+                    setState(() {
+                      radioItem1 = val;
+                    });
+                  },
                 ),
               ),
               Container(
@@ -474,7 +492,7 @@ class _CreateReceiptsState extends State<CreateReceipts> {
                             value,
                             style: TextStyle(
                                 fontSize: 17.0,
-                              color: Colors.black
+                                color: Colors.black
                             ),
                           ),
                         );
@@ -484,10 +502,135 @@ class _CreateReceiptsState extends State<CreateReceipts> {
                 ),
               ),
               if(template.isNotEmpty)
+                Container(
+                  height: 200.0,
+                  padding: EdgeInsets.only(top: 0.0, bottom: 10.0, left: 0.0, right: 0.0),
+                  child: Image.network(template),
+                ),
               Container(
-                height: 200.0,
+                width: size.width * 0.95,
                 padding: EdgeInsets.only(top: 0.0, bottom: 10.0, left: 0.0, right: 0.0),
-                child: Image.network(template),
+                child: TextField(
+                  maxLength: 28,
+                  controller: term1,
+                  inputFormatters: <TextInputFormatter>[
+
+                  ],
+                  style: TextStyle(
+                      fontFamily: "PoppinsLight",
+                      fontSize: 17.0,
+                      color: Colors.black87),
+                  decoration: InputDecoration(
+                    border: InputBorder.none,
+                    counterStyle: TextStyle(height: double.minPositive,),
+                    counterText: "",
+                    contentPadding: const EdgeInsets.symmetric(vertical: 0.0),
+                    enabledBorder: OutlineInputBorder(
+                      borderSide: BorderSide(
+                          color: kPrimaryColorBlue,
+                          width: 0.5
+                      ),
+                      borderRadius: const BorderRadius.all(Radius.circular(35.0)),
+                    ),
+                    focusedBorder: new OutlineInputBorder(
+                      borderSide: BorderSide(
+                          color: kPrimaryColorBlue,
+                          width: 0.5),
+                      borderRadius: const BorderRadius.all(Radius.circular(35.0)),
+                    ),
+                    prefixIcon: Icon(
+                      CupertinoIcons.doc_richtext,
+                      color: kPrimaryColorBlue,
+                      size: 23.0,
+                    ),
+                    labelText: "Terms and Conditions 1",
+                    labelStyle: TextStyle(
+                        fontFamily: "PoppinsLight", fontSize: 13.0, color: kPrimaryColorBlue),
+                  ),
+                ),
+              ),
+              Container(
+                width: size.width * 0.95,
+                padding: EdgeInsets.only(top: 0.0, bottom: 10.0, left: 0.0, right: 0.0),
+                child: TextField(
+                  maxLength: 28,
+                  controller: term2,
+                  inputFormatters: <TextInputFormatter>[
+
+                  ],
+                  style: TextStyle(
+                      fontFamily: "PoppinsLight",
+                      fontSize: 17.0,
+                      color: Colors.black87),
+                  decoration: InputDecoration(
+                    border: InputBorder.none,
+                    counterStyle: TextStyle(height: double.minPositive,),
+                    counterText: "",
+                    contentPadding: const EdgeInsets.symmetric(vertical: 0.0),
+                    enabledBorder: OutlineInputBorder(
+                      borderSide: BorderSide(
+                          color: kPrimaryColorBlue,
+                          width: 0.5
+                      ),
+                      borderRadius: const BorderRadius.all(Radius.circular(35.0)),
+                    ),
+                    focusedBorder: new OutlineInputBorder(
+                      borderSide: BorderSide(
+                          color: kPrimaryColorBlue,
+                          width: 0.5),
+                      borderRadius: const BorderRadius.all(Radius.circular(35.0)),
+                    ),
+                    prefixIcon: Icon(
+                      CupertinoIcons.doc_richtext,
+                      color: kPrimaryColorBlue,
+                      size: 23.0,
+                    ),
+                    labelText: "Terms and Conditions 2",
+                    labelStyle: TextStyle(
+                        fontFamily: "PoppinsLight", fontSize: 13.0, color: kPrimaryColorBlue),
+                  ),
+                ),
+              ),
+              Container(
+                width: size.width * 0.95,
+                padding: EdgeInsets.only(top: 0.0, bottom: 10.0, left: 0.0, right: 0.0),
+                child: TextField(
+                  maxLength: 28,
+                  controller: term3,
+                  inputFormatters: <TextInputFormatter>[
+                  ],
+                  style: TextStyle(
+                      fontFamily: "PoppinsLight",
+                      fontSize: 17.0,
+                      color: Colors.black87),
+                  decoration: InputDecoration(
+                    border: InputBorder.none,
+                    counterStyle: TextStyle(height: double.minPositive,),
+                    counterText: "",
+                    contentPadding: const EdgeInsets.symmetric(vertical: 0.0),
+                    enabledBorder: OutlineInputBorder(
+                      borderSide: BorderSide(
+                          color: kPrimaryColorBlue,
+                          width: 0.5
+                      ),
+                      borderRadius: const BorderRadius.all(Radius.circular(35.0)),
+                    ),
+                    focusedBorder: new OutlineInputBorder(
+                      borderSide: BorderSide(
+                          color: kPrimaryColorBlue,
+                          width: 0.5),
+                      borderRadius: const BorderRadius.all(Radius.circular(35.0)),
+                    ),
+                    prefixIcon: Icon(
+                      CupertinoIcons.doc_richtext,
+                      color: kPrimaryColorBlue,
+                      size: 23.0,
+                    ),
+                    labelText: "Terms and Conditions 3",
+                    labelStyle: TextStyle(
+                        fontFamily: "PoppinsLight", fontSize: 13.0, color: kPrimaryColorBlue),
+                  ),
+                ),
               ),
             ],
           ),
@@ -537,6 +680,8 @@ class _CreateReceiptsState extends State<CreateReceipts> {
   }
 
   createTemplate() async {
+
+
     if(mobController.text.length < 10){
       showInSnackBar("Please enter Valid Mobile No.");
       return null;
@@ -549,10 +694,7 @@ class _CreateReceiptsState extends State<CreateReceipts> {
       showInSnackBar("Please enter Cash Received From");
       return null;
     }
-    if(rsController.text.isEmpty){
-      showInSnackBar("Please enter Rs");
-      return null;
-    }
+
     if(amtForController.text.isEmpty){
       showInSnackBar("Please enter Amount For");
       return null;
@@ -561,10 +703,7 @@ class _CreateReceiptsState extends State<CreateReceipts> {
       showInSnackBar("Please enter Total");
       return null;
     }
-    if(gtController.text.isEmpty){
-      showInSnackBar("Please enter Grand Total");
-      return null;
-    }
+
     if(dateController.text.isEmpty){
       showInSnackBar("Please Select Date");
       return null;
@@ -574,6 +713,28 @@ class _CreateReceiptsState extends State<CreateReceipts> {
       return null;
     }
 
+    if(radioItem1.contains("cash")){
+      setState(() {
+        val1='cash';
+      });
+    }else if(radioItem1.contains('Cheque')){
+      setState(() {
+        val2='Cheque';
+      });
+
+    }else if(radioItem1.contains("other")){
+      setState(() {
+        val3='Cheque';
+      });
+    }
+
+
+    print(val1);
+    print(val2);
+    print(val3);
+
+
+
     _showLoaderDialog(context);
 
     final param = {
@@ -581,12 +742,16 @@ class _CreateReceiptsState extends State<CreateReceipts> {
       "m_business_id": storeID,
       "mobile_no": mobController.text,
       "cash_received_from": crfController.text,
-      "rs": rsController.text,
       "amount_for": amtForController.text,
       "date": dateController.text,
       "template_choice": templateID,
+      "cash":val1,
+      "cheque":val2,
+      "other":val3,
+      "term_and_condition1":term1.text,
+      "term_and_condition2":term2.text,
+      "term_and_condition3":term3.text,
       "total": totalController.text,
-      "grand_total": gtController.text,
     };
 
     final response = await http.post(
@@ -623,4 +788,3 @@ class AlwaysDisabledFocusNode extends FocusNode {
   @override
   bool get hasFocus => false;
 }
-

@@ -127,6 +127,7 @@ class DmEnquiryState extends State<DmEnquiry> {
                     top: 20.0, bottom: 10.0, left: 0.0, right: 0.0),
                 child: new TextField(
                   controller: nameController,
+                  maxLength: 20,
                   style: TextStyle(
                       //fontFamily: "PoppinsBold",
                       fontSize: 17.0,
@@ -540,6 +541,7 @@ class DmEnquiryState extends State<DmEnquiry> {
         nameController.clear();
         mobController.clear();
         emailController.clear();
+        _items.clear();
         _chosenName = null;
         _chosenValue = null;
         dropdownInt = "Select Interest";

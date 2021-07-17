@@ -75,7 +75,7 @@ class HistoryState extends State<History> {
       });
       print(paymentHistoryFromJson(res.body).data.length);
 
-      print("Vinay"+total);
+      print("Vinay"+total.toString());
       print(totalTran);
 
     } else {
@@ -225,7 +225,7 @@ class HistoryState extends State<History> {
                   else if (snapshot.hasError) {
                     print(snapshot.error);
                     return Center(
-                      child: Text("No Data Found!"),
+                      child: Text("No History Available"),
                     );
                   } else {
                     if (snapshot.connectionState == ConnectionState.done &&
@@ -250,49 +250,37 @@ class HistoryState extends State<History> {
 
                                       dense: true,
                                       title: Text(
-                                          snapshot.data[index].subscriptionName,
+                                          snapshot.data[index].business,
                                           style: TextStyle(fontSize: 15.0, fontFamily: "PoppinsMedium", fontWeight: FontWeight.bold)
                                       ),
                                       subtitle: Text('Purchase Date : ${snapshot.data[index].purchaseDate }\nTransaction Id : ${snapshot.data[index].transactionId}',
                                           style: TextStyle(fontSize: 10.0)) ,
+                                      isThreeLine: false,
                                       trailing: Wrap(
                                         spacing: 10, // space between two icons
                                         crossAxisAlignment:
                                         WrapCrossAlignment.center,
                                         children: <Widget>[
 
-                                          if((snapshot.data[index].isSubscriptionPlan))
-                                          Text('Green Bill ',
-                                              style: TextStyle(fontSize: 10.0,color: Colors.black)),
-                                          if((snapshot.data[index].isPromotionalSmsPlan))
-                                            Text('Promotional Sms',
-                                                style: TextStyle(fontSize: 10.0,color: Colors.black)),
-                                          if((snapshot.data[index].isAddOnPlan))
-                                            Text('Add On ',
-                                                style: TextStyle(fontSize: 10.0,color: Colors.black)),
-                                          if((snapshot.data[index].isTransactionalSmsPlan))
-                                            Text('Transactional Sms',
-                                                style: TextStyle(fontSize: 10.0,color: Colors.black)),
-
                                           Text(
-                                              "₹ ${snapshot.data[index].cost}",
+                                              "₹ ${snapshot.data[index].cost.toString()}",
                                               style: TextStyle(fontSize: 15.0, fontFamily: "PoppinsMedium", fontWeight: FontWeight.bold)
                                           ),
                                         ],
                                       ),
-                                      onTap: () {
-                                        Navigator.of(context).push(
-                                          PageRouteBuilder(
-                                            opaque: false,
-                                            pageBuilder: (_, animation, __) {
-                                              return FadeTransition(
-                                                opacity: animation,
-                                                child: ViewBill("","",snapshot.data[index].subscriptionBillUrl,"","",""),
-                                              );
-                                            },
-                                          ),
-                                        );
-                                      },
+                                      // onTap: () {
+                                      //   Navigator.of(context).push(
+                                      //     PageRouteBuilder(
+                                      //       opaque: false,
+                                      //       pageBuilder: (_, animation, __) {
+                                      //         return FadeTransition(
+                                      //           opacity: animation,
+                                      //           child: ViewBill("","",snapshot.data[index].billUrl,"","",""),
+                                      //         );
+                                      //       },
+                                      //     ),
+                                      //   );
+                                      // },
                                     ),
                                   ),
 

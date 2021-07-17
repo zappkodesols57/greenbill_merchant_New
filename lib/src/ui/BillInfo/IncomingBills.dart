@@ -241,8 +241,6 @@ class BillIncomingState extends State<BillIncoming> {
                                       WrapCrossAlignment.center,
                                       children: <Widget>[
 
-                                        
-
                                         Container(
                                             width: 70.0,
                                             child: Text(snapshot.data[index].billAmount.characters.contains(".")?
