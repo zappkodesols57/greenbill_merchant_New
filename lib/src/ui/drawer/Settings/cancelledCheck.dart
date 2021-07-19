@@ -397,7 +397,6 @@ class _CancelledCheckState extends State<CancelledCheck> {
     int userID = prefs.getInt("userID");
     String tokenn = prefs.getString("token");
 
-
     if (_imageFile == null) {
       showInSnackBar("Please select Cancelled Cheque");
       return null;

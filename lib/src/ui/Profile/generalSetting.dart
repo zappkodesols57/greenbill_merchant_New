@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:greenbill_merchant/src/models/model_getGeneralSetting.dart';
+import 'package:greenbill_merchant/src/ui/drawer/Settings/cancelledCheck.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -199,6 +200,33 @@ class _MyGeneralSettingState extends State<GeneralSetting> {
         child: Center(
           child: Column(
             children: <Widget>[
+              Container(
+                padding: EdgeInsets.only(top: 10.0),
+               child: MaterialButton(
+                 elevation: 10,
+                    color: kPrimaryColorBlue,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: const BorderRadius.all(Radius.circular(35.0)),
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.all(10.0),
+                      child: Text(
+                        "Cancelled Cheque Photo",
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 20.0,
+                            fontWeight: FontWeight.w500,
+                            fontFamily: "PoppinsMedium"),
+                      ),
+                    ),
+                    onPressed: () {
+                      {
+                        Navigator.push(context,
+                            MaterialPageRoute(
+                                builder: (context) => CancelledCheck()));
+                      }
+                    }),
+              ),
               Container(
                 width: size.width * 0.95,
                 padding: EdgeInsets.only(top: 20.0, bottom: 10.0, left: 0.0, right: 0.0),
@@ -980,6 +1008,54 @@ class _MyGeneralSettingState extends State<GeneralSetting> {
                   ),
                 ),
               ),
+              // GestureDetector(
+              //   onTap:() {
+              //     Navigator.push(context,
+              //         MaterialPageRoute(
+              //             builder: (context) => CancelledCheck()));
+              //   },
+              //   child:
+              // Container(
+              //   width: size.width * 0.95,
+              //   padding: EdgeInsets.only(top: 0.0, bottom: 10.0, left: 0.0, right: 0.0),
+              //   child: new TextField(
+              //     enableInteractiveSelection: false, // will disable paste operation
+              //     focusNode: new AlwaysDisabledFocusNode(),
+              //     controller: branchController,
+              //     style: TextStyle(
+              //       //fontFamily: "PoppinsBold",
+              //         fontSize: 17.0,
+              //         color: Colors.black87),
+              //     decoration: InputDecoration(
+              //       border: InputBorder.none,
+              //       counterStyle: TextStyle(height: double.minPositive,),
+              //       counterText: "",
+              //       contentPadding: const EdgeInsets.symmetric(vertical: 0.0),
+              //       enabledBorder: OutlineInputBorder(
+              //         borderSide: BorderSide(
+              //             color: kPrimaryColorBlue,
+              //             width: 0.5
+              //         ),
+              //         borderRadius: const BorderRadius.all(Radius.circular(35.0)),
+              //       ),
+              //       focusedBorder: new OutlineInputBorder(
+              //         borderSide: BorderSide(
+              //             color: kPrimaryColorBlue,
+              //             width: 0.5),
+              //         borderRadius: const BorderRadius.all(Radius.circular(35.0)),
+              //       ),
+              //       prefixIcon: Icon(
+              //         FontAwesomeIcons.image,
+              //         color: kPrimaryColorBlue,
+              //         size: 23.0,
+              //       ),
+              //       labelText: "Cancelled Cheque Photo",
+              //       labelStyle: TextStyle(
+              //           fontFamily: "PoppinsLight", fontSize: 13.0, color: kPrimaryColorBlue),
+              //     ),
+              //   ),
+              // ),
+              // ),
               // Container(
               //   width: size.width * 0.99,
               //   padding: EdgeInsets.only(

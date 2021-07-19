@@ -160,13 +160,13 @@ class SettingsState extends State<Settings> {
             Navigator.push(context,
                 MaterialPageRoute(builder: (context) => SuggestABrand()));
           }),
-          Divider(
-            thickness: 1.0,
-          ),
-          _buildListItem("Cancelled Cheque Photo",Icons.photo, () {
-            Navigator.push(context,
-                MaterialPageRoute(builder: (context) => CancelledCheck()));
-          }),
+          // Divider(
+          //   thickness: 1.0,
+          // ),
+          // _buildListItem("Cancelled Cheque Photo",Icons.photo, () {
+          //   Navigator.push(context,
+          //       MaterialPageRoute(builder: (context) => CancelledCheck()));
+          // }),
           Divider(
             thickness: 1.0,
           ),
