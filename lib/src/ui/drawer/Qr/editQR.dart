@@ -138,7 +138,7 @@ class EditQRState extends State<EditQR> {
                     child: QrImage(
                       data: "${widget.mobileNo}~${widget.vehicleType}~${widget.vehicleNo}~GreenBill",
                       version: QrVersions.auto,
-                      size: 300.0,
+                      size: 250.0,
                       // gapless: false,
                       foregroundColor: kPrimaryColorBlue,
                       embeddedImage: AssetImage('assets/icon.png'),
@@ -329,10 +329,6 @@ class EditQRState extends State<EditQR> {
                     '2 Wheeler',
                     '3 Wheeler',
                     '4 Wheeler',
-                    'Lorry',
-                    'Truck',
-                    'Special Vehicle',
-                    'Cycle',
                     'Other'
                   ]
                       .map<DropdownMenuItem<String>>((String value) {
