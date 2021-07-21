@@ -48,7 +48,6 @@ class CashMemoListState extends State<CashMemoList> {
     });
     print('$token\n$busId');
   }
-
   Future<List<Datum>> getPassLists() async {
     final param = {
       "m_business_id": busId,
@@ -67,7 +66,6 @@ class CashMemoListState extends State<CashMemoList> {
       throw Exception('Failed to load List');
     }
   }
-
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -139,7 +137,6 @@ class CashMemoListState extends State<CashMemoList> {
                     color: kPrimaryColorBlue),
               ),
             ),
-
           ),
           Expanded(
             child: FutureBuilder<List<Datum>>(
