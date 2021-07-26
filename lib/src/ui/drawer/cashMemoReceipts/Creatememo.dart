@@ -1159,109 +1159,111 @@ class _CreateReceiptsState extends State<CreateMemo> {
                 ),
 
 
-              Container(
-                width: size.width * 0.95,
-                padding: EdgeInsets.only(
-                    top: 0.0, bottom: 10.0, left: 0.0, right: 0.0),
-                child: InputDecorator(
-                  decoration: InputDecoration(
-                    prefixIcon: Icon(
-                      CupertinoIcons.rectangle_dock,
-                      color: kPrimaryColorBlue,
-                    ),
-                    labelText: "Cash Memo Template *",
-                    labelStyle: TextStyle(
-                        fontFamily: "PoppinsLight",
-                        fontSize: 13.0,
-                        color: kPrimaryColorBlue),
-                    border: InputBorder.none,
-                    counterStyle: TextStyle(
-                      height: double.minPositive,
-                    ),
-                    counterText: "",
-                    contentPadding:
-                    const EdgeInsets.symmetric(vertical: .0, horizontal: 5),
-                    enabledBorder: OutlineInputBorder(
-                      borderSide: BorderSide(
-                          color: kPrimaryColorBlue,
-                          width: 0.5),
-                      borderRadius: const BorderRadius.all(Radius.circular(35.0)),
-                    ),
-                    focusedBorder: new OutlineInputBorder(
-                      borderSide: BorderSide(
-                          color: kPrimaryColorBlue,
-                          width: 0.5),
-                      borderRadius: const BorderRadius.all(Radius.circular(35.0)),
-                    ),
-                  ),
-                  child: DropdownButtonHideUnderline(
-                    child: new DropdownButton<String>(
-                      iconEnabledColor: Colors.black,
-                      dropdownColor: Colors.white,
-                      value: dropdownValue,
-                      isExpanded: true,
-                      style: TextStyle(
-                          fontFamily: "PoppinsLight",
-                          fontSize: 13.0,
-                          color: kPrimaryColorBlue
-                      ),
-                      underline: Container(
-                        height: 1,
-                        width: 50,
-                        color: Colors.black38,
-                      ),
-                      onChanged: (String newValue) {
+              // Container(
+              //   width: size.width * 0.95,
+              //   padding: EdgeInsets.only(
+              //       top: 0.0, bottom: 10.0, left: 0.0, right: 0.0),
+              //   child: InputDecorator(
+              //     decoration: InputDecoration(
+              //       prefixIcon: Icon(
+              //         CupertinoIcons.rectangle_dock,
+              //         color: kPrimaryColorBlue,
+              //       ),
+              //       labelText: "Cash Memo Template *",
+              //       labelStyle: TextStyle(
+              //           fontFamily: "PoppinsLight",
+              //           fontSize: 13.0,
+              //           color: kPrimaryColorBlue),
+              //       border: InputBorder.none,
+              //       counterStyle: TextStyle(
+              //         height: double.minPositive,
+              //       ),
+              //       counterText: "",
+              //       contentPadding:
+              //       const EdgeInsets.symmetric(vertical: .0, horizontal: 5),
+              //       enabledBorder: OutlineInputBorder(
+              //         borderSide: BorderSide(
+              //             color: kPrimaryColorBlue,
+              //             width: 0.5),
+              //         borderRadius: const BorderRadius.all(Radius.circular(35.0)),
+              //       ),
+              //       focusedBorder: new OutlineInputBorder(
+              //         borderSide: BorderSide(
+              //             color: kPrimaryColorBlue,
+              //             width: 0.5),
+              //         borderRadius: const BorderRadius.all(Radius.circular(35.0)),
+              //       ),
+              //     ),
+              //     child: DropdownButtonHideUnderline(
+              //       child: new DropdownButton<String>(
+              //         iconEnabledColor: Colors.black,
+              //         dropdownColor: Colors.white,
+              //         value: dropdownValue,
+              //         isExpanded: true,
+              //         style: TextStyle(
+              //             fontFamily: "PoppinsLight",
+              //             fontSize: 13.0,
+              //             color: kPrimaryColorBlue
+              //         ),
+              //         underline: Container(
+              //           height: 1,
+              //           width: 50,
+              //           color: Colors.black38,
+              //         ),
+              //         onChanged: (String newValue) {
+              //
+              //           var value = newValue.split(" ").last;
+              //           String temp;
+              //
+              //           if(value == "1")
+              //             temp = "http://157.230.228.250/media/cash-memo/cash-memo-1.png";
+              //           else if(value == "2")
+              //             temp = "http://157.230.228.250/media/cash-memo/cash-memo-2.png";
+              //           else if(value == "3")
+              //             temp = "http://157.230.228.250/media/cash-memo/cash-memo-3.png";
+              //           else if(value == "4")
+              //             temp = "http://157.230.228.250/media/cash-memo/cash-memo-4.png";
+              //           else if(value == "5")
+              //             temp = "http://157.230.228.250/media/cash-memo/cash-memo-5.png";
+              //           else temp = "";
+              //
+              //           setState(() {
+              //             dropdownValue = newValue;
+              //             template = temp;
+              //             templateID = value;
+              //           });
+              //         },
+              //         items: <String>[
+              //           'Select Cash Memo Template',
+              //           'Cash Memo Template 1',
+              //           'Cash Memo Template 2',
+              //           'Cash Memo Template 3',
+              //           'Cash Memo Template 4',
+              //           'Cash Memo Template 5',
+              //         ].map<DropdownMenuItem<String>>((String value) {
+              //           return DropdownMenuItem<String>(
+              //             value: value,
+              //             child: Text(
+              //               value,
+              //               style: TextStyle(
+              //                   fontSize: 17.0,
+              //                   color: Colors.black
+              //               ),
+              //             ),
+              //           );
+              //         }).toList(),
+              //       ),
+              //     ),
+              //   ),
+              // ),
 
-                        var value = newValue.split(" ").last;
-                        String temp;
+              // if(template.isNotEmpty)
+              //   Container(
+              //     height: 200.0,
+              //     padding: EdgeInsets.only(top: 0.0, bottom: 10.0, left: 0.0, right: 0.0),
+              //     child: Image.network(template),
+              //   ),
 
-                        if(value == "1")
-                          temp = "http://157.230.228.250/media/cash-memo/cash-memo-1.png";
-                        else if(value == "2")
-                          temp = "http://157.230.228.250/media/cash-memo/cash-memo-2.png";
-                        else if(value == "3")
-                          temp = "http://157.230.228.250/media/cash-memo/cash-memo-3.png";
-                        else if(value == "4")
-                          temp = "http://157.230.228.250/media/cash-memo/cash-memo-4.png";
-                        else if(value == "5")
-                          temp = "http://157.230.228.250/media/cash-memo/cash-memo-5.png";
-                        else temp = "";
-
-                        setState(() {
-                          dropdownValue = newValue;
-                          template = temp;
-                          templateID = value;
-                        });
-                      },
-                      items: <String>[
-                        'Select Cash Memo Template',
-                        'Cash Memo Template 1',
-                        'Cash Memo Template 2',
-                        'Cash Memo Template 3',
-                        'Cash Memo Template 4',
-                        'Cash Memo Template 5',
-                      ].map<DropdownMenuItem<String>>((String value) {
-                        return DropdownMenuItem<String>(
-                          value: value,
-                          child: Text(
-                            value,
-                            style: TextStyle(
-                                fontSize: 17.0,
-                                color: Colors.black
-                            ),
-                          ),
-                        );
-                      }).toList(),
-                    ),
-                  ),
-                ),
-              ),
-              if(template.isNotEmpty)
-                Container(
-                  height: 200.0,
-                  padding: EdgeInsets.only(top: 0.0, bottom: 10.0, left: 0.0, right: 0.0),
-                  child: Image.network(template),
-                ),
               Container(
                 width: size.width * 0.95,
                 padding: EdgeInsets.only(top: 0.0, bottom: 10.0, left: 0.0, right: 0.0),
@@ -1340,7 +1342,7 @@ class _CreateReceiptsState extends State<CreateMemo> {
                       color: kPrimaryColorBlue,
                       size: 23.0,
                     ),
-                    labelText: "Terms and Conditions 1",
+                    labelText: "Terms and Conditions 2",
                     labelStyle: TextStyle(
                         fontFamily: "PoppinsLight", fontSize: 13.0, color: kPrimaryColorBlue),
                   ),
@@ -1382,7 +1384,7 @@ class _CreateReceiptsState extends State<CreateMemo> {
                       color: kPrimaryColorBlue,
                       size: 23.0,
                     ),
-                    labelText: "Terms and Conditions 1",
+                    labelText: "Terms and Conditions 3",
                     labelStyle: TextStyle(
                         fontFamily: "PoppinsLight", fontSize: 13.0, color: kPrimaryColorBlue),
                   ),
@@ -1461,10 +1463,10 @@ class _CreateReceiptsState extends State<CreateMemo> {
       showInSnackBar("Please Select Date");
       return null;
     }
-    if(dropdownValue == "Select Cash Memo Template"){
-      showInSnackBar("Please Select Cash Memo Template");
-      return null;
-    }
+    // if(dropdownValue == "Select Cash Memo Template"){
+    //   showInSnackBar("Please Select Cash Memo Template");
+    //   return null;
+    // }
 
 
     if(amtForController.text.isNotEmpty){
@@ -1550,7 +1552,6 @@ class _CreateReceiptsState extends State<CreateMemo> {
       "address": addressController.text,
       "mobile_number":mobController.text,
       "date":  dateController.text,
-      "template_choice": templateID,
       "description":(discAll.isEmpty) ? "" : discAll.reduce((value, element) => value + ',' + element),
       "quantity":(quanAll.isEmpty) ? "" : quanAll.reduce((value, element) => value + ',' + element),
       "rate":(rateAll.isEmpty) ? "" : rateAll.reduce((value, element) => value + ',' + element),

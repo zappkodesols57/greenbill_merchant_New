@@ -404,109 +404,112 @@ class _CreateReceiptsState extends State<CreateReceipts> {
                   },
                 ),
               ),
-              Container(
-                width: size.width * 0.95,
-                padding: EdgeInsets.only(
-                    top: 0.0, bottom: 10.0, left: 0.0, right: 0.0),
-                child: InputDecorator(
-                  decoration: InputDecoration(
-                    prefixIcon: Icon(
-                      CupertinoIcons.rectangle_dock,
-                      color: kPrimaryColorBlue,
-                    ),
-                    labelText: "Receipt Template *",
-                    labelStyle: TextStyle(
-                        fontFamily: "PoppinsLight",
-                        fontSize: 13.0,
-                        color: kPrimaryColorBlue),
-                    border: InputBorder.none,
-                    counterStyle: TextStyle(
-                      height: double.minPositive,
-                    ),
-                    counterText: "",
-                    contentPadding:
-                    const EdgeInsets.symmetric(vertical: .0, horizontal: 5),
-                    enabledBorder: OutlineInputBorder(
-                      borderSide: BorderSide(
-                          color: kPrimaryColorBlue,
-                          width: 0.5),
-                      borderRadius: const BorderRadius.all(Radius.circular(35.0)),
-                    ),
-                    focusedBorder: new OutlineInputBorder(
-                      borderSide: BorderSide(
-                          color: kPrimaryColorBlue,
-                          width: 0.5),
-                      borderRadius: const BorderRadius.all(Radius.circular(35.0)),
-                    ),
-                  ),
-                  child: DropdownButtonHideUnderline(
-                    child: new DropdownButton<String>(
-                      iconEnabledColor: Colors.black,
-                      dropdownColor: Colors.white,
-                      value: dropdownValue,
-                      isExpanded: true,
-                      style: TextStyle(
-                          fontFamily: "PoppinsLight",
-                          fontSize: 13.0,
-                          color: kPrimaryColorBlue
-                      ),
-                      underline: Container(
-                        height: 1,
-                        width: 50,
-                        color: Colors.black38,
-                      ),
-                      onChanged: (String newValue) {
+              // Container(
+              //   width: size.width * 0.95,
+              //   padding: EdgeInsets.only(
+              //       top: 0.0, bottom: 10.0, left: 0.0, right: 0.0),
+              //   child: InputDecorator(
+              //     decoration: InputDecoration(
+              //       prefixIcon: Icon(
+              //         CupertinoIcons.rectangle_dock,
+              //         color: kPrimaryColorBlue,
+              //       ),
+              //       labelText: "Receipt Template *",
+              //       labelStyle: TextStyle(
+              //           fontFamily: "PoppinsLight",
+              //           fontSize: 13.0,
+              //           color: kPrimaryColorBlue),
+              //       border: InputBorder.none,
+              //       counterStyle: TextStyle(
+              //         height: double.minPositive,
+              //       ),
+              //       counterText: "",
+              //       contentPadding:
+              //       const EdgeInsets.symmetric(vertical: .0, horizontal: 5),
+              //       enabledBorder: OutlineInputBorder(
+              //         borderSide: BorderSide(
+              //             color: kPrimaryColorBlue,
+              //             width: 0.5),
+              //         borderRadius: const BorderRadius.all(Radius.circular(35.0)),
+              //       ),
+              //       focusedBorder: new OutlineInputBorder(
+              //         borderSide: BorderSide(
+              //             color: kPrimaryColorBlue,
+              //             width: 0.5),
+              //         borderRadius: const BorderRadius.all(Radius.circular(35.0)),
+              //       ),
+              //     ),
+              //     child: DropdownButtonHideUnderline(
+              //       child: new DropdownButton<String>(
+              //         iconEnabledColor: Colors.black,
+              //         dropdownColor: Colors.white,
+              //         value: dropdownValue,
+              //         isExpanded: true,
+              //         style: TextStyle(
+              //             fontFamily: "PoppinsLight",
+              //             fontSize: 13.0,
+              //             color: kPrimaryColorBlue
+              //         ),
+              //         underline: Container(
+              //           height: 1,
+              //           width: 50,
+              //           color: Colors.black38,
+              //         ),
+              //         onChanged: (String newValue) {
+              //
+              //           var value = newValue.split(" ").last;
+              //           String temp;
+              //
+              //           if(value == "1")
+              //             temp = "http://157.230.228.250/media/receipt/receipt-1.png";
+              //           else if(value == "2")
+              //             temp = "http://157.230.228.250/media/receipt/receipt-2.png";
+              //           else if(value == "3")
+              //             temp = "http://157.230.228.250/media/receipt/receipt-3.png";
+              //           else if(value == "4")
+              //             temp = "http://157.230.228.250/media/receipt/receipt-4.png";
+              //           else if(value == "5")
+              //             temp = "http://157.230.228.250/media/receipt/receipt-5.png";
+              //           else temp = "";
+              //
+              //           setState(() {
+              //             dropdownValue = newValue;
+              //             template = temp;
+              //             templateID = value;
+              //           });
+              //         },
+              //         items: <String>[
+              //           'Select Receipt Template',
+              //           'Receipt Template 1',
+              //           'Receipt Template 2',
+              //           'Receipt Template 3',
+              //           'Receipt Template 4',
+              //           'Receipt Template 5',
+              //         ].map<DropdownMenuItem<String>>((String value) {
+              //           return DropdownMenuItem<String>(
+              //             value: value,
+              //             child: Text(
+              //               value,
+              //               style: TextStyle(
+              //                   fontSize: 17.0,
+              //                   color: Colors.black
+              //               ),
+              //             ),
+              //           );
+              //         }).toList(),
+              //       ),
+              //     ),
+              //   ),
+              // ),
+              // if(template.isNotEmpty)
+              //   Container(
+              //     height: 200.0,
+              //     padding: EdgeInsets.only(top: 0.0, bottom: 10.0, left: 0.0, right: 0.0),
+              //     child: Image.network(template),
+              //   ),
 
-                        var value = newValue.split(" ").last;
-                        String temp;
 
-                        if(value == "1")
-                          temp = "http://157.230.228.250/media/receipt/receipt-1.png";
-                        else if(value == "2")
-                          temp = "http://157.230.228.250/media/receipt/receipt-2.png";
-                        else if(value == "3")
-                          temp = "http://157.230.228.250/media/receipt/receipt-3.png";
-                        else if(value == "4")
-                          temp = "http://157.230.228.250/media/receipt/receipt-4.png";
-                        else if(value == "5")
-                          temp = "http://157.230.228.250/media/receipt/receipt-5.png";
-                        else temp = "";
 
-                        setState(() {
-                          dropdownValue = newValue;
-                          template = temp;
-                          templateID = value;
-                        });
-                      },
-                      items: <String>[
-                        'Select Receipt Template',
-                        'Receipt Template 1',
-                        'Receipt Template 2',
-                        'Receipt Template 3',
-                        'Receipt Template 4',
-                        'Receipt Template 5',
-                      ].map<DropdownMenuItem<String>>((String value) {
-                        return DropdownMenuItem<String>(
-                          value: value,
-                          child: Text(
-                            value,
-                            style: TextStyle(
-                                fontSize: 17.0,
-                                color: Colors.black
-                            ),
-                          ),
-                        );
-                      }).toList(),
-                    ),
-                  ),
-                ),
-              ),
-              if(template.isNotEmpty)
-                Container(
-                  height: 200.0,
-                  padding: EdgeInsets.only(top: 0.0, bottom: 10.0, left: 0.0, right: 0.0),
-                  child: Image.network(template),
-                ),
               Container(
                 width: size.width * 0.95,
                 padding: EdgeInsets.only(top: 0.0, bottom: 10.0, left: 0.0, right: 0.0),
@@ -708,10 +711,10 @@ class _CreateReceiptsState extends State<CreateReceipts> {
       showInSnackBar("Please Select Date");
       return null;
     }
-    if(dropdownValue == "Select Receipt Template"){
-      showInSnackBar("Please Select Receipt Template");
-      return null;
-    }
+    // if(dropdownValue == "Select Receipt Template"){
+    //   showInSnackBar("Please Select Receipt Template");
+    //   return null;
+    // }
 
     if(radioItem1.contains("cash")){
       setState(() {
@@ -744,7 +747,6 @@ class _CreateReceiptsState extends State<CreateReceipts> {
       "cash_received_from": crfController.text,
       "amount_for": amtForController.text,
       "date": dateController.text,
-      "template_choice": templateID,
       "cash":val1,
       "cheque":val2,
       "other":val3,

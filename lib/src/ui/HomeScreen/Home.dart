@@ -15,6 +15,7 @@ import 'package:greenbill_merchant/src/ui/MySubcription/newSubFile.dart';
 import 'package:greenbill_merchant/src/ui/MySubcription/tabbarsubscription.dart';
 import 'package:greenbill_merchant/src/ui/PayLinks/paylinks.dart';
 import 'package:greenbill_merchant/src/ui/Profile/personalInfo.dart';
+import 'package:greenbill_merchant/src/ui/Promotions/bulkSMS.dart';
 import 'package:greenbill_merchant/src/ui/Promotions/offersList.dart';
 import 'package:greenbill_merchant/src/ui/Promotions/tabBarPromotions.dart';
 import 'package:greenbill_merchant/src/ui/drawer/CustomerInfo/customerInfo.dart';
@@ -30,6 +31,7 @@ import 'package:greenbill_merchant/src/ui/drawer/PetrolPump/AddOn/addOn_products
 import 'package:greenbill_merchant/src/ui/drawer/PetrolPump/AddUser/viewAllUsers.dart';
 import 'package:greenbill_merchant/src/ui/drawer/PetrolPump/ManageProduct/manage_products.dart';
 import 'package:greenbill_merchant/src/ui/drawer/Qr/allQrLists.dart';
+import 'package:greenbill_merchant/src/ui/drawer/ReceivedPayments/receivedPayments.dart';
 import 'package:greenbill_merchant/src/ui/drawer/Settings/settings_main.dart';
 import 'package:greenbill_merchant/src/ui/drawer/Settings/share_a_word.dart';
 import 'package:greenbill_merchant/src/ui/drawer/cashMemoReceipts/tabBarMemo.dart';
@@ -686,6 +688,48 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
                         MaterialPageRoute(builder: (context) => subUpdated()));
                   }
               ),
+              ListTile(
+                  dense: false,
+                  title: Text("Bulk SMS"),
+                  leading: Container(
+                    width: 35.0,
+                    height: 35.0,
+                    margin: const EdgeInsets.only(right: 10.0),
+                    decoration: new BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: new BorderRadius.circular(25.0),
+                    ),
+                    alignment: Alignment.center,
+                    child: new Icon(CupertinoIcons.bubble_left_bubble_right,
+                        color: kPrimaryColorBlue, size: 25.0),
+                  ),
+                  onTap: () {
+                    Navigator.of(context).pop();
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => BulkSMS()));
+                  }),
+
+              ListTile(
+                  dense: false,
+                  title: Text("Received Payments"),
+                  leading: Container(
+                    width: 35.0,
+                    height: 35.0,
+                    margin: const EdgeInsets.only(right: 10.0),
+                    decoration: new BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: new BorderRadius.circular(25.0),
+                    ),
+                    alignment: Alignment.center,
+                    child: new Icon(CupertinoIcons.tray_arrow_down,
+                        color: kPrimaryColorBlue, size: 25.0),
+                  ),
+                  onTap: () {
+                    Navigator.of(context).pop();
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => ReceivedPayments()));
+                  }),
+
               ListTile(
                   dense: false,
                   title: Text("Offers"),

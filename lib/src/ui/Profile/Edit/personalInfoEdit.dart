@@ -651,10 +651,11 @@ class _MyPersonalInfoEditState extends State<PersonalInfoEdit> {
       showInSnackBar("Please enter valid Pan Number", 2);
       return null;
     }
-    if (panController.text.length > 10) {
-      showInSnackBar("Please enter valid Pan Number", 2);
-      return null;
-    }
+    if(mobController.text.isEmpty) {
+        showInSnackBar("Please enter Mobile Number", 2);
+        return null;
+      }
+
     if (validatePan(panController.text) == false) {
       showInSnackBar("Invalid Pan Number", 2);
       return null;
@@ -689,7 +690,6 @@ class _MyPersonalInfoEditState extends State<PersonalInfoEdit> {
     CommonData data;
     var responseJson = json.decode(response.body);
     print(response.body);
-    data = new CommonData.fromJson(jsonDecode(response.body));
     print(responseJson);
 
     if (response.statusCode == 200) {

@@ -7,31 +7,32 @@ import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:greenbill_merchant/src/Services/historyServices.dart';
 import 'package:greenbill_merchant/src/constants.dart';
+import 'package:greenbill_merchant/src/models/model_Received.dart';
 import 'package:greenbill_merchant/src/ui/BillInfo/ViewBill.dart';
 import 'package:sticky_headers/sticky_headers.dart';
-import 'package:greenbill_merchant/src/models/model_History.dart';
 import 'package:http/http.dart' as http;
 import 'package:open_file/open_file.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 
-class History extends StatefulWidget {
+class ReceivedPayments extends StatefulWidget {
   @override
-  HistoryState createState() => HistoryState();
+  ReceivedPaymentsState createState() => ReceivedPaymentsState();
 }
 
-class HistoryState extends State<History> {
+class ReceivedPaymentsState extends State<ReceivedPayments> {
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
   String token, id, storeID;
-  String amount="0";
-  int totalTran=0;
+  int amount = 0;
+  int totalTran = 0;
   int subTotal;
-  String total="0";
+  double total = 0;
   final ScrollController _controller = ScrollController();
   File media;
   Dio dio = new Dio();
   TextEditingController query = new TextEditingController();
+
 
   @override
   void initState() {
@@ -62,41 +63,47 @@ class HistoryState extends State<History> {
     final param = {
       "merchant_business_id": storeID,
     };
-    final res = await http.post("http://157.230.228.250/merchant-get-payment-history-api/",
+    final res = await http.post("http://157.230.228.250/merchant-get-payment-received-api/",
         body: param, headers: {HttpHeaders.authorizationHeader: "Token $token"});
 
     print(res.body);
     print(res.statusCode);
     if (200 == res.statusCode) {
       setState(() {
-        total=paymentHistoryFromJson(res.body).totalAmountSpent;
-        totalTran=paymentHistoryFromJson(res.body).totalTransactionCount;
+        total=receivedPaymentsFromJson(res.body).totalPaymentReceived;
+        totalTran=receivedPaymentsFromJson(res.body).totalPaymentReceivedCount;
       });
-      print(paymentHistoryFromJson(res.body).data.length);
+      print(receivedPaymentsFromJson(res.body).data.length);
 
       print("Vinay"+total.toString());
       print(totalTran);
+
+        return receivedPaymentsFromJson(res.body).data.where((element) => element.mobile.toLowerCase().contains(query.text));
 
     } else {
       throw Exception('Failed to load List');
     }
   }
 
-
   Future<List<Datum>> getBillInfoList() async {
     final param = {
       "merchant_business_id": storeID,
     };
-    final res = await http.post("http://157.230.228.250/merchant-get-payment-history-api/",
+    final res = await http.post("http://157.230.228.250/merchant-get-payment-received-api/",
         body: param, headers: {HttpHeaders.authorizationHeader: "Token $token"});
 
-    //print(res.body);
-   // print(res.statusCode);
+    print(">>>>>>>>>>>>>>>>>${res.body}");
+   print(res.statusCode);
     if (200 == res.statusCode) {
-      print(paymentHistoryFromJson(res.body).data.length);
-      total=paymentHistoryFromJson(res.body).totalAmountSpent;
-      totalTran=paymentHistoryFromJson(res.body).totalTransactionCount;
-      return paymentHistoryFromJson(res.body).data;
+      print(receivedPaymentsFromJson(res.body).data.length);
+      print(receivedPaymentsFromJson(res.body).totalPaymentReceived);
+      print(receivedPaymentsFromJson(res.body).totalPaymentReceivedCount);
+
+      total=receivedPaymentsFromJson(res.body).totalPaymentReceived;
+      totalTran=receivedPaymentsFromJson(res.body).totalPaymentReceivedCount;
+
+
+      return receivedPaymentsFromJson(res.body).data;
     } else {
       throw Exception('Failed to load List');
     }
@@ -108,8 +115,71 @@ class HistoryState extends State<History> {
     return Scaffold(
         key: _scaffoldKey,
         backgroundColor: Colors.white,
+        appBar: AppBar(
+          title: Text('Received Payments'),
+          elevation: 0,
+          leading: IconButton(
+            icon: Icon(Icons.arrow_back_ios),
+            onPressed: () {
+              Navigator.pop(context);
+            },
+          ),
+        ),
         body: Column(
           children: [
+        // Container(
+        // width: size.width * 0.99,
+        //   padding: EdgeInsets.only(
+        //       top: 10.0, bottom: 10.0, left: 0.0, right: 0.0),
+        //   decoration: BoxDecoration(
+        //     borderRadius: BorderRadius.circular(32),
+        //   ),
+        //   child: TextField(
+        //     controller: query,
+        //     onChanged: (value) {
+        //       getBillInfoList();
+        //       setState(() {});
+        //     },
+        //     style: TextStyle(
+        //         fontFamily: "PoppinsMedium",
+        //         fontSize: 15.0,
+        //         color: kPrimaryColorBlue),
+        //     decoration: InputDecoration(
+        //       border: InputBorder.none,
+        //       counterStyle: TextStyle(
+        //         height: double.minPositive,
+        //       ),
+        //       counterText: "",
+        //       contentPadding: const EdgeInsets.symmetric(
+        //           vertical: 13.0, horizontal: 20.0),
+        //       enabledBorder: OutlineInputBorder(
+        //         borderSide:
+        //         BorderSide(color: kPrimaryColorBlue, width: 1.0),
+        //         borderRadius:
+        //         const BorderRadius.all(Radius.circular(35.0)),
+        //       ),
+        //       focusedBorder: new OutlineInputBorder(
+        //         borderSide:
+        //         BorderSide(color: kPrimaryColorBlue, width: 1.0),
+        //         borderRadius:
+        //         const BorderRadius.all(Radius.circular(35.0)),
+        //       ),
+        //       suffixIcon: GestureDetector(
+        //         onTap: () {},
+        //         child: Icon(
+        //           CupertinoIcons.search,
+        //           color: kPrimaryColorBlue,
+        //           size: 25.0,
+        //         ),
+        //       ),
+        //       hintText: "Search Payments",
+        //       hintStyle: TextStyle(
+        //           fontFamily: "PoppinsMedium",
+        //           fontSize: 15.0,
+        //           color: kPrimaryColorBlue),
+        //     ),
+        //   ),
+        // ),
             Container(
               padding: EdgeInsets.fromLTRB(10.00, 10.00, 10.00, 0),
               width: double.maxFinite,
@@ -136,10 +206,10 @@ class HistoryState extends State<History> {
                                 alignment: Alignment.center,
                                 width: size.width * 0.4,
                                 child: Text(
-                                  "Total Amount",
+                                  "Total Received",
                                   style: TextStyle(
                                       color: Colors.black,
-                                      fontSize: 12.0,
+                                      fontSize: 11.0,
                                       fontFamily: "PoppinsBold"),
                                 ),
                               ),
@@ -150,7 +220,7 @@ class HistoryState extends State<History> {
                                   ,
                                   style: TextStyle(
                                       color: Colors.black,
-                                      fontSize: 12.0,
+                                      fontSize: 14.0,
                                       fontFamily: "PoppinsBold"),
                                 ),
                               ),
@@ -179,10 +249,10 @@ class HistoryState extends State<History> {
                                 alignment: Alignment.center,
                                 width: size.width * 0.4,
                                 child: Text(
-                                  "Total Transaction",
+                                  "Total Received Count",
                                   style: TextStyle(
                                       color: Colors.black,
-                                      fontSize: 12.0,
+                                      fontSize: 11.0,
                                       fontFamily: "PoppinsBold"),
                                 ),
                               ),
@@ -193,21 +263,19 @@ class HistoryState extends State<History> {
                                   ,
                                   style: TextStyle(
                                       color: Colors.black,
-                                      fontSize: 12.0,
+                                      fontSize: 14.0,
                                       fontFamily: "PoppinsBold"),
                                 ),
                               ),
 
                             ],),
                         ),
-
                       ),
                     ),
                   ],
                 ),
               ),
             ),
-
             Expanded(
 
               child: FutureBuilder<List<Datum>>(
@@ -249,10 +317,10 @@ class HistoryState extends State<History> {
 
                                       dense: true,
                                       title: Text(
-                                          snapshot.data[index].business,
+                                          snapshot.data[index].mobile,
                                           style: TextStyle(fontSize: 15.0, fontFamily: "PoppinsMedium", fontWeight: FontWeight.bold)
                                       ),
-                                      subtitle: Text('Purchase Date : ${snapshot.data[index].purchaseDate }\nTransaction Id : ${snapshot.data[index].transactionId}',
+                                      subtitle: Text('Transaction Id : ${snapshot.data[index].transactionId }\nPayment Date : ${snapshot.data[index].paymentDate}',
                                           style: TextStyle(fontSize: 10.0)) ,
                                       isThreeLine: false,
                                       trailing: Wrap(
@@ -262,7 +330,7 @@ class HistoryState extends State<History> {
                                         children: <Widget>[
 
                                           Text(
-                                              "₹ ${snapshot.data[index].cost.toString()}",
+                                              "₹ ${snapshot.data[index].amount.toString()}",
                                               style: TextStyle(fontSize: 15.0, fontFamily: "PoppinsMedium", fontWeight: FontWeight.bold)
                                           ),
                                         ],

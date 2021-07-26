@@ -397,7 +397,7 @@ class AddQRState extends State<AddQR> {
       "description": nameController.text,
       "mobile_no": mobController.text,
       // "c_email": emailController.text,
-      // "qr_type": dropdownValueType,
+      // "qr_type": dropdownValueT
       "vehicle_type": dropdownValue,
       "vehicle_no": vehicleNumController.text,
     };

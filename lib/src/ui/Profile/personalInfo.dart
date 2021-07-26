@@ -4,6 +4,7 @@ import 'package:async/async.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:greenbill_merchant/src/models/model_Common.dart';
@@ -11,6 +12,7 @@ import 'package:greenbill_merchant/src/models/model_getPersonalInfo.dart';
 import 'package:greenbill_merchant/src/models/model_getProfileImage.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../constants.dart';
 import 'Edit/personalInfoEdit.dart';
@@ -27,6 +29,8 @@ class PersonalInfo extends StatefulWidget {
 
 class _MyPersonalInfoState extends State<PersonalInfo> {
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
+  bool _isButtonDisabled = true;
+  bool _isButtonDisabledColor = true;
 
   String number, token;
   int id;
@@ -119,19 +123,49 @@ class _MyPersonalInfoState extends State<PersonalInfo> {
   }
 
   @override
+  @override
   void dispose() {
     super.dispose();
+    myFocusNodeFname.dispose();
+    myFocusNodeLname.dispose();
+    myFocusNodeMob.dispose();
+    myFocusNodeEmail.dispose();
+    myFocusNodeDob.dispose();
+    myFocusNodeDegi.dispose();
+    myFocusNodeAadhar.dispose();
+    myFocusNodePan.dispose();
+
     fnameController.dispose();
     lnameController.dispose();
-    nameController.dispose();
     mobController.dispose();
     emailController.dispose();
     dobController.dispose();
     degiController.dispose();
     aadharController.dispose();
     panController.dispose();
-    profile.dispose();
   }
+
+  final FocusNode myFocusNodeFname = FocusNode();
+  final FocusNode myFocusNodeLname = FocusNode();
+  final FocusNode myFocusNodeMob = FocusNode();
+  final FocusNode myFocusNodeEmail = FocusNode();
+  final FocusNode myFocusNodeDob = FocusNode();
+  final FocusNode myFocusNodeDegi = FocusNode();
+  final FocusNode myFocusNodeAadhar = FocusNode();
+  final FocusNode myFocusNodePan = FocusNode();
+  // void dispose() {
+  //   super.dispose();
+  //   fnameController.dispose();
+  //   lnameController.dispose();
+  //   nameController.dispose();
+  //   mobController.dispose();
+  //   emailController.dispose();
+  //   dobController.dispose();
+  //   degiController.dispose();
+  //   aadharController.dispose();
+  //   panController.dispose();
+  //   profile.dispose();
+  // }
 
   TextEditingController fnameController = new TextEditingController();
   TextEditingController lnameController = new TextEditingController();
@@ -143,6 +177,17 @@ class _MyPersonalInfoState extends State<PersonalInfo> {
   TextEditingController aadharController = new TextEditingController();
   TextEditingController panController = new TextEditingController();
   TextEditingController profile = new TextEditingController();
+
+  Future<void> _selectDate(BuildContext context) async {
+    showDatePicker(
+      context: context,
+      initialDate: DateTime.now(),
+      firstDate: DateTime(1950, 1),
+      lastDate: DateTime.now(),
+    ).then((pickedDate) {
+      dobController.text = DateFormat('dd-MM-yyyy').format(pickedDate);
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -157,31 +202,18 @@ class _MyPersonalInfoState extends State<PersonalInfo> {
         leading: IconButton(
           icon: Icon(Icons.arrow_back_ios),
           onPressed: () {
-            Navigator.pop(context, true);
+            Navigator.pop(context, false);
           },
         ),
         actions: <Widget>[
-          IconButton(
-            icon: Icon(
-              Icons.edit,
-              color: Colors.white,
-            ),
+          FlatButton(
+            textColor: _isButtonDisabledColor ? Colors.grey : Colors.white,
             onPressed: () {
-              Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => PersonalInfoEdit(
-                              fnameController.text,
-                              lnameController.text,
-                              mobController.text,
-                              emailController.text,
-                              dobController.text,
-                              degiController.text,
-                              aadharController.text,
-                              panController.text)))
-                  .then((value) => value ? updateProfile() : null);
+              _isButtonDisabled ? null : save();
             },
-          )
+            child: Text("SAVE"),
+            shape: CircleBorder(side: BorderSide(color: Colors.transparent)),
+          ),
         ],
       ),
       body: SingleChildScrollView(
@@ -266,12 +298,16 @@ class _MyPersonalInfoState extends State<PersonalInfo> {
               padding: EdgeInsets.only(
                   top: 20.0, bottom: 10.0, left: 0.0, right: 0.0),
               child: TextField(
-                enableInteractiveSelection:
-                false, // will disable paste operation
-                focusNode: new AlwaysDisabledFocusNode(),
-                controller: nameController,
+                focusNode: myFocusNodeFname,
+                controller: fnameController,
+                onChanged: (value) {
+                  setState(() {
+                    _isButtonDisabledColor = false;
+                    _isButtonDisabled = false;
+                  });
+                },
                 style: TextStyle(
-                    //fontFamily: "PoppinsBold",
+                  //fontFamily: "PoppinsBold",
                     fontSize: 17.0,
                     color: Colors.black87),
                 decoration: InputDecoration(
@@ -297,7 +333,53 @@ class _MyPersonalInfoState extends State<PersonalInfo> {
                     color: kPrimaryColorBlue,
                     size: 20.0,
                   ),
-                  labelText: "Name",
+                  labelText: "First Name *",
+                  labelStyle: TextStyle(
+                      fontFamily: "PoppinsLight", fontSize: 13.0, color: kPrimaryColorBlue),
+                ),
+              ),
+            ),
+            Container(
+              width: size.width * 0.95,
+              padding: EdgeInsets.only(
+                  top: 0.0, bottom: 10.0, left: 0.0, right: 0.0),
+              child: TextField(
+                focusNode: myFocusNodeLname,
+                controller: lnameController,
+                onChanged: (value) {
+                  setState(() {
+                    _isButtonDisabledColor = false;
+                    _isButtonDisabled = false;
+                  });
+                },
+                style: TextStyle(
+                  //fontFamily: "PoppinsBold",
+                    fontSize: 17.0,
+                    color: Colors.black87),
+                decoration: InputDecoration(
+                  border: InputBorder.none,
+                  counterStyle: TextStyle(height: double.minPositive,),
+                  counterText: "",
+                  contentPadding: const EdgeInsets.symmetric(vertical: 0.0),
+                  enabledBorder: OutlineInputBorder(
+                    borderSide: BorderSide(
+                        color: kPrimaryColorBlue,
+                        width: 0.5
+                    ),
+                    borderRadius: const BorderRadius.all(Radius.circular(35.0)),
+                  ),
+                  focusedBorder: new OutlineInputBorder(
+                    borderSide: BorderSide(
+                        color: kPrimaryColorBlue,
+                        width: 0.5),
+                    borderRadius: const BorderRadius.all(Radius.circular(35.0)),
+                  ),
+                  prefixIcon: Icon(
+                    FontAwesomeIcons.user,
+                    color: kPrimaryColorBlue,
+                    size: 20.0,
+                  ),
+                  labelText: "Last Name *",
                   labelStyle: TextStyle(
                       fontFamily: "PoppinsLight", fontSize: 13.0, color: kPrimaryColorBlue),
                 ),
@@ -312,10 +394,20 @@ class _MyPersonalInfoState extends State<PersonalInfo> {
                 false, // will disable paste operation
                 focusNode: new AlwaysDisabledFocusNode(),
                 controller: mobController,
+                keyboardType: TextInputType.number,
+                onTap: () {
+                  showInSnackBar("Unauthorized action! Permission Denied", 2);
+                },
+                onChanged: (value) {
+                  setState(() {
+                    _isButtonDisabledColor = false;
+                    _isButtonDisabled = false;
+                  });
+                },
                 style: TextStyle(
-                    //fontFamily: "PoppinsBold",
+                  //fontFamily: "PoppinsBold",
                     fontSize: 17.0,
-                    color: Colors.black87),
+                    color: Colors.black54),
                 decoration: InputDecoration(
                   border: InputBorder.none,
                   counterStyle: TextStyle(height: double.minPositive,),
@@ -350,12 +442,16 @@ class _MyPersonalInfoState extends State<PersonalInfo> {
               padding: EdgeInsets.only(
                   top: 0.0, bottom: 10.0, left: 0.0, right: 0.0),
               child: TextField(
-                enableInteractiveSelection:
-                false, // will disable paste operation
-                focusNode: new AlwaysDisabledFocusNode(),
+                focusNode: myFocusNodeEmail,
                 controller: emailController,
+                onChanged: (value) {
+                  setState(() {
+                    _isButtonDisabledColor = false;
+                    _isButtonDisabled = false;
+                  });
+                },
                 style: TextStyle(
-                    //fontFamily: "PoppinsBold",
+                  //fontFamily: "PoppinsBold",
                     fontSize: 17.0,
                     color: Colors.black87),
                 decoration: InputDecoration(
@@ -401,8 +497,21 @@ class _MyPersonalInfoState extends State<PersonalInfo> {
                       false, // will disable paste operation
                       focusNode: new AlwaysDisabledFocusNode(),
                       controller: dobController,
+                      onTap: () {
+                        _selectDate(context);
+                        setState(() {
+                          _isButtonDisabledColor = false;
+                          _isButtonDisabled = false;
+                        });
+                      },
+                      onChanged: (value) {
+                        setState(() {
+                          _isButtonDisabledColor = false;
+                          _isButtonDisabled = false;
+                        });
+                      },
                       style: TextStyle(
-                          //fontFamily: "PoppinsBold",
+                        //fontFamily: "PoppinsBold",
                           fontSize: 17.0,
                           color: Colors.black87),
                       decoration: InputDecoration(
@@ -439,12 +548,16 @@ class _MyPersonalInfoState extends State<PersonalInfo> {
                     padding: EdgeInsets.only(
                         top: 0.0, bottom: 10.0, left: 0.0, right: 0.0),
                     child: TextField(
-                      enableInteractiveSelection:
-                      false, // will disable paste operation
-                      focusNode: new AlwaysDisabledFocusNode(),
+                      focusNode: myFocusNodeDegi,
                       controller: degiController,
+                      onChanged: (value) {
+                        setState(() {
+                          _isButtonDisabledColor = false;
+                          _isButtonDisabled = false;
+                        });
+                      },
                       style: TextStyle(
-                          //fontFamily: "PoppinsBold",
+                        //fontFamily: "PoppinsBold",
                           fontSize: 17.0,
                           color: Colors.black87),
                       decoration: InputDecoration(
@@ -484,12 +597,21 @@ class _MyPersonalInfoState extends State<PersonalInfo> {
               padding: EdgeInsets.only(
                   top: 0.0, bottom: 10.0, left: 0.0, right: 0.0),
               child: TextField(
-                enableInteractiveSelection:
-                false, // will disable paste operation
-                focusNode: new AlwaysDisabledFocusNode(),
+                focusNode: myFocusNodeAadhar,
                 controller: aadharController,
+                keyboardType: TextInputType.number,
+                maxLength: 12,
+                inputFormatters: <TextInputFormatter>[
+                  FilteringTextInputFormatter.digitsOnly
+                ],
+                onChanged: (value) {
+                  setState(() {
+                    _isButtonDisabledColor = false;
+                    _isButtonDisabled = false;
+                  });
+                },
                 style: TextStyle(
-                    //fontFamily: "PoppinsBold",
+                  //fontFamily: "PoppinsBold",
                     fontSize: 17.0,
                     color: Colors.black87),
                 decoration: InputDecoration(
@@ -526,12 +648,27 @@ class _MyPersonalInfoState extends State<PersonalInfo> {
               padding: EdgeInsets.only(
                   top: 0.0, bottom: 10.0, left: 0.0, right: 0.0),
               child: TextField(
-                enableInteractiveSelection:
-                false, // will disable paste operation
-                focusNode: new AlwaysDisabledFocusNode(),
+                focusNode: myFocusNodePan,
                 controller: panController,
+                keyboardType: TextInputType.text,
+                maxLength: 10,
+                textCapitalization: TextCapitalization.characters,
+                inputFormatters: [
+                  LengthLimitingTextInputFormatter(10),
+                ],
+                onChanged: (value) {
+                  setState(() {
+                    _isButtonDisabledColor = false;
+                    _isButtonDisabled = false;
+                  });
+                  if (value.length == 10) {
+                    validatePan(value)
+                        ? showInSnackBar('Valid Pan Number', 2)
+                        : showInSnackBar("Invalid Pan Number", 2);
+                  }
+                },
                 style: TextStyle(
-                    //fontFamily: "PoppinsBold",
+                  //fontFamily: "PoppinsBold",
                     fontSize: 17.0,
                     color: Colors.black87),
                 decoration: InputDecoration(
@@ -721,7 +858,7 @@ class _MyPersonalInfoState extends State<PersonalInfo> {
         });
   }
 
-  void showInSnackBar(String value) {
+  void showInSnackBar(String value, int sec) {
     FocusScope.of(context).requestFocus(new FocusNode());
     _scaffoldKey.currentState?.removeCurrentSnackBar();
     _scaffoldKey.currentState.showSnackBar(new SnackBar(
@@ -732,8 +869,135 @@ class _MyPersonalInfoState extends State<PersonalInfo> {
             color: Colors.white, fontSize: 16.0, fontFamily: "PoppinsMedium"),
       ),
       backgroundColor: kPrimaryColorBlue,
-      duration: Duration(seconds: 2),
+      duration: Duration(seconds: sec),
     ));
+  }
+
+  bool validatePan(String value) {
+    String pattern = r"[A-Z]{5}[0-9]{4}[A-Z]{1}";
+    RegExp regExp = new RegExp(pattern);
+    return regExp.hasMatch(value);
+  }
+
+  Future<void> save() async {
+    if (fnameController.text.isEmpty) {
+      showInSnackBar("Please enter First Name", 2);
+      return null;
+    }
+    if (lnameController.text.isEmpty) {
+      showInSnackBar("Please enter Last Name", 2);
+      return null;
+    }
+    // if(mobController.text.isEmpty) {
+    //   showInSnackBar("Please enter Mobile Number", 2);
+    //   return null;
+    // }
+    if (emailController.text.isEmpty) {
+      showInSnackBar("Please enter Email", 2);
+      return null;
+    }
+    if (emailController.text.isNotEmpty) {
+      if (emailController.text.contains('com') ||
+          emailController.text.contains('net') ||
+          emailController.text.contains('edu') ||
+          emailController.text.contains('org') ||
+          emailController.text.contains('mil') ||
+          emailController.text.contains('gov')) {
+        if (validateEmail(emailController.text) == false) {
+          showInSnackBar("Invalid Email", 2);
+          return null;
+        }
+      } else {
+        showInSnackBar("Invalid Email", 2);
+        return null;
+      }
+    }
+    if (dobController.text.isEmpty) {
+      showInSnackBar("Please enter Date of Birth", 2);
+      return null;
+    }
+    if (degiController.text.isEmpty) {
+      showInSnackBar("Please enter Designation", 2);
+      return null;
+    }
+    if (aadharController.text.isEmpty) {
+      showInSnackBar("Please enter Aadhar Number", 2);
+      return null;
+    }
+    if (aadharController.text.length < 12) {
+      showInSnackBar("Please enter valid Aadhar Number", 2);
+      return null;
+    }
+    if (panController.text.isEmpty) {
+      showInSnackBar("Please enter Pan Number", 2);
+      return null;
+    }
+    if (panController.text.length < 10) {
+      showInSnackBar("Please enter valid Pan Number", 2);
+      return null;
+    }
+    if (panController.text.length > 10) {
+      showInSnackBar("Please enter valid Pan Number", 2);
+      return null;
+    }
+    if (validatePan(panController.text) == false) {
+      showInSnackBar("Invalid Pan Number", 2);
+      return null;
+    }
+
+    SchedulerBinding.instance
+        .addPostFrameCallback((_) => _showLoaderDialog(context));
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+
+    String token = prefs.getString("token");
+    int id = prefs.getInt("userID");
+    print('$id $token');
+
+    final param = {
+      "user_id": id.toString(),
+      "m_email": emailController.text,
+      "first_name": fnameController.text,
+      "last_name": lnameController.text,
+      "m_dob": dobController.text,
+      "m_designation": degiController.text,
+      "m_adhaar_number": aadharController.text,
+      "m_pan_number": panController.text,
+    };
+
+    final response = await http.post(
+      "http://157.230.228.250/set-merchant-profile-api/",
+      body: param,
+      headers: {HttpHeaders.authorizationHeader: "Token $token"},
+    );
+
+    print(response.statusCode);
+    CommonData data;
+    var responseJson = json.decode(response.body);
+    print(response.body);
+    data = new CommonData.fromJson(jsonDecode(response.body));
+    print(responseJson);
+
+    if (response.statusCode == 200) {
+      if (data.status == "success") {
+        print("Profile update Successful");
+        print(data.message);
+        Navigator.of(context, rootNavigator: true).pop();
+        Navigator.pop(context, true);
+      } else {
+        print(data.status);
+        showInSnackBar(data.message, 2);
+      }
+    } else {
+      print(data.status);
+      showInSnackBar(data.message, 2);
+    }
+  }
+
+  bool validateEmail(String value) {
+    String pattern =
+        r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+";
+    RegExp regExp = new RegExp(pattern);
+    return regExp.hasMatch(value);
   }
 
   Future<void> removeProfile() async {
@@ -758,13 +1022,13 @@ class _MyPersonalInfoState extends State<PersonalInfo> {
     if (response.statusCode == 200) {
       if (remove.status == "success") {
         print(remove.status);
-        showInSnackBar("Profile Picture removed successfully.");
+        showInSnackBar("Profile Picture removed successfully.",2);
         setData(id, token);
       } else
-        showInSnackBar(remove.message);
+        showInSnackBar(remove.message,2);
     } else {
       print(remove.status);
-      showInSnackBar(remove.message);
+      showInSnackBar(remove.message,2);
       return null;
     }
   }
@@ -806,11 +1070,11 @@ class _MyPersonalInfoState extends State<PersonalInfo> {
     if (response.statusCode == 200) {
       print(
           "***********************************************     Submit     *******************************************************");
-      showInSnackBar("Profile Updated");
+      showInSnackBar("Profile Updated",2);
       setData(id, token);
       setState(() {});
     } else {
-      showInSnackBar("Something went wrong!");
+      showInSnackBar("Something went wrong!",2);
     }
 
     // listen for response
@@ -821,7 +1085,7 @@ class _MyPersonalInfoState extends State<PersonalInfo> {
 
   updateProfile() {
     setDetails();
-    showInSnackBar("Profile updated successfully");
+    showInSnackBar("Profile updated successfully",2);
   }
 }
 
