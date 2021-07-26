@@ -210,7 +210,6 @@ class _HomePageState extends State<HomePage> {
     return data;
   }
 
-
   Future<List<DoughnutChartData>> BilllingAnalysis() async {
     final param = {
       "merchant_business_id": storeID,
@@ -1430,7 +1429,9 @@ class _HomePageState extends State<HomePage> {
                     ],
                   ),
                 ),
+
                 SizedBox(height: 10.0,),
+
                 (!_headerEnabled) ? Container(
                   width: size.width * 0.95,
                   height: size.height * 0.25,
@@ -1512,6 +1513,7 @@ class _HomePageState extends State<HomePage> {
                       }
                     },
                   ),
+
                 ) :
                 Shimmer.fromColors(
                   baseColor: Colors.grey[300],
@@ -1529,111 +1531,111 @@ class _HomePageState extends State<HomePage> {
                   ),
                 ),
                 SizedBox(height: 10.0,),
+                (!_headerEnabled) ? Container(
+                    width: size.width * 0.95,
+                    height: size.height * 0.45,
+                    padding: EdgeInsets.only(top: 10.0, bottom: 10.0),
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.all(Radius.circular(30)),
+                        color: Colors.white,
+                        boxShadow: [
+                          BoxShadow(
+                              color: Constants.softHighlightColor,
+                              offset: Offset(-10, -10),
+                              spreadRadius: 0,
+                              blurRadius: 10),
+                          BoxShadow(
+                              color: Constants.softShadowColor,
+                              offset: Offset(5, 5),
+                              spreadRadius: 0,
+                              blurRadius: 10)
+                        ]
+                    ),
+                    child: (storeCatID == "11") ? FutureBuilder<List<ChartPetrolData>>(
+                      future: fetchAllPetrolCollection(),
+                      builder: (BuildContext context, AsyncSnapshot<List<ChartPetrolData>> snapshot) {
+                        if (snapshot.connectionState == ConnectionState.waiting)
+                          return Center(child: CircularProgressIndicator(valueColor:AlwaysStoppedAnimation<Color>(kPrimaryColorBlue),));
+                        else if (snapshot.hasError) {
+                          return Center(
+                            child: Text("No Data Found!"),
+                          );
+                        } else {
+                          if (snapshot.connectionState == ConnectionState.done &&
+                              snapshot.hasData) {
+                            return Column(
+                              children: [
+                                Text("Bills Collection",
+                                  style: TextStyle(
+                                    color: kPrimaryColorBlue,
+                                    fontSize: size.width * 0.04,
+                                    fontFamily: "PoppinsBold",
+                                  ),
+                                ),
+                                Expanded(
+                                  child: _buildDefaultSplineChart(snapshot.data),
+                                )
+                              ],
+                            );
+                          } else {
+                            return Center(child: CircularProgressIndicator(valueColor:AlwaysStoppedAnimation<Color>(kPrimaryColorBlue),));
+                          }
+                        }
+                      },
+                    )
+                        : FutureBuilder<List<ChartParkingData>>(
+                      future: fetchAllParkingCollection(),
+                      builder: (BuildContext context, AsyncSnapshot<List<ChartParkingData>> snapshot) {
+                        if (snapshot.connectionState == ConnectionState.waiting)
+                          return Center(child: CircularProgressIndicator(valueColor:AlwaysStoppedAnimation<Color>(kPrimaryColorBlue),));
+                        else if (snapshot.hasError) {
+                          print(">>>>>>${snapshot.error}");
+                          return Center(
+                            child: Text("No Data Found!"),
+                          );
+                        } else {
+                          if (snapshot.connectionState == ConnectionState.done &&
+                              snapshot.hasData) {
+                            return Column(
+                              children: [
+                                Text("Bills Collection",
+                                  style: TextStyle(
+                                    color: kPrimaryColorBlue,
+                                    fontSize: size.width * 0.04,
+                                    fontFamily: "PoppinsBold",
+                                  ),
+                                ),
+                                Expanded(
+                                  child: _buildParkingSplineChart(snapshot.data),
+                                )
+                              ],
+                            );
+                          } else {
+                            return Center(child: CircularProgressIndicator(valueColor:AlwaysStoppedAnimation<Color>(kPrimaryColorBlue),));
+                          }
+                        }
+                      },
+                    )
+                ) :
+                Shimmer.fromColors(
+                  baseColor: Colors.grey[300],
+                  highlightColor: Colors.grey[100],
+                  enabled: _headerEnabled,
+                  child: Container(
+                    width: size.width * 0.95,
+                    height: size.height * 0.45,
+                    padding: EdgeInsets.only(top: 10.0, bottom: 10.0),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.all(Radius.circular(30)),
+                      color: Colors.white,
+                    ),
+                    child: null,
+                  ),
+                ),
+                SizedBox(height: 10.0,),
               ],
             ),
           ),
-            (!_headerEnabled) ? Container(
-              width: size.width * 0.95,
-              height: size.height * 0.45,
-              padding: EdgeInsets.only(top: 10.0, bottom: 10.0),
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.all(Radius.circular(30)),
-                  color: Colors.white,
-                  boxShadow: [
-                    BoxShadow(
-                        color: Constants.softHighlightColor,
-                        offset: Offset(-10, -10),
-                        spreadRadius: 0,
-                        blurRadius: 10),
-                    BoxShadow(
-                        color: Constants.softShadowColor,
-                        offset: Offset(5, 5),
-                        spreadRadius: 0,
-                        blurRadius: 10)
-                  ]
-              ),
-              child: (storeCatID == "11") ? FutureBuilder<List<ChartPetrolData>>(
-                future: fetchAllPetrolCollection(),
-                builder: (BuildContext context, AsyncSnapshot<List<ChartPetrolData>> snapshot) {
-                  if (snapshot.connectionState == ConnectionState.waiting)
-                    return Center(child: CircularProgressIndicator(valueColor:AlwaysStoppedAnimation<Color>(kPrimaryColorBlue),));
-                  else if (snapshot.hasError) {
-                    return Center(
-                      child: Text("No Data Found!"),
-                    );
-                  } else {
-                    if (snapshot.connectionState == ConnectionState.done &&
-                        snapshot.hasData) {
-                      return Column(
-                        children: [
-                          Text("Bills Collection",
-                            style: TextStyle(
-                              color: kPrimaryColorBlue,
-                              fontSize: size.width * 0.04,
-                              fontFamily: "PoppinsBold",
-                            ),
-                          ),
-                          Expanded(
-                            child: _buildDefaultSplineChart(snapshot.data),
-                          )
-                        ],
-                      );
-                    } else {
-                      return Center(child: CircularProgressIndicator(valueColor:AlwaysStoppedAnimation<Color>(kPrimaryColorBlue),));
-                    }
-                  }
-                },
-              ) :
-            FutureBuilder<List<ChartParkingData>>(
-              future: fetchAllParkingCollection(),
-              builder: (BuildContext context, AsyncSnapshot<List<ChartParkingData>> snapshot) {
-                if (snapshot.connectionState == ConnectionState.waiting)
-                  return Center(child: CircularProgressIndicator(valueColor:AlwaysStoppedAnimation<Color>(kPrimaryColorBlue),));
-                else if (snapshot.hasError) {
-                  print(">>>>>>${snapshot.error}");
-                  return Center(
-                    child: Text("No Data Found!"),
-                  );
-                } else {
-                  if (snapshot.connectionState == ConnectionState.done &&
-                      snapshot.hasData) {
-                    return Column(
-                      children: [
-                        Text("Bills Collection",
-                          style: TextStyle(
-                            color: kPrimaryColorBlue,
-                            fontSize: size.width * 0.04,
-                            fontFamily: "PoppinsBold",
-                          ),
-                        ),
-                        Expanded(
-                          child: _buildParkingSplineChart(snapshot.data),
-                        )
-                      ],
-                    );
-                  } else {
-                    return Center(child: CircularProgressIndicator(valueColor:AlwaysStoppedAnimation<Color>(kPrimaryColorBlue),));
-                  }
-                }
-              },
-            )
-            ) :
-            Shimmer.fromColors(
-              baseColor: Colors.grey[300],
-              highlightColor: Colors.grey[100],
-              enabled: _headerEnabled,
-              child: Container(
-                width: size.width * 0.95,
-                height: size.height * 0.45,
-                padding: EdgeInsets.only(top: 10.0, bottom: 10.0),
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.all(Radius.circular(30)),
-                    color: Colors.white,
-                ),
-                child: null,
-              ),
-            ),
-            SizedBox(height: 10.0,),
           ],
         )
     );
