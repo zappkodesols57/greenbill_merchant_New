@@ -115,16 +115,6 @@ class ReceivedPaymentsState extends State<ReceivedPayments> {
     return Scaffold(
         key: _scaffoldKey,
         backgroundColor: Colors.white,
-        appBar: AppBar(
-          title: Text('Received Payments'),
-          elevation: 0,
-          leading: IconButton(
-            icon: Icon(Icons.arrow_back_ios),
-            onPressed: () {
-              Navigator.pop(context);
-            },
-          ),
-        ),
         body: Column(
           children: [
         // Container(
