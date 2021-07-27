@@ -50,6 +50,7 @@ class _ReceiptState extends State<Receipt>{
     final param = {
       "m_business_id": storeID,
     };
+      print(">>>>>>>>>>$storeID");
 
     final res = await http.post("http://157.230.228.250/merchant-receipt-list-api/", body: param,
       headers: {HttpHeaders.authorizationHeader: "Token $token"},
@@ -60,7 +61,8 @@ class _ReceiptState extends State<Receipt>{
     if(200 == res.statusCode){
       print(receiptListFromJson(res.body).data.length);
       return receiptListFromJson(res.body).data.where((element) =>
-          element.mobileNumber.toLowerCase().toString().contains(query.text.toLowerCase().toString())).toList();
+          element.mobileNumber.toLowerCase().toString().contains(query.text.toLowerCase().toString()) ||
+              element.receiptNo.toLowerCase().toString().contains(query.text.toLowerCase().toString()) ).toList();
     } else{
       throw Exception('Failed to load List');
     }
@@ -143,6 +145,7 @@ class _ReceiptState extends State<Receipt>{
                 if (snapshot.connectionState == ConnectionState.waiting)
                   return Center(child: CircularProgressIndicator(valueColor:AlwaysStoppedAnimation<Color>(kPrimaryColorBlue),));
                 else if (snapshot.hasError) {
+                  print(">>>>${snapshot.error}");
                   return Center(
                     child: Text("No Receipts Created"),
                   );
@@ -152,7 +155,7 @@ class _ReceiptState extends State<Receipt>{
                     WidgetsBinding.instance.addPostFrameCallback((_) {
                       if (_controller.hasClients) {
                         _controller.animateTo(
-                            _controller.position.maxScrollExtent,
+                            _controller.position.minScrollExtent,
                             duration: Duration(milliseconds: 500),
                             curve: Curves.fastLinearToSlowEaseIn);
                       } else {
@@ -165,7 +168,7 @@ class _ReceiptState extends State<Receipt>{
                       controller: _controller,
                       thickness: 3.0,
                       child: ListView.builder(
-                          padding: const EdgeInsets.only(bottom: kFloatingActionButtonMargin + 48),
+                          padding: const EdgeInsets.only(bottom: kFloatingActionButtonMargin + 50),
                           itemCount: snapshot.data.length,
                           shrinkWrap: true,
                           reverse: false,

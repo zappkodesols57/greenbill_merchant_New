@@ -1616,8 +1616,8 @@ class _HomePageState extends State<HomePage> {
                         }
                       },
                     )
-                ) :
-                Shimmer.fromColors(
+                )
+                    : Shimmer.fromColors(
                   baseColor: Colors.grey[300],
                   highlightColor: Colors.grey[100],
                   enabled: _headerEnabled,

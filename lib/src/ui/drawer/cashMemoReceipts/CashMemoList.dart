@@ -60,7 +60,7 @@ class CashMemoListState extends State<CashMemoList> {
     if (200 == res.statusCode) {
       print(cashMemoFromJson(res.body).data.length);
       return cashMemoFromJson(res.body).data.where((element) => element.mobileNumber.toLowerCase().contains(query.text) ||
-          element.total.toString().toLowerCase().contains(query.text)).toList();
+          element.memoNo.toString().toLowerCase().contains(query.text)).toList();
 
     } else {
       throw Exception('Failed to load List');
@@ -169,7 +169,7 @@ class CashMemoListState extends State<CashMemoList> {
                       controller: _controller,
                       thickness: 3.0,
                       child: ListView.builder(
-                          padding: const EdgeInsets.only(bottom: kFloatingActionButtonMargin + 48),
+                          padding: const EdgeInsets.only(bottom: kFloatingActionButtonMargin + 50),
                           itemCount: snapshot.data.length,
                           shrinkWrap: true,
                           reverse: false,

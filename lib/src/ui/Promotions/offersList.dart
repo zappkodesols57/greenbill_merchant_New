@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:greenbill_merchant/src/models/model_offersList.dart';
 import 'package:greenbill_merchant/src/ui/Promotions/offersDetail.dart';
 import 'package:http/http.dart' as http;
@@ -85,6 +86,7 @@ class _OffersListState extends State<OffersList> {
               borderRadius: BorderRadius.circular(32),
             ),
             child: TextField(
+              inputFormatters: [LengthLimitingTextInputFormatter(10)],
               controller: query,
               onChanged: (value) {
                 setState(() {});

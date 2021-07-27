@@ -389,7 +389,7 @@ class _MyGeneralSettingEditState extends State<GeneralSettingEdit> {
                       color: kPrimaryColorBlue,
                       size: 23.0,
                     ),
-                    labelText: "Business Name",
+                    labelText: "Business Name*",
                     labelStyle: TextStyle(
                         fontFamily: "PoppinsLight", fontSize: 13.0, color: kPrimaryColorBlue),
                   ),
@@ -446,7 +446,7 @@ class _MyGeneralSettingEditState extends State<GeneralSettingEdit> {
                             color: kPrimaryColorBlue,
                             size: 23.0,
                           ),
-                          labelText: "Pincode",
+                          labelText: "Pincode*",
                           labelStyle: TextStyle(
                               fontFamily: "PoppinsLight", fontSize: 13.0, color: kPrimaryColorBlue),
                         ),
@@ -455,6 +455,9 @@ class _MyGeneralSettingEditState extends State<GeneralSettingEdit> {
                     Container(
                       width: size.width * 0.45,
                       child: new TextField(
+                        keyboardType:TextInputType.name,
+                        inputFormatters: [FilteringTextInputFormatter.allow(RegExp("[a-zA-Z]")),],
+                        maxLength: 15,
                         focusNode: myFocusNodeCity,
                         controller: cityController,
                         onChanged: (value) {
@@ -490,7 +493,7 @@ class _MyGeneralSettingEditState extends State<GeneralSettingEdit> {
                             color: kPrimaryColorBlue,
                             size: 23.0,
                           ),
-                          labelText: "City",
+                          labelText: "City*",
                           labelStyle: TextStyle(
                               fontFamily: "PoppinsLight", fontSize: 13.0, color: kPrimaryColorBlue),
                         ),
@@ -509,6 +512,9 @@ class _MyGeneralSettingEditState extends State<GeneralSettingEdit> {
                     Container(
                       width: size.width * 0.45,
                       child: new TextField(
+                        keyboardType:TextInputType.name,
+                        inputFormatters: [FilteringTextInputFormatter.allow(RegExp("[a-zA-Z]")),],
+                        maxLength: 15,
                         focusNode: myFocusNodeArea,
                         controller: areaController,
                         onChanged: (value) {
@@ -544,7 +550,7 @@ class _MyGeneralSettingEditState extends State<GeneralSettingEdit> {
                             color: kPrimaryColorBlue,
                             size: 23.0,
                           ),
-                          labelText: "Area",
+                          labelText: "Area*",
                           labelStyle: TextStyle(
                               fontFamily: "PoppinsLight", fontSize: 13.0, color: kPrimaryColorBlue),
                         ),
@@ -553,6 +559,9 @@ class _MyGeneralSettingEditState extends State<GeneralSettingEdit> {
                     Container(
                       width: size.width * 0.45,
                       child: new TextField(
+                        keyboardType:TextInputType.name,
+                        inputFormatters: [FilteringTextInputFormatter.allow(RegExp("[a-zA-Z]")),],
+                        maxLength: 15,
                         focusNode: myFocusNodeDistrict,
                         controller: districtController,
                         onChanged: (value) {
@@ -588,7 +597,7 @@ class _MyGeneralSettingEditState extends State<GeneralSettingEdit> {
                             color: kPrimaryColorBlue,
                             size: 23.0,
                           ),
-                          labelText: "District",
+                          labelText: "District*",
                           labelStyle: TextStyle(
                               fontFamily: "PoppinsLight", fontSize: 13.0, color: kPrimaryColorBlue),
                         ),
@@ -636,7 +645,7 @@ class _MyGeneralSettingEditState extends State<GeneralSettingEdit> {
                       color: kPrimaryColorBlue,
                       size: 23.0,
                     ),
-                    labelText: "State",
+                    labelText: "State*",
                     labelStyle: TextStyle(
                         fontFamily: "PoppinsLight", fontSize: 13.0, color: kPrimaryColorBlue),
                   ),
@@ -681,7 +690,7 @@ class _MyGeneralSettingEditState extends State<GeneralSettingEdit> {
                       color: kPrimaryColorBlue,
                       size: 23.0,
                     ),
-                    labelText: "Address",
+                    labelText: "Address*",
                     labelStyle: TextStyle(
                         fontFamily: "PoppinsLight", fontSize: 13.0, color: kPrimaryColorBlue),
                   ),
@@ -781,7 +790,7 @@ class _MyGeneralSettingEditState extends State<GeneralSettingEdit> {
                       color: kPrimaryColorBlue,
                       size: 23.0,
                     ),
-                    labelText: "Alternate Mobile No.",
+                    labelText: "Alternate Mobile No.*",
                     labelStyle: TextStyle(
                         fontFamily: "PoppinsLight", fontSize: 13.0, color: kPrimaryColorBlue),
                   ),
@@ -827,7 +836,7 @@ class _MyGeneralSettingEditState extends State<GeneralSettingEdit> {
                       color: kPrimaryColorBlue,
                       size: 23.0,
                     ),
-                    labelText: "Company Email",
+                    labelText: "Company Email*",
                     labelStyle: TextStyle(
                         fontFamily: "PoppinsLight", fontSize: 13.0, color: kPrimaryColorBlue),
                   ),
@@ -940,7 +949,7 @@ class _MyGeneralSettingEditState extends State<GeneralSettingEdit> {
                       color: kPrimaryColorBlue,
                       size: 23.0,
                     ),
-                    labelText: "Pan No.",
+                    labelText: "Pan No.*",
                     labelStyle: TextStyle(
                         fontFamily: "PoppinsLight", fontSize: 13.0, color: kPrimaryColorBlue),
                   ),
@@ -1113,7 +1122,7 @@ class _MyGeneralSettingEditState extends State<GeneralSettingEdit> {
                       color: kPrimaryColorBlue,
                       size: 23.0,
                     ),
-                    labelText: "Bank Account No.",
+                    labelText: "Bank Account No.*",
                     labelStyle: TextStyle(
                         fontFamily: "PoppinsLight", fontSize: 13.0, color: kPrimaryColorBlue),
                   ),
@@ -1179,7 +1188,7 @@ class _MyGeneralSettingEditState extends State<GeneralSettingEdit> {
                       color: kPrimaryColorBlue,
                       size: 23.0,
                     ),
-                    labelText: "Bank IFSC Code",
+                    labelText: "Bank IFSC Code*",
                     labelStyle: TextStyle(
                         fontFamily: "PoppinsLight", fontSize: 13.0, color: kPrimaryColorBlue),
                   ),
@@ -1224,7 +1233,7 @@ class _MyGeneralSettingEditState extends State<GeneralSettingEdit> {
                       color: kPrimaryColorBlue,
                       size: 23.0,
                     ),
-                    labelText: "Bank Name",
+                    labelText: "Bank Name*",
                     labelStyle: TextStyle(
                         fontFamily: "PoppinsLight", fontSize: 13.0, color: kPrimaryColorBlue),
                   ),
@@ -1269,7 +1278,7 @@ class _MyGeneralSettingEditState extends State<GeneralSettingEdit> {
                       color: kPrimaryColorBlue,
                       size: 23.0,
                     ),
-                    labelText: "Branch Name",
+                    labelText: "Branch Name*",
                     labelStyle: TextStyle(
                         fontFamily: "PoppinsLight", fontSize: 13.0, color: kPrimaryColorBlue),
                   ),
