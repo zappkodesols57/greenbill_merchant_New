@@ -206,8 +206,7 @@ class ReceivedPaymentsState extends State<ReceivedPayments> {
                               Container(
                                 alignment: Alignment.center,
                                 width: size.width * 0.4,
-                                child: Text("₹"+total.toString()
-                                  ,
+                                child: Text("₹ ${total.toString()}0",
                                   style: TextStyle(
                                       color: Colors.black,
                                       fontSize: 14.0,

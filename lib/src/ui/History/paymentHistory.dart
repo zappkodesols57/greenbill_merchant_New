@@ -262,7 +262,7 @@ class HistoryState extends State<History> {
                                         children: <Widget>[
 
                                           Text(
-                                              "₹ ${snapshot.data[index].cost.toString()}",
+                                              "₹ ${snapshot.data[index].cost.toString()}0",
                                               style: TextStyle(fontSize: 15.0, fontFamily: "PoppinsMedium", fontWeight: FontWeight.bold)
                                           ),
                                         ],

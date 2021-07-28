@@ -794,10 +794,11 @@ class _CouponsState extends State<Coupons> {
       showInSnackBar("Please enter Fix Amount");
       return null;
     }
-    if(quantityController.text.isEmpty){
+    if(quantityController.text.isEmpty || quantityController.text == "0"){
       showInSnackBar("Please enter No. of Users");
       return null;
     }
+
 
     _showLoaderDialog(context);
 

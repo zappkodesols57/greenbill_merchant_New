@@ -137,6 +137,53 @@ class _ReceiptState extends State<Receipt>{
                     color: kPrimaryColorBlue),
               ),
             ),
+
+          ),
+          ListTile(
+
+            tileColor: kPrimaryColorBlue,
+            title: Text(
+              "Mobile No.",
+              textAlign: TextAlign.start,
+              style:
+              TextStyle(color: Colors.white, fontFamily: "PoppinsBold"),
+            ),
+            trailing: Wrap(
+              spacing: 11, // space between two icons
+              crossAxisAlignment: WrapCrossAlignment.center,
+              children: <Widget>[
+                Container(
+                  width: 50.0,
+                  child: Text(
+                    "Send",
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                        color: Colors.white, fontFamily: "PoppinsBold"),
+                  ),
+                ),
+                Container(
+                  width: 50.0,
+                  child: Text(
+                    "Delete",
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                        color: Colors.white, fontFamily: "PoppinsBold"),
+                  ),
+                ),
+                Container(
+                  width: 72.0,
+                  child: Text(
+                    "Amount",
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                        color: Colors.white, fontFamily: "PoppinsBold"),
+                  ),
+                )
+              ],
+            ),
+            onTap: () {
+              // Navigator.push(context, MaterialPageRoute(builder:  (context)=>MerchantBillList(snapshot.data[index].mBusinessName)));
+            },
           ),
           Expanded(
             child: FutureBuilder<List<Datum>>(
@@ -187,7 +234,7 @@ class _ReceiptState extends State<Receipt>{
                                           color: Colors.grey)),
                                   isThreeLine: false,
                                   trailing: Wrap(
-                                    spacing: 10, // space between two icons
+                                    spacing: 11, // space between two icons
                                     alignment: WrapAlignment.end,
                                     crossAxisAlignment: WrapCrossAlignment.center,
                                     children: <Widget>[
@@ -212,7 +259,7 @@ class _ReceiptState extends State<Receipt>{
                                       Container(
                                           width: 70.0,
                                           child: Text(
-                                              "₹ ${snapshot.data[index].total.toString()}",
+                                              "   ₹ ${snapshot.data[index].total.toString()}",
                                               style: TextStyle(fontWeight: FontWeight.bold))),
                                     ],
                                   ),
@@ -296,11 +343,11 @@ class _ReceiptState extends State<Receipt>{
     print(responseJson);
 
     if (response.statusCode == 200) {
-      print("Send Successful");
+      print("Sent Successful");
       print(data.status);
       if(data.status == "success"){
         Navigator.of(context, rootNavigator: true).pop();
-        showInSnackBar("Receipt Send Successfully");
+        showInSnackBar("Receipt Sent Successfully");
       } else showInSnackBar(data.status);
     } else {
       Navigator.of(context, rootNavigator: true).pop();

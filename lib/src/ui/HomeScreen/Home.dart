@@ -33,6 +33,7 @@ import 'package:greenbill_merchant/src/ui/drawer/PetrolPump/AddUser/viewAllUsers
 import 'package:greenbill_merchant/src/ui/drawer/PetrolPump/ManageProduct/manage_products.dart';
 import 'package:greenbill_merchant/src/ui/drawer/Qr/allQrLists.dart';
 import 'package:greenbill_merchant/src/ui/drawer/ReceivedPayments/receivedPayments.dart';
+import 'package:greenbill_merchant/src/ui/drawer/Settings/Help&Support/reviews.dart';
 import 'package:greenbill_merchant/src/ui/drawer/Settings/settings_main.dart';
 import 'package:greenbill_merchant/src/ui/drawer/Settings/share_a_word.dart';
 import 'package:greenbill_merchant/src/ui/drawer/cashMemoReceipts/tabBarMemo.dart';
@@ -689,6 +690,27 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
                       Navigator.of(context).pop();
                       Navigator.push(context,
                           MaterialPageRoute(builder: (context) => subUpdated()));
+                    }
+                ),
+                ListTile(
+                    dense: false,
+                    title: Text("Ratings"),
+                    leading: Container(
+                      width: 35.0,
+                      height: 35.0,
+                      margin: const EdgeInsets.only(right: 10.0),
+                      decoration: new BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: new BorderRadius.circular(25.0),
+                      ),
+                      alignment: Alignment.center,
+                      child: new Icon(CupertinoIcons.star_fill,
+                          color: kPrimaryColorBlue, size: 25.0),
+                    ),
+                    onTap: () {
+                      Navigator.of(context).pop();
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (context) => Reviews()));
                     }
                 ),
                 if(storeCatID != "11" && storeCatID != "12")

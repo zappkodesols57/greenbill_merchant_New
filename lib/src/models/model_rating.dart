@@ -36,11 +36,15 @@ class Datum {
     this.billAmount,
     this.billDate,
     this.invoiceNo,
+    this.storeFeedback,
+    this.merchantReplay,
     this.rating,
   });
 
   int id;
   String userId;
+  String storeFeedback;
+  String merchantReplay;
   String mobileNo;
   String billAmount;
   String billDate;
@@ -55,6 +59,8 @@ class Datum {
     billDate: json["bill_date"],
     invoiceNo: json["invoice_no"],
     rating: json["rating"],
+    storeFeedback: json["store_feedback"],
+    merchantReplay: json["merchant_reply"],
   );
 
   Map<String, dynamic> toJson() => {
@@ -65,6 +71,8 @@ class Datum {
     "bill_date": billDate,
     "invoice_no": invoiceNo,
     "rating": rating,
+    "store_feedback": storeFeedback,
+    "merchant_reply": merchantReplay,
   };
 }
 

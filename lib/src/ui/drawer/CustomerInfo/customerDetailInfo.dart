@@ -184,7 +184,7 @@ class CustomerDetailInfoState extends State<CustomerDetailInfo> {
                         Container(
                           width: 50.0,
                           child: Text(
-                            "Sms",
+                            "Send",
                             textAlign: TextAlign.center,
                             style: TextStyle(
                                 color: Colors.white, fontFamily: "PoppinsBold"),
@@ -267,7 +267,7 @@ class CustomerDetailInfoState extends State<CustomerDetailInfo> {
                                   Container(
                                     width: 80.0,
                                     child: Text(
-                                        "₹ ${snapshot.data.allBills[index].amount+"0"}",
+                                        "    ₹ ${snapshot.data.allBills[index].amount+".00"}",
                                         style: TextStyle(
                                             fontWeight: FontWeight.bold)),
                                   ),

@@ -138,6 +138,51 @@ class CashMemoListState extends State<CashMemoList> {
               ),
             ),
           ),
+          ListTile(
+            tileColor: kPrimaryColorBlue,
+            title: Text(
+              "Mobile No.",
+              textAlign: TextAlign.start,
+              style:
+              TextStyle(color: Colors.white, fontFamily: "PoppinsBold"),
+            ),
+            trailing: Wrap(
+              spacing: 11, // space between two icons
+              crossAxisAlignment: WrapCrossAlignment.center,
+              children: <Widget>[
+                Container(
+                  width: 50.0,
+                  child: Text(
+                    "Send",
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                        color: Colors.white, fontFamily: "PoppinsBold"),
+                  ),
+                ),
+                Container(
+                  width: 50.0,
+                  child: Text(
+                    "Delete",
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                        color: Colors.white, fontFamily: "PoppinsBold"),
+                  ),
+                ),
+                Container(
+                  width: 72.0,
+                  child: Text(
+                    "Amount",
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                        color: Colors.white, fontFamily: "PoppinsBold"),
+                  ),
+                )
+              ],
+            ),
+            onTap: () {
+              // Navigator.push(context, MaterialPageRoute(builder:  (context)=>MerchantBillList(snapshot.data[index].mBusinessName)));
+            },
+          ),
           Expanded(
             child: FutureBuilder<List<Datum>>(
               future: getPassLists(),
@@ -209,7 +254,7 @@ class CashMemoListState extends State<CashMemoList> {
                                 //   ),
                                 // ),
                                 trailing: Wrap(
-                                  spacing: 10, // space between two icons
+                                  spacing: 11, // space between two icons
                                   crossAxisAlignment:
                                   WrapCrossAlignment.center,
                                   children: <Widget>[
@@ -236,7 +281,7 @@ class CashMemoListState extends State<CashMemoList> {
                                     Container(
                                         width: 80.0,
                                         child: Text(
-                                            "₹ ${snapshot.data[index].total}",
+                                            "   ₹ ${snapshot.data[index].total}",
                                             style: TextStyle(
                                                 fontWeight:
                                                 FontWeight.bold))),
@@ -289,7 +334,7 @@ class CashMemoListState extends State<CashMemoList> {
     Navigator.of(context, rootNavigator: true).pop();
     if (response.statusCode == 200) {
       if (data.status == "success") {
-        showInSnackBar("Send Successful");
+        showInSnackBar("Cash Memo Sent Successfully");
       } else {
         print(data.status);
       }

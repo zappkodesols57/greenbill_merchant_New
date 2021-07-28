@@ -646,6 +646,7 @@ class SignUp_MerchantState extends State<SignUp_Merchant> {
                 padding: EdgeInsets.only(
                     top: 0.0, bottom: 10.0, left: 0.0, right: 0.0),
                 child: TextField(
+                  maxLength: 7,
                   controller: signupReferralCodeController,
                   keyboardType: TextInputType.text,
                   style: TextStyle(
