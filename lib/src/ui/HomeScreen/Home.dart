@@ -10,6 +10,7 @@ import 'package:greenbill_merchant/src/models/model_Common.dart';
 import 'package:greenbill_merchant/src/models/model_getProfileImage.dart';
 import 'package:greenbill_merchant/src/models/model_getStore.dart';
 import 'package:greenbill_merchant/src/ui/BillInfo/tabBar.dart';
+import 'package:greenbill_merchant/src/ui/History/historyTab.dart';
 import 'package:greenbill_merchant/src/ui/History/paymentHistory.dart';
 import 'package:greenbill_merchant/src/ui/MySubcription/newSubFile.dart';
 import 'package:greenbill_merchant/src/ui/MySubcription/tabbarsubscription.dart';
@@ -32,6 +33,7 @@ import 'package:greenbill_merchant/src/ui/drawer/PetrolPump/AddUser/viewAllUsers
 import 'package:greenbill_merchant/src/ui/drawer/PetrolPump/ManageProduct/manage_products.dart';
 import 'package:greenbill_merchant/src/ui/drawer/Qr/allQrLists.dart';
 import 'package:greenbill_merchant/src/ui/drawer/ReceivedPayments/receivedPayments.dart';
+import 'package:greenbill_merchant/src/ui/drawer/Settings/Help&Support/reviews.dart';
 import 'package:greenbill_merchant/src/ui/drawer/Settings/settings_main.dart';
 import 'package:greenbill_merchant/src/ui/drawer/Settings/share_a_word.dart';
 import 'package:greenbill_merchant/src/ui/drawer/cashMemoReceipts/tabBarMemo.dart';
@@ -53,6 +55,7 @@ class HomeActivity extends StatelessWidget {
     );
   }
 }
+
 class MyHomePage extends StatefulWidget {
   MyHomePage({Key key, this.title}) : super(key: key);
 
@@ -300,26 +303,26 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
       actions: <Widget>[
         Padding(
           padding: const EdgeInsets.only(right: 10.0),
-          
+
         ),
         GestureDetector(
             child: (businessLogo != null)
                 ? CircleAvatar(
-                    backgroundColor: Colors.white,
-                    backgroundImage:
-                        NetworkImage("${profile.text}"),
-                  )
+              backgroundColor: Colors.white,
+              backgroundImage:
+              NetworkImage("${profile.text}"),
+            )
                 : CircleAvatar(
-                    backgroundColor: Colors.white,
-                    child: Text(
-                      store.substring(0, 1).toUpperCase(),
-                      style: TextStyle(
-                        fontSize: 20.0,
-                        color: kPrimaryColorBlue,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ),
+              backgroundColor: Colors.white,
+              child: Text(
+                store.substring(0, 1).toUpperCase(),
+                style: TextStyle(
+                  fontSize: 20.0,
+                  color: kPrimaryColorBlue,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ),
             onTap: () {
               showStoreDialog(context);
             }),
@@ -347,7 +350,7 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
             actions: <Widget>[
               TextButton(
                 child:
-                    Text('Cancel', style: TextStyle(color: kPrimaryColorBlue)),
+                Text('Cancel', style: TextStyle(color: kPrimaryColorBlue)),
                 onPressed: () {
                   Navigator.of(context).pop();
                 },
@@ -524,192 +527,215 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
       drawer: SafeArea(
         child: new Drawer(
             child: ListView(
-            children: <Widget>[
-              UserAccountsDrawerHeader(
-                accountName: Text('${profileFName.text} ${profileLName.text}'),
-                accountEmail: null,
-                // accountEmail: RichText(
-                //   text: TextSpan(
-                //       text: 'Checkout Pin: ',
-                //       style: TextStyle(
-                //         color: Colors.white,
-                //       ),
-                //       children: <TextSpan>[
-                //         TextSpan(
-                //           text: profileUid.text,
-                //           style: TextStyle(
-                //             color: Colors.white,
-                //             fontWeight: FontWeight.bold,
-                //           ),
-                //           // recognizer: TapGestureRecognizer()
-                //           //   ..onTap = () {
-                //           //     // open desired screen
-                //           //   }
-                //         ),
-                //       ]),
-                // ),
-                arrowColor: Colors.transparent,
-                // accountEmail: Text(profileMob.text),
-                currentAccountPicture: GestureDetector(
-                    child: CircleAvatar(
-                      backgroundImage: NetworkImage("${profile.text}"),
+              children: <Widget>[
+                UserAccountsDrawerHeader(
+                  accountName: Text('${profileFName.text} ${profileLName.text}'),
+                  accountEmail: null,
+                  // accountEmail: RichText(
+                  //   text: TextSpan(
+                  //       text: 'Checkout Pin: ',
+                  //       style: TextStyle(
+                  //         color: Colors.white,
+                  //       ),
+                  //       children: <TextSpan>[
+                  //         TextSpan(
+                  //           text: profileUid.text,
+                  //           style: TextStyle(
+                  //             color: Colors.white,
+                  //             fontWeight: FontWeight.bold,
+                  //           ),
+                  //           // recognizer: TapGestureRecognizer()
+                  //           //   ..onTap = () {
+                  //           //     // open desired screen
+                  //           //   }
+                  //         ),
+                  //       ]),
+                  // ),
+                  arrowColor: Colors.transparent,
+                  // accountEmail: Text(profileMob.text),
+                  currentAccountPicture: GestureDetector(
+                      child: CircleAvatar(
+                        backgroundImage: NetworkImage("${profile.text}"),
+                      ),
+                      onTap: () {
+                        profileView();
+                      }),
+                  onDetailsPressed: () {
+                    profileView();
+                  },
+                  //.. This line of code provides the usage of multiple accounts
+                  otherAccountsPictures: <Widget>[
+                    GestureDetector(
+                      onTap: () => Navigator.of(context).pop(),
+                      child: Container(
+                        width: 35.0,
+                        height: 35.0,
+                        decoration: new BoxDecoration(
+                          borderRadius: new BorderRadius.circular(25.0),
+                        ),
+                        alignment: Alignment.center,
+                        child: new Icon(Icons.clear, color: Colors.white, size: 20.0),
+                      ),
                     ),
-                    onTap: () {
-                      profileView();
-                    }),
-                onDetailsPressed: () {
-                  profileView();
-                },
-                //.. This line of code provides the usage of multiple accounts
-                otherAccountsPictures: <Widget>[
-                  GestureDetector(
-                    onTap: () => Navigator.of(context).pop(),
-                    child: Container(
+                  ],
+
+                  decoration: BoxDecoration(
+                    color: kPrimaryColorBlue,
+                  ),
+                ),
+                ListTile(
+                    dense: false,
+                    title: Text("Manage QR Code"),
+                    leading: Container(
                       width: 35.0,
                       height: 35.0,
+                      margin: const EdgeInsets.only(right: 10.0),
                       decoration: new BoxDecoration(
+                        color: Colors.white,
                         borderRadius: new BorderRadius.circular(25.0),
                       ),
                       alignment: Alignment.center,
-                      child: new Icon(Icons.clear, color: Colors.white, size: 20.0),
+                      child: new Icon(CupertinoIcons.qrcode,
+                          color: kPrimaryColorBlue, size: 25.0),
                     ),
+                    onTap: () {
+                      print("Manage QRs");
+                      Navigator.of(context).pop();
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (context) => AllQrLists()));
+                    }),
+                if(storeCatID != "11" && storeCatID != "1")
+                  ListTile(
+                      dense: false,
+                      title: Text("Parking Pass"),
+                      leading: Container(
+                        width: 35.0,
+                        height: 35.0,
+                        margin: const EdgeInsets.only(right: 10.0),
+                        decoration: new BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: new BorderRadius.circular(25.0),
+                        ),
+                        alignment: Alignment.center,
+                        child: new Icon(CupertinoIcons.person_crop_rectangle,
+                            color: kPrimaryColorBlue, size: 25.0),
+                      ),
+                      onTap: () {
+                        print("Parking Pass");
+                        Navigator.of(context).pop();
+                        Navigator.push(context,
+                            MaterialPageRoute(builder: (context) => ParkingPass()));
+                      }
                   ),
-                ],
-
-                decoration: BoxDecoration(
-                  color: kPrimaryColorBlue,
+                if(storeCatID != "11" && storeCatID != "12")
+                ListTile(
+                    dense: false,
+                    title: Text("Cash Memo & Receipt"),
+                    leading: Container(
+                      width: 35.0,
+                      height: 35.0,
+                      margin: const EdgeInsets.only(right: 10.0),
+                      decoration: new BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: new BorderRadius.circular(25.0),
+                      ),
+                      alignment: Alignment.center,
+                      child: new Icon(CupertinoIcons.doc_text_search,
+                          color: kPrimaryColorBlue, size: 25.0),
+                    ),
+                    onTap: () {
+                      Navigator.of(context).pop();
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (context) => TabBarMemo()));
+                    }
                 ),
-              ),
-              ListTile(
-                  dense: false,
-                  title: Text("Manage QR Code"),
-                  leading: Container(
-                    width: 35.0,
-                    height: 35.0,
-                    margin: const EdgeInsets.only(right: 10.0),
-                    decoration: new BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: new BorderRadius.circular(25.0),
-                    ),
-                    alignment: Alignment.center,
-                    child: new Icon(CupertinoIcons.qrcode,
-                        color: kPrimaryColorBlue, size: 25.0),
+                if(storeCatID != "11" && storeCatID != "12")
+                  ListTile(
+                      dense: false,
+                      title: Text("Customer Info"),
+                      leading: Container(
+                        width: 35.0,
+                        height: 35.0,
+                        margin: const EdgeInsets.only(right: 10.0),
+                        decoration: new BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: new BorderRadius.circular(25.0),
+                        ),
+                        alignment: Alignment.center,
+                        child: new Icon(CupertinoIcons.person_3,
+                            color: kPrimaryColorBlue, size: 25.0),
+                      ),
+                      onTap: () {
+                        Navigator.of(context).pop();
+                        Navigator.push(context,
+                            MaterialPageRoute(builder: (context) => CustomerInfo()));
+                      }
                   ),
-                  onTap: () {
-                    print("Manage QRs");
-                    Navigator.of(context).pop();
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => AllQrLists()));
-                  }),
-               if(storeCatID != "11" && storeCatID != "1")
-              ListTile(
-                  dense: false,
-                  title: Text("Parking Pass"),
-                  leading: Container(
-                    width: 35.0,
-                    height: 35.0,
-                    margin: const EdgeInsets.only(right: 10.0),
-                    decoration: new BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: new BorderRadius.circular(25.0),
+                ListTile(
+                    dense: false,
+                    title: Text("My Subscription"),
+                    leading: Container(
+                      width: 35.0,
+                      height: 35.0,
+                      margin: const EdgeInsets.only(right: 10.0),
+                      decoration: new BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: new BorderRadius.circular(25.0),
+                      ),
+                      alignment: Alignment.center,
+                      child: new Icon(CupertinoIcons.purchased,
+                          color: kPrimaryColorBlue, size: 25.0),
                     ),
-                    alignment: Alignment.center,
-                    child: new Icon(CupertinoIcons.person_crop_rectangle,
-                        color: kPrimaryColorBlue, size: 25.0),
-                  ),
-                  onTap: () {
-                    print("Parking Pass");
-                    Navigator.of(context).pop();
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => ParkingPass()));
-                  }
-              ),
-              ListTile(
-                  dense: false,
-                  title: Text("Cash Memo & Receipt"),
-                  leading: Container(
-                    width: 35.0,
-                    height: 35.0,
-                    margin: const EdgeInsets.only(right: 10.0),
-                    decoration: new BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: new BorderRadius.circular(25.0),
+                    onTap: () {
+                      Navigator.of(context).pop();
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (context) => subUpdated()));
+                    }
+                ),
+                ListTile(
+                    dense: false,
+                    title: Text("Ratings"),
+                    leading: Container(
+                      width: 35.0,
+                      height: 35.0,
+                      margin: const EdgeInsets.only(right: 10.0),
+                      decoration: new BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: new BorderRadius.circular(25.0),
+                      ),
+                      alignment: Alignment.center,
+                      child: new Icon(CupertinoIcons.star_fill,
+                          color: kPrimaryColorBlue, size: 25.0),
                     ),
-                    alignment: Alignment.center,
-                    child: new Icon(CupertinoIcons.doc_text_search,
-                        color: kPrimaryColorBlue, size: 25.0),
-                  ),
-                  onTap: () {
-                    Navigator.of(context).pop();
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => TabBarMemo()));
-                  }
-              ),
-              if(storeCatID != "11" && storeCatID != "12")
-              ListTile(
-                  dense: false,
-                  title: Text("Customer Info"),
-                  leading: Container(
-                    width: 35.0,
-                    height: 35.0,
-                    margin: const EdgeInsets.only(right: 10.0),
-                    decoration: new BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: new BorderRadius.circular(25.0),
+                    onTap: () {
+                      Navigator.of(context).pop();
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (context) => Reviews()));
+                    }
+                ),
+                if(storeCatID != "11" && storeCatID != "12")
+                ListTile(
+                    dense: false,
+                    title: Text("Bulk SMS"),
+                    leading: Container(
+                      width: 35.0,
+                      height: 35.0,
+                      margin: const EdgeInsets.only(right: 10.0),
+                      decoration: new BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: new BorderRadius.circular(25.0),
+                      ),
+                      alignment: Alignment.center,
+                      child: new Icon(CupertinoIcons.bubble_left_bubble_right,
+                          color: kPrimaryColorBlue, size: 25.0),
                     ),
-                    alignment: Alignment.center,
-                    child: new Icon(CupertinoIcons.person_3,
-                        color: kPrimaryColorBlue, size: 25.0),
-                  ),
-                  onTap: () {
-                    Navigator.of(context).pop();
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => CustomerInfo()));
-                  }
-              ),
-              ListTile(
-                  dense: false,
-                  title: Text("My Subscription"),
-                  leading: Container(
-                    width: 35.0,
-                    height: 35.0,
-                    margin: const EdgeInsets.only(right: 10.0),
-                    decoration: new BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: new BorderRadius.circular(25.0),
-                    ),
-                    alignment: Alignment.center,
-                    child: new Icon(CupertinoIcons.purchased,
-                        color: kPrimaryColorBlue, size: 25.0),
-                  ),
-                  onTap: () {
-                    Navigator.of(context).pop();
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => subUpdated()));
-                  }
-              ),
-              ListTile(
-                  dense: false,
-                  title: Text("Bulk SMS"),
-                  leading: Container(
-                    width: 35.0,
-                    height: 35.0,
-                    margin: const EdgeInsets.only(right: 10.0),
-                    decoration: new BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: new BorderRadius.circular(25.0),
-                    ),
-                    alignment: Alignment.center,
-                    child: new Icon(CupertinoIcons.bubble_left_bubble_right,
-                        color: kPrimaryColorBlue, size: 25.0),
-                  ),
-                  onTap: () {
-                    Navigator.of(context).pop();
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => BulkSMS()));
-                  }),
+                    onTap: () {
+                      Navigator.of(context).pop();
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (context) => BulkSMS()));
+                    }),
 
-              ListTile(
+                /* ListTile(
                   dense: false,
                   title: Text("Received Payments"),
                   leading: Container(
@@ -728,33 +754,55 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
                     Navigator.of(context).pop();
                     Navigator.push(context,
                         MaterialPageRoute(builder: (context) => ReceivedPayments()));
-                  }),
+                  }),*/
 
-              ListTile(
-                  dense: false,
-                  title: Text("Offers"),
-                  leading: Container(
-                    width: 35.0,
-                    height: 35.0,
-                    margin: const EdgeInsets.only(right: 10.0),
-                    decoration: new BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: new BorderRadius.circular(25.0),
+                ListTile(
+                    dense: false,
+                    title: Text("Offers"),
+                    leading: Container(
+                      width: 35.0,
+                      height: 35.0,
+                      margin: const EdgeInsets.only(right: 10.0),
+                      decoration: new BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: new BorderRadius.circular(25.0),
+                      ),
+                      alignment: Alignment.center,
+                      child: new Icon(CupertinoIcons.gift,
+                          color: kPrimaryColorBlue, size: 25.0),
                     ),
-                    alignment: Alignment.center,
-                    child: new Icon(CupertinoIcons.gift,
-                        color: kPrimaryColorBlue, size: 25.0),
+                    onTap: () {
+                      Navigator.of(context).pop();
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (context) => OffersList()));
+                    }
+                ),
+                if(storeCatID == "12")
+                  ListTile(
+                      dense: false,
+                      title: Text("Exit Parked Vehicles"),
+                      leading: Container(
+                        width: 35.0,
+                        height: 35.0,
+                        margin: const EdgeInsets.only(right: 10.0),
+                        decoration: new BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: new BorderRadius.circular(25.0),
+                        ),
+                        alignment: Alignment.center,
+                        child: new Icon(CupertinoIcons.check_mark_circled,
+                            color: kPrimaryColorBlue, size: 25.0),
+                      ),
+                      onTap: () {
+                        Navigator.of(context).pop();
+                        Navigator.push(context,
+                            MaterialPageRoute(builder: (context) => ExitBillList()));
+                      }
                   ),
-                  onTap: () {
-                    Navigator.of(context).pop();
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => OffersList()));
-                  }
-              ),
-              if(storeCatID == "12")
-                ListTile(
-                    dense: false,
-                    title: Text("Exit Parked Vehicles"),
+                if(storeCatID == "12")
+                  ExpansionTile(
+                    title: Text("ParkingLot Management"),
+                    expandedAlignment: Alignment.centerRight,
                     leading: Container(
                       width: 35.0,
                       height: 35.0,
@@ -764,127 +812,105 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
                         borderRadius: new BorderRadius.circular(25.0),
                       ),
                       alignment: Alignment.center,
-                      child: new Icon(CupertinoIcons.check_mark_circled,
+                      child: new Icon(CupertinoIcons.car_detailed,
                           color: kPrimaryColorBlue, size: 25.0),
                     ),
-                    onTap: () {
-                      Navigator.of(context).pop();
-                      Navigator.push(context,
-                          MaterialPageRoute(builder: (context) => ExitBillList()));
-                    }
-                ),
-              if(storeCatID == "12")
-                ExpansionTile(
-                  title: Text("ParkingLot Management"),
-                  expandedAlignment: Alignment.centerRight,
-                  leading: Container(
-                    width: 35.0,
-                    height: 35.0,
-                    margin: const EdgeInsets.only(right: 10.0),
-                    decoration: new BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: new BorderRadius.circular(25.0),
-                    ),
-                    alignment: Alignment.center,
-                    child: new Icon(CupertinoIcons.car_detailed,
-                        color: kPrimaryColorBlue, size: 25.0),
+                    maintainState: true,
+                    children: [
+                      ListTile(
+                        dense: true,
+                        title: Text("Manage Vehicle Type"),
+                        onTap: (){
+                          Navigator.of(context).pop();
+                          Navigator.push(context,
+                              MaterialPageRoute(builder: (context) => ManageVehicleType()));
+                        },
+                      ),
+                      ListTile(
+                        dense: true,
+                        title: Text("Manage Parking Space"),
+                        onTap: (){
+                          Navigator.of(context).pop();
+                          Navigator.push(context,
+                              MaterialPageRoute(builder: (context) => ManageParkingSpace()));
+                        },
+                      ),
+                      ListTile(
+                        dense: true,
+                        title: Text("Manage Charges"),
+                        onTap: (){
+                          Navigator.of(context).pop();
+                          Navigator.push(context,
+                              MaterialPageRoute(builder: (context) => ManageCharges()));
+                        },
+                      )
+                    ],
                   ),
-                  maintainState: true,
-                  children: [
-                    ListTile(
-                      dense: true,
-                      title: Text("Manage Vehicle Type"),
-                      onTap: (){
+                if(storeCatID == "11")
+                  ListTile(
+                      dense: false,
+                      title: Text("Manage Products"),
+                      leading: Container(
+                        width: 35.0,
+                        height: 35.0,
+                        margin: const EdgeInsets.only(right: 10.0),
+                        decoration: new BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: new BorderRadius.circular(25.0),
+                        ),
+                        alignment: Alignment.center,
+                        child: new Icon(CupertinoIcons.bolt_circle,
+                            color: kPrimaryColorBlue, size: 25.0),
+                      ),
+                      onTap: () {
                         Navigator.of(context).pop();
                         Navigator.push(context,
-                            MaterialPageRoute(builder: (context) => ManageVehicleType()));
-                      },
-                    ),
-                    ListTile(
-                      dense: true,
-                      title: Text("Manage Parking Space"),
-                      onTap: (){
+                            MaterialPageRoute(builder: (context) => ManageProducts()));
+                      }
+                  ),
+                if(storeCatID == "11")
+                  ListTile(
+                      dense: false,
+                      title: Text("Addon Products"),
+                      leading: Container(
+                        width: 35.0,
+                        height: 35.0,
+                        margin: const EdgeInsets.only(right: 10.0),
+                        decoration: new BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: new BorderRadius.circular(25.0),
+                        ),
+                        alignment: Alignment.center,
+                        child: new Icon(CupertinoIcons.cube_box,
+                            color: kPrimaryColorBlue, size: 25.0),
+                      ),
+                      onTap: () {
                         Navigator.of(context).pop();
                         Navigator.push(context,
-                            MaterialPageRoute(builder: (context) => ManageParkingSpace()));
-                      },
-                    ),
-                    ListTile(
-                      dense: true,
-                      title: Text("Manage Charges"),
-                      onTap: (){
+                            MaterialPageRoute(builder: (context) => AddonProducts()));
+                      }
+                  ),
+                if(storeCatID == "11")
+                  ListTile(
+                      dense: false,
+                      title: Text("Manage Nozzle"),
+                      leading: Container(
+                        width: 35.0,
+                        height: 35.0,
+                        margin: const EdgeInsets.only(right: 10.0),
+                        decoration: new BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: new BorderRadius.circular(25.0),
+                        ),
+                        alignment: Alignment.center,
+                        child: new Icon(CupertinoIcons.drop,
+                            color: kPrimaryColorBlue, size: 25.0),
+                      ),
+                      onTap: () {
                         Navigator.of(context).pop();
-                        Navigator.push(context,
-                            MaterialPageRoute(builder: (context) => ManageCharges()));
-                      },
-                    )
-                  ],
-                ),
-              if(storeCatID == "11")
-                ListTile(
-                    dense: false,
-                    title: Text("Manage Products"),
-                    leading: Container(
-                      width: 35.0,
-                      height: 35.0,
-                      margin: const EdgeInsets.only(right: 10.0),
-                      decoration: new BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: new BorderRadius.circular(25.0),
-                      ),
-                      alignment: Alignment.center,
-                      child: new Icon(CupertinoIcons.bolt_circle,
-                          color: kPrimaryColorBlue, size: 25.0),
-                    ),
-                    onTap: () {
-                      Navigator.of(context).pop();
-                      Navigator.push(context,
-                          MaterialPageRoute(builder: (context) => ManageProducts()));
-                    }
-                ),
-              if(storeCatID == "11")
-                ListTile(
-                    dense: false,
-                    title: Text("Addon Products"),
-                    leading: Container(
-                      width: 35.0,
-                      height: 35.0,
-                      margin: const EdgeInsets.only(right: 10.0),
-                      decoration: new BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: new BorderRadius.circular(25.0),
-                      ),
-                      alignment: Alignment.center,
-                      child: new Icon(CupertinoIcons.cube_box,
-                          color: kPrimaryColorBlue, size: 25.0),
-                    ),
-                    onTap: () {
-                      Navigator.of(context).pop();
-                      Navigator.push(context,
-                          MaterialPageRoute(builder: (context) => AddonProducts()));
-                    }
-                ),
-              if(storeCatID == "11")
-                ListTile(
-                    dense: false,
-                    title: Text("Manage Nozzle"),
-                    leading: Container(
-                      width: 35.0,
-                      height: 35.0,
-                      margin: const EdgeInsets.only(right: 10.0),
-                      decoration: new BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: new BorderRadius.circular(25.0),
-                      ),
-                      alignment: Alignment.center,
-                      child: new Icon(CupertinoIcons.drop,
-                          color: kPrimaryColorBlue, size: 25.0),
-                    ),
-                    onTap: () {
-                      Navigator.of(context).pop();
-                      fetchNozzleCount().then((value) => showNozzleDialog(context));
-                    }
-                ),
+                        fetchNozzleCount().then((value) => showNozzleDialog(context));
+                      }
+                  ),
                 ListTile(
                     dense: false,
                     title: Text("Add User"),
@@ -906,132 +932,132 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
                           MaterialPageRoute(builder: (context) => ViewAllUsers()));
                     }
                 ),
-              if(storeCatID != "11" && storeCatID != "12")
-              ListTile(
-                  dense: false,
-                  title: Text("Digital Marketing"),
-                  leading: Container(
-                    width: 35.0,
-                    height: 35.0,
-                    margin: const EdgeInsets.only(right: 10.0),
-                    decoration: new BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: new BorderRadius.circular(25.0),
+                if(storeCatID != "11" && storeCatID != "12")
+                  ListTile(
+                      dense: false,
+                      title: Text("Digital Marketing"),
+                      leading: Container(
+                        width: 35.0,
+                        height: 35.0,
+                        margin: const EdgeInsets.only(right: 10.0),
+                        decoration: new BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: new BorderRadius.circular(25.0),
+                        ),
+                        alignment: Alignment.center,
+                        child: new Icon(CupertinoIcons.speaker_zzz,
+                            color: kPrimaryColorBlue, size: 25.0),
+                      ),
+                      onTap: () {
+                        Navigator.of(context).pop();
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => DmEnquiry(
+                                    "${profileFName.text} ${profileLName.text}",
+                                    profileMob.text)));
+                      }),
+                // ListTile(
+                //     dense: false,
+                //     title: Text("Offers"),
+                //     leading: Container(
+                //       width: 35.0,
+                //       height: 35.0,
+                //       margin: const EdgeInsets.only(right: 10.0),
+                //       decoration: new BoxDecoration(
+                //         color: Colors.white,
+                //         borderRadius: new BorderRadius.circular(25.0),
+                //       ),
+                //       alignment: Alignment.center,
+                //       child: new Icon(CupertinoIcons.gift,
+                //           color: kPrimaryColorBlue, size: 25.0),
+                //     ),
+                //     onTap: () {
+                //       // Navigator.of(context).pop();
+                //     }),
+                ListTile(
+                    dense: false,
+                    title: Text("Refer a Store"),
+                    leading: Container(
+                      width: 35.0,
+                      height: 35.0,
+                      margin: const EdgeInsets.only(right: 10.0),
+                      decoration: new BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: new BorderRadius.circular(25.0),
+                      ),
+                      alignment: Alignment.center,
+                      child: new Icon(CupertinoIcons.shopping_cart,
+                          color: kPrimaryColorBlue, size: 25.0),
                     ),
-                    alignment: Alignment.center,
-                    child: new Icon(CupertinoIcons.speaker_zzz,
-                        color: kPrimaryColorBlue, size: 25.0),
-                  ),
-                  onTap: () {
-                    Navigator.of(context).pop();
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => DmEnquiry(
-                                "${profileFName.text} ${profileLName.text}",
-                                profileMob.text)));
-                  }),
-              // ListTile(
-              //     dense: false,
-              //     title: Text("Offers"),
-              //     leading: Container(
-              //       width: 35.0,
-              //       height: 35.0,
-              //       margin: const EdgeInsets.only(right: 10.0),
-              //       decoration: new BoxDecoration(
-              //         color: Colors.white,
-              //         borderRadius: new BorderRadius.circular(25.0),
-              //       ),
-              //       alignment: Alignment.center,
-              //       child: new Icon(CupertinoIcons.gift,
-              //           color: kPrimaryColorBlue, size: 25.0),
-              //     ),
-              //     onTap: () {
-              //       // Navigator.of(context).pop();
-              //     }),
-              ListTile(
-                  dense: false,
-                  title: Text("Refer a Store"),
-                  leading: Container(
-                    width: 35.0,
-                    height: 35.0,
-                    margin: const EdgeInsets.only(right: 10.0),
-                    decoration: new BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: new BorderRadius.circular(25.0),
+                    onTap: () {
+                      print("Refer a Store");
+                      Navigator.of(context).pop();
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (context) => ReferralPage()));
+                    }),
+                ListTile(
+                    dense: false,
+                    title: Text("Share a Word"),
+                    leading: Container(
+                      width: 35.0,
+                      height: 35.0,
+                      margin: const EdgeInsets.only(right: 10.0),
+                      decoration: new BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: new BorderRadius.circular(25.0),
+                      ),
+                      alignment: Alignment.center,
+                      child: new Icon(CupertinoIcons.arrowshape_turn_up_right,
+                          color: kPrimaryColorBlue, size: 25.0),
                     ),
-                    alignment: Alignment.center,
-                    child: new Icon(CupertinoIcons.shopping_cart,
-                        color: kPrimaryColorBlue, size: 25.0),
-                  ),
-                  onTap: () {
-                    print("Refer a Store");
-                    Navigator.of(context).pop();
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => ReferralPage()));
-                  }),
-              ListTile(
-                  dense: false,
-                  title: Text("Share a Word"),
-                  leading: Container(
-                    width: 35.0,
-                    height: 35.0,
-                    margin: const EdgeInsets.only(right: 10.0),
-                    decoration: new BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: new BorderRadius.circular(25.0),
+                    onTap: () {
+                      Navigator.of(context).pop();
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (context) => ShareAWord()));
+                    }),
+                // ListTile(
+                //     dense: false,
+                //     title: Text("Feedback"),
+                //     leading: Container(
+                //       width: 35.0,
+                //       height: 35.0,
+                //       margin: const EdgeInsets.only(right: 10.0),
+                //       decoration: new BoxDecoration(
+                //         color: Colors.white,
+                //         borderRadius: new BorderRadius.circular(25.0),
+                //       ),
+                //       alignment: Alignment.center,
+                //       child: new Icon(CupertinoIcons.text_bubble,
+                //           color: kPrimaryColorBlue, size: 25.0),
+                //     ),
+                //     onTap: () {
+                //       Navigator.of(context).pop();
+                //       Navigator.push(context,
+                //           MaterialPageRoute(builder: (context) => Feedback1()));
+                //     }),
+                ListTile(
+                    dense: false,
+                    title: Text("Settings"),
+                    leading: Container(
+                      width: 35.0,
+                      height: 35.0,
+                      margin: const EdgeInsets.only(right: 10.0),
+                      decoration: new BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: new BorderRadius.circular(25.0),
+                      ),
+                      alignment: Alignment.center,
+                      child: new Icon(CupertinoIcons.settings,
+                          color: kPrimaryColorBlue, size: 25.0),
                     ),
-                    alignment: Alignment.center,
-                    child: new Icon(CupertinoIcons.arrowshape_turn_up_right,
-                        color: kPrimaryColorBlue, size: 25.0),
-                  ),
-                  onTap: () {
-                    Navigator.of(context).pop();
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => ShareAWord()));
-                  }),
-              // ListTile(
-              //     dense: false,
-              //     title: Text("Feedback"),
-              //     leading: Container(
-              //       width: 35.0,
-              //       height: 35.0,
-              //       margin: const EdgeInsets.only(right: 10.0),
-              //       decoration: new BoxDecoration(
-              //         color: Colors.white,
-              //         borderRadius: new BorderRadius.circular(25.0),
-              //       ),
-              //       alignment: Alignment.center,
-              //       child: new Icon(CupertinoIcons.text_bubble,
-              //           color: kPrimaryColorBlue, size: 25.0),
-              //     ),
-              //     onTap: () {
-              //       Navigator.of(context).pop();
-              //       Navigator.push(context,
-              //           MaterialPageRoute(builder: (context) => Feedback1()));
-              //     }),
-              ListTile(
-                  dense: false,
-                  title: Text("Settings"),
-                  leading: Container(
-                    width: 35.0,
-                    height: 35.0,
-                    margin: const EdgeInsets.only(right: 10.0),
-                    decoration: new BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: new BorderRadius.circular(25.0),
-                    ),
-                    alignment: Alignment.center,
-                    child: new Icon(CupertinoIcons.settings,
-                        color: kPrimaryColorBlue, size: 25.0),
-                  ),
-                  onTap: () {
-                    Navigator.of(context).pop();
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => Settings()));
-                  }),
-           ],
-        )),
+                    onTap: () {
+                      Navigator.of(context).pop();
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (context) => Settings()));
+                    }),
+              ],
+            )),
       ),
       body: PageView(
         physics: NeverScrollableScrollPhysics(),
@@ -1044,7 +1070,7 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
           BillsTab(storeCatID,length),
           PayLinks(),
           TabBarPromotions(),
-          History(),
+          HistoryTab(),
 
         ],
       ),
@@ -1062,120 +1088,120 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
             color: Colors.white,
           )
               : Column(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  Icon(
-                    CupertinoIcons.home,
-                    color: Colors.white,
-                  ),
-                  Text(
-                    "Home",
-                    style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 10.0,
-                        fontFamily: "PoppinsMedium"),
-                  ),
-                  SizedBox(
-                    height: 10.0,
-                  )
-                ],
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              Icon(
+                CupertinoIcons.home,
+                color: Colors.white,
               ),
+              Text(
+                "Home",
+                style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 10.0,
+                    fontFamily: "PoppinsMedium"),
+              ),
+              SizedBox(
+                height: 10.0,
+              )
+            ],
+          ),
           (_page == 1)
               ? Icon(
             CupertinoIcons.doc_plaintext,
             color: Colors.white,
           )
               : Column(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  Icon(
-                    CupertinoIcons.doc_plaintext,
-                    color: Colors.white,
-                  ),
-                  Text(
-                    "Bills",
-                    style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 10.0,
-                        fontFamily: "PoppinsMedium"),
-                  ),
-                  SizedBox(
-                    height: 10.0,
-                  )
-                ],
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              Icon(
+                CupertinoIcons.doc_plaintext,
+                color: Colors.white,
               ),
+              Text(
+                "Bills",
+                style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 10.0,
+                    fontFamily: "PoppinsMedium"),
+              ),
+              SizedBox(
+                height: 10.0,
+              )
+            ],
+          ),
           (_page == 2)
               ? Icon(
             FontAwesomeIcons.rupeeSign,
             color: Colors.white,
           )
               : Column(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  Icon(
-                    FontAwesomeIcons.rupeeSign,
-                    color: Colors.white,
-                  ),
-                  Text(
-                    "Pay Links",
-                    style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 10.0,
-                        fontFamily: "PoppinsMedium"),
-                  ),
-                  SizedBox(
-                    height: 10.0,
-                  )
-                ],
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              Icon(
+                FontAwesomeIcons.rupeeSign,
+                color: Colors.white,
               ),
+              Text(
+                "Pay Links",
+                style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 10.0,
+                    fontFamily: "PoppinsMedium"),
+              ),
+              SizedBox(
+                height: 10.0,
+              )
+            ],
+          ),
           (_page == 3)
               ? Icon(
             CupertinoIcons.ticket,
             color: Colors.white,
           )
               : Column(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  Icon(
-                    CupertinoIcons.ticket,
-                    color: Colors.white,
-                  ),
-                  Text(
-                    "Promotions",
-                    style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 10.0,
-                        fontFamily: "PoppinsMedium"),
-                  ),
-                  SizedBox(
-                    height: 10.0,
-                  )
-                ],
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              Icon(
+                CupertinoIcons.ticket,
+                color: Colors.white,
               ),
+              Text(
+                "Promotions",
+                style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 10.0,
+                    fontFamily: "PoppinsMedium"),
+              ),
+              SizedBox(
+                height: 10.0,
+              )
+            ],
+          ),
           (_page == 4)
               ? Icon(
             CupertinoIcons.arrow_right_arrow_left_circle,
             color: Colors.white,
           )
               : Column(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  Icon(
-                    CupertinoIcons.arrow_right_arrow_left_circle,
-                    color: Colors.white,
-                  ),
-                  Text(
-                    "History",
-                    style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 10.0,
-                        fontFamily: "PoppinsMedium"),
-                  ),
-                  SizedBox(
-                    height: 10.0,
-                  )
-                ],
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              Icon(
+                CupertinoIcons.arrow_right_arrow_left_circle,
+                color: Colors.white,
               ),
+              Text(
+                "History",
+                style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 10.0,
+                    fontFamily: "PoppinsMedium"),
+              ),
+              SizedBox(
+                height: 10.0,
+              )
+            ],
+          ),
         ],
         onTap: (index) {
           setState(() {
@@ -1190,7 +1216,7 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
   void profileView() {
     Navigator.of(context).pop();
     Navigator.push(context,
-            MaterialPageRoute(builder: (context) => PersonalInfo(profile.text, profileUid.text)))
+        MaterialPageRoute(builder: (context) => PersonalInfo(profile.text, profileUid.text)))
         .then((value) => value ? setData() : null);
   }
 }

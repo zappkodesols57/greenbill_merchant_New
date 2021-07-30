@@ -4,7 +4,6 @@ import 'package:greenbill_merchant/src/constants.dart';
 import 'package:greenbill_merchant/src/ui/Profile/generalSetting.dart';
 import 'package:greenbill_merchant/src/ui/drawer/Settings/feedback.dart';
 import 'package:greenbill_merchant/src/ui/drawer/Settings/suggestBrand.dart';
-import 'package:greenbill_merchant/src/ui/drawer/Settings/tabFeedback.dart';
 import 'package:greenbill_merchant/src/ui/drawer/Settings/updatePass.dart';
 import 'package:greenbill_merchant/src/ui/drawer/Settings/webView.dart';
 import 'package:greenbill_merchant/src/ui/login/login_Page_Merchant.dart';
@@ -172,7 +171,7 @@ class SettingsState extends State<Settings> {
           ),
           _buildListItem("Feedback", CupertinoIcons.text_bubble, () {
             Navigator.push(context,
-                MaterialPageRoute(builder: (context) => FeedTab()));
+                MaterialPageRoute(builder: (context) => Feedback1()));
           }),
           Divider(
             thickness: 1.0,

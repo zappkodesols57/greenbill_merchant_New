@@ -161,7 +161,7 @@ class BillInfoState extends State<BillInfo> {
                   Container(
                     width: 50.0,
                     child: Text(
-                      "SMS ",
+                      "Send",
                       textAlign: TextAlign.center,
                       style: TextStyle(
                           color: Colors.white, fontFamily: "PoppinsBold"),

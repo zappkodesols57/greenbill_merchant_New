@@ -60,7 +60,7 @@ class CashMemoListState extends State<CashMemoList> {
     if (200 == res.statusCode) {
       print(cashMemoFromJson(res.body).data.length);
       return cashMemoFromJson(res.body).data.where((element) => element.mobileNumber.toLowerCase().contains(query.text) ||
-          element.total.toString().toLowerCase().contains(query.text)).toList();
+          element.memoNo.toString().toLowerCase().contains(query.text)).toList();
 
     } else {
       throw Exception('Failed to load List');
@@ -138,6 +138,51 @@ class CashMemoListState extends State<CashMemoList> {
               ),
             ),
           ),
+          ListTile(
+            tileColor: kPrimaryColorBlue,
+            title: Text(
+              "Mobile No.",
+              textAlign: TextAlign.start,
+              style:
+              TextStyle(color: Colors.white, fontFamily: "PoppinsBold"),
+            ),
+            trailing: Wrap(
+              spacing: 11, // space between two icons
+              crossAxisAlignment: WrapCrossAlignment.center,
+              children: <Widget>[
+                Container(
+                  width: 50.0,
+                  child: Text(
+                    "Send",
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                        color: Colors.white, fontFamily: "PoppinsBold"),
+                  ),
+                ),
+                Container(
+                  width: 50.0,
+                  child: Text(
+                    "Delete",
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                        color: Colors.white, fontFamily: "PoppinsBold"),
+                  ),
+                ),
+                Container(
+                  width: 72.0,
+                  child: Text(
+                    "Amount",
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                        color: Colors.white, fontFamily: "PoppinsBold"),
+                  ),
+                )
+              ],
+            ),
+            onTap: () {
+              // Navigator.push(context, MaterialPageRoute(builder:  (context)=>MerchantBillList(snapshot.data[index].mBusinessName)));
+            },
+          ),
           Expanded(
             child: FutureBuilder<List<Datum>>(
               future: getPassLists(),
@@ -169,7 +214,7 @@ class CashMemoListState extends State<CashMemoList> {
                       controller: _controller,
                       thickness: 3.0,
                       child: ListView.builder(
-                          padding: const EdgeInsets.only(bottom: kFloatingActionButtonMargin + 48),
+                          padding: const EdgeInsets.only(bottom: kFloatingActionButtonMargin + 50),
                           itemCount: snapshot.data.length,
                           shrinkWrap: true,
                           reverse: false,
@@ -209,7 +254,7 @@ class CashMemoListState extends State<CashMemoList> {
                                 //   ),
                                 // ),
                                 trailing: Wrap(
-                                  spacing: 10, // space between two icons
+                                  spacing: 11, // space between two icons
                                   crossAxisAlignment:
                                   WrapCrossAlignment.center,
                                   children: <Widget>[
@@ -236,7 +281,7 @@ class CashMemoListState extends State<CashMemoList> {
                                     Container(
                                         width: 80.0,
                                         child: Text(
-                                            "₹ ${snapshot.data[index].total}",
+                                            "   ₹ ${snapshot.data[index].total}",
                                             style: TextStyle(
                                                 fontWeight:
                                                 FontWeight.bold))),
@@ -289,7 +334,7 @@ class CashMemoListState extends State<CashMemoList> {
     Navigator.of(context, rootNavigator: true).pop();
     if (response.statusCode == 200) {
       if (data.status == "success") {
-        showInSnackBar("Send Successful");
+        showInSnackBar("Cash Memo Sent Successfully");
       } else {
         print(data.status);
       }

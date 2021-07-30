@@ -16,12 +16,10 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:shimmer/shimmer.dart';
 import '../../constants.dart';
 import 'constants.dart';
-
 import 'doughnut_chart_graph.dart';
 import 'widgets/card_item.dart';
 import 'package:http/http.dart' as http;
 import 'package:syncfusion_flutter_charts/charts.dart';
-
 import 'widgets/data_viz/circle/neuomorphic_circle.dart';
 import 'widgets/title_with_more_bbtn.dart';
 
@@ -32,13 +30,12 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
-  String token, id, storeID, storeCatID,AvgTransaction,averageBilling,totalCollection,totalSale,avgSale;
+  String token, id,bussinessID, storeID, storeCatID,AvgTransaction,averageBilling,totalCollection,totalSale,avgSale;
   String newsCustomerText,returningCustomerText,c,d;
   static int newsCustomerValue=1;
   static int returningCustomerValue=1;
   static Map<String, double> dataMap;
   bool _headerEnabled,_headerBusiness;
-
 
 
   int todayTransaction;
@@ -66,6 +63,7 @@ class _HomePageState extends State<HomePage> {
       token = prefs.getString("token");
       id = prefs.getInt("userID").toString();
       storeID = prefs.getString("businessID");
+      // bussinessID = prefs.getString("businessIDstore");
       storeCatID = prefs.getString("businessCategoryID");
     });
     print('$token\n$id');
@@ -212,7 +210,6 @@ class _HomePageState extends State<HomePage> {
     return data;
   }
 
-
   Future<List<DoughnutChartData>> BilllingAnalysis() async {
     final param = {
       "merchant_business_id": storeID,
@@ -323,6 +320,7 @@ class _HomePageState extends State<HomePage> {
     final param = {
       "m_business_id": storeID,
     };
+    print (">>>>>>>>>>>>>$id>>>>$storeCatID>>>>>>>$storeID>>>>>>>>>$token");
     String url = "http://157.230.228.250/parking-merchant-session-graph-api/";
 
     final response = await http.post(url, body: param,
@@ -338,12 +336,47 @@ class _HomePageState extends State<HomePage> {
     print(body);
     for (int i = 0; i < body["labels"].length; i++) {
       sessionData.add(ChartParkingData(
-        x: body["labels"][i],
-        twoWheeler: body["data"][i],
-
+        x: body["month_labels"][i],
+        twoWheeler: body["2 - Wheeler"][i],
+        threeWheeler: body["3 - Wheeler"][i],
+        fourWheeler: body["4 - Wheeler"][i],
+        truck: body["Truck"][i],
+        lorry: body["Lorry"][i],
       ));
     }
     return sessionData;
+  }
+
+
+  Future<List<ChartPetrolData>> fetchAllPetrolCollection() async {
+    final param = {
+      "m_business_id": storeID,
+    };
+    String url = "http://157.230.228.250/petrol-merchant-session-graph-api/";
+
+    final response = await http.post(url, body: param,
+      headers: {HttpHeaders.authorizationHeader: "Token $token"},
+    );
+    List<ChartPetrolData> sessionData1 = [];
+    print(response.body);
+    print(response.statusCode);
+    if (response.statusCode == 400) {
+      return null;
+    }
+    final body = json.decode(response.body);
+    print(body);
+    for (int i = 0; i < body["labels"].length; i++) {
+      sessionData1.add(ChartPetrolData(
+        x: body["month_labels"][i],
+        petrol: body["Petrol"][i],
+        petrolPower : body["petrol power"][i],
+        cng : body["CNG"][i],
+        wheels : body["wheels"][i],
+        oil : body["oil"][i],
+
+      ));
+    }
+    return sessionData1;
   }
 
   Future<List<Metadata>> getUsersLists() async {
@@ -1396,7 +1429,9 @@ class _HomePageState extends State<HomePage> {
                     ],
                   ),
                 ),
+
                 SizedBox(height: 10.0,),
+
                 (!_headerEnabled) ? Container(
                   width: size.width * 0.95,
                   height: size.height * 0.25,
@@ -1478,6 +1513,7 @@ class _HomePageState extends State<HomePage> {
                       }
                     },
                   ),
+
                 ) :
                 Shimmer.fromColors(
                   baseColor: Colors.grey[300],
@@ -1495,110 +1531,111 @@ class _HomePageState extends State<HomePage> {
                   ),
                 ),
                 SizedBox(height: 10.0,),
+                (!_headerEnabled) ? Container(
+                    width: size.width * 0.95,
+                    height: size.height * 0.45,
+                    padding: EdgeInsets.only(top: 10.0, bottom: 10.0),
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.all(Radius.circular(30)),
+                        color: Colors.white,
+                        boxShadow: [
+                          BoxShadow(
+                              color: Constants.softHighlightColor,
+                              offset: Offset(-10, -10),
+                              spreadRadius: 0,
+                              blurRadius: 10),
+                          BoxShadow(
+                              color: Constants.softShadowColor,
+                              offset: Offset(5, 5),
+                              spreadRadius: 0,
+                              blurRadius: 10)
+                        ]
+                    ),
+                    child: (storeCatID == "11") ? FutureBuilder<List<ChartPetrolData>>(
+                      future: fetchAllPetrolCollection(),
+                      builder: (BuildContext context, AsyncSnapshot<List<ChartPetrolData>> snapshot) {
+                        if (snapshot.connectionState == ConnectionState.waiting)
+                          return Center(child: CircularProgressIndicator(valueColor:AlwaysStoppedAnimation<Color>(kPrimaryColorBlue),));
+                        else if (snapshot.hasError) {
+                          return Center(
+                            child: Text("No Data Found!"),
+                          );
+                        } else {
+                          if (snapshot.connectionState == ConnectionState.done &&
+                              snapshot.hasData) {
+                            return Column(
+                              children: [
+                                Text("Bills Collection",
+                                  style: TextStyle(
+                                    color: kPrimaryColorBlue,
+                                    fontSize: size.width * 0.04,
+                                    fontFamily: "PoppinsBold",
+                                  ),
+                                ),
+                                Expanded(
+                                  child: _buildDefaultSplineChart(snapshot.data),
+                                )
+                              ],
+                            );
+                          } else {
+                            return Center(child: CircularProgressIndicator(valueColor:AlwaysStoppedAnimation<Color>(kPrimaryColorBlue),));
+                          }
+                        }
+                      },
+                    )
+                        : FutureBuilder<List<ChartParkingData>>(
+                      future: fetchAllParkingCollection(),
+                      builder: (BuildContext context, AsyncSnapshot<List<ChartParkingData>> snapshot) {
+                        if (snapshot.connectionState == ConnectionState.waiting)
+                          return Center(child: CircularProgressIndicator(valueColor:AlwaysStoppedAnimation<Color>(kPrimaryColorBlue),));
+                        else if (snapshot.hasError) {
+                          print(">>>>>>${snapshot.error}");
+                          return Center(
+                            child: Text("No Data Found!"),
+                          );
+                        } else {
+                          if (snapshot.connectionState == ConnectionState.done &&
+                              snapshot.hasData) {
+                            return Column(
+                              children: [
+                                Text("Bills Collection",
+                                  style: TextStyle(
+                                    color: kPrimaryColorBlue,
+                                    fontSize: size.width * 0.04,
+                                    fontFamily: "PoppinsBold",
+                                  ),
+                                ),
+                                Expanded(
+                                  child: _buildParkingSplineChart(snapshot.data),
+                                )
+                              ],
+                            );
+                          } else {
+                            return Center(child: CircularProgressIndicator(valueColor:AlwaysStoppedAnimation<Color>(kPrimaryColorBlue),));
+                          }
+                        }
+                      },
+                    )
+                )
+                    : Shimmer.fromColors(
+                  baseColor: Colors.grey[300],
+                  highlightColor: Colors.grey[100],
+                  enabled: _headerEnabled,
+                  child: Container(
+                    width: size.width * 0.95,
+                    height: size.height * 0.45,
+                    padding: EdgeInsets.only(top: 10.0, bottom: 10.0),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.all(Radius.circular(30)),
+                      color: Colors.white,
+                    ),
+                    child: null,
+                  ),
+                ),
+                SizedBox(height: 10.0,),
               ],
             ),
           ),
-            // (!_headerEnabled) ? Container(
-            //   width: size.width * 0.95,
-            //   height: size.height * 0.45,
-            //   padding: EdgeInsets.only(top: 10.0, bottom: 10.0),
-            //   decoration: BoxDecoration(
-            //       borderRadius: BorderRadius.all(Radius.circular(30)),
-            //       color: Colors.white,
-            //       boxShadow: [
-            //         BoxShadow(
-            //             color: Constants.softHighlightColor,
-            //             offset: Offset(-10, -10),
-            //             spreadRadius: 0,
-            //             blurRadius: 10),
-            //         BoxShadow(
-            //             color: Constants.softShadowColor,
-            //             offset: Offset(5, 5),
-            //             spreadRadius: 0,
-            //             blurRadius: 10)
-            //       ]
-            //   ),
-            //   child: (storeCatID == "11") ? FutureBuilder<List<ChartPetrolData>>(
-            //     future: fetchAllPetrolCollection(),
-            //     builder: (BuildContext context, AsyncSnapshot<List<ChartPetrolData>> snapshot) {
-            //       if (snapshot.connectionState == ConnectionState.waiting)
-            //         return Center(child: CircularProgressIndicator(valueColor:AlwaysStoppedAnimation<Color>(kPrimaryColorBlue),));
-            //       else if (snapshot.hasError) {
-            //         return Center(
-            //           child: Text("No Data Found!"),
-            //         );
-            //       } else {
-            //         if (snapshot.connectionState == ConnectionState.done &&
-            //             snapshot.hasData) {
-            //           return Column(
-            //             children: [
-            //               Text("Bills Collection",
-            //                 style: TextStyle(
-            //                   color: kPrimaryColorBlue,
-            //                   fontSize: size.width * 0.04,
-            //                   fontFamily: "PoppinsBold",
-            //                 ),
-            //               ),
-            //               Expanded(
-            //                 child: _buildDefaultSplineChart(snapshot.data),
-            //               )
-            //             ],
-            //           );
-            //         } else {
-            //           return Center(child: CircularProgressIndicator(valueColor:AlwaysStoppedAnimation<Color>(kPrimaryColorBlue),));
-            //         }
-            //       }
-            //     },
-            //   ) :
-            // FutureBuilder<List<ChartParkingData>>(
-            //   future: fetchAllParkingCollection(),
-            //   builder: (BuildContext context, AsyncSnapshot<List<ChartParkingData>> snapshot) {
-            //     if (snapshot.connectionState == ConnectionState.waiting)
-            //       return Center(child: CircularProgressIndicator(valueColor:AlwaysStoppedAnimation<Color>(kPrimaryColorBlue),));
-            //     else if (snapshot.hasError) {
-            //       return Center(
-            //         child: Text("No Data Found!"),
-            //       );
-            //     } else {
-            //       if (snapshot.connectionState == ConnectionState.done &&
-            //           snapshot.hasData) {
-            //         return Column(
-            //           children: [
-            //             Text("Bills Collection",
-            //               style: TextStyle(
-            //                 color: kPrimaryColorBlue,
-            //                 fontSize: size.width * 0.04,
-            //                 fontFamily: "PoppinsBold",
-            //               ),
-            //             ),
-            //             Expanded(
-            //               child: _buildParkingSplineChart(snapshot.data),
-            //             )
-            //           ],
-            //         );
-            //       } else {
-            //         return Center(child: CircularProgressIndicator(valueColor:AlwaysStoppedAnimation<Color>(kPrimaryColorBlue),));
-            //       }
-            //     }
-            //   },
-            // )
-            // ) :
-            // Shimmer.fromColors(
-            //   baseColor: Colors.grey[300],
-            //   highlightColor: Colors.grey[100],
-            //   enabled: _headerEnabled,
-            //   child: Container(
-            //     width: size.width * 0.95,
-            //     height: size.height * 0.45,
-            //     padding: EdgeInsets.only(top: 10.0, bottom: 10.0),
-            //     decoration: BoxDecoration(
-            //         borderRadius: BorderRadius.all(Radius.circular(30)),
-            //         color: Colors.white,
-            //     ),
-            //     child: null,
-            //   ),
-            // ),
-            // SizedBox(height: 10.0,),
           ],
         )
     );
@@ -1634,7 +1671,7 @@ class _HomePageState extends State<HomePage> {
         SplineSeries<ChartPetrolData, String>(
           dataSource: data,
           xValueMapper: (ChartPetrolData sales, _) => sales.x,
-          yValueMapper: (ChartPetrolData sales, _) => sales.y,
+          yValueMapper: (ChartPetrolData sales, _) => sales.petrol,
           markerSettings: MarkerSettings(isVisible: true),
           name: 'Petrol',
         ),
@@ -1643,14 +1680,35 @@ class _HomePageState extends State<HomePage> {
           name: 'Diesel',
           markerSettings: MarkerSettings(isVisible: true),
           xValueMapper: (ChartPetrolData sales, _) => sales.x,
-          yValueMapper: (ChartPetrolData sales, _) => sales.secondSeriesYValue,
+          yValueMapper: (ChartPetrolData sales, _) => sales.diesel,
+        ),
+        SplineSeries<ChartPetrolData, String>(
+          dataSource: data,
+          name: 'Petrol Power',
+          markerSettings: MarkerSettings(isVisible: true),
+          xValueMapper: (ChartPetrolData sales, _) => sales.x,
+          yValueMapper: (ChartPetrolData sales, _) => sales.petrolPower,
         ),
         SplineSeries<ChartPetrolData, String>(
           dataSource: data,
           name: 'CNG',
           markerSettings: MarkerSettings(isVisible: true),
           xValueMapper: (ChartPetrolData sales, _) => sales.x,
-          yValueMapper: (ChartPetrolData sales, _) => sales.thirdSeriesYValue,
+          yValueMapper: (ChartPetrolData sales, _) => sales.cng,
+        ),
+        SplineSeries<ChartPetrolData, String>(
+          dataSource: data,
+          name: 'Wheels',
+          markerSettings: MarkerSettings(isVisible: true),
+          xValueMapper: (ChartPetrolData sales, _) => sales.x,
+          yValueMapper: (ChartPetrolData sales, _) => sales.wheels,
+        ) ,
+        SplineSeries<ChartPetrolData, String>(
+          dataSource: data,
+          name: 'Oil',
+          markerSettings: MarkerSettings(isVisible: true),
+          xValueMapper: (ChartPetrolData sales, _) => sales.x,
+          yValueMapper: (ChartPetrolData sales, _) => sales.oil,
         )
       ],
       tooltipBehavior: TooltipBehavior(enable: true),
@@ -1683,6 +1741,7 @@ class _HomePageState extends State<HomePage> {
           labelFormat: '₹ {value}',
           majorTickLines: MajorTickLines(size: 0)
       ),
+
       series: <SplineSeries<ChartParkingData, String>>[
         SplineSeries<ChartParkingData, String>(
           dataSource: data,
@@ -1693,17 +1752,18 @@ class _HomePageState extends State<HomePage> {
         ),
         SplineSeries<ChartParkingData, String>(
           dataSource: data,
-          name: '4 - Wheeler',
-          markerSettings: MarkerSettings(isVisible: true),
-          xValueMapper: (ChartParkingData sales, _) => sales.x,
-          yValueMapper: (ChartParkingData sales, _) => sales.fourWheeler,
-        ),
-        SplineSeries<ChartParkingData, String>(
-          dataSource: data,
           name: '3 - Wheeler',
           markerSettings: MarkerSettings(isVisible: true),
           xValueMapper: (ChartParkingData sales, _) => sales.x,
           yValueMapper: (ChartParkingData sales, _) => sales.threeWheeler,
+        ),
+
+        SplineSeries<ChartParkingData, String>(
+          dataSource: data,
+          name: '4 - Wheeler',
+          markerSettings: MarkerSettings(isVisible: true),
+          xValueMapper: (ChartParkingData sales, _) => sales.x,
+          yValueMapper: (ChartParkingData sales, _) => sales.fourWheeler,
         ),
         SplineSeries<ChartParkingData, String>(
           dataSource: data,
@@ -1714,31 +1774,10 @@ class _HomePageState extends State<HomePage> {
         ),
         SplineSeries<ChartParkingData, String>(
           dataSource: data,
-          name: 'Cycle',
-          markerSettings: MarkerSettings(isVisible: true),
-          xValueMapper: (ChartParkingData sales, _) => sales.x,
-          yValueMapper: (ChartParkingData sales, _) => sales.cycle,
-        ),
-        SplineSeries<ChartParkingData, String>(
-          dataSource: data,
-          name: 'Special Vehicle',
-          markerSettings: MarkerSettings(isVisible: true),
-          xValueMapper: (ChartParkingData sales, _) => sales.x,
-          yValueMapper: (ChartParkingData sales, _) => sales.specialVehicle,
-        ),
-        SplineSeries<ChartParkingData, String>(
-          dataSource: data,
           name: 'Lorry',
           markerSettings: MarkerSettings(isVisible: true),
           xValueMapper: (ChartParkingData sales, _) => sales.x,
           yValueMapper: (ChartParkingData sales, _) => sales.lorry,
-        ),
-        SplineSeries<ChartParkingData, String>(
-          dataSource: data,
-          name: 'Others',
-          markerSettings: MarkerSettings(isVisible: true),
-          xValueMapper: (ChartParkingData sales, _) => sales.x,
-          yValueMapper: (ChartParkingData sales, _) => sales.others,
         ),
       ],
       tooltipBehavior: TooltipBehavior(enable: true),
@@ -1786,17 +1825,21 @@ class AnalysisData {
 
 
 class ChartPetrolData {
-  ChartPetrolData({this.x, this.y, this.secondSeriesYValue, this.thirdSeriesYValue});
+  ChartPetrolData({this.x, this.petrol, this.diesel, this.petrolPower,this.cng,this.wheels,this.oil});
   String x;
-  int y;
-  int secondSeriesYValue;
-  int thirdSeriesYValue;
+  int petrol;
+  int diesel;
+  int petrolPower;
+  int cng;
+  int wheels;
+  int oil;
 }
 
 class ChartParkingData {
-  ChartParkingData({this.x, this.twoWheeler, this.threeWheeler, this.fourWheeler, this.truck, this.cycle, this.specialVehicle, this.lorry, this.others});
+  ChartParkingData({this.x, this.twoWheeler, this.threeWheeler, this.fourWheeler, this.truck, this.cycle, this.specialVehicle, this.lorry, this.others,this.months});
   String x;
   int twoWheeler;
+  String months;
   int threeWheeler;
   int fourWheeler;
   int truck;

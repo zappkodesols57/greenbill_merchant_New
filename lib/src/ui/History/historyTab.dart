@@ -1,34 +1,31 @@
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:greenbill_merchant/src/constants.dart';
-import 'package:greenbill_merchant/src/ui/drawer/Settings/feedback.dart';
-
-import 'Help&Support/reviews.dart';
-
-class FeedTab extends StatelessWidget {
+import 'package:greenbill_merchant/src/ui/History/paymentHistory.dart';
+import 'package:greenbill_merchant/src/ui/drawer/ReceivedPayments/receivedPayments.dart';
+class HistoryTab extends StatelessWidget {
+  const HistoryTab({Key key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-
       body: DefaultTabController(
         length: 2,
         child: Scaffold(
           appBar: AppBar(
-            toolbarHeight: 80.0,
+
+            // elevation: 0,
+            toolbarHeight: 50.0,
             backgroundColor:  kPrimaryColorBlue,
             bottom: TabBar(
               tabs: [
-                Tab( text:'Feedback'),
-                Tab( text:'Rating'),
-
+                Tab(text: 'Payment History'),
+                Tab(text: 'Received Payments'),
               ],
             ),
           ),
           body: TabBarView(
             children: [
-              Feedback1(),
-             Reviews(),
-
+              History(),
+              ReceivedPayments(),
             ],
           ),
         ),

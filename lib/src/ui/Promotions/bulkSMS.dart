@@ -317,7 +317,9 @@ class BulkSMSState extends State<BulkSMS> {
                   borderRadius: BorderRadius.circular(5),
                 ),
                 child: TextField(
-                  controller: messageController,
+                  enableInteractiveSelection: false,
+                  focusNode: new AlwaysDisabledFocusNode(),
+                  controller: templateController,
                   textInputAction: TextInputAction.newline,
                   inputFormatters: [LengthLimitingTextInputFormatter(140),],
                   maxLines: 4,
@@ -330,10 +332,10 @@ class BulkSMSState extends State<BulkSMS> {
                     labelText: 'Message',
                     labelStyle:
                     TextStyle(
-                        fontFamily: "PoppinsLight", fontSize: 13.0,color: kPrimaryColorBlue),
+                        fontFamily: "PoppinsLight", fontSize: 14.0,color: kPrimaryColorBlue),
                     alignLabelWithHint: true,
                     contentPadding:
-                    const EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
+                    const EdgeInsets.symmetric(vertical: 15.0, horizontal: 15.0),
                     enabledBorder: OutlineInputBorder(
                       borderSide: BorderSide(color: kPrimaryColorBlue, width: 0.5),
                       borderRadius: const BorderRadius.all(Radius.circular(30.0)),
@@ -1191,10 +1193,10 @@ class BulkSMSState extends State<BulkSMS> {
       return null;
     }
 
-    if(messageController.text.isEmpty){
-      showInSnackBar("Please Enter Message");
-      return null;
-    }
+    // if(messageController.text.isEmpty){
+    //   showInSnackBar("Please Enter Message");
+    //   return null;
+    // }
     if(stateController.text.isEmpty){
       showInSnackBar("Please enter State");
       return null;
@@ -1216,7 +1218,7 @@ class BulkSMSState extends State<BulkSMS> {
       "customer":"customer",
       "smsheader":header,
       "template_id":template,
-      "message":messageController.text,
+      "message":templateController.text,
       "customer_state_value":state,
       "customer_city_value":city,
       "customer_area_value":area,
