@@ -116,12 +116,13 @@ class _PayLinksState extends State<PayLinks> {
             controller: emailController,
             inputType: TextInputType.emailAddress,
             prefixIcon: CupertinoIcons.mail,
-            hintText: "Email *",
+            hintText: "Email",
             padding: EdgeInsets.only(top: 0.0, right: 15.0, left: 15.0, bottom: 10.0),
           ),
           CustomTextField(
             controller: amountController,
             inputType: TextInputType.number,
+            maxLength: 8,
             formatter: <TextInputFormatter>[
               FilteringTextInputFormatter.digitsOnly
             ],
@@ -131,6 +132,7 @@ class _PayLinksState extends State<PayLinks> {
           ),
           CustomTextField(
             controller: decController,
+            maxLength: 30,
             formatter: [new WhitelistingTextInputFormatter(RegExp("[a-z A-Z]")),],
             prefixIcon: CupertinoIcons.quote_bubble,
             hintText: "Description *",

@@ -11,6 +11,7 @@ import 'package:greenbill_merchant/src/constants.dart';
 import 'package:greenbill_merchant/src/models/model_Common.dart';
 import 'package:greenbill_merchant/src/models/model_IncomingBills.dart';
 import 'package:greenbill_merchant/src/models/model_billInfoList.dart';
+import 'package:greenbill_merchant/src/models/model_getStore.dart';
 import 'package:http/http.dart' as http;
 import 'package:open_file/open_file.dart';
 import 'package:image_downloader/image_downloader.dart';
@@ -69,7 +70,7 @@ class BillIncomingState extends State<BillIncoming> {
       print(incomingBillsFromJson(res.body).data.length);
       return incomingBillsFromJson(res.body).data
           .where((element) =>
-      element.businessName.toString().toLowerCase().contains(query.text) ||
+      element.businessName.toString().contains(query.text) ||
           element.invoiceNo.toString().toLowerCase().contains(query.text) ||
           element.billId.toString().toLowerCase().contains(query.text))
           .toList();
@@ -78,12 +79,172 @@ class BillIncomingState extends State<BillIncoming> {
       throw Exception('Failed to load List');
     }
   }
+  Future<List<StoreList>> getStoreList(String id, String token) async {
+    final param = {
+      "user_id": id,
+    };
+
+    final res = await http.post(
+      "http://157.230.228.250/get-merchant-businesses-api/",
+      body: param,
+      headers: {HttpHeaders.authorizationHeader: "Token $token"},
+    );
+
+    print(res.body);
+    if (200 == res.statusCode) {
+      print(storeListFromJson(res.body).length);
+      return storeListFromJson(res.body);
+    } else {
+      throw Exception('Failed to load Stores List');
+    }
+  }
+  Widget setupAlertDialoagContainer() {
+    return Container(
+      height: 150,
+      width: 350,
+      child: FutureBuilder<List<StoreList>>(
+        future: getStoreList(id.toString(), token),
+        builder: (BuildContext context,
+            AsyncSnapshot<List<StoreList>> snapshot) {
+          if (snapshot.connectionState == ConnectionState.done &&
+              snapshot.hasData) {
+            return Scrollbar(
+                radius: Radius.circular(5.0),
+                isAlwaysShown: true,
+                controller: _controller,
+                thickness: 3.0,
+                child: ListView.builder(
+                    controller: _controller,
+                    itemCount: snapshot.data.length,
+                    itemBuilder: (BuildContext context, int index) {
+                      return ListTile(
+                        title: Text(snapshot.data[index].mBusinessName,
+                            style: TextStyle(fontSize: 15.0)),
+                        subtitle: (snapshot.data[index].mArea.isNotEmpty)
+                            ? Text(
+                            '${snapshot.data[index].mAddress}, ${snapshot.data[index].mArea}, ${snapshot.data[index].mCity}',
+                            style: TextStyle(fontSize: 10.0))
+                            : Text('Address not available',
+                            style: TextStyle(fontSize: 10.0)),
+
+
+                        leading:
+                        (snapshot.data[index].mBusinessLogo != null)
+                            ? CircleAvatar(
+                          backgroundColor: kPrimaryColorBlue,
+                          backgroundImage: NetworkImage(snapshot.data[index].mBusinessLogo),
+                        )
+                            : CircleAvatar(
+                          backgroundColor: kPrimaryColorBlue,
+                          child: Text(
+                            storeID.substring(0, 1).toUpperCase(),
+                            style: TextStyle(
+                              fontSize: 20.0,
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
+                        onTap: () async {
+                          final SharedPreferences prefs = await SharedPreferences.getInstance();
+                          prefs.setString("businessName", snapshot.data[index].mBusinessName);
+                          prefs.setString("businessID", snapshot.data[index].id.toString());
+                          prefs.setString("businessLogo", snapshot.data[index].mBusinessLogo);
+                          prefs.setString("businessCategoryID", snapshot.data[index].mBusinessCategory.toString());
+                          setState(() {
+                            // store = snapshot.data[index].mBusinessName;
+                            storeID = snapshot.data[index].id.toString();
+                            //storeAddress = '${snapshot.data[index].mAddress}, ${snapshot.data[index].mArea}, ${snapshot.data[index].mCity}';
+                            // businessLogo = snapshot.data[index].mBusinessLogo;
+                            // storeCatID = snapshot.data[index].mBusinessCategory.toString();
+                          });
+                          Navigator.of(context).pop();
+                          // Navigator.pushAndRemoveUntil(
+                          //  context,
+                          //  MaterialPageRoute(
+                          //       builder: (context) => HomeActivity()),
+                          //      (Route<dynamic> route) => false,
+                          // );
+                        },
+                      );
+                    }));
+          } else {
+            return Center(
+                child: CircularProgressIndicator(
+                  //valueColor: animationController.drive(ColorTween(
+                  // begin: kPrimaryColorBlue, end: kPrimaryColorGreen)),
+                ));
+          }
+        },
+      ),
+    );
+  }
+  AppBar buildAppBar() {
+    return AppBar(
+      title: new Text(storeID),
+      elevation: 0,
+      actions: <Widget>[
+        Padding(
+          padding: const EdgeInsets.only(right: 10.0),
+
+        ),
+        GestureDetector(
+            child:  CircleAvatar(
+              backgroundColor: Colors.white,
+              child: Text(
+                storeID.substring(0, 1).toUpperCase(),
+                style: TextStyle(
+                  fontSize: 20.0,
+                  color: kPrimaryColorBlue,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ),
+            onTap: () {
+              showStoreDialog(context);
+            }),
+        SizedBox(
+          width: 20.0,
+        ),
+      ],
+    );
+  }
+
+
+  showStoreDialog(BuildContext context) {
+    showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text(
+              'Where you want to send bill',
+              style: TextStyle(
+                  color: Colors.black87,
+                  fontWeight: FontWeight.w800,
+                  fontSize: 15.0,
+                  fontFamily: "PoppinsMedium"),
+            ),
+            content: setupAlertDialoagContainer(),
+            actions: <Widget>[
+              TextButton(
+                child:
+                Text('Cancel', style: TextStyle(color: kPrimaryColorBlue)),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+              ),
+            ],
+          );
+        });
+  }
+
 
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
         key: _scaffoldKey,
+        // appBar:buildAppBar(),
         backgroundColor: Colors.white,
         body: Column(
           children: [
@@ -160,17 +321,32 @@ class BillIncomingState extends State<BillIncoming> {
                       color: Colors.white, fontFamily: "PoppinsBold"),
                 ),
               ),
-              trailing:
+              trailing:Wrap(
+                spacing: 12, // space between two icons
+                crossAxisAlignment: WrapCrossAlignment.center,
+                children: <Widget>[
+                  // Container(
+                  //   width: 50.0,
+                  //   child: Text(
+                  //     "Send ",
+                  //     textAlign: TextAlign.center,
+                  //     style: TextStyle(
+                  //         color: Colors.white, fontFamily: "PoppinsBold"),
+                  //   ),
+                  // ),
+
 
                   Container(
-                    width: 100.0,
+                    width: 72.0,
                     child: Text(
                       "Amount",
                       textAlign: TextAlign.center,
                       style: TextStyle(
                           color: Colors.white, fontFamily: "PoppinsBold"),
                     ),
-                  ),
+                  )
+                ],
+              ),
 
               onTap: () {
                 // Navigator.push(context, MaterialPageRoute(builder:  (context)=>MerchantBillList(snapshot.data[index].mBusinessName)));
@@ -240,11 +416,21 @@ class BillIncomingState extends State<BillIncoming> {
                                       crossAxisAlignment:
                                       WrapCrossAlignment.center,
                                       children: <Widget>[
+                                        // IconButton(
+                                        //   icon: Icon(
+                                        //     Icons.switch_account,
+                                        //     color: Colors.black,
+                                        //   ),
+                                        //   onPressed: () {
+                                        //     showStoreDialog(context);
+                                        //
+                                        //   },
+                                        // ),
 
                                         Container(
                                             width: 70.0,
                                             child: Text(snapshot.data[index].billAmount.characters.contains(".")?
-                                                "₹ ${snapshot.data[index].billAmount.split(".").first+".00"}":"₹ ${snapshot.data[index].billAmount+".00"}",
+                                            "₹ ${snapshot.data[index].billAmount.split(".").first+".00"}":"₹ ${snapshot.data[index].billAmount+".00"}",
                                                 style: TextStyle(
                                                     fontWeight:
                                                     FontWeight.bold))),

@@ -342,7 +342,7 @@ class _OffersState extends State<Offers> {
                 width: size.width * 0.95,
                 padding: EdgeInsets.only(top: 10.0, bottom: 10.0, left: 0.0, right: 0.0),
                 child: TextField(
-                  maxLength: 15,
+                  maxLength: 30,
                   controller: cnController,
                   inputFormatters: [new WhitelistingTextInputFormatter(RegExp("[a-z A-Z]")),],
                   style: TextStyle(
