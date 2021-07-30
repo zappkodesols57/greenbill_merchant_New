@@ -24,6 +24,7 @@ class Login_Merchant extends StatefulWidget {
 
 class Login_MerchantState extends State<Login_Merchant> {
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
+  String pass;
 
   @override
   void initState() {
@@ -384,6 +385,7 @@ class Login_MerchantState extends State<Login_Merchant> {
         prefs.setString("email", data.data.mEmail);
         prefs.setString("mobile", data.data.mobileNo);
         prefs.setString("fName", data.data.firstName);
+        prefs.setString("PassaWorda", loginPasswordController.text);
         prefs.setString("isLogin", "1");
 
         getBusiness(data.data.id.toString(), data.token);

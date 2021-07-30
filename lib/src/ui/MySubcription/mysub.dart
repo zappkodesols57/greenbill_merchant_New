@@ -30,7 +30,7 @@ class Recharge extends StatefulWidget {
 }
 class RechargeState extends State<Recharge> {
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
-  String token, busId,mobile,number,emailAddress,nameOfBuss;
+  String token, busId,mobile,number,emailAddress,nameOfBuss,userId;
   final ScrollController _controller = ScrollController();
   TextEditingController query = new TextEditingController();
   String _chosenValue="Green Bill Subscription Plan";
@@ -69,6 +69,7 @@ class RechargeState extends State<Recharge> {
       number = prefs.getString("mobile");
       token = prefs.getString("token");
       nameOfBuss=prefs.getString("fName");
+      userId=prefs.getInt("userID").toString();
       emailAddress=prefs.getString("email");
       busId =prefs.getString("businessID");
     });
@@ -123,14 +124,15 @@ class RechargeState extends State<Recharge> {
   }
 
 
-  _launchPayURL(amount,name)async {
+  _launchPayURL(amount,id,planType)async {
     String key="IUZdcF";
     String salt="7ViVXMy1";
 
     var uuid = Uuid();
     var txId=(uuid.v4());
-    var bytes = utf8.encode("$key|$txId|$amount|$name|$nameOfBuss|$emailAddress|||||||||||$salt"); // data being hashed
+    var bytes = utf8.encode("$key|$txId|$amount|$planType|$nameOfBuss|$emailAddress|||||||||||$salt"); // data being hashed
     var digest = sha512.convert(bytes);
+    print("$digest\n$txId");
 
 
 
@@ -139,12 +141,15 @@ class RechargeState extends State<Recharge> {
       'key':key,
       'txnid':txId,
       'amount':amount,
-      'productinfo':name,
+      'productinfo':planType,
       'firstname':nameOfBuss,
       'email':emailAddress,
       'phone':number,
-      'surl':'https://apiplayground-response.herokuapp.com/',
-      'furl':'https://apiplayground-response.herokuapp.com/',
+      'lastname':id,
+      'address1':busId,
+      'address2':userId,
+      'surl':'http://157.230.228.250/merchant-subscription-purchased-success/',
+      'furl':'http://157.230.228.250/merchant-subscription-purchased-failed/',
       'hash':digest.toString(),
       'SALT':salt
     };
@@ -154,6 +159,7 @@ class RechargeState extends State<Recharge> {
     },body: paramss);
 
     launch(responses.headers.values.elementAt(10));
+
 
 
 
@@ -254,1082 +260,1082 @@ class RechargeState extends State<Recharge> {
         ),
       ),
       body:Column(
-       children: [
+        children: [
 
-         SizedBox(
-           height: 5,
-         ),
-         Container(
-           width: size.width ,
-           height: 30,
-           decoration: BoxDecoration(
-               borderRadius: BorderRadius.all(Radius.circular(40))),
-           child: Row(
-             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-             children: [
-               InkWell(
-                 child:Container(
-                   decoration: BoxDecoration(
-                       color: _onTapBox1?kPrimaryColorBlue:_colorMerchantContainer,
-                       border: Border.all(color: kPrimaryColorBlue),
-                       borderRadius: BorderRadius.all(Radius.circular(40))),
-                   width: size.width * 0.23,
-                   child: Center(
-                       child: Text(
-                         'Green Bill',
-                         style: TextStyle(color: _onTapBox1?Colors.white :_colorMerchantText,fontSize: 12.0),
-                       )),
-                 ),
-                 onTap:(){
-                   setState(() {
-                     _isSub=true;
-                     _onTapBox2=false;
-                     _onTapBox3=false;
-                     _onTapBox1=true;
-                     _onTapBox4=false;
-                     _isTrans=false;
+          SizedBox(
+            height: 5,
+          ),
+          Container(
+            width: size.width ,
+            height: 30,
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.all(Radius.circular(40))),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                InkWell(
+                  child:Container(
+                    decoration: BoxDecoration(
+                        color: _onTapBox1?kPrimaryColorBlue:_colorMerchantContainer,
+                        border: Border.all(color: kPrimaryColorBlue),
+                        borderRadius: BorderRadius.all(Radius.circular(40))),
+                    width: size.width * 0.23,
+                    child: Center(
+                        child: Text(
+                          'Green Bill',
+                          style: TextStyle(color: _onTapBox1?Colors.white :_colorMerchantText,fontSize: 12.0),
+                        )),
+                  ),
+                  onTap:(){
+                    setState(() {
+                      _isSub=true;
+                      _onTapBox2=false;
+                      _onTapBox3=false;
+                      _onTapBox1=true;
+                      _onTapBox4=false;
+                      _isTrans=false;
 
-                   });
-                 } ,
+                    });
+                  } ,
 
-               ),
-               InkWell(
+                ),
+                InkWell(
 
-                 child:Container(
-                   decoration: BoxDecoration(
-                       color: _onTapBox2?kPrimaryColorBlue:_colorMerchantContainer,
-                       border: Border.all(color: kPrimaryColorBlue),
-                       borderRadius: BorderRadius.all(Radius.circular(20))),
-                   width: size.width * 0.23,
-                   child: Center(
-                       child: Text(
-                         'Promotional',
-                         style: TextStyle(color: _onTapBox2?Colors.white :_colorMerchantText,fontSize: 12.0),
-                       )),
-                 ),
-                 onTap:(){
-                   setState(() {
-                     _onTapBox3=false;
-                     _onTapBox1=false;
-                     _onTapBox2=true;
-                     _isTrans=false;
-                     _onTapBox4=false;
-                     _isSub=false;
-                   });
-                 } ,
-               ),
-               InkWell(
+                  child:Container(
+                    decoration: BoxDecoration(
+                        color: _onTapBox2?kPrimaryColorBlue:_colorMerchantContainer,
+                        border: Border.all(color: kPrimaryColorBlue),
+                        borderRadius: BorderRadius.all(Radius.circular(20))),
+                    width: size.width * 0.23,
+                    child: Center(
+                        child: Text(
+                          'Promotional',
+                          style: TextStyle(color: _onTapBox2?Colors.white :_colorMerchantText,fontSize: 12.0),
+                        )),
+                  ),
+                  onTap:(){
+                    setState(() {
+                      _onTapBox3=false;
+                      _onTapBox1=false;
+                      _onTapBox2=true;
+                      _isTrans=false;
+                      _onTapBox4=false;
+                      _isSub=false;
+                    });
+                  } ,
+                ),
+                InkWell(
 
-                 child:Container(
-                   decoration: BoxDecoration(
-                       color: _onTapBox3?kPrimaryColorBlue:_colorMerchantContainer,
-                       border: Border.all(color: kPrimaryColorBlue),
-                       borderRadius: BorderRadius.all(Radius.circular(20))),
-                   width: size.width * 0.23,
-                   child: Center(
-                       child: Text(
-                         'Transactional ',
-                         style: TextStyle(color: _onTapBox3?Colors.white :_colorMerchantText,fontSize: 12.0),
-                       )),
-                 ),
-                 onTap:(){
-                   setState(() {
-                     _isTrans=true;
-                     _onTapBox1=false;
-                     _onTapBox2=false;
-                     _isSub=false;
-                     _onTapBox3=true;
-                     _onTapBox4=false;
+                  child:Container(
+                    decoration: BoxDecoration(
+                        color: _onTapBox3?kPrimaryColorBlue:_colorMerchantContainer,
+                        border: Border.all(color: kPrimaryColorBlue),
+                        borderRadius: BorderRadius.all(Radius.circular(20))),
+                    width: size.width * 0.23,
+                    child: Center(
+                        child: Text(
+                          'Transactional ',
+                          style: TextStyle(color: _onTapBox3?Colors.white :_colorMerchantText,fontSize: 12.0),
+                        )),
+                  ),
+                  onTap:(){
+                    setState(() {
+                      _isTrans=true;
+                      _onTapBox1=false;
+                      _onTapBox2=false;
+                      _isSub=false;
+                      _onTapBox3=true;
+                      _onTapBox4=false;
 
-                   });
-                 } ,
-               ),
-               InkWell(
+                    });
+                  } ,
+                ),
+                InkWell(
 
-                 child:Container(
-                   decoration: BoxDecoration(
-                       color: _onTapBox4?kPrimaryColorBlue:_colorMerchantContainer,
-                       border: Border.all(color: kPrimaryColorBlue),
-                       borderRadius: BorderRadius.all(Radius.circular(20))),
-                   width: size.width * 0.23,
-                   child: Center(
-                       child: Text(
-                         "Add On's",
-                         style: TextStyle(color: _onTapBox4?Colors.white :_colorMerchantText,fontSize: 12.0),
-                       )),
-                 ),
-                 onTap:(){
-                   setState(() {
-                     _isTrans=false;
-                     _onTapBox1=false;
-                     _onTapBox2=false;
-                     _isSub=false;
-                     _onTapBox3=false;
-                     _onTapBox4=true;
+                  child:Container(
+                    decoration: BoxDecoration(
+                        color: _onTapBox4?kPrimaryColorBlue:_colorMerchantContainer,
+                        border: Border.all(color: kPrimaryColorBlue),
+                        borderRadius: BorderRadius.all(Radius.circular(20))),
+                    width: size.width * 0.23,
+                    child: Center(
+                        child: Text(
+                          "Add On's",
+                          style: TextStyle(color: _onTapBox4?Colors.white :_colorMerchantText,fontSize: 12.0),
+                        )),
+                  ),
+                  onTap:(){
+                    setState(() {
+                      _isTrans=false;
+                      _onTapBox1=false;
+                      _onTapBox2=false;
+                      _isSub=false;
+                      _onTapBox3=false;
+                      _onTapBox4=true;
 
-                   });
-                 } ,
-               ),
+                    });
+                  } ,
+                ),
 
-             ],
-           ),
-         ),
-         SizedBox(
-           height: 5,
-         ),
-         if(_onTapBox1)
-         Expanded(
-           child: FutureBuilder<List<Datum>>(
-             future: getLists(),
-             builder: (BuildContext context, AsyncSnapshot<List<Datum>> snapshot) {
-               if (snapshot.connectionState == ConnectionState.waiting)
-                 return Center(child: CircularProgressIndicator(valueColor:AlwaysStoppedAnimation<Color>(kPrimaryColorBlue),));
-               else if (snapshot.hasError) {
-                 return Center(
-                   child: Text("You don’t have any Active Subscription"),
-                 );
-               } else {
-                 if (snapshot.connectionState == ConnectionState.done &&
-                     snapshot.hasData) {
-                   WidgetsBinding.instance.addPostFrameCallback((_) {
-                     if (_controller.hasClients) {
-                       _controller.animateTo(
-                           _controller.position.minScrollExtent,
-                           duration: Duration(milliseconds: 500),
-                           curve: Curves.fastOutSlowIn);
-                     } else {
-                       setState(() => null);
-                     }
-                   });
-                   return Scrollbar(
-                     isAlwaysShown: true,
-                     controller: _controller,
-                     thickness: 3.0,
-                     child: ListView.builder(
-                         itemCount: snapshot.data.length,
-                         shrinkWrap: true,
-                         reverse: false,
-                         controller: _controller,
-                         itemBuilder: (BuildContext context, int index) {
-                           return Container(padding: EdgeInsets.fromLTRB(10, 10, 10, 0),
-                             width: double.maxFinite,
-                             child: Card(
-                               elevation: 5.0,
-                               shape: RoundedRectangleBorder(
-                                 borderRadius: BorderRadius.only(topLeft: Radius.elliptical(30, 20),bottomRight:  Radius.elliptical(30, 20)),
-                               ),
-                               child: Center(
-                                 child: Column(
-                                   children: <Widget>[
-                                     Container(
-                                       width: size.width * 0.9,
-                                       padding: EdgeInsets.only(
-                                           top: 10.0, bottom: 5.0, left: 5.0, right: 5.0),
-                                       child: Row(
-                                         crossAxisAlignment: CrossAxisAlignment.center,
-                                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                         children: <Widget>[
+              ],
+            ),
+          ),
+          SizedBox(
+            height: 5,
+          ),
+          if(_onTapBox1)
+            Expanded(
+              child: FutureBuilder<List<Datum>>(
+                future: getLists(),
+                builder: (BuildContext context, AsyncSnapshot<List<Datum>> snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting)
+                    return Center(child: CircularProgressIndicator(valueColor:AlwaysStoppedAnimation<Color>(kPrimaryColorBlue),));
+                  else if (snapshot.hasError) {
+                    return Center(
+                      child: Text("You don’t have any Active Subscription"),
+                    );
+                  } else {
+                    if (snapshot.connectionState == ConnectionState.done &&
+                        snapshot.hasData) {
+                      WidgetsBinding.instance.addPostFrameCallback((_) {
+                        if (_controller.hasClients) {
+                          _controller.animateTo(
+                              _controller.position.minScrollExtent,
+                              duration: Duration(milliseconds: 500),
+                              curve: Curves.fastOutSlowIn);
+                        } else {
+                          setState(() => null);
+                        }
+                      });
+                      return Scrollbar(
+                        isAlwaysShown: true,
+                        controller: _controller,
+                        thickness: 3.0,
+                        child: ListView.builder(
+                            itemCount: snapshot.data.length,
+                            shrinkWrap: true,
+                            reverse: false,
+                            controller: _controller,
+                            itemBuilder: (BuildContext context, int index) {
+                              return Container(padding: EdgeInsets.fromLTRB(10, 10, 10, 0),
+                                width: double.maxFinite,
+                                child: Card(
+                                  elevation: 5.0,
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.only(topLeft: Radius.elliptical(30, 20),bottomRight:  Radius.elliptical(30, 20)),
+                                  ),
+                                  child: Center(
+                                    child: Column(
+                                      children: <Widget>[
+                                        Container(
+                                          width: size.width * 0.9,
+                                          padding: EdgeInsets.only(
+                                              top: 10.0, bottom: 5.0, left: 5.0, right: 5.0),
+                                          child: Row(
+                                            crossAxisAlignment: CrossAxisAlignment.center,
+                                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                            children: <Widget>[
 
-                                           Container(
-                                             padding: EdgeInsets.only(
-                                                 top: 10.0, bottom: 5.0, left: 5.0, right: 5.0),
-                                             width: size.width * 0.4,
-                                             child: Text(
-                                               "Subscription Name",
-                                               style: TextStyle(
-                                                   color: Colors.black,
-                                                   fontSize: 12.0,
-                                                   fontFamily: "PoppinsBold"),
-                                             ),
-                                           ),
-                                           Container(
-                                             padding: EdgeInsets.only(
-                                                 top: 10.0, bottom: 5.0, left: 5.0, right: 5.0),
-                                             width: size.width * 0.4,
-                                             child: Text(
-                                               snapshot.data[index].subscriptionName,
-                                               textAlign: TextAlign.center,
-                                               style: TextStyle(
-                                                   color: kPrimaryColorBlue,
-                                                   fontSize: 12.0,
-                                                   fontFamily: "PoppinsBold"),
-                                             ),
-                                           ),
-
-                                         ],
-                                       ),
-                                     ),
-                                     Container(
-                                       width: size.width * 0.9,
-                                       padding: EdgeInsets.only(
-                                           top: 0.0, bottom: 5.0, left: 5.0, right: 5.0),
-                                       child: Row(
-                                         crossAxisAlignment: CrossAxisAlignment.center,
-                                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                         children: <Widget>[
-
-                                           Container(
-                                             padding: EdgeInsets.only(
-                                                 top: 0.0, bottom: 5.0, left: 5.0, right: 5.0),
-                                             width: size.width * 0.4,
-                                             child: Text(
-                                               "Users Up To",
-
-                                               style: TextStyle(
-                                                   color: Colors.black,
-                                                   fontSize: 12.0,
-                                                   fontFamily: "PoppinsBold"),
-                                             ),
-                                           ),
-
-                                           Container(
-                                             padding: EdgeInsets.only(
-                                                 top: 0.0, bottom: 5.0, left: 5.0, right: 5.0),
-                                             width: size.width * 0.4,
-                                             child: Text(
-                                               snapshot.data[index].numberOfUsers,
-                                               textAlign: TextAlign.center,
-                                               style: TextStyle(
-                                                   color: kPrimaryColorBlue,
-                                                   fontSize: 12.0,
-                                                   fontFamily: "PoppinsBold"),
-                                             ),
-                                           ),
-                                         ],
-                                       ),
-                                     ),
-
-                                     Container(
-                                       width: size.width * 0.9,
-                                       padding: EdgeInsets.only(
-                                           top: 0.0, bottom: 5.0, left: 5.0, right: 5.0),
-                                       child: Row(
-                                         crossAxisAlignment: CrossAxisAlignment.center,
-                                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                         children: <Widget>[
-
-                                           Container(
-                                             padding: EdgeInsets.only(
-                                                 top: 0.0, bottom: 5.0, left: 5.0, right: 5.0),
-                                             width: size.width * 0.4,
-                                             child: Text(
-                                               "Monthly Charges",
-
-                                               style: TextStyle(
-                                                   color: Colors.black,
-                                                   fontSize: 12.0,
-                                                   fontFamily: "PoppinsBold"),
-                                             ),
-                                           ),
-
-                                           Container(
-                                             padding: EdgeInsets.only(
-                                                 top: 0.0, bottom: 5.0, left: 5.0, right: 5.0),
-                                             width: size.width * 0.4,
-                                             child: Text(
-                                               "₹ "+snapshot.data[index].subscriptionPlanCost+".00",
-                                               textAlign: TextAlign.center,
-                                               style: TextStyle(
-                                                   color: kPrimaryColorBlue,
-                                                   fontSize: 12.0,
-                                                   fontFamily: "PoppinsBold"),
-                                             ),
-                                           ),
-                                         ],
-                                       ),
-                                     ),
-
-
-                                     Container(
-                                       width: size.width * 0.9,
-                                       padding: EdgeInsets.only(
-                                           top: 10.0, bottom: 5.0, left: 5.0, right: 5.0),
-                                       child: Row(
-                                         crossAxisAlignment: CrossAxisAlignment.center,
-                                         mainAxisAlignment: MainAxisAlignment.spaceAround,
-                                         children: <Widget>[
-                                           TextButton(
-                                             onPressed: () {
-                                               showDialog(
-                                                 context: context,
-                                                 builder: (BuildContext context) => _buildPopupDialog(context,snapshot.data[index]),
-                                               );
-                                             },
-                                             child: Text('View Details'),
-                                           ),
-                                           MaterialButton(
-
-                                               splashColor: kPrimaryColorBlue,
-                                               child: Padding(
-                                                 padding: const EdgeInsets.symmetric(
-                                                     vertical: 00.0, horizontal: 10.0),
-                                                 child: Text(
-                                                   "Buy",
-                                                   style: TextStyle(
-                                                       color:kPrimaryColorBlue,
-                                                       fontSize: 15.0,
-                                                       fontWeight: FontWeight.w500,
-                                                       fontFamily: "PoppinsMedium"),
-                                                   textAlign: TextAlign.center,
-                                                 ),
-                                               ),
-                                               onPressed: () {
-                                                 _launchPayURL(snapshot.data[index].subscriptionPlanCost, snapshot.data[index].subscriptionName);
-
-                                               }),
-
-                                         ],
-                                       ),
-                                     ),
-                                   ],
-                                 ),
-                               ),
-                             ),
-                           );
-                         }
-                     ),
-                   );
-
-                 } else {
-                   return Center(child: Text("No Data Found"));
-                 }
-               }
-
-             },
-           ),
-         ),
-         if(_onTapBox2)
-              Expanded(
-                child: FutureBuilder<List<Datu>>(
-                  future: getSms(),
-                  builder: (BuildContext context, AsyncSnapshot<List<Datu>> snapshot) {
-                    if (snapshot.connectionState == ConnectionState.waiting)
-                      return Center(child: CircularProgressIndicator(valueColor:AlwaysStoppedAnimation<Color>(kPrimaryColorBlue),));
-                    else if (snapshot.hasError) {
-                      return Center(
-                        child: Text("You don’t have any Active Subscription"),
-                      );
-                    } else {
-                      if (snapshot.connectionState == ConnectionState.done &&
-                          snapshot.hasData) {
-                        WidgetsBinding.instance.addPostFrameCallback((_) {
-                          if (_controller.hasClients) {
-                            _controller.animateTo(
-                                _controller.position.minScrollExtent,
-                                duration: Duration(milliseconds: 500),
-                                curve: Curves.fastOutSlowIn);
-                          } else {
-                            setState(() => null);
-                          }
-                        });
-                        return ListView.builder(
-                              itemCount: snapshot.data.length,
-                              shrinkWrap: true,
-                              reverse: false,
-                              controller: _controller,
-                              itemBuilder: (BuildContext context, int index) {
-                                return Container(padding: EdgeInsets.fromLTRB(10, 10, 10, 0),
-                                  width: double.maxFinite,
-                                  child: Card(
-                                    elevation: 5.0,
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.only(topLeft: Radius.elliptical(30, 20),bottomRight:  Radius.elliptical(30, 20)),
-                                    ),
-                                    child: Center(
-                                      child: Column(
-                                        children: <Widget>[
-                                          Container(
-                                            width: size.width * 0.9,
-                                            padding: EdgeInsets.only(
-                                                top: 10.0, bottom: 5.0, left: 5.0, right: 5.0),
-                                            child: Row(
-                                              crossAxisAlignment: CrossAxisAlignment.center,
-                                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                              children: <Widget>[
-
-                                                Container(
-                                                  padding: EdgeInsets.only(
-                                                      top: 10.0, bottom: 5.0, left: 5.0, right: 5.0),
-                                                  width: size.width * 0.4,
-                                                  child: Text(
-                                                    "Subscription Name",
-
-                                                    style: TextStyle(
-                                                        color: Colors.black,
-                                                        fontSize: 12.0,
-                                                        fontFamily: "PoppinsBold"),
-                                                  ),
+                                              Container(
+                                                padding: EdgeInsets.only(
+                                                    top: 10.0, bottom: 5.0, left: 5.0, right: 5.0),
+                                                width: size.width * 0.4,
+                                                child: Text(
+                                                  "Subscription Name",
+                                                  style: TextStyle(
+                                                      color: Colors.black,
+                                                      fontSize: 12.0,
+                                                      fontFamily: "PoppinsBold"),
                                                 ),
-
-                                                Container(
-                                                  padding: EdgeInsets.only(
-                                                      top: 10.0, bottom: 5.0, left: 5.0, right: 5.0),
-                                                  width: size.width * 0.4,
-                                                  child: Text(
-                                                    snapshot.data[index].subscriptionName,
-                                                    textAlign: TextAlign.center,
-                                                    style: TextStyle(
-                                                        color: kPrimaryColorBlue,
-                                                        fontSize: 12.0,
-                                                        fontFamily: "PoppinsBold"),
-                                                  ),
+                                              ),
+                                              Container(
+                                                padding: EdgeInsets.only(
+                                                    top: 10.0, bottom: 5.0, left: 5.0, right: 5.0),
+                                                width: size.width * 0.4,
+                                                child: Text(
+                                                  snapshot.data[index].subscriptionName,
+                                                  textAlign: TextAlign.center,
+                                                  style: TextStyle(
+                                                      color: kPrimaryColorBlue,
+                                                      fontSize: 12.0,
+                                                      fontFamily: "PoppinsBold"),
                                                 ),
+                                              ),
 
-                                              ],
-                                            ),
+                                            ],
                                           ),
-                                          Container(
-                                            width: size.width * 0.9,
-                                            padding: EdgeInsets.only(
-                                                top: 0.0, bottom: 5.0, left: 5.0, right: 5.0),
-                                            child: Row(
-                                              crossAxisAlignment: CrossAxisAlignment.center,
-                                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                              children: <Widget>[
+                                        ),
+                                        Container(
+                                          width: size.width * 0.9,
+                                          padding: EdgeInsets.only(
+                                              top: 0.0, bottom: 5.0, left: 5.0, right: 5.0),
+                                          child: Row(
+                                            crossAxisAlignment: CrossAxisAlignment.center,
+                                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                            children: <Widget>[
 
-                                                Container(
-                                                  padding: EdgeInsets.only(
-                                                      top: 0.0, bottom: 5.0, left: 5.0, right: 5.0),
-                                                  width: size.width * 0.4,
-                                                  child: Text(
-                                                    "Total SMS",
+                                              Container(
+                                                padding: EdgeInsets.only(
+                                                    top: 0.0, bottom: 5.0, left: 5.0, right: 5.0),
+                                                width: size.width * 0.4,
+                                                child: Text(
+                                                  "Users Up To",
 
-                                                    style: TextStyle(
-                                                        color: Colors.black,
-                                                        fontSize: 12.0,
-                                                        fontFamily: "PoppinsBold"),
-                                                  ),
+                                                  style: TextStyle(
+                                                      color: Colors.black,
+                                                      fontSize: 12.0,
+                                                      fontFamily: "PoppinsBold"),
                                                 ),
+                                              ),
 
-                                                Container(
-                                                  padding: EdgeInsets.only(
-                                                      top: 0.0, bottom: 5.0, left: 5.0, right: 5.0),
-                                                  width: size.width * 0.4,
-                                                  child: Text(
-                                                    snapshot.data[index].totalSms,
-                                                    textAlign: TextAlign.center,
-                                                    style: TextStyle(
-                                                        color: kPrimaryColorBlue,
-                                                        fontSize: 12.0,
-                                                        fontFamily: "PoppinsBold"),
-                                                  ),
+                                              Container(
+                                                padding: EdgeInsets.only(
+                                                    top: 0.0, bottom: 5.0, left: 5.0, right: 5.0),
+                                                width: size.width * 0.4,
+                                                child: Text(
+                                                  snapshot.data[index].numberOfUsers,
+                                                  textAlign: TextAlign.center,
+                                                  style: TextStyle(
+                                                      color: kPrimaryColorBlue,
+                                                      fontSize: 12.0,
+                                                      fontFamily: "PoppinsBold"),
                                                 ),
-                                              ],
-                                            ),
+                                              ),
+                                            ],
                                           ),
+                                        ),
 
-                                          Container(
-                                            width: size.width * 0.9,
-                                            padding: EdgeInsets.only(
-                                                top: 0.0, bottom: 5.0, left: 5.0, right: 5.0),
-                                            child: Row(
-                                              crossAxisAlignment: CrossAxisAlignment.center,
-                                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                              children: <Widget>[
+                                        Container(
+                                          width: size.width * 0.9,
+                                          padding: EdgeInsets.only(
+                                              top: 0.0, bottom: 5.0, left: 5.0, right: 5.0),
+                                          child: Row(
+                                            crossAxisAlignment: CrossAxisAlignment.center,
+                                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                            children: <Widget>[
 
-                                                Container(
-                                                  padding: EdgeInsets.only(
-                                                      top: 0.0, bottom: 5.0, left: 5.0, right: 5.0),
-                                                  width: size.width * 0.4,
-                                                  child: Text(
-                                                    "Per SMS Cost",
+                                              Container(
+                                                padding: EdgeInsets.only(
+                                                    top: 0.0, bottom: 5.0, left: 5.0, right: 5.0),
+                                                width: size.width * 0.4,
+                                                child: Text(
+                                                  "Monthly Charges",
 
-                                                    style: TextStyle(
-                                                        color: Colors.black,
-                                                        fontSize: 12.0,
-                                                        fontFamily: "PoppinsBold"),
-                                                  ),
+                                                  style: TextStyle(
+                                                      color: Colors.black,
+                                                      fontSize: 12.0,
+                                                      fontFamily: "PoppinsBold"),
                                                 ),
+                                              ),
 
-                                                Container(
-                                                  padding: EdgeInsets.only(
-                                                      top: 0.0, bottom: 5.0, left: 5.0, right: 5.0),
-                                                  width: size.width * 0.4,
-                                                  child: Text(
-                                                    "₹ "+snapshot.data[index].perSmsCost+".00",
-                                                    textAlign: TextAlign.center,
-                                                    style: TextStyle(
-                                                        color: kPrimaryColorBlue,
-                                                        fontSize: 12.0,
-                                                        fontFamily: "PoppinsBold"),
-                                                  ),
+                                              Container(
+                                                padding: EdgeInsets.only(
+                                                    top: 0.0, bottom: 5.0, left: 5.0, right: 5.0),
+                                                width: size.width * 0.4,
+                                                child: Text(
+                                                  "₹ "+snapshot.data[index].subscriptionPlanCost+".00",
+                                                  textAlign: TextAlign.center,
+                                                  style: TextStyle(
+                                                      color: kPrimaryColorBlue,
+                                                      fontSize: 12.0,
+                                                      fontFamily: "PoppinsBold"),
                                                 ),
-                                              ],
-                                            ),
+                                              ),
+                                            ],
                                           ),
-
-                                          Container(
-                                            width: size.width * 0.9,
-                                            padding: EdgeInsets.only(
-                                                top: 0.0, bottom: 5.0, left: 5.0, right: 5.0),
-                                            child: Row(
-                                              crossAxisAlignment: CrossAxisAlignment.center,
-                                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                              children: <Widget>[
-
-                                                Container(
-                                                  padding: EdgeInsets.only(
-                                                      top: 0.0, bottom: 5.0, left: 5.0, right: 5.0),
-                                                  width: size.width * 0.4,
-                                                  child: Text(
-                                                    "Amount",
-
-                                                    style: TextStyle(
-                                                        color: Colors.black,
-                                                        fontSize: 12.0,
-                                                        fontFamily: "PoppinsBold"),
-                                                  ),
-                                                ),
-
-                                                Container(
-                                                  padding: EdgeInsets.only(
-                                                      top: 0.0, bottom: 5.0, left: 5.0, right: 5.0),
-                                                  width: size.width * 0.4,
-                                                  child: Text(
-                                                    "₹ "+snapshot.data[index].totalSmsCost+".00",
-                                                    textAlign: TextAlign.center,
-                                                    style: TextStyle(
-                                                        color: kPrimaryColorBlue,
-                                                        fontSize: 12.0,
-                                                        fontFamily: "PoppinsBold"),
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-                                          ),
+                                        ),
 
 
-                                          Container(
-                                            width: size.width * 0.9,
-                                            padding: EdgeInsets.only(
-                                                top: 10.0, bottom: 5.0, left: 5.0, right: 5.0),
-                                            child: Row(
-                                              crossAxisAlignment: CrossAxisAlignment.center,
-                                              mainAxisAlignment: MainAxisAlignment.spaceAround,
-                                              children: <Widget>[
-                                                TextButton(
-                                                  onPressed: () {
-                                                    showDialog(
-                                                      context: context,
-                                                      builder: (BuildContext context) => _buildPopupForSms(context,snapshot.data[index]),
-                                                    );
-                                                  },
-                                                  child: Text('View Details'),
-                                                ),
-                                                MaterialButton(
+                                        Container(
+                                          width: size.width * 0.9,
+                                          padding: EdgeInsets.only(
+                                              top: 10.0, bottom: 5.0, left: 5.0, right: 5.0),
+                                          child: Row(
+                                            crossAxisAlignment: CrossAxisAlignment.center,
+                                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                            children: <Widget>[
+                                              TextButton(
+                                                onPressed: () {
+                                                  showDialog(
+                                                    context: context,
+                                                    builder: (BuildContext context) => _buildPopupDialog(context,snapshot.data[index]),
+                                                  );
+                                                },
+                                                child: Text('View Details'),
+                                              ),
+                                              MaterialButton(
 
-                                                    splashColor: kPrimaryColorBlue,
-                                                    child: Padding(
-                                                      padding: const EdgeInsets.symmetric(
-                                                          vertical: 00.0, horizontal: 10.0),
-                                                      child: Text(
-                                                        "Buy",
-                                                        style: TextStyle(
-                                                            color:kPrimaryColorBlue,
-                                                            fontSize: 15.0,
-                                                            fontWeight: FontWeight.w500,
-                                                            fontFamily: "PoppinsMedium"),
-                                                        textAlign: TextAlign.center,
-                                                      ),
+                                                  splashColor: kPrimaryColorBlue,
+                                                  child: Padding(
+                                                    padding: const EdgeInsets.symmetric(
+                                                        vertical: 00.0, horizontal: 10.0),
+                                                    child: Text(
+                                                      "Buy",
+                                                      style: TextStyle(
+                                                          color:kPrimaryColorBlue,
+                                                          fontSize: 15.0,
+                                                          fontWeight: FontWeight.w500,
+                                                          fontFamily: "PoppinsMedium"),
+                                                      textAlign: TextAlign.center,
                                                     ),
-                                                    onPressed: () {
-                                                      _launchPayURL(snapshot.data[index].totalSmsCost, snapshot.data[index].subscriptionName);
+                                                  ),
+                                                  onPressed: () {
+                                                    _launchPayURL(snapshot.data[index].subscriptionPlanCost, snapshot.data[index].id.toString(),"Green Bill Subscription");
 
-                                                    }),
+                                                  }),
 
-                                              ],
-                                            ),
+                                            ],
                                           ),
-                                        ],
-                                      ),
+                                        ),
+                                      ],
                                     ),
                                   ),
-                                );
-                              }
+                                ),
+                              );
+                            }
+                        ),
+                      );
 
-                        );
-
-                      } else {
-                        return Center(child: Text("No Data Found"));
-                      }
+                    } else {
+                      return Center(child: Text("No Data Found"));
                     }
+                  }
 
-                  },
-                ),
+                },
               ),
-         if(_onTapBox3)
-           Expanded(
-             child: FutureBuilder<List<DatuJI>>(
-               future: getTrans(),
-               builder: (BuildContext context, AsyncSnapshot<List<DatuJI>> snapshot) {
-                 if (snapshot.connectionState == ConnectionState.waiting)
-                   return Center(child: CircularProgressIndicator(valueColor:AlwaysStoppedAnimation<Color>(kPrimaryColorBlue),));
-                 else if (snapshot.hasError) {
-                   return Center(
-                     child: Text("You don’t have any Active Subscription"),
-                   );
-                 } else {
-                   if (snapshot.connectionState == ConnectionState.done &&
-                       snapshot.hasData) {
-                     WidgetsBinding.instance.addPostFrameCallback((_) {
-                       if (_controller.hasClients) {
-                         _controller.animateTo(
-                             _controller.position.minScrollExtent,
-                             duration: Duration(milliseconds: 500),
-                             curve: Curves.fastOutSlowIn);
-                       } else {
-                         setState(() => null);
-                       }
-                     });
-                     return ListView.builder(
-                         itemCount: snapshot.data.length,
-                         shrinkWrap: true,
-                         reverse: false,
-                         controller: _controller,
-                         itemBuilder: (BuildContext context, int index) {
-                           return Container(padding: EdgeInsets.fromLTRB(10, 10, 10, 0),
-                             width: double.maxFinite,
-                             child: Card(
-                               elevation: 5.0,
-                               shape: RoundedRectangleBorder(
-                                 borderRadius: BorderRadius.only(topLeft: Radius.elliptical(30, 20),bottomRight:  Radius.elliptical(30, 20)),
-                               ),
-                               child: Center(
-                                 child: Column(
-                                   children: <Widget>[
-                                     Container(
-                                       width: size.width * 0.9,
-                                       padding: EdgeInsets.only(
-                                           top: 10.0, bottom: 5.0, left: 5.0, right: 5.0),
-                                       child: Row(
-                                         crossAxisAlignment: CrossAxisAlignment.center,
-                                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                         children: <Widget>[
+            ),
+          if(_onTapBox2)
+            Expanded(
+              child: FutureBuilder<List<Datu>>(
+                future: getSms(),
+                builder: (BuildContext context, AsyncSnapshot<List<Datu>> snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting)
+                    return Center(child: CircularProgressIndicator(valueColor:AlwaysStoppedAnimation<Color>(kPrimaryColorBlue),));
+                  else if (snapshot.hasError) {
+                    return Center(
+                      child: Text("You don’t have any Active Subscription"),
+                    );
+                  } else {
+                    if (snapshot.connectionState == ConnectionState.done &&
+                        snapshot.hasData) {
+                      WidgetsBinding.instance.addPostFrameCallback((_) {
+                        if (_controller.hasClients) {
+                          _controller.animateTo(
+                              _controller.position.minScrollExtent,
+                              duration: Duration(milliseconds: 500),
+                              curve: Curves.fastOutSlowIn);
+                        } else {
+                          setState(() => null);
+                        }
+                      });
+                      return ListView.builder(
+                          itemCount: snapshot.data.length,
+                          shrinkWrap: true,
+                          reverse: false,
+                          controller: _controller,
+                          itemBuilder: (BuildContext context, int index) {
+                            return Container(padding: EdgeInsets.fromLTRB(10, 10, 10, 0),
+                              width: double.maxFinite,
+                              child: Card(
+                                elevation: 5.0,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.only(topLeft: Radius.elliptical(30, 20),bottomRight:  Radius.elliptical(30, 20)),
+                                ),
+                                child: Center(
+                                  child: Column(
+                                    children: <Widget>[
+                                      Container(
+                                        width: size.width * 0.9,
+                                        padding: EdgeInsets.only(
+                                            top: 10.0, bottom: 5.0, left: 5.0, right: 5.0),
+                                        child: Row(
+                                          crossAxisAlignment: CrossAxisAlignment.center,
+                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                          children: <Widget>[
 
-                                           Container(
-                                             padding: EdgeInsets.only(
-                                                 top: 10.0, bottom: 5.0, left: 5.0, right: 5.0),
-                                             width: size.width * 0.4,
-                                             child: Text(
-                                               "Subscription Name",
+                                            Container(
+                                              padding: EdgeInsets.only(
+                                                  top: 10.0, bottom: 5.0, left: 5.0, right: 5.0),
+                                              width: size.width * 0.4,
+                                              child: Text(
+                                                "Subscription Name",
 
-                                               style: TextStyle(
-                                                   color: Colors.black,
-                                                   fontSize: 12.0,
-                                                   fontFamily: "PoppinsBold"),
-                                             ),
-                                           ),
+                                                style: TextStyle(
+                                                    color: Colors.black,
+                                                    fontSize: 12.0,
+                                                    fontFamily: "PoppinsBold"),
+                                              ),
+                                            ),
 
-                                           Container(
-                                             padding: EdgeInsets.only(
-                                                 top: 10.0, bottom: 5.0, left: 5.0, right: 5.0),
-                                             width: size.width * 0.4,
-                                             child: Text(
-                                               snapshot.data[index].subscriptionName,
-                                               textAlign: TextAlign.center,
-                                               style: TextStyle(
-                                                   color: kPrimaryColorBlue,
-                                                   fontSize: 12.0,
-                                                   fontFamily: "PoppinsBold"),
-                                             ),
-                                           ),
+                                            Container(
+                                              padding: EdgeInsets.only(
+                                                  top: 10.0, bottom: 5.0, left: 5.0, right: 5.0),
+                                              width: size.width * 0.4,
+                                              child: Text(
+                                                snapshot.data[index].subscriptionName,
+                                                textAlign: TextAlign.center,
+                                                style: TextStyle(
+                                                    color: kPrimaryColorBlue,
+                                                    fontSize: 12.0,
+                                                    fontFamily: "PoppinsBold"),
+                                              ),
+                                            ),
 
-                                         ],
-                                       ),
-                                     ),
-                                     Container(
-                                       width: size.width * 0.9,
-                                       padding: EdgeInsets.only(
-                                           top: 0.0, bottom: 5.0, left: 5.0, right: 5.0),
-                                       child: Row(
-                                         crossAxisAlignment: CrossAxisAlignment.center,
-                                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                         children: <Widget>[
+                                          ],
+                                        ),
+                                      ),
+                                      Container(
+                                        width: size.width * 0.9,
+                                        padding: EdgeInsets.only(
+                                            top: 0.0, bottom: 5.0, left: 5.0, right: 5.0),
+                                        child: Row(
+                                          crossAxisAlignment: CrossAxisAlignment.center,
+                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                          children: <Widget>[
 
-                                           Container(
-                                             padding: EdgeInsets.only(
-                                                 top: 0.0, bottom: 5.0, left: 5.0, right: 5.0),
-                                             width: size.width * 0.4,
-                                             child: Text(
-                                               "Total SMS",
+                                            Container(
+                                              padding: EdgeInsets.only(
+                                                  top: 0.0, bottom: 5.0, left: 5.0, right: 5.0),
+                                              width: size.width * 0.4,
+                                              child: Text(
+                                                "Total SMS",
 
-                                               style: TextStyle(
-                                                   color: Colors.black,
-                                                   fontSize: 12.0,
-                                                   fontFamily: "PoppinsBold"),
-                                             ),
-                                           ),
+                                                style: TextStyle(
+                                                    color: Colors.black,
+                                                    fontSize: 12.0,
+                                                    fontFamily: "PoppinsBold"),
+                                              ),
+                                            ),
 
-                                           Container(
-                                             padding: EdgeInsets.only(
-                                                 top: 0.0, bottom: 5.0, left: 5.0, right: 5.0),
-                                             width: size.width * 0.4,
-                                             child: Text(
-                                               snapshot.data[index].totalSms,
-                                               textAlign: TextAlign.center,
-                                               style: TextStyle(
-                                                   color: kPrimaryColorBlue,
-                                                   fontSize: 12.0,
-                                                   fontFamily: "PoppinsBold"),
-                                             ),
-                                           ),
-                                         ],
-                                       ),
-                                     ),
+                                            Container(
+                                              padding: EdgeInsets.only(
+                                                  top: 0.0, bottom: 5.0, left: 5.0, right: 5.0),
+                                              width: size.width * 0.4,
+                                              child: Text(
+                                                snapshot.data[index].totalSms,
+                                                textAlign: TextAlign.center,
+                                                style: TextStyle(
+                                                    color: kPrimaryColorBlue,
+                                                    fontSize: 12.0,
+                                                    fontFamily: "PoppinsBold"),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
 
-                                     Container(
-                                       width: size.width * 0.9,
-                                       padding: EdgeInsets.only(
-                                           top: 0.0, bottom: 5.0, left: 5.0, right: 5.0),
-                                       child: Row(
-                                         crossAxisAlignment: CrossAxisAlignment.center,
-                                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                         children: <Widget>[
+                                      Container(
+                                        width: size.width * 0.9,
+                                        padding: EdgeInsets.only(
+                                            top: 0.0, bottom: 5.0, left: 5.0, right: 5.0),
+                                        child: Row(
+                                          crossAxisAlignment: CrossAxisAlignment.center,
+                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                          children: <Widget>[
 
-                                           Container(
-                                             padding: EdgeInsets.only(
-                                                 top: 0.0, bottom: 5.0, left: 5.0, right: 5.0),
-                                             width: size.width * 0.4,
-                                             child: Text(
-                                               "Per SMS Cost",
+                                            Container(
+                                              padding: EdgeInsets.only(
+                                                  top: 0.0, bottom: 5.0, left: 5.0, right: 5.0),
+                                              width: size.width * 0.4,
+                                              child: Text(
+                                                "Per SMS Cost",
 
-                                               style: TextStyle(
-                                                   color: Colors.black,
-                                                   fontSize: 12.0,
-                                                   fontFamily: "PoppinsBold"),
-                                             ),
-                                           ),
+                                                style: TextStyle(
+                                                    color: Colors.black,
+                                                    fontSize: 12.0,
+                                                    fontFamily: "PoppinsBold"),
+                                              ),
+                                            ),
 
-                                           Container(
-                                             padding: EdgeInsets.only(
-                                                 top: 0.0, bottom: 5.0, left: 5.0, right: 5.0),
-                                             width: size.width * 0.4,
-                                             child: Text(
-                                               "₹ "+snapshot.data[index].perSmsCost+".00",
-                                               textAlign: TextAlign.center,
-                                               style: TextStyle(
-                                                   color: kPrimaryColorBlue,
-                                                   fontSize: 12.0,
-                                                   fontFamily: "PoppinsBold"),
-                                             ),
-                                           ),
-                                         ],
-                                       ),
-                                     ),
+                                            Container(
+                                              padding: EdgeInsets.only(
+                                                  top: 0.0, bottom: 5.0, left: 5.0, right: 5.0),
+                                              width: size.width * 0.4,
+                                              child: Text(
+                                                "₹ "+snapshot.data[index].perSmsCost+".00",
+                                                textAlign: TextAlign.center,
+                                                style: TextStyle(
+                                                    color: kPrimaryColorBlue,
+                                                    fontSize: 12.0,
+                                                    fontFamily: "PoppinsBold"),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
 
-                                     Container(
-                                       width: size.width * 0.9,
-                                       padding: EdgeInsets.only(
-                                           top: 0.0, bottom: 5.0, left: 5.0, right: 5.0),
-                                       child: Row(
-                                         crossAxisAlignment: CrossAxisAlignment.center,
-                                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                         children: <Widget>[
+                                      Container(
+                                        width: size.width * 0.9,
+                                        padding: EdgeInsets.only(
+                                            top: 0.0, bottom: 5.0, left: 5.0, right: 5.0),
+                                        child: Row(
+                                          crossAxisAlignment: CrossAxisAlignment.center,
+                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                          children: <Widget>[
 
-                                           Container(
-                                             padding: EdgeInsets.only(
-                                                 top: 0.0, bottom: 5.0, left: 5.0, right: 5.0),
-                                             width: size.width * 0.4,
-                                             child: Text(
-                                               "Amount",
+                                            Container(
+                                              padding: EdgeInsets.only(
+                                                  top: 0.0, bottom: 5.0, left: 5.0, right: 5.0),
+                                              width: size.width * 0.4,
+                                              child: Text(
+                                                "Amount",
 
-                                               style: TextStyle(
-                                                   color: Colors.black,
-                                                   fontSize: 12.0,
-                                                   fontFamily: "PoppinsBold"),
-                                             ),
-                                           ),
+                                                style: TextStyle(
+                                                    color: Colors.black,
+                                                    fontSize: 12.0,
+                                                    fontFamily: "PoppinsBold"),
+                                              ),
+                                            ),
 
-                                           Container(
-                                             padding: EdgeInsets.only(
-                                                 top: 0.0, bottom: 5.0, left: 5.0, right: 5.0),
-                                             width: size.width * 0.4,
-                                             child: Text(
-                                               "₹ "+snapshot.data[index].totalSmsCost+".00",
-                                               textAlign: TextAlign.center,
-                                               style: TextStyle(
-                                                   color: kPrimaryColorBlue,
-                                                   fontSize: 12.0,
-                                                   fontFamily: "PoppinsBold"),
-                                             ),
-                                           ),
-                                         ],
-                                       ),
-                                     ),
+                                            Container(
+                                              padding: EdgeInsets.only(
+                                                  top: 0.0, bottom: 5.0, left: 5.0, right: 5.0),
+                                              width: size.width * 0.4,
+                                              child: Text(
+                                                "₹ "+snapshot.data[index].totalSmsCost+".00",
+                                                textAlign: TextAlign.center,
+                                                style: TextStyle(
+                                                    color: kPrimaryColorBlue,
+                                                    fontSize: 12.0,
+                                                    fontFamily: "PoppinsBold"),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
 
-                                     Container(
-                                       width: size.width * 0.9,
-                                       padding: EdgeInsets.only(
-                                           top: 10.0, bottom: 5.0, left: 5.0, right: 5.0),
-                                       child: Row(
-                                         crossAxisAlignment: CrossAxisAlignment.center,
-                                         mainAxisAlignment: MainAxisAlignment.spaceAround,
-                                         children: <Widget>[
-                                           TextButton(
-                                             onPressed: () {
-                                               showDialog(
-                                                 context: context,
-                                                 builder: (BuildContext context) => _buildPopupForTrans(context,snapshot.data[index]),
-                                               );
-                                             },
-                                             child: Text('View Details'),
-                                           ),
-                                           //if(snapshot.data[index].isActive)
 
-                                           //snapshot.data[index].isActive?
+                                      Container(
+                                        width: size.width * 0.9,
+                                        padding: EdgeInsets.only(
+                                            top: 10.0, bottom: 5.0, left: 5.0, right: 5.0),
+                                        child: Row(
+                                          crossAxisAlignment: CrossAxisAlignment.center,
+                                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                          children: <Widget>[
+                                            TextButton(
+                                              onPressed: () {
+                                                showDialog(
+                                                  context: context,
+                                                  builder: (BuildContext context) => _buildPopupForSms(context,snapshot.data[index]),
+                                                );
+                                              },
+                                              child: Text('View Details'),
+                                            ),
+                                            MaterialButton(
+
+                                                splashColor: kPrimaryColorBlue,
+                                                child: Padding(
+                                                  padding: const EdgeInsets.symmetric(
+                                                      vertical: 00.0, horizontal: 10.0),
+                                                  child: Text(
+                                                    "Buy",
+                                                    style: TextStyle(
+                                                        color:kPrimaryColorBlue,
+                                                        fontSize: 15.0,
+                                                        fontWeight: FontWeight.w500,
+                                                        fontFamily: "PoppinsMedium"),
+                                                    textAlign: TextAlign.center,
+                                                  ),
+                                                ),
+                                                onPressed: () {
+                                                  _launchPayURL(snapshot.data[index].totalSmsCost, snapshot.data[index].id.toString(),"Promotional Sms Subscription");
+
+                                                }),
+
+                                          ],
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            );
+                          }
+
+                      );
+
+                    } else {
+                      return Center(child: Text("No Data Found"));
+                    }
+                  }
+
+                },
+              ),
+            ),
+          if(_onTapBox3)
+            Expanded(
+              child: FutureBuilder<List<DatuJI>>(
+                future: getTrans(),
+                builder: (BuildContext context, AsyncSnapshot<List<DatuJI>> snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting)
+                    return Center(child: CircularProgressIndicator(valueColor:AlwaysStoppedAnimation<Color>(kPrimaryColorBlue),));
+                  else if (snapshot.hasError) {
+                    return Center(
+                      child: Text("You don’t have any Active Subscription"),
+                    );
+                  } else {
+                    if (snapshot.connectionState == ConnectionState.done &&
+                        snapshot.hasData) {
+                      WidgetsBinding.instance.addPostFrameCallback((_) {
+                        if (_controller.hasClients) {
+                          _controller.animateTo(
+                              _controller.position.minScrollExtent,
+                              duration: Duration(milliseconds: 500),
+                              curve: Curves.fastOutSlowIn);
+                        } else {
+                          setState(() => null);
+                        }
+                      });
+                      return ListView.builder(
+                          itemCount: snapshot.data.length,
+                          shrinkWrap: true,
+                          reverse: false,
+                          controller: _controller,
+                          itemBuilder: (BuildContext context, int index) {
+                            return Container(padding: EdgeInsets.fromLTRB(10, 10, 10, 0),
+                              width: double.maxFinite,
+                              child: Card(
+                                elevation: 5.0,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.only(topLeft: Radius.elliptical(30, 20),bottomRight:  Radius.elliptical(30, 20)),
+                                ),
+                                child: Center(
+                                  child: Column(
+                                    children: <Widget>[
+                                      Container(
+                                        width: size.width * 0.9,
+                                        padding: EdgeInsets.only(
+                                            top: 10.0, bottom: 5.0, left: 5.0, right: 5.0),
+                                        child: Row(
+                                          crossAxisAlignment: CrossAxisAlignment.center,
+                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                          children: <Widget>[
+
+                                            Container(
+                                              padding: EdgeInsets.only(
+                                                  top: 10.0, bottom: 5.0, left: 5.0, right: 5.0),
+                                              width: size.width * 0.4,
+                                              child: Text(
+                                                "Subscription Name",
+
+                                                style: TextStyle(
+                                                    color: Colors.black,
+                                                    fontSize: 12.0,
+                                                    fontFamily: "PoppinsBold"),
+                                              ),
+                                            ),
+
+                                            Container(
+                                              padding: EdgeInsets.only(
+                                                  top: 10.0, bottom: 5.0, left: 5.0, right: 5.0),
+                                              width: size.width * 0.4,
+                                              child: Text(
+                                                snapshot.data[index].subscriptionName,
+                                                textAlign: TextAlign.center,
+                                                style: TextStyle(
+                                                    color: kPrimaryColorBlue,
+                                                    fontSize: 12.0,
+                                                    fontFamily: "PoppinsBold"),
+                                              ),
+                                            ),
+
+                                          ],
+                                        ),
+                                      ),
+                                      Container(
+                                        width: size.width * 0.9,
+                                        padding: EdgeInsets.only(
+                                            top: 0.0, bottom: 5.0, left: 5.0, right: 5.0),
+                                        child: Row(
+                                          crossAxisAlignment: CrossAxisAlignment.center,
+                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                          children: <Widget>[
+
+                                            Container(
+                                              padding: EdgeInsets.only(
+                                                  top: 0.0, bottom: 5.0, left: 5.0, right: 5.0),
+                                              width: size.width * 0.4,
+                                              child: Text(
+                                                "Total SMS",
+
+                                                style: TextStyle(
+                                                    color: Colors.black,
+                                                    fontSize: 12.0,
+                                                    fontFamily: "PoppinsBold"),
+                                              ),
+                                            ),
+
+                                            Container(
+                                              padding: EdgeInsets.only(
+                                                  top: 0.0, bottom: 5.0, left: 5.0, right: 5.0),
+                                              width: size.width * 0.4,
+                                              child: Text(
+                                                snapshot.data[index].totalSms,
+                                                textAlign: TextAlign.center,
+                                                style: TextStyle(
+                                                    color: kPrimaryColorBlue,
+                                                    fontSize: 12.0,
+                                                    fontFamily: "PoppinsBold"),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+
+                                      Container(
+                                        width: size.width * 0.9,
+                                        padding: EdgeInsets.only(
+                                            top: 0.0, bottom: 5.0, left: 5.0, right: 5.0),
+                                        child: Row(
+                                          crossAxisAlignment: CrossAxisAlignment.center,
+                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                          children: <Widget>[
+
+                                            Container(
+                                              padding: EdgeInsets.only(
+                                                  top: 0.0, bottom: 5.0, left: 5.0, right: 5.0),
+                                              width: size.width * 0.4,
+                                              child: Text(
+                                                "Per SMS Cost",
+
+                                                style: TextStyle(
+                                                    color: Colors.black,
+                                                    fontSize: 12.0,
+                                                    fontFamily: "PoppinsBold"),
+                                              ),
+                                            ),
+
+                                            Container(
+                                              padding: EdgeInsets.only(
+                                                  top: 0.0, bottom: 5.0, left: 5.0, right: 5.0),
+                                              width: size.width * 0.4,
+                                              child: Text(
+                                                "₹ "+snapshot.data[index].perSmsCost+".00",
+                                                textAlign: TextAlign.center,
+                                                style: TextStyle(
+                                                    color: kPrimaryColorBlue,
+                                                    fontSize: 12.0,
+                                                    fontFamily: "PoppinsBold"),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+
+                                      Container(
+                                        width: size.width * 0.9,
+                                        padding: EdgeInsets.only(
+                                            top: 0.0, bottom: 5.0, left: 5.0, right: 5.0),
+                                        child: Row(
+                                          crossAxisAlignment: CrossAxisAlignment.center,
+                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                          children: <Widget>[
+
+                                            Container(
+                                              padding: EdgeInsets.only(
+                                                  top: 0.0, bottom: 5.0, left: 5.0, right: 5.0),
+                                              width: size.width * 0.4,
+                                              child: Text(
+                                                "Amount",
+
+                                                style: TextStyle(
+                                                    color: Colors.black,
+                                                    fontSize: 12.0,
+                                                    fontFamily: "PoppinsBold"),
+                                              ),
+                                            ),
+
+                                            Container(
+                                              padding: EdgeInsets.only(
+                                                  top: 0.0, bottom: 5.0, left: 5.0, right: 5.0),
+                                              width: size.width * 0.4,
+                                              child: Text(
+                                                "₹ "+snapshot.data[index].totalSmsCost+".00",
+                                                textAlign: TextAlign.center,
+                                                style: TextStyle(
+                                                    color: kPrimaryColorBlue,
+                                                    fontSize: 12.0,
+                                                    fontFamily: "PoppinsBold"),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+
+                                      Container(
+                                        width: size.width * 0.9,
+                                        padding: EdgeInsets.only(
+                                            top: 10.0, bottom: 5.0, left: 5.0, right: 5.0),
+                                        child: Row(
+                                          crossAxisAlignment: CrossAxisAlignment.center,
+                                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                          children: <Widget>[
+                                            TextButton(
+                                              onPressed: () {
+                                                showDialog(
+                                                  context: context,
+                                                  builder: (BuildContext context) => _buildPopupForTrans(context,snapshot.data[index]),
+                                                );
+                                              },
+                                              child: Text('View Details'),
+                                            ),
+                                            //if(snapshot.data[index].isActive)
+
+                                            //snapshot.data[index].isActive?
                                             // Container(
-                                             //  child: Row(
-                                              //   children: <Widget>[
-                                                //   Container(
-                                                    // padding: EdgeInsets.only(
-                                                    //     top: 0.0, bottom: 0.0, left: 5.0, right: 5.0),
-                                                  //   child:  Icon(
-                                                   //    Icons.check_circle,color: Colors.green,size: 20,
-                                                  //   ),
-                                                   //),
+                                            //  child: Row(
+                                            //   children: <Widget>[
+                                            //   Container(
+                                            // padding: EdgeInsets.only(
+                                            //     top: 0.0, bottom: 0.0, left: 5.0, right: 5.0),
+                                            //   child:  Icon(
+                                            //    Icons.check_circle,color: Colors.green,size: 20,
+                                            //   ),
+                                            //),
 
-                                                 //  Container(
-                                                //     child: Text(  "Active",
-                                                 //      style: TextStyle(
-                                                   //        color:kPrimaryColorBlue,
-                                                    //       fontSize: 15.0,
-                                                    //       fontFamily: "Poppins"),
-                                                   //   textAlign: TextAlign.center,),
-                                                   //)
-                                                // ],
+                                            //  Container(
+                                            //     child: Text(  "Active",
+                                            //      style: TextStyle(
+                                            //        color:kPrimaryColorBlue,
+                                            //       fontSize: 15.0,
+                                            //       fontFamily: "Poppins"),
+                                            //   textAlign: TextAlign.center,),
+                                            //)
+                                            // ],
 
-                                               //),
-                                           //  )
-
-
-                                           MaterialButton(
-                                               splashColor: kPrimaryColorBlue,
-                                               child: Padding(
-                                                 padding: const EdgeInsets.symmetric(
-                                                     vertical: 00.0, horizontal: 10.0),
-                                                 child: Text(
-                                                   "Buy",
-                                                   style: TextStyle(
-                                                       color:kPrimaryColorBlue,
-                                                       fontSize: 15.0,
-                                                       fontWeight: FontWeight.w500,
-                                                       fontFamily: "PoppinsMedium"),
-                                                   textAlign: TextAlign.center,
-                                                 ),
-                                               ),
-                                               onPressed: () {
-                                                 _launchPayURL(snapshot.data[index].totalSmsCost, snapshot.data[index].subscriptionName);
-
-                                               }),
-
-                                         ],
-                                       ),
-                                     ),
-                                   ],
-                                 ),
-                               ),
-                             ),
-                           );
-                         }
-
-                     );
-
-                   } else {
-                     return Center(child: Text("No Data Found"));
-                   }
-                 }
-
-               },
-             ),
-           ),
-         if(_onTapBox4)
-           Expanded(
-             child: FutureBuilder<List<Datumii>>(
-               future:  getAddOn(),
-               builder: (BuildContext context, AsyncSnapshot<List<Datumii>> snapshot) {
-                 if (snapshot.connectionState == ConnectionState.waiting)
-                   return Center(child: CircularProgressIndicator(valueColor:AlwaysStoppedAnimation<Color>(kPrimaryColorBlue),));
-                 else if (snapshot.hasError) {
-                   return Center(
-                     child: Text("You don’t have any Active Subscription"),
-                   );
-                 } else {
-                   if (snapshot.connectionState == ConnectionState.done &&
-                       snapshot.hasData) {
-                     WidgetsBinding.instance.addPostFrameCallback((_) {
-                       if (_controller.hasClients) {
-                         _controller.animateTo(
-                             _controller.position.minScrollExtent,
-                             duration: Duration(milliseconds: 500),
-                             curve: Curves.fastOutSlowIn);
-                       } else {
-                         setState(() => null);
-                       }
-                     });
-                     return Scrollbar(
-                       isAlwaysShown: true,
-                       controller: _controller,
-                       thickness: 3.0,
-                       child: ListView.builder(
-                           itemCount: snapshot.data.length,
-                           shrinkWrap: true,
-                           reverse: false,
-                           controller: _controller,
-                           itemBuilder: (BuildContext context, int index) {
-                             return Container(padding: EdgeInsets.fromLTRB(10, 10, 10, 0),
-                               width: double.maxFinite,
-                               child: Card(
-                                 elevation: 5.0,
-                                 shape: RoundedRectangleBorder(
-                                   borderRadius: BorderRadius.only(topLeft: Radius.elliptical(30, 20),bottomRight:  Radius.elliptical(30, 20)),
-                                 ),
-                                 child: Center(
-                                   child: Column(
-                                     children: <Widget>[
-                                       Container(
-                                         width: size.width * 0.9,
-                                         padding: EdgeInsets.only(
-                                             top: 10.0, bottom: 5.0, left: 5.0, right: 5.0),
-                                         child: Row(
-                                           crossAxisAlignment: CrossAxisAlignment.center,
-                                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                           children: <Widget>[
-
-                                             Container(
-                                               padding: EdgeInsets.only(
-                                                   top: 10.0, bottom: 5.0, left: 5.0, right: 5.0),
-                                               width: size.width * 0.4,
-                                               child: Text(
-                                                 "Add On's Name",
-                                                 style: TextStyle(
-                                                     color: Colors.black,
-                                                     fontSize: 12.0,
-                                                     fontFamily: "PoppinsBold"),
-                                               ),
-                                             ),
-                                             Container(
-                                               padding: EdgeInsets.only(
-                                                   top: 10.0, bottom: 5.0, left: 5.0, right: 5.0),
-                                               width: size.width * 0.4,
-                                               child: Text(
-                                                 snapshot.data[index].addOnName,
-                                                 textAlign: TextAlign.center,
-                                                 style: TextStyle(
-                                                     color: kPrimaryColorBlue,
-                                                     fontSize: 12.0,
-                                                     fontFamily: "PoppinsBold"),
-                                               ),
-                                             ),
-
-                                           ],
-                                         ),
-                                       ),
+                                            //),
+                                            //  )
 
 
-                                       Container(
-                                         width: size.width * 0.9,
-                                         padding: EdgeInsets.only(
-                                             top: 0.0, bottom: 5.0, left: 5.0, right: 5.0),
-                                         child: Row(
-                                           crossAxisAlignment: CrossAxisAlignment.center,
-                                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                           children: <Widget>[
+                                            MaterialButton(
+                                                splashColor: kPrimaryColorBlue,
+                                                child: Padding(
+                                                  padding: const EdgeInsets.symmetric(
+                                                      vertical: 00.0, horizontal: 10.0),
+                                                  child: Text(
+                                                    "Buy",
+                                                    style: TextStyle(
+                                                        color:kPrimaryColorBlue,
+                                                        fontSize: 15.0,
+                                                        fontWeight: FontWeight.w500,
+                                                        fontFamily: "PoppinsMedium"),
+                                                    textAlign: TextAlign.center,
+                                                  ),
+                                                ),
+                                                onPressed: () {
+                                                  _launchPayURL(snapshot.data[index].totalSmsCost, snapshot.data[index].id.toString(),"Transactional Sms Subscription");
 
-                                             Container(
-                                               padding: EdgeInsets.only(
-                                                   top: 0.0, bottom: 5.0, left: 5.0, right: 5.0),
-                                               width: size.width * 0.4,
-                                               child: Text(
-                                                 "Recharge Amount",
+                                                }),
 
-                                                 style: TextStyle(
-                                                     color: Colors.black,
-                                                     fontSize: 12.0,
-                                                     fontFamily: "PoppinsBold"),
-                                               ),
-                                             ),
+                                          ],
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            );
+                          }
 
-                                             Container(
-                                               padding: EdgeInsets.only(
-                                                   top: 0.0, bottom: 5.0, left: 5.0, right: 5.0),
-                                               width: size.width * 0.4,
-                                               child: Text(
-                                                 "₹ "+snapshot.data[index].rechargeAmount+".00",
-                                                 textAlign: TextAlign.center,
-                                                 style: TextStyle(
-                                                     color: kPrimaryColorBlue,
-                                                     fontSize: 12.0,
-                                                     fontFamily: "PoppinsBold"),
-                                               ),
-                                             ),
-                                           ],
-                                         ),
-                                       ),
+                      );
+
+                    } else {
+                      return Center(child: Text("No Data Found"));
+                    }
+                  }
+
+                },
+              ),
+            ),
+          if(_onTapBox4)
+            Expanded(
+              child: FutureBuilder<List<Datumii>>(
+                future:  getAddOn(),
+                builder: (BuildContext context, AsyncSnapshot<List<Datumii>> snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting)
+                    return Center(child: CircularProgressIndicator(valueColor:AlwaysStoppedAnimation<Color>(kPrimaryColorBlue),));
+                  else if (snapshot.hasError) {
+                    return Center(
+                      child: Text("You don’t have any Active Subscription"),
+                    );
+                  } else {
+                    if (snapshot.connectionState == ConnectionState.done &&
+                        snapshot.hasData) {
+                      WidgetsBinding.instance.addPostFrameCallback((_) {
+                        if (_controller.hasClients) {
+                          _controller.animateTo(
+                              _controller.position.minScrollExtent,
+                              duration: Duration(milliseconds: 500),
+                              curve: Curves.fastOutSlowIn);
+                        } else {
+                          setState(() => null);
+                        }
+                      });
+                      return Scrollbar(
+                        isAlwaysShown: true,
+                        controller: _controller,
+                        thickness: 3.0,
+                        child: ListView.builder(
+                            itemCount: snapshot.data.length,
+                            shrinkWrap: true,
+                            reverse: false,
+                            controller: _controller,
+                            itemBuilder: (BuildContext context, int index) {
+                              return Container(padding: EdgeInsets.fromLTRB(10, 10, 10, 0),
+                                width: double.maxFinite,
+                                child: Card(
+                                  elevation: 5.0,
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.only(topLeft: Radius.elliptical(30, 20),bottomRight:  Radius.elliptical(30, 20)),
+                                  ),
+                                  child: Center(
+                                    child: Column(
+                                      children: <Widget>[
+                                        Container(
+                                          width: size.width * 0.9,
+                                          padding: EdgeInsets.only(
+                                              top: 10.0, bottom: 5.0, left: 5.0, right: 5.0),
+                                          child: Row(
+                                            crossAxisAlignment: CrossAxisAlignment.center,
+                                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                            children: <Widget>[
+
+                                              Container(
+                                                padding: EdgeInsets.only(
+                                                    top: 10.0, bottom: 5.0, left: 5.0, right: 5.0),
+                                                width: size.width * 0.4,
+                                                child: Text(
+                                                  "Add On's Name",
+                                                  style: TextStyle(
+                                                      color: Colors.black,
+                                                      fontSize: 12.0,
+                                                      fontFamily: "PoppinsBold"),
+                                                ),
+                                              ),
+                                              Container(
+                                                padding: EdgeInsets.only(
+                                                    top: 10.0, bottom: 5.0, left: 5.0, right: 5.0),
+                                                width: size.width * 0.4,
+                                                child: Text(
+                                                  snapshot.data[index].addOnName,
+                                                  textAlign: TextAlign.center,
+                                                  style: TextStyle(
+                                                      color: kPrimaryColorBlue,
+                                                      fontSize: 12.0,
+                                                      fontFamily: "PoppinsBold"),
+                                                ),
+                                              ),
+
+                                            ],
+                                          ),
+                                        ),
 
 
-                                       Container(
-                                         width: size.width * 0.9,
-                                         padding: EdgeInsets.only(
-                                             top: 10.0, bottom: 5.0, left: 5.0, right: 5.0),
-                                         child: Row(
-                                           crossAxisAlignment: CrossAxisAlignment.center,
-                                           mainAxisAlignment: MainAxisAlignment.spaceAround,
-                                           children: <Widget>[
-                                             TextButton(
-                                               onPressed: () {
-                                                 showDialog(
-                                                   context: context,
-                                                   builder: (BuildContext context) => _buildPopupDialogAddOn(context,snapshot.data[index]),
-                                                 );
-                                               },
-                                               child: Text('View Details'),
-                                             ),
-                                             MaterialButton(
+                                        Container(
+                                          width: size.width * 0.9,
+                                          padding: EdgeInsets.only(
+                                              top: 0.0, bottom: 5.0, left: 5.0, right: 5.0),
+                                          child: Row(
+                                            crossAxisAlignment: CrossAxisAlignment.center,
+                                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                            children: <Widget>[
 
-                                                 splashColor: kPrimaryColorBlue,
-                                                 child: Padding(
-                                                   padding: const EdgeInsets.symmetric(
-                                                       vertical: 00.0, horizontal: 10.0),
-                                                   child: Text(
-                                                     "Buy",
-                                                     style: TextStyle(
-                                                         color:kPrimaryColorBlue,
-                                                         fontSize: 15.0,
-                                                         fontWeight: FontWeight.w500,
-                                                         fontFamily: "PoppinsMedium"),
-                                                     textAlign: TextAlign.center,
-                                                   ),
-                                                 ),
-                                                 onPressed: () {
-                                                   _launchPayURL(snapshot.data[index].rechargeAmount, snapshot.data[index].addOnName);
+                                              Container(
+                                                padding: EdgeInsets.only(
+                                                    top: 0.0, bottom: 5.0, left: 5.0, right: 5.0),
+                                                width: size.width * 0.4,
+                                                child: Text(
+                                                  "Recharge Amount",
 
-                                                 }),
+                                                  style: TextStyle(
+                                                      color: Colors.black,
+                                                      fontSize: 12.0,
+                                                      fontFamily: "PoppinsBold"),
+                                                ),
+                                              ),
 
-                                           ],
-                                         ),
-                                       ),
-                                     ],
-                                   ),
-                                 ),
-                               ),
-                             );
-                           }
-                       ),
-                     );
+                                              Container(
+                                                padding: EdgeInsets.only(
+                                                    top: 0.0, bottom: 5.0, left: 5.0, right: 5.0),
+                                                width: size.width * 0.4,
+                                                child: Text(
+                                                  "₹ "+snapshot.data[index].rechargeAmount+".00",
+                                                  textAlign: TextAlign.center,
+                                                  style: TextStyle(
+                                                      color: kPrimaryColorBlue,
+                                                      fontSize: 12.0,
+                                                      fontFamily: "PoppinsBold"),
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
 
-                   } else {
-                     return Center(child: Text("No Data Found"));
-                   }
-                 }
 
-               },
-             ),
-           ),
+                                        Container(
+                                          width: size.width * 0.9,
+                                          padding: EdgeInsets.only(
+                                              top: 10.0, bottom: 5.0, left: 5.0, right: 5.0),
+                                          child: Row(
+                                            crossAxisAlignment: CrossAxisAlignment.center,
+                                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                            children: <Widget>[
+                                              TextButton(
+                                                onPressed: () {
+                                                  showDialog(
+                                                    context: context,
+                                                    builder: (BuildContext context) => _buildPopupDialogAddOn(context,snapshot.data[index]),
+                                                  );
+                                                },
+                                                child: Text('View Details'),
+                                              ),
+                                              MaterialButton(
 
-       ],
+                                                  splashColor: kPrimaryColorBlue,
+                                                  child: Padding(
+                                                    padding: const EdgeInsets.symmetric(
+                                                        vertical: 00.0, horizontal: 10.0),
+                                                    child: Text(
+                                                      "Buy",
+                                                      style: TextStyle(
+                                                          color:kPrimaryColorBlue,
+                                                          fontSize: 15.0,
+                                                          fontWeight: FontWeight.w500,
+                                                          fontFamily: "PoppinsMedium"),
+                                                      textAlign: TextAlign.center,
+                                                    ),
+                                                  ),
+                                                  onPressed: () {
+                                                    _launchPayURL(snapshot.data[index].rechargeAmount, snapshot.data[index].id.toString(),"Add's On Subscription");
+
+                                                  }),
+
+                                            ],
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              );
+                            }
+                        ),
+                      );
+
+                    } else {
+                      return Center(child: Text("No Data Found"));
+                    }
+                  }
+
+                },
+              ),
+            ),
+
+        ],
       ),
 
-          );
+    );
   }
 
   Widget _buildPopupDialog(BuildContext context, Datum data) {
@@ -1346,49 +1352,49 @@ class RechargeState extends State<Recharge> {
           Container(
             height: 80,
             width: double.maxFinite,
-             child: Card(
+            child: Card(
               shape: RoundedRectangleBorder(
-               borderRadius: BorderRadius.circular(15.0),),
-               child: Center(
-                 child: Column(
-                     children: <Widget>[
+                borderRadius: BorderRadius.circular(15.0),),
+              child: Center(
+                child: Column(
+                  children: <Widget>[
 
-                       Container(
-                       //width: MediaQuery.of(context).size.width,
-                       padding: EdgeInsets.only(
-                           top: 10.0, bottom: 0.0, left: 5.0, right: 5.0),
-                         child: Column(
-                           crossAxisAlignment: CrossAxisAlignment.center,
-                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                           children: <Widget>[
-                             Text(
-                               "₹ "+data.subscriptionPlanCost+".00",
-                               textAlign: TextAlign.center,
-                               style: TextStyle(
-                                   color: Colors.white,
-                                   fontSize: 20.0,
-                                   fontFamily: "PoppinsBold"),
-                             ),
-                             Text(
-                               "Plan For - "+data.validForMonth+" Months",
-                               textAlign: TextAlign.center,
-                               style: TextStyle(
-                                   color: Colors.white,
-                                   fontSize: 12.0,
-                                   fontFamily: "PoppinsBold"),
-                             ),
-                           ],
+                    Container(
+                      //width: MediaQuery.of(context).size.width,
+                      padding: EdgeInsets.only(
+                          top: 10.0, bottom: 0.0, left: 5.0, right: 5.0),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: <Widget>[
+                          Text(
+                            "₹ "+data.subscriptionPlanCost+".00",
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 20.0,
+                                fontFamily: "PoppinsBold"),
+                          ),
+                          Text(
+                            "Plan For - "+data.validForMonth+" Months",
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 12.0,
+                                fontFamily: "PoppinsBold"),
+                          ),
+                        ],
 
 
-                       ),
+                      ),
 
-                       ),
-                       
-                     ],),
-                 
-               ),
-               color: kPrimaryColorBlue,
-             ),
+                    ),
+
+                  ],),
+
+              ),
+              color: kPrimaryColorBlue,
+            ),
           ),
 
 
@@ -1431,19 +1437,19 @@ class RechargeState extends State<Recharge> {
             ),
           ),
 
-         // Container(
-            //width: MediaQuery.of(context).size.width,
+          // Container(
+          //width: MediaQuery.of(context).size.width,
           //  padding: EdgeInsets.only(
-                //top: 0.0, bottom: 5.0, left: 5.0, right: 5.0),
+          //top: 0.0, bottom: 5.0, left: 5.0, right: 5.0),
           //  child: Row(
-           //   crossAxisAlignment: CrossAxisAlignment.center,
+          //   crossAxisAlignment: CrossAxisAlignment.center,
           //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
           //     children: <Widget>[
 
           //        Container(
           //      padding: EdgeInsets.only(
           //           top: 0.0, bottom: 5.0, left: 5.0, right: 5.0),
-                  //width:MediaQuery.of(context).size.width* 0.5,
+          //width:MediaQuery.of(context).size.width* 0.5,
           //       child: Text(
           //        "Recharge  Amount",
 
@@ -1457,7 +1463,7 @@ class RechargeState extends State<Recharge> {
           //    Container(
           //         padding: EdgeInsets.only(
           //            top: 0.0, bottom: 5.0, left: 5.0, right: 5.0),
-                  // width:MediaQuery.of(context).size.width* 0.5,
+          // width:MediaQuery.of(context).size.width* 0.5,
           //          child: Text(
           //            "₹ "+data.rechargeAmount+".00",
           //           textAlign: TextAlign.end,
@@ -1467,9 +1473,9 @@ class RechargeState extends State<Recharge> {
           //              fontFamily: "PoppinsBold"),
           //        ),
           //    ),
-            //  ],
-           // ),
-         // ),
+          //  ],
+          // ),
+          // ),
 
           Container(
             //width: MediaQuery.of(context).size.width,
@@ -1499,7 +1505,7 @@ class RechargeState extends State<Recharge> {
                       top: 0.0, bottom: 5.0, left: 5.0, right: 5.0),
                   // width:MediaQuery.of(context).size.width* 0.5,
                   child: Text(
-                      data.perBillCost.toString().contains(".")?
+                    data.perBillCost.toString().contains(".")?
                     "₹ "+data.perBillCost : "₹ "+data.perBillCost +".00",
                     textAlign: TextAlign.end,
                     style: TextStyle(
@@ -1809,7 +1815,7 @@ class RechargeState extends State<Recharge> {
                   // width:MediaQuery.of(context).size.width* 0.5,
                   child:
                   Text(data.perBillCost.characters.first=="0"?
-                    "₹ "+data.perBillCost :  "₹ "+data.perBillCost+".00",
+                  "₹ "+data.perBillCost :  "₹ "+data.perBillCost+".00",
                     textAlign: TextAlign.end,
                     style: TextStyle(
                         color: kPrimaryColorBlue,
@@ -1849,7 +1855,7 @@ class RechargeState extends State<Recharge> {
                       top: 0.0, bottom: 5.0, left: 5.0, right: 5.0),
                   // width:MediaQuery.of(context).size.width* 0.5,
                   child: Text(data.perDigitalBillCost.characters.first=="0"?
-                    "₹ "+data.perDigitalBillCost:"₹ "+data.perDigitalBillCost+".00",
+                  "₹ "+data.perDigitalBillCost:"₹ "+data.perDigitalBillCost+".00",
                     textAlign: TextAlign.end,
                     style: TextStyle(
                         color: kPrimaryColorBlue,
