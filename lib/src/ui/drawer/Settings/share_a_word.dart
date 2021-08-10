@@ -14,6 +14,8 @@ class _ShareAWordState extends State<ShareAWord> {
   final GlobalKey<ScaffoldState> _scaffoldKe = new GlobalKey<ScaffoldState>();
 
   String profile, mobile, token, name = "";
+  String text = "Hey,\n\nI have found this amazing App where you can send Bills, Cash memo, Receipts digitally and also track your business analytics at lower cost.  Also you can  engage with your customers and earn money with GreenBill.\n\n\nDownload GreenBill Merchant App now :\n\nPlay store :https://play.google.com/store/apps/details?id=com.tej.greenbill_merchant\n\nIos: link\n\nWebsite :https://www.greenbill.in";
+
   TextEditingController wordController = new TextEditingController();
   String showDate = DateFormat('EEEE, d MMM, yyyy h:mm a').format(DateTime.now()); // prints Tuesday, 10 Dec, 2019
 
@@ -59,6 +61,7 @@ class _ShareAWordState extends State<ShareAWord> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+
             // Padding(
             //   padding: const EdgeInsets.only(top: 10.0, left: 10.0),
             //   child: Text("Preview",
@@ -70,11 +73,12 @@ class _ShareAWordState extends State<ShareAWord> {
             //     ),
             //   ),
             // ),
+
             Padding(
               padding: const EdgeInsets.all(10.0),
               child: Container(
-                padding: EdgeInsets.only(top: 50.0, left: 10.0, right: 10.0, bottom: 10.0),
-                height: size.height * 0.60,
+                padding: EdgeInsets.only(top: 20.0, left: 10.0, right: 10.0, bottom: 10.0),
+                height: size.height * 0.70,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.all(Radius.circular(10)),
                   color: Colors.white,
@@ -95,6 +99,7 @@ class _ShareAWordState extends State<ShareAWord> {
                                 alignment: Alignment.center,
                                 child: Icon(FontAwesomeIcons.userCircle, size: 45.0, color: kPrimaryColorBlue,),
                               )
+
                             : CircleAvatar(
                           backgroundImage: NetworkImage(profile),
                           radius: 20.0,
@@ -115,7 +120,7 @@ class _ShareAWordState extends State<ShareAWord> {
                       child: Container(
                         width: size.width,
                         padding: EdgeInsets.all(10.0),
-                        child: Text("Hey,\n\nI have found this amazing App where you can send Bills, Cash memo, Receipts digitally and also track your business analytics at lower cost.  Also you can  engage with your customers and earn money with GreenBill.\n\n\nDownload GreenBill Merchant App now :\nPlay store :link\nIos: link\nWebsite :https://www.greenbill.in",
+                        child: Text(text,
                         style: TextStyle(
                             fontSize: 15.0, color: Colors.black),
                       ),
@@ -227,7 +232,7 @@ class _ShareAWordState extends State<ShareAWord> {
     //   showInSnackBar("Please enter Message");
     //   return null;
     // }
-    Share.share("Hey,\n\nI have found this amazing App where you can send Bills, Cash memo, Receipts digitally and also track your business analytics at lower cost.  Also you can  engage with your customers and earn money with GreenBill.\n\n\nDownload GreenBill Merchant App now :\nPlay store :link\nIos: link\nWebsite :https://www.greenbill.in");
+    Share.share(text);
 
   }
 }

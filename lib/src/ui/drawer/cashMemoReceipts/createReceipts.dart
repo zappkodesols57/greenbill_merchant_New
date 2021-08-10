@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
+import 'package:greenbill_merchant/src/models/model_checkReceipt.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -33,11 +34,12 @@ class _CreateReceiptsState extends State<CreateReceipts> {
   TextEditingController term3 = new TextEditingController();
 
   String dropdownValue = "Select Receipt Template";
-  String template = "", templateID;
+  String template = "",
+      templateID;
   String radioItem1;
-  String val1="";
-  String val2="";
-  String val3="";
+  String val1 = "";
+  String val2 = "";
+  String val3 = "";
 
   String token, id, mob, storeID;
 
@@ -70,6 +72,7 @@ class _CreateReceiptsState extends State<CreateReceipts> {
       mob = prefs.getString("mobile");
       storeID = prefs.getString("businessID");
     });
+    checkTemplate();
   }
 
   Future<void> _selectDate(BuildContext context) async {
@@ -78,7 +81,7 @@ class _CreateReceiptsState extends State<CreateReceipts> {
 
       initialDate: DateTime.now(),
       firstDate: DateTime.now(),
-      lastDate:  DateTime.now(),
+      lastDate: DateTime.now(),
     ).then((pickedDate) {
       dateController.text = DateFormat('dd-MM-yyyy').format(pickedDate);
     });
@@ -86,7 +89,9 @@ class _CreateReceiptsState extends State<CreateReceipts> {
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
+    Size size = MediaQuery
+        .of(context)
+        .size;
     return Scaffold(
       key: _scaffoldKey,
       appBar: AppBar(
@@ -94,11 +99,16 @@ class _CreateReceiptsState extends State<CreateReceipts> {
         elevation: 0,
         leading: IconButton(
           icon: Icon(Icons.arrow_back_ios),
-          onPressed: () {Navigator.pop(context, false);},
+          onPressed: () {
+            Navigator.pop(context, false);
+          },
         ),
         actions: <Widget>[
           TextButton(
             onPressed: () {
+              if(templateID =="") {
+                saveReceiptTemplate();
+              }else{}
               createTemplate();
             },
             child: Text("CREATE", style: TextStyle(color: Colors.white),),
@@ -111,7 +121,8 @@ class _CreateReceiptsState extends State<CreateReceipts> {
             children: [
               Container(
                 width: size.width * 0.95,
-                padding: EdgeInsets.only(top: 20.0, bottom: 10.0, left: 0.0, right: 0.0),
+                padding: EdgeInsets.only(
+                    top: 20.0, bottom: 10.0, left: 0.0, right: 0.0),
                 child: TextField(
                   controller: mobController,
                   keyboardType: TextInputType.phone,
@@ -133,13 +144,15 @@ class _CreateReceiptsState extends State<CreateReceipts> {
                           color: kPrimaryColorBlue,
                           width: 0.5
                       ),
-                      borderRadius: const BorderRadius.all(Radius.circular(35.0)),
+                      borderRadius: const BorderRadius.all(
+                          Radius.circular(35.0)),
                     ),
                     focusedBorder: new OutlineInputBorder(
                       borderSide: BorderSide(
                           color: kPrimaryColorBlue,
                           width: 0.5),
-                      borderRadius: const BorderRadius.all(Radius.circular(35.0)),
+                      borderRadius: const BorderRadius.all(
+                          Radius.circular(35.0)),
                     ),
                     prefixIcon: Icon(
                       CupertinoIcons.phone,
@@ -148,17 +161,22 @@ class _CreateReceiptsState extends State<CreateReceipts> {
                     ),
                     labelText: "Mobile No. *",
                     labelStyle: TextStyle(
-                        fontFamily: "PoppinsLight", fontSize: 13.0, color: kPrimaryColorBlue),
+                        fontFamily: "PoppinsLight",
+                        fontSize: 13.0,
+                        color: kPrimaryColorBlue),
                   ),
                 ),
               ),
               Container(
                 width: size.width * 0.95,
-                padding: EdgeInsets.only(top: 0.0, bottom: 10.0, left: 0.0, right: 0.0),
+                padding: EdgeInsets.only(
+                    top: 0.0, bottom: 10.0, left: 0.0, right: 0.0),
                 child: TextField(
                   controller: crfController,
                   maxLength: 25,
-                  inputFormatters: [new WhitelistingTextInputFormatter(RegExp("[a-z A-Z]")),],
+                  inputFormatters: [
+                    new WhitelistingTextInputFormatter(RegExp("[a-z A-Z]")),
+                  ],
                   style: TextStyle(
                       fontFamily: "PoppinsLight",
                       fontSize: 17.0,
@@ -173,13 +191,15 @@ class _CreateReceiptsState extends State<CreateReceipts> {
                           color: kPrimaryColorBlue,
                           width: 0.5
                       ),
-                      borderRadius: const BorderRadius.all(Radius.circular(35.0)),
+                      borderRadius: const BorderRadius.all(
+                          Radius.circular(35.0)),
                     ),
                     focusedBorder: new OutlineInputBorder(
                       borderSide: BorderSide(
                           color: kPrimaryColorBlue,
                           width: 0.5),
-                      borderRadius: const BorderRadius.all(Radius.circular(35.0)),
+                      borderRadius: const BorderRadius.all(
+                          Radius.circular(35.0)),
                     ),
                     prefixIcon: Icon(
                       CupertinoIcons.person,
@@ -188,18 +208,23 @@ class _CreateReceiptsState extends State<CreateReceipts> {
                     ),
                     labelText: "Cash Received From *",
                     labelStyle: TextStyle(
-                        fontFamily: "PoppinsLight", fontSize: 13.0, color: kPrimaryColorBlue),
+                        fontFamily: "PoppinsLight",
+                        fontSize: 13.0,
+                        color: kPrimaryColorBlue),
                   ),
                 ),
               ),
 
               Container(
                 width: size.width * 0.95,
-                padding: EdgeInsets.only(top: 0.0, bottom: 10.0, left: 0.0, right: 0.0),
+                padding: EdgeInsets.only(
+                    top: 0.0, bottom: 10.0, left: 0.0, right: 0.0),
                 child: TextField(
                   maxLength: 20,
                   controller: amtForController,
-                  inputFormatters: [new WhitelistingTextInputFormatter(RegExp("[a-z A-Z]")),],
+                  inputFormatters: [
+                    new WhitelistingTextInputFormatter(RegExp("[a-z A-Z]")),
+                  ],
                   style: TextStyle(
                       fontFamily: "PoppinsLight",
                       fontSize: 17.0,
@@ -214,13 +239,15 @@ class _CreateReceiptsState extends State<CreateReceipts> {
                           color: kPrimaryColorBlue,
                           width: 0.5
                       ),
-                      borderRadius: const BorderRadius.all(Radius.circular(35.0)),
+                      borderRadius: const BorderRadius.all(
+                          Radius.circular(35.0)),
                     ),
                     focusedBorder: new OutlineInputBorder(
                       borderSide: BorderSide(
                           color: kPrimaryColorBlue,
                           width: 0.5),
-                      borderRadius: const BorderRadius.all(Radius.circular(35.0)),
+                      borderRadius: const BorderRadius.all(
+                          Radius.circular(35.0)),
                     ),
                     prefixIcon: Icon(
                       CupertinoIcons.bubble_left,
@@ -229,13 +256,16 @@ class _CreateReceiptsState extends State<CreateReceipts> {
                     ),
                     labelText: "Amount For *",
                     labelStyle: TextStyle(
-                        fontFamily: "PoppinsLight", fontSize: 13.0, color: kPrimaryColorBlue),
+                        fontFamily: "PoppinsLight",
+                        fontSize: 13.0,
+                        color: kPrimaryColorBlue),
                   ),
                 ),
               ),
               Container(
                 width: size.width * 0.95,
-                padding: EdgeInsets.only(top: 0.0, bottom: 10.0, left: 0.0, right: 0.0),
+                padding: EdgeInsets.only(
+                    top: 0.0, bottom: 10.0, left: 0.0, right: 0.0),
                 child: TextField(
                   maxLength: 10,
                   controller: totalController,
@@ -257,13 +287,15 @@ class _CreateReceiptsState extends State<CreateReceipts> {
                           color: kPrimaryColorBlue,
                           width: 0.5
                       ),
-                      borderRadius: const BorderRadius.all(Radius.circular(35.0)),
+                      borderRadius: const BorderRadius.all(
+                          Radius.circular(35.0)),
                     ),
                     focusedBorder: new OutlineInputBorder(
                       borderSide: BorderSide(
                           color: kPrimaryColorBlue,
                           width: 0.5),
-                      borderRadius: const BorderRadius.all(Radius.circular(35.0)),
+                      borderRadius: const BorderRadius.all(
+                          Radius.circular(35.0)),
                     ),
                     prefixIcon: Icon(
                       CupertinoIcons.doc_append,
@@ -272,19 +304,23 @@ class _CreateReceiptsState extends State<CreateReceipts> {
                     ),
                     labelText: "Total *",
                     labelStyle: TextStyle(
-                        fontFamily: "PoppinsLight", fontSize: 13.0, color: kPrimaryColorBlue),
+                        fontFamily: "PoppinsLight",
+                        fontSize: 13.0,
+                        color: kPrimaryColorBlue),
                   ),
                 ),
               ),
 
               Container(
                 width: size.width * 0.95,
-                padding: EdgeInsets.only(top: 0.0, bottom: 10.0, left: 0.0, right: 0.0),
+                padding: EdgeInsets.only(
+                    top: 0.0, bottom: 10.0, left: 0.0, right: 0.0),
                 child: TextField(
                   controller: dateController,
-                  enableInteractiveSelection: false, // will disable paste operation
+                  enableInteractiveSelection: false,
+                  // will disable paste operation
                   focusNode: new AlwaysDisabledFocusNode(),
-                  onTap: (){
+                  onTap: () {
                     _selectDate(context);
                   },
                   style: TextStyle(
@@ -301,13 +337,15 @@ class _CreateReceiptsState extends State<CreateReceipts> {
                           color: kPrimaryColorBlue,
                           width: 0.5
                       ),
-                      borderRadius: const BorderRadius.all(Radius.circular(35.0)),
+                      borderRadius: const BorderRadius.all(
+                          Radius.circular(35.0)),
                     ),
                     focusedBorder: new OutlineInputBorder(
                       borderSide: BorderSide(
                           color: kPrimaryColorBlue,
                           width: 0.5),
-                      borderRadius: const BorderRadius.all(Radius.circular(35.0)),
+                      borderRadius: const BorderRadius.all(
+                          Radius.circular(35.0)),
                     ),
                     prefixIcon: Icon(
                       CupertinoIcons.calendar,
@@ -316,7 +354,9 @@ class _CreateReceiptsState extends State<CreateReceipts> {
                     ),
                     labelText: "Date *",
                     labelStyle: TextStyle(
-                        fontFamily: "PoppinsLight", fontSize: 13.0, color: kPrimaryColorBlue),
+                        fontFamily: "PoppinsLight",
+                        fontSize: 13.0,
+                        color: kPrimaryColorBlue),
                   ),
                 ),
               ),
@@ -357,8 +397,10 @@ class _CreateReceiptsState extends State<CreateReceipts> {
                       width: size.width * 0.45,
                       child: RadioListTile(
                         groupValue: radioItem1,
-                        title: Text('Cash',style: TextStyle(
-                            fontFamily: "PoppinsLight", fontSize: 15.0, color: kPrimaryColorBlue),),
+                        title: Text('Cash', style: TextStyle(
+                            fontFamily: "PoppinsLight",
+                            fontSize: 15.0,
+                            color: kPrimaryColorBlue),),
 
                         value: 'cash',
                         onChanged: (val) {
@@ -370,10 +412,12 @@ class _CreateReceiptsState extends State<CreateReceipts> {
                     ),
                     Container(
                       width: size.width * 0.45,
-                      child:RadioListTile(
+                      child: RadioListTile(
                         groupValue: radioItem1,
-                        title: Text('Cheque',style: TextStyle(
-                            fontFamily: "PoppinsLight", fontSize: 15.0, color: kPrimaryColorBlue),),
+                        title: Text('Cheque', style: TextStyle(
+                            fontFamily: "PoppinsLight",
+                            fontSize: 15.0,
+                            color: kPrimaryColorBlue),),
                         value: 'Cheque',
                         onChanged: (val) {
                           setState(() {
@@ -392,10 +436,12 @@ class _CreateReceiptsState extends State<CreateReceipts> {
                 padding: EdgeInsets.only(
                     top: 0.0, bottom: 10.0, left: 0.0, right: 0.0),
 
-                child:RadioListTile(
+                child: RadioListTile(
                   groupValue: radioItem1,
-                  title: Text('Other',style: TextStyle(
-                      fontFamily: "PoppinsLight", fontSize: 15.0, color: kPrimaryColorBlue),),
+                  title: Text('Other', style: TextStyle(
+                      fontFamily: "PoppinsLight",
+                      fontSize: 15.0,
+                      color: kPrimaryColorBlue),),
                   value: 'other',
                   onChanged: (val) {
                     setState(() {
@@ -404,120 +450,123 @@ class _CreateReceiptsState extends State<CreateReceipts> {
                   },
                 ),
               ),
-              // Container(
-              //   width: size.width * 0.95,
-              //   padding: EdgeInsets.only(
-              //       top: 0.0, bottom: 10.0, left: 0.0, right: 0.0),
-              //   child: InputDecorator(
-              //     decoration: InputDecoration(
-              //       prefixIcon: Icon(
-              //         CupertinoIcons.rectangle_dock,
-              //         color: kPrimaryColorBlue,
-              //       ),
-              //       labelText: "Receipt Template *",
-              //       labelStyle: TextStyle(
-              //           fontFamily: "PoppinsLight",
-              //           fontSize: 13.0,
-              //           color: kPrimaryColorBlue),
-              //       border: InputBorder.none,
-              //       counterStyle: TextStyle(
-              //         height: double.minPositive,
-              //       ),
-              //       counterText: "",
-              //       contentPadding:
-              //       const EdgeInsets.symmetric(vertical: .0, horizontal: 5),
-              //       enabledBorder: OutlineInputBorder(
-              //         borderSide: BorderSide(
-              //             color: kPrimaryColorBlue,
-              //             width: 0.5),
-              //         borderRadius: const BorderRadius.all(Radius.circular(35.0)),
-              //       ),
-              //       focusedBorder: new OutlineInputBorder(
-              //         borderSide: BorderSide(
-              //             color: kPrimaryColorBlue,
-              //             width: 0.5),
-              //         borderRadius: const BorderRadius.all(Radius.circular(35.0)),
-              //       ),
-              //     ),
-              //     child: DropdownButtonHideUnderline(
-              //       child: new DropdownButton<String>(
-              //         iconEnabledColor: Colors.black,
-              //         dropdownColor: Colors.white,
-              //         value: dropdownValue,
-              //         isExpanded: true,
-              //         style: TextStyle(
-              //             fontFamily: "PoppinsLight",
-              //             fontSize: 13.0,
-              //             color: kPrimaryColorBlue
-              //         ),
-              //         underline: Container(
-              //           height: 1,
-              //           width: 50,
-              //           color: Colors.black38,
-              //         ),
-              //         onChanged: (String newValue) {
-              //
-              //           var value = newValue.split(" ").last;
-              //           String temp;
-              //
-              //           if(value == "1")
-              //             temp = "http://157.230.228.250/media/receipt/receipt-1.png";
-              //           else if(value == "2")
-              //             temp = "http://157.230.228.250/media/receipt/receipt-2.png";
-              //           else if(value == "3")
-              //             temp = "http://157.230.228.250/media/receipt/receipt-3.png";
-              //           else if(value == "4")
-              //             temp = "http://157.230.228.250/media/receipt/receipt-4.png";
-              //           else if(value == "5")
-              //             temp = "http://157.230.228.250/media/receipt/receipt-5.png";
-              //           else temp = "";
-              //
-              //           setState(() {
-              //             dropdownValue = newValue;
-              //             template = temp;
-              //             templateID = value;
-              //           });
-              //         },
-              //         items: <String>[
-              //           'Select Receipt Template',
-              //           'Receipt Template 1',
-              //           'Receipt Template 2',
-              //           'Receipt Template 3',
-              //           'Receipt Template 4',
-              //           'Receipt Template 5',
-              //         ].map<DropdownMenuItem<String>>((String value) {
-              //           return DropdownMenuItem<String>(
-              //             value: value,
-              //             child: Text(
-              //               value,
-              //               style: TextStyle(
-              //                   fontSize: 17.0,
-              //                   color: Colors.black
-              //               ),
-              //             ),
-              //           );
-              //         }).toList(),
-              //       ),
-              //     ),
-              //   ),
-              // ),
-              // if(template.isNotEmpty)
-              //   Container(
-              //     height: 200.0,
-              //     padding: EdgeInsets.only(top: 0.0, bottom: 10.0, left: 0.0, right: 0.0),
-              //     child: Image.network(template),
-              //   ),
 
+              if(templateID == "")
+              Container(
+                width: size.width * 0.95,
+                padding: EdgeInsets.only(
+                    top: 0.0, bottom: 10.0, left: 0.0, right: 0.0),
+                child: InputDecorator(
+                  decoration: InputDecoration(
+                    prefixIcon: Icon(
+                      CupertinoIcons.rectangle_dock,
+                      color: kPrimaryColorBlue,
+                    ),
+                    labelText: "Receipt Template *",
+                    labelStyle: TextStyle(
+                        fontFamily: "PoppinsLight",
+                        fontSize: 13.0,
+                        color: kPrimaryColorBlue),
+                    border: InputBorder.none,
+                    counterStyle: TextStyle(
+                      height: double.minPositive,
+                    ),
+                    counterText: "",
+                    contentPadding:
+                    const EdgeInsets.symmetric(vertical: .0, horizontal: 5),
+                    enabledBorder: OutlineInputBorder(
+                      borderSide: BorderSide(
+                          color: kPrimaryColorBlue,
+                          width: 0.5),
+                      borderRadius: const BorderRadius.all(
+                          Radius.circular(35.0)),
+                    ),
+                    focusedBorder: new OutlineInputBorder(
+                      borderSide: BorderSide(
+                          color: kPrimaryColorBlue,
+                          width: 0.5),
+                      borderRadius: const BorderRadius.all(
+                          Radius.circular(35.0)),
+                    ),
+                  ),
+                  child: DropdownButtonHideUnderline(
+                    child: new DropdownButton<String>(
+                      iconEnabledColor: Colors.black,
+                      dropdownColor: Colors.white,
+                      value: dropdownValue,
+                      isExpanded: true,
+                      style: TextStyle(
+                          fontFamily: "PoppinsLight",
+                          fontSize: 13.0,
+                          color: kPrimaryColorBlue
+                      ),
+                      underline: Container(
+                        height: 1,
+                        width: 50,
+                        color: Colors.black38,
+                      ),
+                      onChanged: (String newValue) {
+                        var value = newValue
+                            .split(" ")
+                            .last;
+                        String temp;
+
+                        if (value == "1")
+                          temp =
+                          "http://157.230.228.250/media/receipt/receipt-template1.png";
+                        else if (value == "2")
+                          temp =
+                          "http://157.230.228.250/media/receipt/receipt-template2.png";
+                        else if (value == "3")
+                          temp =
+                          "http://157.230.228.250/media/receipt/receipt-template3.png";
+                        else
+                          temp = "";
+
+                        setState(() {
+                          dropdownValue = newValue;
+                          template = temp;
+                          templateID = value;
+                        });
+                      },
+                      items: <String>[
+                        'Select Receipt Template',
+                        'Receipt Template 1',
+                        'Receipt Template 2',
+                        'Receipt Template 3',
+                      ].map<DropdownMenuItem<String>>((String value) {
+                        return DropdownMenuItem<String>(
+                          value: value,
+                          child: Text(
+                            value,
+                            style: TextStyle(
+                                fontSize: 17.0,
+                                color: Colors.black
+                            ),
+                          ),
+                        );
+                      }).toList(),
+                    ),
+                  ),
+                ),
+              ),
+              if(template.isNotEmpty)
+                Container(
+                  height: 200.0,
+                  padding: EdgeInsets.only(
+                      top: 0.0, bottom: 10.0, left: 0.0, right: 0.0),
+                  child: Image.network(template),
+                ),
 
 
               Container(
                 width: size.width * 0.95,
-                padding: EdgeInsets.only(top: 0.0, bottom: 10.0, left: 0.0, right: 0.0),
+                padding: EdgeInsets.only(
+                    top: 0.0, bottom: 10.0, left: 0.0, right: 0.0),
                 child: TextField(
                   maxLength: 28,
                   controller: term1,
                   inputFormatters: <TextInputFormatter>[
-
                   ],
                   style: TextStyle(
                       fontFamily: "PoppinsLight",
@@ -533,13 +582,15 @@ class _CreateReceiptsState extends State<CreateReceipts> {
                           color: kPrimaryColorBlue,
                           width: 0.5
                       ),
-                      borderRadius: const BorderRadius.all(Radius.circular(35.0)),
+                      borderRadius: const BorderRadius.all(
+                          Radius.circular(35.0)),
                     ),
                     focusedBorder: new OutlineInputBorder(
                       borderSide: BorderSide(
                           color: kPrimaryColorBlue,
                           width: 0.5),
-                      borderRadius: const BorderRadius.all(Radius.circular(35.0)),
+                      borderRadius: const BorderRadius.all(
+                          Radius.circular(35.0)),
                     ),
                     prefixIcon: Icon(
                       CupertinoIcons.doc_richtext,
@@ -548,18 +599,20 @@ class _CreateReceiptsState extends State<CreateReceipts> {
                     ),
                     labelText: "Terms and Conditions 1",
                     labelStyle: TextStyle(
-                        fontFamily: "PoppinsLight", fontSize: 13.0, color: kPrimaryColorBlue),
+                        fontFamily: "PoppinsLight",
+                        fontSize: 13.0,
+                        color: kPrimaryColorBlue),
                   ),
                 ),
               ),
               Container(
                 width: size.width * 0.95,
-                padding: EdgeInsets.only(top: 0.0, bottom: 10.0, left: 0.0, right: 0.0),
+                padding: EdgeInsets.only(
+                    top: 0.0, bottom: 10.0, left: 0.0, right: 0.0),
                 child: TextField(
                   maxLength: 28,
                   controller: term2,
                   inputFormatters: <TextInputFormatter>[
-
                   ],
                   style: TextStyle(
                       fontFamily: "PoppinsLight",
@@ -575,13 +628,15 @@ class _CreateReceiptsState extends State<CreateReceipts> {
                           color: kPrimaryColorBlue,
                           width: 0.5
                       ),
-                      borderRadius: const BorderRadius.all(Radius.circular(35.0)),
+                      borderRadius: const BorderRadius.all(
+                          Radius.circular(35.0)),
                     ),
                     focusedBorder: new OutlineInputBorder(
                       borderSide: BorderSide(
                           color: kPrimaryColorBlue,
                           width: 0.5),
-                      borderRadius: const BorderRadius.all(Radius.circular(35.0)),
+                      borderRadius: const BorderRadius.all(
+                          Radius.circular(35.0)),
                     ),
                     prefixIcon: Icon(
                       CupertinoIcons.doc_richtext,
@@ -590,13 +645,16 @@ class _CreateReceiptsState extends State<CreateReceipts> {
                     ),
                     labelText: "Terms and Conditions 2",
                     labelStyle: TextStyle(
-                        fontFamily: "PoppinsLight", fontSize: 13.0, color: kPrimaryColorBlue),
+                        fontFamily: "PoppinsLight",
+                        fontSize: 13.0,
+                        color: kPrimaryColorBlue),
                   ),
                 ),
               ),
               Container(
                 width: size.width * 0.95,
-                padding: EdgeInsets.only(top: 0.0, bottom: 10.0, left: 0.0, right: 0.0),
+                padding: EdgeInsets.only(
+                    top: 0.0, bottom: 10.0, left: 0.0, right: 0.0),
                 child: TextField(
                   maxLength: 28,
                   controller: term3,
@@ -616,13 +674,15 @@ class _CreateReceiptsState extends State<CreateReceipts> {
                           color: kPrimaryColorBlue,
                           width: 0.5
                       ),
-                      borderRadius: const BorderRadius.all(Radius.circular(35.0)),
+                      borderRadius: const BorderRadius.all(
+                          Radius.circular(35.0)),
                     ),
                     focusedBorder: new OutlineInputBorder(
                       borderSide: BorderSide(
                           color: kPrimaryColorBlue,
                           width: 0.5),
-                      borderRadius: const BorderRadius.all(Radius.circular(35.0)),
+                      borderRadius: const BorderRadius.all(
+                          Radius.circular(35.0)),
                     ),
                     prefixIcon: Icon(
                       CupertinoIcons.doc_richtext,
@@ -631,7 +691,9 @@ class _CreateReceiptsState extends State<CreateReceipts> {
                     ),
                     labelText: "Terms and Conditions 3",
                     labelStyle: TextStyle(
-                        fontFamily: "PoppinsLight", fontSize: 13.0, color: kPrimaryColorBlue),
+                        fontFamily: "PoppinsLight",
+                        fontSize: 13.0,
+                        color: kPrimaryColorBlue),
                   ),
                 ),
               ),
@@ -682,32 +744,61 @@ class _CreateReceiptsState extends State<CreateReceipts> {
     ));
   }
 
+  Future<void> saveReceiptTemplate() async {
+    final param = {
+      "user_id": id,
+      "template_choice": templateID
+    };
+    final res = await http.post(
+        "http://157.230.228.250/merchant-receipt-save-template/",
+        body: param, headers: {HttpHeaders.authorizationHeader: "Token $token"}
+    );
+    print(res.statusCode);
+    CommonData data;
+    var responseJson = json.decode(res.body);
+    print(res.body);
+    data = new CommonData.fromJson(jsonDecode(res.body));
+    print(responseJson);
+    // Navigator.of(context, rootNavigator: true).pop();
+    if (res.statusCode == 200) {
+      if (data.status == "success") {
+        print("Send Successfullyyy");
+        showInSnackBar(data.message);
+        print(data.message);
+      } else {
+        print(data.status);
+        showInSnackBar(data.message);
+      }
+    } else {
+      print(data.status);
+      showInSnackBar(data.message);
+    }
+  }
+
   createTemplate() async {
-
-
-    if(mobController.text.length < 10){
+    if (mobController.text.length < 10) {
       showInSnackBar("Please enter Valid Mobile No.");
       return null;
     }
-    if(mobController.text.isEmpty){
+    if (mobController.text.isEmpty) {
       showInSnackBar("Please enter Mobile Number");
       return null;
     }
-    if(crfController.text.isEmpty){
+    if (crfController.text.isEmpty) {
       showInSnackBar("Please enter Cash Received From");
       return null;
     }
 
-    if(amtForController.text.isEmpty){
+    if (amtForController.text.isEmpty) {
       showInSnackBar("Please enter Amount For");
       return null;
     }
-    if(totalController.text.isEmpty){
+    if (totalController.text.isEmpty) {
       showInSnackBar("Please enter Total");
       return null;
     }
 
-    if(dateController.text.isEmpty){
+    if (dateController.text.isEmpty) {
       showInSnackBar("Please Select Date");
       return null;
     }
@@ -716,18 +807,17 @@ class _CreateReceiptsState extends State<CreateReceipts> {
     //   return null;
     // }
 
-    if(radioItem1.contains("cash")){
+    if (radioItem1.contains("cash")) {
       setState(() {
-        val1='cash';
+        val1 = 'cash';
       });
-    }else if(radioItem1.contains('Cheque')){
+    } else if (radioItem1.contains('Cheque')) {
       setState(() {
-        val2='Cheque';
+        val2 = 'Cheque';
       });
-
-    }else if(radioItem1.contains("other")){
+    } else if (radioItem1.contains("other")) {
       setState(() {
-        val3='Cheque';
+        val3 = 'Cheque';
       });
     }
 
@@ -735,7 +825,6 @@ class _CreateReceiptsState extends State<CreateReceipts> {
     print(val1);
     print(val2);
     print(val3);
-
 
 
     _showLoaderDialog(context);
@@ -747,12 +836,12 @@ class _CreateReceiptsState extends State<CreateReceipts> {
       "cash_received_from": crfController.text,
       "amount_for": amtForController.text,
       "date": dateController.text,
-      "cash":val1,
-      "cheque":val2,
-      "other":val3,
-      "term_and_condition1":term1.text,
-      "term_and_condition2":term2.text,
-      "term_and_condition3":term3.text,
+      "cash": val1,
+      "cheque": val2,
+      "other": val3,
+      "term_and_condition1": term1.text,
+      "term_and_condition2": term2.text,
+      "term_and_condition3": term3.text,
       "total": totalController.text,
     };
 
@@ -771,19 +860,42 @@ class _CreateReceiptsState extends State<CreateReceipts> {
     if (response.statusCode == 200) {
       print("Submit Successful");
       print(data.status);
-      if(data.status == "success"){
+      if (data.status == "success") {
         Navigator.of(context, rootNavigator: true).pop();
         Navigator.pop(context, true);
-      } else showInSnackBar(data.status);
+      } else
+        showInSnackBar(data.status);
     } else {
       Navigator.of(context, rootNavigator: true).pop();
       print(data.status);
       showInSnackBar(data.status);
       return null;
     }
-
   }
 
+  Future<List<Datum3>> checkTemplate() async {
+    final param = {
+      "user_id": id,
+    };
+
+    final response = await http.post(
+        "http://157.230.228.250/receipt-template-existornot/",
+        body: param, headers: {HttpHeaders.authorizationHeader: "Token $token"}
+    );
+    print(response.statusCode);
+
+    if (200 == response.statusCode) {
+      print(checkReceiptFromJson(response.body).data.length);
+      print(">>>>>>>>>>>>>${checkReceiptFromJson(response.body).data[0]
+          .templateNo}");
+      setState(() {
+        templateID = checkReceiptFromJson(response.body).data[0].templateNo;
+      });
+      return checkReceiptFromJson(response.body).data;
+    } else {
+      throw Exception('Failed to load List');
+    }
+  }
 }
 
 class AlwaysDisabledFocusNode extends FocusNode {

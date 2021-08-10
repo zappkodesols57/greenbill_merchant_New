@@ -39,6 +39,11 @@ class DatuJI {
     this.discountPercentage,
     this.discountAmount,
     this.createdDate,
+    this.gstAmt,
+    this.totalAmt,
+    this.cgst,
+    this.igst,
+    this.sgst,
     this.isActive,
   });
 
@@ -46,10 +51,15 @@ class DatuJI {
   String subscriptionName;
   String totalSms;
   String perSmsCost;
-  String totalSmsCost;
+  double totalSmsCost;
   String discountIn;
   String discountPercentage;
   String discountAmount;
+  String totalAmt;
+  String gstAmt;
+  int sgst;
+  int igst;
+  int cgst;
   DateTime createdDate;
   bool isActive;
 
@@ -62,6 +72,11 @@ class DatuJI {
     discountIn: json["discount_in"],
     discountPercentage: json["discount_percentage"],
     discountAmount: json["discount_amount"],
+    gstAmt: json["gst_amount"],
+    cgst: json["cgst_value"],
+    igst: json["igst_value"],
+    sgst: json["sgst_value"],
+    totalAmt: json["total_amount"],
     createdDate: DateTime.parse(json["created_date"]),
     isActive: json["is_active"],
   );
@@ -75,6 +90,11 @@ class DatuJI {
     "discount_in": discountIn,
     "discount_percentage": discountPercentage,
     "discount_amount": discountAmount,
+    "total_amount": totalAmt,
+    "gst_amount": gstAmt,
+    "sgst_value": sgst,
+    "cgst_value": cgst,
+    "igst_value": igst,
     "created_date": createdDate.toIso8601String(),
     "is_active": isActive,
   };

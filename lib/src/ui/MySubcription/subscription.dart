@@ -399,7 +399,7 @@ class MySubState extends State<MySub> {
                                                   top: 0.0, bottom: 5.0, left: 5.0, right: 5.0),
                                               width: size.width * 0.4,
                                               child: Text(
-                                                "₹ "+snapshot.data[index].perDigitalBillCost.toString()+".00",
+                                                "₹ "+snapshot.data[index].perDigitalBillCost.toString(),
                                                 textAlign: TextAlign.center,
                                                 style: TextStyle(
                                                     color: Colors.white,
@@ -1338,7 +1338,7 @@ class MySubState extends State<MySub> {
                         fontFamily: "PoppinsBold"),
                   ),
                   Text(
-                    "₹"+data.totalSmsCost,
+                    "₹"+data.totalSmsCost.toString(),
                     style: TextStyle(
                         color: Colors.black,
                         fontSize: 12.0,

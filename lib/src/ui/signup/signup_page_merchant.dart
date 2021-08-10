@@ -10,6 +10,7 @@ import 'package:greenbill_merchant/src/Services/postalApi_services.dart';
 import 'package:greenbill_merchant/src/models/model_Common.dart';
 import 'package:greenbill_merchant/src/models/model_generateOTP.dart';
 import 'package:greenbill_merchant/src/models/postApi_model.dart';
+import 'package:greenbill_merchant/src/ui/drawer/Settings/webView.dart';
 import 'package:greenbill_merchant/src/ui/signup/validateRegister.dart';
 import 'package:greenbill_merchant/src/ui/widgets/background.dart';
 import 'package:sms_autofill/sms_autofill.dart';
@@ -646,9 +647,9 @@ class SignUp_MerchantState extends State<SignUp_Merchant> {
                 padding: EdgeInsets.only(
                     top: 0.0, bottom: 10.0, left: 0.0, right: 0.0),
                 child: TextField(
-                  maxLength: 7,
                   controller: signupReferralCodeController,
                   keyboardType: TextInputType.text,
+                  inputFormatters: [LengthLimitingTextInputFormatter(7)],
                   style: TextStyle(
                       fontFamily: "PoppinsLight",
                       fontSize: 13.0,
@@ -826,6 +827,11 @@ class SignUp_MerchantState extends State<SignUp_Merchant> {
                                 recognizer: TapGestureRecognizer()
                                   ..onTap = () {
                                     // open desired screen
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) => WebViewScreen("Terms of service", "https://www.greenbill.in/terms-conditions/")),
+                                    );
                                   }),
                             TextSpan(
                                 text: ' and ',
@@ -843,6 +849,11 @@ class SignUp_MerchantState extends State<SignUp_Merchant> {
                                 recognizer: TapGestureRecognizer()
                                   ..onTap = () {
                                     // open desired screen
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) => WebViewScreen("Privacy Policy", "https://www.greenbill.in/privacy-policy-2/")),
+                                    );
                                   }),
                           ]),
                     ))),

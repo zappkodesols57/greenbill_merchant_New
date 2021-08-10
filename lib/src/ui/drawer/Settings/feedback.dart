@@ -91,7 +91,7 @@ class _Feedback1State extends State<Feedback1> {
                   },
                   child: Container(
                     height: 50,
-                    width: size.width * 0.35,
+                    width: size.width * 0.40,
                     decoration: BoxDecoration(
                         border: Border.all(color: kPrimaryColorBlue),
                         color: suggestionContainerColor,
@@ -101,7 +101,7 @@ class _Feedback1State extends State<Feedback1> {
                         'Suggestions',
                         style: TextStyle(
                           color: suggestionTextColor,
-                          fontSize: 18,
+                          fontSize: 17,
                           fontFamily: "PoppinsBold",
                           fontWeight: FontWeight.normal,
                         ),
@@ -121,7 +121,7 @@ class _Feedback1State extends State<Feedback1> {
                   },
                   child: Container(
                     height: 50,
-                    width: size.width * 0.35,
+                    width: size.width * 0.40,
                     decoration: BoxDecoration(
                         border: Border.all(color: kPrimaryColorBlue),
                         color: bugsContainerColor,
@@ -131,7 +131,7 @@ class _Feedback1State extends State<Feedback1> {
                         'Bugs',
                         style: TextStyle(
                           color: bugsTextColor,
-                          fontSize: 18,
+                          fontSize: 17,
                           fontFamily: "PoppinsBold",
                           fontWeight: FontWeight.normal,
                         ),

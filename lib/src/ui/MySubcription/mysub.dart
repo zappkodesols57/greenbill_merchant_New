@@ -4,6 +4,7 @@ import 'package:dio/dio.dart';
 import 'package:greenbill_merchant/src/models/model_addOn.dart';
 import 'package:greenbill_merchant/src/models/model_transactional.dart';
 import 'package:greenbill_merchant/src/ui/HomeScreen/widgets/data_viz/circle/neuomorphic_circle.dart';
+import 'package:greenbill_merchant/src/ui/values/values.dart';
 import 'package:uuid/uuid.dart';
 import 'dart:io';
 import 'package:flutter/services.dart';
@@ -22,6 +23,7 @@ import 'package:greenbill_merchant/src/models/model_getsubplan.dart';
 import 'package:greenbill_merchant/src/ui/drawer/Settings/webView.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:webview_flutter/webview_flutter.dart';
 
 import 'newSubFile.dart';
 class Recharge extends StatefulWidget {
@@ -30,7 +32,7 @@ class Recharge extends StatefulWidget {
 }
 class RechargeState extends State<Recharge> {
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
-  String token, busId,mobile,number,emailAddress,nameOfBuss,userId;
+  String token, busId,mobile,number,emailAddress,nameOfBuss,userId,storeCatID;
   final ScrollController _controller = ScrollController();
   TextEditingController query = new TextEditingController();
   String _chosenValue="Green Bill Subscription Plan";
@@ -72,14 +74,20 @@ class RechargeState extends State<Recharge> {
       userId=prefs.getInt("userID").toString();
       emailAddress=prefs.getString("email");
       busId =prefs.getString("businessID");
+      storeCatID = prefs.getString("businessCategoryID");
     });
     print('$token\n$busId');
   }
 
   Future<List<Datu>> getSms() async {
+    final param = {
+      "user_id":userId,
+      "business_id":busId,
+    };
+    print(">>>>>>>>>$busId");
 
     final res = await http.post("http://157.230.228.250/merchant-get-promotional-sms-subscription-api/",
-        headers: {HttpHeaders.authorizationHeader: "Token $token"});
+       body: param, headers: {HttpHeaders.authorizationHeader: "Token $token"});
 
     print(res.body);
     print(res.statusCode);
@@ -91,10 +99,16 @@ class RechargeState extends State<Recharge> {
       throw Exception('Failed to load List');
     }
   }
-  Future<List<DatuJI>> getTrans() async {
 
+  Future<List<DatuJI>> getTrans() async {
+    final param = {
+      "user_id":userId,
+      "business_id":busId,
+    };
+
+    print("$userId >>>> $busId");
     final res = await http.post("http://157.230.228.250/merchant-get-transactional-sms-subscription-api/",
-        headers: {HttpHeaders.authorizationHeader: "Token $token"});
+       body: param, headers: {HttpHeaders.authorizationHeader: "Token $token"});
 
     print(res.body);
     print(res.statusCode);
@@ -108,9 +122,13 @@ class RechargeState extends State<Recharge> {
   }
 
   Future<List<Datumii>> getAddOn() async {
+    final param = {
+      "user_id":userId,
+      "business_id":busId,
+    };
 
     final res = await http.post("http://157.230.228.250/merchant-get-addon-recharge-api/",
-        headers: {HttpHeaders.authorizationHeader: "Token $token"});
+       body: param, headers: {HttpHeaders.authorizationHeader: "Token $token"});
 
     print(res.body);
     print(res.statusCode);
@@ -134,9 +152,6 @@ class RechargeState extends State<Recharge> {
     var digest = sha512.convert(bytes);
     print("$digest\n$txId");
 
-
-
-
     final paramss={
       'key':key,
       'txnid':txId,
@@ -153,16 +168,15 @@ class RechargeState extends State<Recharge> {
       'hash':digest.toString(),
       'SALT':salt
     };
+
+    print("Parameters....$paramss");
+
     final responses=await http.post("https://secure.payu.in/_payment",headers: {
       "accept":"application/json",
       "Content-Type":"application/x-www-form-urlencoded",
     },body: paramss);
 
     launch(responses.headers.values.elementAt(10));
-
-
-
-
   }
 
   Future<Map<String, dynamic>> postRequest(String key, String txId,String amount, String nameOfBuss,String emailAddress, String number,String name, String surl,String furl, String hash) async {
@@ -227,8 +241,12 @@ class RechargeState extends State<Recharge> {
   }
   Future<List<Datum>> getLists() async {
     final param = {
-      "m_business_id":busId,
+      "user_id":userId,
+      "business_category_id":(storeCatID == "11")? storeCatID : storeCatID =="12"? storeCatID : "",
     };
+
+    print(">>>>>>>>>>>>>$storeCatID");
+
     final res = await http.post("http://157.230.228.250/merchant-get-subscription-plans-api/",
         body: param, headers: {HttpHeaders.authorizationHeader: "Token $token"});
 
@@ -297,10 +315,8 @@ class RechargeState extends State<Recharge> {
 
                     });
                   } ,
-
                 ),
                 InkWell(
-
                   child:Container(
                     decoration: BoxDecoration(
                         color: _onTapBox2?kPrimaryColorBlue:_colorMerchantContainer,
@@ -533,7 +549,7 @@ class RechargeState extends State<Recharge> {
                                                     top: 0.0, bottom: 5.0, left: 5.0, right: 5.0),
                                                 width: size.width * 0.4,
                                                 child: Text(
-                                                  "₹ "+snapshot.data[index].subscriptionPlanCost+".00",
+                                                  "₹ "+snapshot.data[index].subscriptionPlanCost.toString(),
                                                   textAlign: TextAlign.center,
                                                   style: TextStyle(
                                                       color: kPrimaryColorBlue,
@@ -580,10 +596,13 @@ class RechargeState extends State<Recharge> {
                                                     ),
                                                   ),
                                                   onPressed: () {
-                                                    _launchPayURL(snapshot.data[index].subscriptionPlanCost, snapshot.data[index].id.toString(),"Green Bill Subscription");
-
+                                                    print(">>>>>>>>>${_launchPayURL}");
+                                                    // WebView(
+                                                    //   javascriptMode: JavascriptMode.unrestricted,
+                                                    //   initialUrl:"http://157.230.228.250/my-bill-merchant/58cSUH117fs/" ,
+                                                    // );
+                                                    _launchPayURL(snapshot.data[index].totalAmt, snapshot.data[index].id.toString(),"Green Bill Subscription");
                                                   }),
-
                                             ],
                                           ),
                                         ),
@@ -752,7 +771,7 @@ class RechargeState extends State<Recharge> {
                                                   top: 0.0, bottom: 5.0, left: 5.0, right: 5.0),
                                               width: size.width * 0.4,
                                               child: Text(
-                                                "₹ "+snapshot.data[index].perSmsCost+".00",
+                                                "₹ "+snapshot.data[index].perSmsCost,
                                                 textAlign: TextAlign.center,
                                                 style: TextStyle(
                                                     color: kPrimaryColorBlue,
@@ -792,7 +811,7 @@ class RechargeState extends State<Recharge> {
                                                   top: 0.0, bottom: 5.0, left: 5.0, right: 5.0),
                                               width: size.width * 0.4,
                                               child: Text(
-                                                "₹ "+snapshot.data[index].totalSmsCost+".00",
+                                                "₹ "+snapshot.data[index].totalSmsCost.toString(),
                                                 textAlign: TextAlign.center,
                                                 style: TextStyle(
                                                     color: kPrimaryColorBlue,
@@ -839,7 +858,7 @@ class RechargeState extends State<Recharge> {
                                                   ),
                                                 ),
                                                 onPressed: () {
-                                                  _launchPayURL(snapshot.data[index].totalSmsCost, snapshot.data[index].id.toString(),"Promotional Sms Subscription");
+                                                  _launchPayURL(snapshot.data[index].totalAmt, snapshot.data[index].id.toString(),"Promotional Sms Subscription");
 
                                                 }),
 
@@ -1011,7 +1030,7 @@ class RechargeState extends State<Recharge> {
                                                   top: 0.0, bottom: 5.0, left: 5.0, right: 5.0),
                                               width: size.width * 0.4,
                                               child: Text(
-                                                "₹ "+snapshot.data[index].perSmsCost+".00",
+                                                "₹ "+snapshot.data[index].perSmsCost,
                                                 textAlign: TextAlign.center,
                                                 style: TextStyle(
                                                     color: kPrimaryColorBlue,
@@ -1051,7 +1070,7 @@ class RechargeState extends State<Recharge> {
                                                   top: 0.0, bottom: 5.0, left: 5.0, right: 5.0),
                                               width: size.width * 0.4,
                                               child: Text(
-                                                "₹ "+snapshot.data[index].totalSmsCost+".00",
+                                                "₹ "+snapshot.data[index].totalSmsCost.toString(),
                                                 textAlign: TextAlign.center,
                                                 style: TextStyle(
                                                     color: kPrimaryColorBlue,
@@ -1124,7 +1143,7 @@ class RechargeState extends State<Recharge> {
                                                   ),
                                                 ),
                                                 onPressed: () {
-                                                  _launchPayURL(snapshot.data[index].totalSmsCost, snapshot.data[index].id.toString(),"Transactional Sms Subscription");
+                                                  _launchPayURL(snapshot.data[index].totalAmt, snapshot.data[index].id.toString(),"Transactional Sms Subscription");
 
                                                 }),
 
@@ -1260,7 +1279,46 @@ class RechargeState extends State<Recharge> {
                                                     top: 0.0, bottom: 5.0, left: 5.0, right: 5.0),
                                                 width: size.width * 0.4,
                                                 child: Text(
-                                                  "₹ "+snapshot.data[index].rechargeAmount+".00",
+                                                  "₹ "+snapshot.data[index].totalAmt.toString(),
+                                                  textAlign: TextAlign.center,
+                                                  style: TextStyle(
+                                                      color: kPrimaryColorBlue,
+                                                      fontSize: 12.0,
+                                                      fontFamily: "PoppinsBold"),
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                        Container(
+                                          width: size.width * 0.9,
+                                          padding: EdgeInsets.only(
+                                              top: 0.0, bottom: 5.0, left: 5.0, right: 5.0),
+                                          child: Row(
+                                            crossAxisAlignment: CrossAxisAlignment.center,
+                                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                            children: <Widget>[
+
+                                              Container(
+                                                padding: EdgeInsets.only(
+                                                    top: 0.0, bottom: 5.0, left: 5.0, right: 5.0),
+                                                width: size.width * 0.4,
+                                                child: Text(
+                                                  "Amount",
+
+                                                  style: TextStyle(
+                                                      color: Colors.black,
+                                                      fontSize: 12.0,
+                                                      fontFamily: "PoppinsBold"),
+                                                ),
+                                              ),
+
+                                              Container(
+                                                padding: EdgeInsets.only(
+                                                    top: 0.0, bottom: 5.0, left: 5.0, right: 5.0),
+                                                width: size.width * 0.4,
+                                                child: Text(
+                                                  "₹ "+snapshot.data[index].rechargeAmount.toString(),
                                                   textAlign: TextAlign.center,
                                                   style: TextStyle(
                                                       color: kPrimaryColorBlue,
@@ -1307,7 +1365,7 @@ class RechargeState extends State<Recharge> {
                                                     ),
                                                   ),
                                                   onPressed: () {
-                                                    _launchPayURL(snapshot.data[index].rechargeAmount, snapshot.data[index].id.toString(),"Add's On Subscription");
+                                                    _launchPayURL(snapshot.data[index].totalAmt, snapshot.data[index].id.toString(),"Add's On Subscription");
 
                                                   }),
 
@@ -1367,8 +1425,7 @@ class RechargeState extends State<Recharge> {
                         crossAxisAlignment: CrossAxisAlignment.center,
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: <Widget>[
-                          Text(
-                            "₹ "+data.subscriptionPlanCost+".00",
+                          Text(data.totalAmt,
                             textAlign: TextAlign.center,
                             style: TextStyle(
                                 color: Colors.white,
@@ -1384,58 +1441,54 @@ class RechargeState extends State<Recharge> {
                                 fontFamily: "PoppinsBold"),
                           ),
                         ],
-
-
                       ),
-
                     ),
-
-                  ],),
-
+                  ],
+                ),
               ),
               color: kPrimaryColorBlue,
             ),
           ),
 
 
-          Container(
+          // Container(
             //width: MediaQuery.of(context).size.width,
-            padding: EdgeInsets.only(
-                top: 10.0, bottom: 5.0, left: 5.0, right: 5.0),
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: <Widget>[
+            // padding: EdgeInsets.only(
+            //     top: 10.0, bottom: 5.0, left: 5.0, right: 5.0),
+            // child: Column(
+            //   mainAxisAlignment: MainAxisAlignment.center,
+            //   children: <Widget>[
 
-                Container(
-                  padding: EdgeInsets.only(
-                      top: 0.0, bottom: 5.0, left: 5.0, right: 5.0),
-                  //width:MediaQuery.of(context).size.width* 0.5,
-                  child: Text(
-                    "Subscription Name",
-                    style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 12.0,
-                        fontFamily: "PoppinsBold"),
+                // Container(
+                //   padding: EdgeInsets.only(
+                //       top: 0.0, bottom: 5.0, left: 5.0, right: 5.0),
+                //   //width:MediaQuery.of(context).size.width* 0.5,
+                //   child: Text(
+                //     "Subscription Name",
+                //     style: TextStyle(
+                //         color: Colors.black,
+                //         fontSize: 12.0,
+                //         fontFamily: "PoppinsBold"),
+                //   ),
+                // ),
+
+                Center(
+                  child: Container(
+                    padding: EdgeInsets.only(
+                        top: 10.0, bottom: 10.0, left: 5.0, right: 5.0),
+                    // width:MediaQuery.of(context).size.width* 0.5,
+                    child: Text(
+                      data.subscriptionName,
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                          color: AppColors.kPrimaryColorBlue,
+                          fontSize: 16.0,
+                          fontFamily: "PoppinsBold"),
+                    ),
                   ),
                 ),
 
-                Container(
-                  padding: EdgeInsets.only(
-                      top: 0.0, bottom: 5.0, left: 5.0, right: 5.0),
-                  // width:MediaQuery.of(context).size.width* 0.5,
-                  child: Text(
-                    data.subscriptionName,
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                        color: kPrimaryColorBlue,
-                        fontSize: 12.0,
-                        fontFamily: "PoppinsBold"),
-                  ),
-                ),
-              ],
-            ),
-          ),
+
 
           // Container(
           //width: MediaQuery.of(context).size.width,
@@ -1546,8 +1599,7 @@ class RechargeState extends State<Recharge> {
                       top: 0.0, bottom: 5.0, left: 5.0, right: 5.0),
                   // width:MediaQuery.of(context).size.width* 0.5,
                   child: Text(
-                    data.perDigitalBillCost.toString().contains(".")?
-                    "₹ "+data.perDigitalBillCost : "₹ "+data.perDigitalBillCost +".00",
+                    data.perDigitalBillCost.toString(),
                     textAlign: TextAlign.end,
                     style: TextStyle(
                         color: kPrimaryColorBlue,
@@ -1577,7 +1629,6 @@ class RechargeState extends State<Recharge> {
                   //width:MediaQuery.of(context).size.width* 0.5,
                   child: Text(
                     "Number Of Users",
-
                     style: TextStyle(
                         color: Colors.red,
                         fontSize: 12.0),
@@ -1634,6 +1685,92 @@ class RechargeState extends State<Recharge> {
               ],
             ),
           ),
+          Container(
+            //width: MediaQuery.of(context).size.width,
+            padding: EdgeInsets.only(
+                top: 0.0, bottom: 5.0, left: 5.0, right: 5.0),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: <Widget>[
+
+                Container(
+                  padding: EdgeInsets.only(
+                      top: 0.0, bottom: 5.0, left: 5.0, right: 5.0),
+                  //width:MediaQuery.of(context).size.width* 0.5,
+                  child: Text(
+                    "CGST",
+
+                    style: TextStyle(
+                        color: Colors.red,
+                        fontSize: 12.0),
+                  ),
+                ),
+
+                Container(
+                  padding: EdgeInsets.only(
+                      top: 0.0, bottom: 5.0, left: 5.0, right: 5.0),
+                  // width:MediaQuery.of(context).size.width* 0.5,
+                  child: Text(data.igst == 1 ? "9%" : "0",
+                    textAlign: TextAlign.end,
+                    style: TextStyle(
+                        color: Colors.red,
+                        fontSize: 12.0),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          Container(
+            //width: MediaQuery.of(context).size.width,
+            padding: EdgeInsets.only(
+                top: 0.0, bottom: 5.0, left: 5.0, right: 5.0),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: <Widget>[
+
+                Container(
+                  padding: EdgeInsets.only(
+                      top: 0.0, bottom: 5.0, left: 5.0, right: 5.0),
+                  //width:MediaQuery.of(context).size.width* 0.5,
+                  child: Text(
+                    "SGST",
+
+                    style: TextStyle(
+                        color: Colors.red,
+                        fontSize: 12.0),
+                  ),
+                ),
+
+                Container(
+                  padding: EdgeInsets.only(
+                      top: 0.0, bottom: 5.0, left: 5.0, right: 5.0),
+                  // width:MediaQuery.of(context).size.width* 0.5,
+                  child: Text(data.igst == 1 ? "9%" : "0",
+                    textAlign: TextAlign.end,
+                    style: TextStyle(
+                        color: Colors.red,
+                        fontSize: 12.0),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          Center(
+            child: Container(
+              padding: EdgeInsets.only(
+                  top: 0.0, bottom: 5.0, left: 5.0, right: 5.0),
+              // width:MediaQuery.of(context).size.width* 0.5,
+              child: Text(data.igst == 1? "Include IGST : 0" :
+              "Include IGST : "+data.igst.toString()+"%",
+                textAlign: TextAlign.end,
+                style: TextStyle(
+                    color: Colors.red,
+                    fontSize: 13.0),
+              ),
+            ),
+          )
         ],
       ),
       actions: <Widget>[
@@ -1647,8 +1784,6 @@ class RechargeState extends State<Recharge> {
       ],
     );
   }
-
-
 
 
   Widget _buildPopupDialogAddOn(BuildContext context, Datumii data) {
@@ -1682,7 +1817,7 @@ class RechargeState extends State<Recharge> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: <Widget>[
                           Text(
-                            "₹ "+data.rechargeAmount+".00",
+                            "₹ "+data.totalAmt.toString(),
                             textAlign: TextAlign.center,
                             style: TextStyle(
                                 color: Colors.white,
@@ -1772,7 +1907,7 @@ class RechargeState extends State<Recharge> {
                       top: 0.0, bottom: 5.0, left: 5.0, right: 5.0),
                   // width:MediaQuery.of(context).size.width* 0.5,
                   child: Text(
-                    "₹ "+data.rechargeAmount+".00",
+                    "₹ "+data.totalAmt.toString(),
                     textAlign: TextAlign.end,
                     style: TextStyle(
                         color: kPrimaryColorBlue,
@@ -1867,11 +2002,96 @@ class RechargeState extends State<Recharge> {
             ),
           ),
 
-
-
           SizedBox(
-            height: MediaQuery.of(context).size.width * 0.01,
+            height: 10.0,
           ),
+          Container(
+            //width: MediaQuery.of(context).size.width,
+            padding: EdgeInsets.only(
+                top: 0.0, bottom: 5.0, left: 5.0, right: 5.0),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: <Widget>[
+
+                Container(
+                  padding: EdgeInsets.only(
+                      top: 0.0, bottom: 5.0, left: 5.0, right: 5.0),
+                  //width:MediaQuery.of(context).size.width* 0.5,
+                  child: Text(
+                    "CGST",
+
+                    style: TextStyle(
+                        color: Colors.red,
+                        fontSize: 12.0),
+                  ),
+                ),
+
+                Container(
+                  padding: EdgeInsets.only(
+                      top: 0.0, bottom: 5.0, left: 5.0, right: 5.0),
+                  // width:MediaQuery.of(context).size.width* 0.5,
+                  child: Text(data.igst == 1 ? "9%" : "0",
+                    textAlign: TextAlign.end,
+                    style: TextStyle(
+                        color: Colors.red,
+                        fontSize: 12.0),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          Container(
+            //width: MediaQuery.of(context).size.width,
+            padding: EdgeInsets.only(
+                top: 0.0, bottom: 5.0, left: 5.0, right: 5.0),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: <Widget>[
+
+                Container(
+                  padding: EdgeInsets.only(
+                      top: 0.0, bottom: 5.0, left: 5.0, right: 5.0),
+                  //width:MediaQuery.of(context).size.width* 0.5,
+                  child: Text(
+                    "SGST",
+
+                    style: TextStyle(
+                        color: Colors.red,
+                        fontSize: 12.0),
+                  ),
+                ),
+
+                Container(
+                  padding: EdgeInsets.only(
+                      top: 0.0, bottom: 5.0, left: 5.0, right: 5.0),
+                  // width:MediaQuery.of(context).size.width* 0.5,
+                  child: Text(data.igst == 1 ? "9%" : "0",
+                    textAlign: TextAlign.end,
+                    style: TextStyle(
+                        color: Colors.red,
+                        fontSize: 12.0),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          Center(
+            child: Container(
+              padding: EdgeInsets.only(
+                  top: 0.0, bottom: 5.0, left: 5.0, right: 5.0),
+              // width:MediaQuery.of(context).size.width* 0.5,
+              child: Text(data.igst == 1? "Include IGST : 0" :
+              "Include IGST : "+data.igst.toString()+"%",
+                textAlign: TextAlign.end,
+                style: TextStyle(
+                    color: Colors.red,
+                    fontSize: 13.0),
+              ),
+            ),
+          )
+
 
         ],
       ),
@@ -1921,7 +2141,7 @@ class RechargeState extends State<Recharge> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: <Widget>[
                           Text(
-                            "₹ "+data.totalSmsCost+".00",
+                            "₹ "+data.totalAmt.toString(),
                             textAlign: TextAlign.center,
                             style: TextStyle(
                                 color: Colors.white,
@@ -1938,48 +2158,25 @@ class RechargeState extends State<Recharge> {
 
                   ],),
 
+
               ),
               color: kPrimaryColorBlue,
             ),
           ),
 
-          Container(
-            //width: MediaQuery.of(context).size.width,
-            padding: EdgeInsets.only(
-                top: 10.0, bottom: 5.0, left: 5.0, right: 5.0),
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: <Widget>[
-
-                Container(
-                  padding: EdgeInsets.only(
-                      top: 0.0, bottom: 5.0, left: 5.0, right: 5.0),
-                  //width:MediaQuery.of(context).size.width* 0.5,
-                  child: Text(
-                    "Subscription Name",
-
-                    style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 12.0,
-                        fontFamily: "PoppinsBold"),
-                  ),
-                ),
-
-                Container(
-                  padding: EdgeInsets.only(
-                      top: 0.0, bottom: 5.0, left: 5.0, right: 5.0),
-                  // width:MediaQuery.of(context).size.width* 0.5,
-                  child: Text(
-                    data.subscriptionName,
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                        color: kPrimaryColorBlue,
-                        fontSize: 12.0,
-                        fontFamily: "PoppinsBold"),
-                  ),
-                ),
-              ],
+          Center(
+            child: Container(
+              padding: EdgeInsets.only(
+                  top: 10.0, bottom: 10.0, left: 5.0, right: 5.0),
+              // width:MediaQuery.of(context).size.width* 0.5,
+              child: Text(
+                data.subscriptionName,
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                    color: kPrimaryColorBlue,
+                    fontSize: 16.0,
+                    fontFamily: "PoppinsBold"),
+              ),
             ),
           ),
 
@@ -2011,7 +2208,7 @@ class RechargeState extends State<Recharge> {
                       top: 0.0, bottom: 5.0, left: 5.0, right: 5.0),
                   // width:MediaQuery.of(context).size.width* 0.5,
                   child: Text(
-                    "₹"+data.totalSmsCost+".00",
+                    "₹"+data.totalAmt.toString(),
                     textAlign: TextAlign.center,
                     style: TextStyle(
                         color: kPrimaryColorBlue,
@@ -2089,7 +2286,7 @@ class RechargeState extends State<Recharge> {
                       top: 0.0, bottom: 5.0, left: 5.0, right: 5.0),
                   // width:MediaQuery.of(context).size.width* 0.5,
                   child: Text(
-                    "₹"+data.perSmsCost+".00",
+                    "₹"+data.perSmsCost,
                     textAlign: TextAlign.center,
                     style: TextStyle(
                         color: kPrimaryColorBlue,
@@ -2101,10 +2298,100 @@ class RechargeState extends State<Recharge> {
             ),
           ),
 
+          SizedBox(
+            height: 10.0,
+          ),
 
+          Container(
+            //width: MediaQuery.of(context).size.width,
+            padding: EdgeInsets.only(
+                top: 0.0, bottom: 5.0, left: 5.0, right: 5.0),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: <Widget>[
 
-        ],
-      ),
+                Container(
+                  padding: EdgeInsets.only(
+                      top: 0.0, bottom: 5.0, left: 5.0, right: 5.0),
+                  //width:MediaQuery.of(context).size.width* 0.5,
+                  child: Text(
+                    "CGST",
+
+                    style: TextStyle(
+                        color: Colors.red,
+                        fontSize: 12.0),
+                  ),
+                ),
+
+                Container(
+                  padding: EdgeInsets.only(
+                      top: 0.0, bottom: 5.0, left: 5.0, right: 5.0),
+                  // width:MediaQuery.of(context).size.width* 0.5,
+                  child: Text(data.igst == 1 ? "9%" : "0",
+                    textAlign: TextAlign.end,
+                    style: TextStyle(
+                        color: Colors.red,
+                        fontSize: 12.0),
+                  ),
+                ),
+              ],
+            ),
+          ),
+
+          Container(
+            //width: MediaQuery.of(context).size.width,
+            padding: EdgeInsets.only(
+                top: 0.0, bottom: 5.0, left: 5.0, right: 5.0),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: <Widget>[
+
+                      Container(
+                        padding: EdgeInsets.only(
+                            top: 0.0, bottom: 5.0, left: 5.0, right: 5.0),
+                        //width:MediaQuery.of(context).size.width* 0.5,
+                        child: Text(
+                          "SGST",
+
+                          style: TextStyle(
+                              color: Colors.red,
+                              fontSize: 12.0),
+                        ),
+                      ),
+
+                      Container(
+                        padding: EdgeInsets.only(
+                            top: 0.0, bottom: 5.0, left: 5.0, right: 5.0),
+                        // width:MediaQuery.of(context).size.width* 0.5,
+                        child: Text(data.igst == 1 ? "9%" : "0",
+                          textAlign: TextAlign.end,
+                          style: TextStyle(
+                              color: Colors.red,
+                              fontSize: 12.0),
+                        ),
+                      ),
+              ],
+            ),
+                ),
+                Center(
+                  child: Container(
+                    padding: EdgeInsets.only(
+                        top: 0.0, bottom: 5.0, left: 5.0, right: 5.0),
+                    // width:MediaQuery.of(context).size.width* 0.5,
+                    child: Text(data.igst == 1? "Include IGST : 0" :
+                    "Include IGST : "+data.igst.toString()+"%",
+                      textAlign: TextAlign.end,
+                      style: TextStyle(
+                          color: Colors.red,
+                          fontSize: 13.0),
+                    ),
+                  ),
+                )
+              ],
+            ),
+
       actions: <Widget>[
         new FlatButton(
           onPressed: () {
@@ -2150,7 +2437,7 @@ class RechargeState extends State<Recharge> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: <Widget>[
                           Text(
-                            "₹ "+data.totalSmsCost+".00",
+                            "₹ "+data.totalAmt.toString(),
                             textAlign: TextAlign.center,
                             style: TextStyle(
                                 color: Colors.white,
@@ -2172,43 +2459,19 @@ class RechargeState extends State<Recharge> {
             ),
           ),
 
-          Container(
-            //width: MediaQuery.of(context).size.width,
-            padding: EdgeInsets.only(
-                top: 10.0, bottom: 5.0, left: 5.0, right: 5.0),
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: <Widget>[
-
-                Container(
-                  padding: EdgeInsets.only(
-                      top: 0.0, bottom: 5.0, left: 5.0, right: 5.0),
-                  //width:MediaQuery.of(context).size.width* 0.5,
-                  child: Text(
-                    "Subscription Name",
-
-                    style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 12.0,
-                        fontFamily: "PoppinsBold"),
-                  ),
-                ),
-
-                Container(
-                  padding: EdgeInsets.only(
-                      top: 0.0, bottom: 5.0, left: 5.0, right: 5.0),
-                  // width:MediaQuery.of(context).size.width* 0.5,
-                  child: Text(
-                    data.subscriptionName,
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                        color: kPrimaryColorBlue,
-                        fontSize: 12.0,
-                        fontFamily: "PoppinsBold"),
-                  ),
-                ),
-              ],
+          Center(
+            child: Container(
+              padding: EdgeInsets.only(
+                  top: 10.0, bottom: 10.0, left: 5.0, right: 5.0),
+              // width:MediaQuery.of(context).size.width* 0.5,
+              child: Text(
+                data.subscriptionName,
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                    color: kPrimaryColorBlue,
+                    fontSize: 16.0,
+                    fontFamily: "PoppinsBold"),
+              ),
             ),
           ),
 
@@ -2240,7 +2503,7 @@ class RechargeState extends State<Recharge> {
                       top: 0.0, bottom: 5.0, left: 5.0, right: 5.0),
                   // width:MediaQuery.of(context).size.width* 0.5,
                   child: Text(
-                    "₹"+data.totalSmsCost+".00",
+                    "₹"+data.totalAmt.toString(),
                     textAlign: TextAlign.center,
                     style: TextStyle(
                         color: kPrimaryColorBlue,
@@ -2318,7 +2581,7 @@ class RechargeState extends State<Recharge> {
                       top: 0.0, bottom: 5.0, left: 5.0, right: 5.0),
                   // width:MediaQuery.of(context).size.width* 0.5,
                   child: Text(
-                    "₹"+data.perSmsCost+".00",
+                    "₹"+data.perSmsCost,
                     textAlign: TextAlign.center,
                     style: TextStyle(
                         color: kPrimaryColorBlue,
@@ -2329,6 +2592,98 @@ class RechargeState extends State<Recharge> {
               ],
             ),
           ),
+
+          SizedBox(
+            height: 10.0,
+          ),
+
+          Container(
+            //width: MediaQuery.of(context).size.width,
+            padding: EdgeInsets.only(
+                top: 0.0, bottom: 5.0, left: 5.0, right: 5.0),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: <Widget>[
+
+                Container(
+                  padding: EdgeInsets.only(
+                      top: 0.0, bottom: 5.0, left: 5.0, right: 5.0),
+                  //width:MediaQuery.of(context).size.width* 0.5,
+                  child: Text(
+                    "CGST",
+
+                    style: TextStyle(
+                        color: Colors.red,
+                        fontSize: 12.0),
+                  ),
+                ),
+
+                Container(
+                  padding: EdgeInsets.only(
+                      top: 0.0, bottom: 5.0, left: 5.0, right: 5.0),
+                  // width:MediaQuery.of(context).size.width* 0.5,
+                  child: Text(data.igst == 1 ? "9%" : "0",
+                    textAlign: TextAlign.end,
+                    style: TextStyle(
+                        color: Colors.red,
+                        fontSize: 12.0),
+                  ),
+                ),
+              ],
+            ),
+          ),
+
+          Container(
+            //width: MediaQuery.of(context).size.width,
+            padding: EdgeInsets.only(
+                top: 0.0, bottom: 5.0, left: 5.0, right: 5.0),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: <Widget>[
+
+                Container(
+                  padding: EdgeInsets.only(
+                      top: 0.0, bottom: 5.0, left: 5.0, right: 5.0),
+                  //width:MediaQuery.of(context).size.width* 0.5,
+                  child: Text(
+                    "SGST",
+
+                    style: TextStyle(
+                        color: Colors.red,
+                        fontSize: 12.0),
+                  ),
+                ),
+
+                Container(
+                  padding: EdgeInsets.only(
+                      top: 0.0, bottom: 5.0, left: 5.0, right: 5.0),
+                  // width:MediaQuery.of(context).size.width* 0.5,
+                  child: Text(data.igst == 1 ? "9%" : "0",
+                    textAlign: TextAlign.end,
+                    style: TextStyle(
+                        color: Colors.red,
+                        fontSize: 12.0),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          Center(
+            child: Container(
+              padding: EdgeInsets.only(
+                  top: 0.0, bottom: 5.0, left: 5.0, right: 5.0),
+              // width:MediaQuery.of(context).size.width* 0.5,
+              child: Text(data.igst == 1? "Include IGST : 0" :
+              "Include IGST : "+data.igst.toString()+"%",
+                textAlign: TextAlign.end,
+                style: TextStyle(
+                    color: Colors.red,
+                    fontSize: 13.0),
+              ),
+            ),
+          )
 
 
 
@@ -2383,8 +2738,4 @@ class RechargeState extends State<Recharge> {
                   )));
         });
   }
-
-
-
-
 }

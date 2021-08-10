@@ -142,7 +142,7 @@ class ReviewsState extends State<Reviews> {
                       size: 25.0,
                     ),
                   ),
-                  hintText: "Search By Invoice Number",
+                  hintText: "Search Ratings",
                   hintStyle: TextStyle(
                       fontFamily: "PoppinsMedium",
                       fontSize: 15.0,
@@ -197,8 +197,8 @@ class ReviewsState extends State<Reviews> {
                                 subtitle:
                                 snapshot.data[index].mobileNo.isNotEmpty?
                                 Text('Mobile No. : ${snapshot.data[index].mobileNo}\nDate : ${snapshot.data[index].billDate
-                                    .toString()} \nMerchant Reply : ${snapshot
-                                    .data[index].merchantReplay.toString()}\nStore Feedback : ${snapshot.data[index].storeFeedback}',
+                                    .toString()} \nStore Feedback : ${snapshot
+                                    .data[index].storeFeedback.toString()}\nMerchant Reply : ${snapshot.data[index].merchantReplay}',
                                     style: TextStyle(fontSize: 12.0,fontFamily: "PoppinsLight",color: Colors.black))
                                     :Text('Date : ${snapshot.data[index].billDate
                                     .toString()}',

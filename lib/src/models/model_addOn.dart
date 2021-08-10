@@ -40,6 +40,11 @@ class Datumii {
     this.perDigitalCashMemoCost,
     this.rechargeAmount,
     this.createdDate,
+    this.gstAmt,
+    this.totalAmt,
+    this.cgst,
+    this.igst,
+    this.sgst,
     this.isActive,
   });
 
@@ -51,7 +56,12 @@ class Datumii {
   String perDigitalBillCost;
   dynamic perDigitalReceiptCost;
   dynamic perDigitalCashMemoCost;
-  String rechargeAmount;
+  double rechargeAmount;
+  String totalAmt;
+  String gstAmt;
+  int sgst;
+  int igst;
+  int cgst;
   DateTime createdDate;
   bool isActive;
 
@@ -65,6 +75,11 @@ class Datumii {
     perDigitalReceiptCost: json["per_digital_receipt_cost"],
     perDigitalCashMemoCost: json["per_digital_cash_memo_cost"],
     rechargeAmount: json["recharge_amount"],
+    gstAmt: json["gst_amount"],
+    cgst: json["cgst_value"],
+    igst: json["igst_value"],
+    sgst: json["sgst_value"],
+    totalAmt: json["total_amount"],
     createdDate: DateTime.parse(json["created_date"]),
     isActive: json["is_active"],
   );
@@ -79,6 +94,11 @@ class Datumii {
     "per_digital_receipt_cost": perDigitalReceiptCost,
     "per_digital_cash_memo_cost": perDigitalCashMemoCost,
     "recharge_amount": rechargeAmount,
+    "total_amount": totalAmt,
+    "gst_amount": gstAmt,
+    "sgst_value": sgst,
+    "cgst_value": cgst,
+    "igst_value": igst,
     "created_date": createdDate.toIso8601String(),
     "is_active": isActive,
   };

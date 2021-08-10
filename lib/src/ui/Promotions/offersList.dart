@@ -19,6 +19,7 @@ class OffersList extends StatefulWidget {
 
 class _OffersListState extends State<OffersList> {
   String token, storeID;
+  int userID;
   final ScrollController _controller = ScrollController();
   TextEditingController query = new TextEditingController();
 
@@ -40,14 +41,18 @@ class _OffersListState extends State<OffersList> {
     setState(() {
       token = prefs.getString("token");
       storeID = prefs.getString("businessID");
+      userID = prefs.getInt("userID");
     });
-    print('$token\n$storeID');
+    print('>>>>>>>>>>>>>>>$token\n >>>>>>>>> user $userID');
   }
 
   Future<List<Datum>> getLists() async {
+    final params = {
+      "user_id": userID.toString(),
+    };
     final res = await http.post(
       "http://157.230.228.250:8001/merchant-get-offers-api/",
-      headers: {HttpHeaders.authorizationHeader: "Token $token"},
+      body: params, headers: {HttpHeaders.authorizationHeader: "Token $token"},
     );
 
     print(res.body);
@@ -76,6 +81,7 @@ class _OffersListState extends State<OffersList> {
           },
         ),
       ),
+
       body: Column(
         children: [
           Container(

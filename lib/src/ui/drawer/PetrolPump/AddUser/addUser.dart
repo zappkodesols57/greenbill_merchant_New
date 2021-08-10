@@ -382,7 +382,7 @@ class AddUserState extends State<AddUser> {
                   );
                 }).toList(),
                 hint: Text(
-                  "Select Role",
+                  "Select Role *",
                   style: TextStyle(
                       fontFamily: "PoppinsLight",
                       fontSize: 13.0,

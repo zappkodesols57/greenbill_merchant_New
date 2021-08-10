@@ -11,6 +11,7 @@ import 'package:greenbill_merchant/src/constants.dart';
 import 'package:greenbill_merchant/src/models/model_Common.dart';
 import 'package:greenbill_merchant/src/models/model_IncomingBills.dart';
 import 'package:greenbill_merchant/src/models/model_billInfoList.dart';
+import 'package:greenbill_merchant/src/models/model_billSend.dart';
 import 'package:greenbill_merchant/src/models/model_getStore.dart';
 import 'package:http/http.dart' as http;
 import 'package:open_file/open_file.dart';
@@ -30,6 +31,8 @@ class BillIncomingState extends State<BillIncoming> {
   String token, id, storeID;
   final ScrollController _controller = ScrollController();
   File media;
+  int billID;
+  int storeId;
   final path = '/storage/emulated/0/Download';
   Dio dio = new Dio();
   TextEditingController query = new TextEditingController();
@@ -61,6 +64,7 @@ class BillIncomingState extends State<BillIncoming> {
     final param = {
       "m_business_id": storeID,
     };
+
     final res = await http.post("http://157.230.228.250/merchant-get-received-bill-api/",
         body: param, headers: {HttpHeaders.authorizationHeader: "Token $token"});
 
@@ -98,14 +102,36 @@ class BillIncomingState extends State<BillIncoming> {
       throw Exception('Failed to load Stores List');
     }
   }
-  Widget setupAlertDialoagContainer() {
+  Future<List<StoreBillList>> transferBill(String id, String token) async {
+    final param = {
+      "user_id": id,
+    };
+
+    final res = await http.post(
+      "http://157.230.228.250/get-merchant-businesses-api/",
+      body: param,
+      headers: {HttpHeaders.authorizationHeader: "Token $token"},
+    );
+
+    print(res.body);
+    if (200 == res.statusCode) {
+      print(storeListFromJson(res.body).length);
+      return storeBillListFromJson(res.body);
+    } else {
+      throw Exception('Failed to load Stores List');
+    }
+  }
+
+
+  Widget setupAlertDialoagContainerBill() {
     return Container(
       height: 150,
       width: 350,
-      child: FutureBuilder<List<StoreList>>(
-        future: getStoreList(id.toString(), token),
+      child: FutureBuilder<List<StoreBillList>>(
+        future: transferBill(id.toString(), token),
+        //future: getStoreList(id.toString(), token),
         builder: (BuildContext context,
-            AsyncSnapshot<List<StoreList>> snapshot) {
+            AsyncSnapshot<List<StoreBillList>> snapshot) {
           if (snapshot.connectionState == ConnectionState.done &&
               snapshot.hasData) {
             return Scrollbar(
@@ -117,6 +143,7 @@ class BillIncomingState extends State<BillIncoming> {
                     controller: _controller,
                     itemCount: snapshot.data.length,
                     itemBuilder: (BuildContext context, int index) {
+
                       return ListTile(
                         title: Text(snapshot.data[index].mBusinessName,
                             style: TextStyle(fontSize: 15.0)),
@@ -146,25 +173,10 @@ class BillIncomingState extends State<BillIncoming> {
                           ),
                         ),
                         onTap: () async {
-                          final SharedPreferences prefs = await SharedPreferences.getInstance();
-                          prefs.setString("businessName", snapshot.data[index].mBusinessName);
-                          prefs.setString("businessID", snapshot.data[index].id.toString());
-                          prefs.setString("businessLogo", snapshot.data[index].mBusinessLogo);
-                          prefs.setString("businessCategoryID", snapshot.data[index].mBusinessCategory.toString());
                           setState(() {
-                            // store = snapshot.data[index].mBusinessName;
-                            storeID = snapshot.data[index].id.toString();
-                            //storeAddress = '${snapshot.data[index].mAddress}, ${snapshot.data[index].mArea}, ${snapshot.data[index].mCity}';
-                            // businessLogo = snapshot.data[index].mBusinessLogo;
-                            // storeCatID = snapshot.data[index].mBusinessCategory.toString();
+                            storeId=snapshot.data[index].id;
                           });
-                          Navigator.of(context).pop();
-                          // Navigator.pushAndRemoveUntil(
-                          //  context,
-                          //  MaterialPageRoute(
-                          //       builder: (context) => HomeActivity()),
-                          //      (Route<dynamic> route) => false,
-                          // );
+                          sendBill();
                         },
                       );
                     }));
@@ -177,36 +189,6 @@ class BillIncomingState extends State<BillIncoming> {
           }
         },
       ),
-    );
-  }
-  AppBar buildAppBar() {
-    return AppBar(
-      title: new Text(storeID),
-      elevation: 0,
-      actions: <Widget>[
-        Padding(
-          padding: const EdgeInsets.only(right: 10.0),
-
-        ),
-        GestureDetector(
-            child:  CircleAvatar(
-              backgroundColor: Colors.white,
-              child: Text(
-                storeID.substring(0, 1).toUpperCase(),
-                style: TextStyle(
-                  fontSize: 20.0,
-                  color: kPrimaryColorBlue,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-            ),
-            onTap: () {
-              showStoreDialog(context);
-            }),
-        SizedBox(
-          width: 20.0,
-        ),
-      ],
     );
   }
 
@@ -224,7 +206,7 @@ class BillIncomingState extends State<BillIncoming> {
                   fontSize: 15.0,
                   fontFamily: "PoppinsMedium"),
             ),
-            content: setupAlertDialoagContainer(),
+            content: setupAlertDialoagContainerBill(),
             actions: <Widget>[
               TextButton(
                 child:
@@ -325,16 +307,15 @@ class BillIncomingState extends State<BillIncoming> {
                 spacing: 12, // space between two icons
                 crossAxisAlignment: WrapCrossAlignment.center,
                 children: <Widget>[
-                  // Container(
-                  //   width: 50.0,
-                  //   child: Text(
-                  //     "Send ",
-                  //     textAlign: TextAlign.center,
-                  //     style: TextStyle(
-                  //         color: Colors.white, fontFamily: "PoppinsBold"),
-                  //   ),
-                  // ),
-
+                  Container(
+                    width: 50.0,
+                    child: Text(
+                      "Send ",
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                          color: Colors.white, fontFamily: "PoppinsBold"),
+                    ),
+                  ),
 
                   Container(
                     width: 72.0,
@@ -358,6 +339,7 @@ class BillIncomingState extends State<BillIncoming> {
                 future: getBillInfoList(),
                 builder: (BuildContext context,
                     AsyncSnapshot<List<Datum>> snapshot) {
+
                   if (snapshot.connectionState == ConnectionState.waiting)
                     return Center(
                         child: CircularProgressIndicator(
@@ -365,6 +347,7 @@ class BillIncomingState extends State<BillIncoming> {
                           AlwaysStoppedAnimation<Color>(kPrimaryColorBlue),
                         ));
                   else if (snapshot.hasError) {
+                    print(snapshot.error);
                     return Center(
                       child: Text("No Bills Found"),
                     );
@@ -390,6 +373,7 @@ class BillIncomingState extends State<BillIncoming> {
                             reverse: false,
                             itemCount: snapshot.data.length,
                             itemBuilder: (BuildContext context, int index) {
+
                               return Card(
                                 child: Center(
                                   child: ListTile(
@@ -416,16 +400,20 @@ class BillIncomingState extends State<BillIncoming> {
                                       crossAxisAlignment:
                                       WrapCrossAlignment.center,
                                       children: <Widget>[
-                                        // IconButton(
-                                        //   icon: Icon(
-                                        //     Icons.switch_account,
-                                        //     color: Colors.black,
-                                        //   ),
-                                        //   onPressed: () {
-                                        //     showStoreDialog(context);
-                                        //
-                                        //   },
-                                        // ),
+                                        IconButton(
+                                          icon: Icon(
+                                            Icons.switch_account,
+                                            color: Colors.black,
+                                          ),
+                                          onPressed: () {
+                                            setState(() {
+                                              billID = snapshot.data[index].billId;
+                                              //storeId= snapshot.data[index].id;
+                                            });
+                                            showStoreDialog(context);
+
+                                          },
+                                        ),
 
                                         Container(
                                             width: 70.0,
@@ -567,6 +555,37 @@ class BillIncomingState extends State<BillIncoming> {
   void showDownloadProgress(received, total) {
     if (total != -1) {
       print((received / total * 100).toStringAsFixed(0) + "%");
+    }
+  }
+
+  void sendBill() async{
+    final param ={
+      "business_id":storeId.toString(),
+      "bill_id":billID.toString(),
+    };
+    print("............$storeId..............$billID");
+    final response = await http.post("http://157.230.228.250/merchant-send-received-bill-api/",
+        body: param, headers: {HttpHeaders.authorizationHeader:"Token $token"}
+    );
+
+    CommonData data;
+    var responseJson = json.decode(response.body);
+    print(response.body);
+    data = new CommonData.fromJson(jsonDecode(response.body));
+    print(responseJson);
+    Navigator.of(context, rootNavigator: true).pop();
+    if (response.statusCode == 200) {
+      if (data.status == "success") {
+        print("Send Successful");
+        showInSnackBar(data.message);
+        print(data.message);
+      } else {
+        print(data.status);
+        showInSnackBar(data.message);
+      }
+    } else {
+      print(data.status);
+      showInSnackBar(data.message);
     }
   }
 

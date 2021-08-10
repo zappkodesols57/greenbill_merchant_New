@@ -594,8 +594,7 @@ class subUpdatedState extends State<subUpdated> {
                                               padding: EdgeInsets.only(
                                                   top: 0.0, bottom: 5.0, left: 5.0, right: 5.0),
                                               width: size.width * 0.4,
-                                              child: Text(
-                                                  "₹ "+snapshot.data[index].totalAmountAvilable.toString().split(".").first+"."+snapshot.data[index].totalAmountAvilable.toString().split(".").last.substring(0,2),
+                                              child: Text(snapshot.data[index].totalAmountAvilable == null ? "₹ 0" :"₹ "+snapshot.data[index].totalAmountAvilable.toString(),
                                                 textAlign: TextAlign.center,
                                                 style: TextStyle(
                                                     color: kPrimaryColorBlue,
@@ -606,7 +605,6 @@ class subUpdatedState extends State<subUpdated> {
                                           ],
                                         ),
                                       ),
-
                                     ],
                                   ),
                                 ),

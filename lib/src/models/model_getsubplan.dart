@@ -55,7 +55,13 @@ class Datum {
     this.createdDate,
     this.isActive,
     this.isOffer,
+    this.gstAmt,
+    this.totalAmt,
+    this.cgst,
+    this.igst,
+    this.sgst,
     this.costPerUser,
+    this.sUrl,
   });
 
   int id;
@@ -73,7 +79,7 @@ class Datum {
   String discountPercentage;
   String discountAmount;
   String userType;
-  String subscriptionPlanCost;
+  double subscriptionPlanCost;
   String businessCategory;
   String merchantName;
   String numberOfUsers;
@@ -82,8 +88,14 @@ class Datum {
   String suitedFor;
   DateTime createdDate;
   bool isActive;
+  String totalAmt;
+  String gstAmt;
+  int sgst;
+  int igst;
+  int cgst;
   bool isOffer;
   String costPerUser;
+  String sUrl;
 
   factory Datum.fromJson(Map<String, dynamic> json) => Datum(
     id: json["id"],
@@ -111,7 +123,13 @@ class Datum {
     createdDate: DateTime.parse(json["created_date"]),
     isActive: json["is_active"],
     isOffer: json["is_offer"],
+    gstAmt: json["gst_amount"],
+    cgst: json["cgst_value"],
+    igst: json["igst_value"],
+    sgst: json["sgst_value"],
+    totalAmt: json["total_amount"],
     costPerUser: json["cost_for_users"],
+    sUrl: json["surl"],
   );
 
   Map<String, dynamic> toJson() => {
@@ -139,7 +157,13 @@ class Datum {
     "number_of_users": numberOfUsers,
     "created_date": createdDate.toIso8601String(),
     "is_active": isActive,
+    "total_amount": totalAmt,
+    "gst_amount": gstAmt,
+    "sgst_value": sgst,
+    "cgst_value": cgst,
+    "igst_value": igst,
     "is_offer": isOffer,
     "cost_for_users": costPerUser,
+    "surl": sUrl,
   };
 }

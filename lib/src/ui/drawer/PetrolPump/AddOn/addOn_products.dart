@@ -70,7 +70,7 @@ class AddonProductsState extends State<AddonProducts> {
       key: _scaffoldKey,
       backgroundColor: Colors.white,
       appBar: AppBar(
-        title: Text("Addon Products"),
+        title: Text("Manage Add On's"),
         elevation: 0,
         leading: IconButton(
           icon: Icon(Icons.arrow_back_ios),

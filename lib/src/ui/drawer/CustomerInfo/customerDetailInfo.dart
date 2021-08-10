@@ -12,9 +12,9 @@ import 'package:open_file/open_file.dart';
 import 'package:path_provider/path_provider.dart';
 
 class CustomerDetailInfo extends StatefulWidget {
-  final String token, id, storeID, mobileNo, amount;
+  final String token, id, storeID, mobileNo;
   CustomerDetailInfo(
-      this.token, this.id, this.storeID, this.mobileNo, this.amount);
+      this.token, this.id, this.storeID, this.mobileNo);
 
   @override
   CustomerDetailInfoState createState() => CustomerDetailInfoState();
@@ -39,7 +39,6 @@ class CustomerDetailInfoState extends State<CustomerDetailInfo> {
   Future<CustomerBills> getCustomerAllBills() async {
     final param = {
       "user_id": widget.id,
-      "merchant_business_id": widget.storeID,
       "mobile_no": widget.mobileNo,
     };
 
@@ -92,7 +91,7 @@ class CustomerDetailInfoState extends State<CustomerDetailInfo> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Container(
-                      height: 220.0,
+                      height: 150.0,
                       child: Column(
                         children: [
                           Container(
@@ -139,34 +138,34 @@ class CustomerDetailInfoState extends State<CustomerDetailInfo> {
                               ],
                             ),
                           ),
-                          Container(
-                            color: kPrimaryColorBlue.withOpacity(0.3),
-                            child: Text(
-                              "Payment Details",
-                              textAlign: TextAlign.left,
-                              style: TextStyle(
-                                  fontSize: 20.0,
-                                  color: Colors.white,
-                                  fontFamily: "PoppinsMedium",
-                                  fontWeight: FontWeight.bold),
-                            ),
-                            padding: EdgeInsets.only(left: 20.0, top: 3.0),
-                            height: 40.0,
-                            width: size.width,
-                          ),
-                          Row(
-                            children: [
-                              Container(
-                                padding: EdgeInsets.only(top: 10.0, left: 20.0),
-                                child: Text(
-                                  "Total Money Received: ₹ ${widget.amount}",
-                                  style: TextStyle(
-                                      fontFamily: "PoppinsMedium",
-                                      fontWeight: FontWeight.bold),
-                                ),
-                              )
-                            ],
-                          )
+                          // Container(
+                          //   color: kPrimaryColorBlue.withOpacity(0.3),
+                          //   child: Text(
+                          //     "Payment Details",
+                          //     textAlign: TextAlign.left,
+                          //     style: TextStyle(
+                          //         fontSize: 20.0,
+                          //         color: Colors.white,
+                          //         fontFamily: "PoppinsMedium",
+                          //         fontWeight: FontWeight.bold),
+                          //   ),
+                          //   padding: EdgeInsets.only(left: 20.0, top: 3.0),
+                          //   height: 40.0,
+                          //   width: size.width,
+                          // ),
+                          // Row(
+                          //   children: [
+                          //     Container(
+                          //       padding: EdgeInsets.only(top: 10.0, left: 20.0),
+                          //       child: Text(
+                          //         "Total Money Received: ₹ ${widget.amount}",
+                          //         style: TextStyle(
+                          //             fontFamily: "PoppinsMedium",
+                          //             fontWeight: FontWeight.bold),
+                          //       ),
+                          //     )
+                          //   ],
+                          // )
                         ],
                       )),
                   ListTile(
@@ -267,7 +266,7 @@ class CustomerDetailInfoState extends State<CustomerDetailInfo> {
                                   Container(
                                     width: 80.0,
                                     child: Text(
-                                        "    ₹ ${snapshot.data.allBills[index].amount+".00"}",
+                                        "    ₹ ${snapshot.data.allBills[index].amount}",
                                         style: TextStyle(
                                             fontWeight: FontWeight.bold)),
                                   ),

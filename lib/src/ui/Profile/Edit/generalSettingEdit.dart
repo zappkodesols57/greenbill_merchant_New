@@ -7,8 +7,9 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:greenbill_merchant/src/Services/postalApi_services.dart';
 import 'package:greenbill_merchant/src/models/postApi_model.dart';
+import 'package:greenbill_merchant/src/ui/values/values.dart';
 import 'package:http/http.dart' as http;
-import 'package:path/path.dart' as path;
+
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../../constants.dart';
 
@@ -91,7 +92,7 @@ class GeneralSettingEdit extends StatefulWidget {
 }
 
 class _MyGeneralSettingEditState extends State<GeneralSettingEdit> {
-  bool _alertMob = true;
+  //bool _alertMob = true;
 
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
 
@@ -324,6 +325,7 @@ class _MyGeneralSettingEditState extends State<GeneralSettingEdit> {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
+      backgroundColor: Colors.white,
       key: _scaffoldKey,
       appBar: AppBar(
         title: Text("General Settings"),
@@ -350,60 +352,527 @@ class _MyGeneralSettingEditState extends State<GeneralSettingEdit> {
         child: Center(
           child: Column(
             children: <Widget>[
-              Container(
-                width: size.width * 0.95,
-                padding: EdgeInsets.only(top: 20.0, bottom: 10.0, left: 0.0, right: 0.0),
-                child: new TextField(
-                  focusNode: myFocusNodeName,
-                  controller: nameController,
-                  onChanged: (value) {
-                    setState(() {
-                      _isButtonDisabledColor = false;
-                      _isButtonDisabled = false;
-                    });
-                  },
-                  style: TextStyle(
-                      //fontFamily: "PoppinsBold",
-                      fontSize: 17.0,
-                      color: Colors.black87),
-                  decoration: InputDecoration(
-                    border: InputBorder.none,
-                    counterStyle: TextStyle(height: double.minPositive,),
-                    counterText: "",
-                    contentPadding: const EdgeInsets.symmetric(vertical: 0.0),
-                    enabledBorder: OutlineInputBorder(
-                      borderSide: BorderSide(
-                          color: kPrimaryColorBlue,
-                          width: 0.5
-                      ),
-                      borderRadius: const BorderRadius.all(Radius.circular(35.0)),
-                    ),
-                    focusedBorder: new OutlineInputBorder(
-                      borderSide: BorderSide(
-                          color: kPrimaryColorBlue,
-                          width: 0.5),
-                      borderRadius: const BorderRadius.all(Radius.circular(35.0)),
-                    ),
-                    prefixIcon: Icon(
-                      FontAwesomeIcons.store,
-                      color: kPrimaryColorBlue,
-                      size: 23.0,
-                    ),
-                    labelText: "Business Name*",
-                    labelStyle: TextStyle(
-                        fontFamily: "PoppinsLight", fontSize: 13.0, color: kPrimaryColorBlue),
+              SizedBox(height: 20.0,),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Container(
+                  width: MediaQuery.of(context).size.width,
+                  height: 45,
+
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(25.0),
+                    color: AppColors.kPrimaryColorBlue,
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.only(top: 7.0),
+                    child: Text("Business Basic Details",textAlign: TextAlign.center,
+                      style: TextStyle(
+                        fontSize: 20,
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                      ),),
                   ),
                 ),
               ),
-              Container(
-                width: size.width * 0.95,
-                padding: EdgeInsets.only(top: 0.0, bottom: 10.0, left: 0.0, right: 0.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  crossAxisAlignment: CrossAxisAlignment.center,
+              SizedBox(height: 20.0,),
+              Card(
+                child:Column(
+                    children:[
+                      Container(
+                        width: size.width * 0.95,
+                        padding: EdgeInsets.only(top: 0.0, bottom: 10.0, left: 0.0, right: 0.0),
+                        child: new TextField(
+                          focusNode: myFocusNodeName,
+                          controller: nameController,
+                          onChanged: (value) {
+                            setState(() {
+                              _isButtonDisabledColor = false;
+                              _isButtonDisabled = false;
+                            });
+                          },
+                          style: TextStyle(
+                            //fontFamily: "PoppinsBold",
+                              fontSize: 17.0,
+                              color: Colors.black87),
+                          decoration: InputDecoration(
+                            border: InputBorder.none,
+                            counterStyle: TextStyle(height: double.minPositive,),
+                            counterText: "",
+                            contentPadding: const EdgeInsets.symmetric(vertical: 0.0),
+                            enabledBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                  color: kPrimaryColorBlue,
+                                  width: 0.5
+                              ),
+                              borderRadius: const BorderRadius.all(Radius.circular(35.0)),
+                            ),
+                            focusedBorder: new OutlineInputBorder(
+                              borderSide: BorderSide(
+                                  color: kPrimaryColorBlue,
+                                  width: 0.5),
+                              borderRadius: const BorderRadius.all(Radius.circular(35.0)),
+                            ),
+                            prefixIcon: Icon(
+                              FontAwesomeIcons.store,
+                              color: kPrimaryColorBlue,
+                              size: 23.0,
+                            ),
+                            labelText: "Business Name*",
+                            labelStyle: TextStyle(
+                                fontFamily: "PoppinsLight", fontSize: 13.0, color: kPrimaryColorBlue),
+                          ),
+                        ),
+                      ),
+                      Container(
+                        width: size.width * 0.95,
+                        padding: EdgeInsets.only(top: 0.0, bottom: 10.0, left: 0.0, right: 0.0),
+                        child: new TextField(
+                          focusNode: myFocusNodeCemail,
+                          controller: cemailController,
+                          keyboardType: TextInputType.emailAddress,
+                          onChanged: (value) {
+                            setState(() {
+                              _isButtonDisabledColor = false;
+                              _isButtonDisabled = false;
+                            });
+                          },
+                          style: TextStyle(
+                            //fontFamily: "PoppinsBold",
+                              fontSize: 17.0,
+                              color: Colors.black87),
+                          decoration: InputDecoration(
+                            border: InputBorder.none,
+                            counterStyle: TextStyle(height: double.minPositive,),
+                            counterText: "",
+                            contentPadding: const EdgeInsets.symmetric(vertical: 0.0),
+                            enabledBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                  color: kPrimaryColorBlue,
+                                  width: 0.5
+                              ),
+                              borderRadius: const BorderRadius.all(Radius.circular(35.0)),
+                            ),
+                            focusedBorder: new OutlineInputBorder(
+                              borderSide: BorderSide(
+                                  color: kPrimaryColorBlue,
+                                  width: 0.5),
+                              borderRadius: const BorderRadius.all(Radius.circular(35.0)),
+                            ),
+                            prefixIcon: Icon(
+                              FontAwesomeIcons.envelope,
+                              color: kPrimaryColorBlue,
+                              size: 23.0,
+                            ),
+                            labelText: "Company Email*",
+                            labelStyle: TextStyle(
+                                fontFamily: "PoppinsLight", fontSize: 13.0, color: kPrimaryColorBlue),
+                          ),
+                        ),
+                      ),
+                      Container(
+                        width: size.width * 0.95,
+                        padding: EdgeInsets.only(top: 0.0, bottom: 10.0, left: 0.0, right: 0.0),
+                        child: new TextField(
+                          focusNode: myFocusNodeMob,
+                          controller: mobController,
+                          keyboardType: TextInputType.number,
+                          maxLength: 10,
+                          inputFormatters: <TextInputFormatter>[
+                            FilteringTextInputFormatter.digitsOnly
+                          ],
+                          onChanged: (value) {
+                            setState(() {
+                              _isButtonDisabledColor = false;
+                              _isButtonDisabled = false;
+                            });
+                          },
+                          style: TextStyle(
+                            //fontFamily: "PoppinsBold",
+                              fontSize: 17.0,
+                              color: Colors.black87),
+                          decoration: InputDecoration(
+                            border: InputBorder.none,
+                            counterStyle: TextStyle(height: double.minPositive,),
+                            counterText: "",
+                            contentPadding: const EdgeInsets.symmetric(vertical: 0.0),
+                            enabledBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                  color: kPrimaryColorBlue,
+                                  width: 0.5
+                              ),
+                              borderRadius: const BorderRadius.all(Radius.circular(35.0)),
+                            ),
+                            focusedBorder: new OutlineInputBorder(
+                              borderSide: BorderSide(
+                                  color: kPrimaryColorBlue,
+                                  width: 0.5),
+                              borderRadius: const BorderRadius.all(Radius.circular(35.0)),
+                            ),
+                            prefixIcon: Icon(
+                              FontAwesomeIcons.mobileAlt,
+                              color: kPrimaryColorBlue,
+                              size: 23.0,
+                            ),
+                            labelText: "Alternate Mobile No.",
+                            labelStyle: TextStyle(
+                                fontFamily: "PoppinsLight", fontSize: 13.0, color: kPrimaryColorBlue),
+                          ),
+                        ),
+                      ),
+
+                      Container(
+                        width: size.width * 0.95,
+                        padding: EdgeInsets.only(top: 0.0, bottom: 10.0, left: 0.0, right: 0.0),
+                        child: new TextField(
+                          focusNode: myFocusNodeEmail,
+                          controller: emailController,
+                          keyboardType: TextInputType.emailAddress,
+                          onChanged: (value) {
+                            setState(() {
+                              _isButtonDisabledColor = false;
+                              _isButtonDisabled = false;
+                            });
+                          },
+                          style: TextStyle(
+                            //fontFamily: "PoppinsBold",
+                              fontSize: 17.0,
+                              color: Colors.black87),
+                          decoration: InputDecoration(
+                            border: InputBorder.none,
+                            counterStyle: TextStyle(height: double.minPositive,),
+                            counterText: "",
+                            contentPadding: const EdgeInsets.symmetric(vertical: 0.0),
+                            enabledBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                  color: kPrimaryColorBlue,
+                                  width: 0.5
+                              ),
+                              borderRadius: const BorderRadius.all(Radius.circular(35.0)),
+                            ),
+                            focusedBorder: new OutlineInputBorder(
+                              borderSide: BorderSide(
+                                  color: kPrimaryColorBlue,
+                                  width: 0.5),
+                              borderRadius: const BorderRadius.all(Radius.circular(35.0)),
+                            ),
+                            prefixIcon: Icon(
+                              FontAwesomeIcons.envelope,
+                              color: kPrimaryColorBlue,
+                              size: 23.0,
+                            ),
+                            labelText: "Alternate Email",
+                            labelStyle: TextStyle(
+                                fontFamily: "PoppinsLight", fontSize: 13.0, color: kPrimaryColorBlue),
+                          ),
+                        ),
+                      ),
+                      Container(
+                        width: size.width * 0.95,
+                        padding: EdgeInsets.only(top: 0.0, bottom: 10.0, left: 0.0, right: 0.0),
+                        child: new TextField(
+                          focusNode: myFocusNodeTele,
+                          controller: teleController,
+                          keyboardType: TextInputType.number,
+                          maxLength: 16,
+                          inputFormatters: <TextInputFormatter>[
+                            FilteringTextInputFormatter.digitsOnly
+                          ],
+                          onChanged: (value) {
+                            setState(() {
+                              _isButtonDisabledColor = false;
+                              _isButtonDisabled = false;
+                            });
+                          },
+                          style: TextStyle(
+                            //fontFamily: "PoppinsBold",
+                              fontSize: 17.0,
+                              color: Colors.black87),
+                          decoration: InputDecoration(
+                            border: InputBorder.none,
+                            counterStyle: TextStyle(height: double.minPositive,),
+                            counterText: "",
+                            contentPadding: const EdgeInsets.symmetric(vertical: 0.0),
+                            enabledBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                  color: kPrimaryColorBlue,
+                                  width: 0.5
+                              ),
+                              borderRadius: const BorderRadius.all(Radius.circular(35.0)),
+                            ),
+                            focusedBorder: new OutlineInputBorder(
+                              borderSide: BorderSide(
+                                  color: kPrimaryColorBlue,
+                                  width: 0.5),
+                              borderRadius: const BorderRadius.all(Radius.circular(35.0)),
+                            ),
+                            prefixIcon: Icon(
+                              FontAwesomeIcons.phoneAlt,
+                              color: kPrimaryColorBlue,
+                              size: 23.0,
+                            ),
+                            labelText: "Landline No.",
+                            labelStyle: TextStyle(
+                                fontFamily: "PoppinsLight", fontSize: 13.0, color: kPrimaryColorBlue),
+                          ),
+                        ),
+                      ),
+                    ]
+                ),
+              ),
+              SizedBox(height: 20.0,),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Container(
+                  width: MediaQuery.of(context).size.width,
+                  height: 45,
+
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(25.0),
+                    color: AppColors.kPrimaryColorBlue,
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.only(top: 7.0),
+                    child: Text("Address Details",textAlign: TextAlign.center,
+                      style: TextStyle(
+                        fontSize: 20,
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                      ),),
+                  ),
+                ),
+              ),
+              SizedBox(height: 20.0,),
+              Card(
+                child: Column(
                   children: [
                     Container(
-                      width: size.width * 0.45,
+                      width: size.width * 0.95,
+                      padding: EdgeInsets.only(top: 0.0, bottom: 10.0, left: 0.0, right: 0.0),
+                      child: new TextField(
+                        focusNode: myFocusNodeAddress,
+                        controller: addressController,
+                        onChanged: (value) {
+                          setState(() {
+                            _isButtonDisabledColor = false;
+                            _isButtonDisabled = false;
+                          });
+                        },
+                        style: TextStyle(
+                          //fontFamily: "PoppinsBold",
+                            fontSize: 17.0,
+                            color: Colors.black87),
+                        decoration: InputDecoration(
+                          border: InputBorder.none,
+                          counterStyle: TextStyle(height: double.minPositive,),
+                          counterText: "",
+                          contentPadding: const EdgeInsets.symmetric(vertical: 0.0),
+                          enabledBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                                color: kPrimaryColorBlue,
+                                width: 0.5
+                            ),
+                            borderRadius: const BorderRadius.all(Radius.circular(35.0)),
+                          ),
+                          focusedBorder: new OutlineInputBorder(
+                            borderSide: BorderSide(
+                                color: kPrimaryColorBlue,
+                                width: 0.5),
+                            borderRadius: const BorderRadius.all(Radius.circular(35.0)),
+                          ),
+                          prefixIcon: Icon(
+                            FontAwesomeIcons.solidMap,
+                            color: kPrimaryColorBlue,
+                            size: 23.0,
+                          ),
+                          labelText: "Address",
+                          labelStyle: TextStyle(
+                              fontFamily: "PoppinsLight", fontSize: 13.0, color: kPrimaryColorBlue),
+                        ),
+                      ),
+                    ),
+                    Container(
+                      width: size.width * 0.95,
+                      padding: EdgeInsets.only(top: 0.0, bottom: 10.0, left: 0.0, right: 0.0),
+                      child: new TextField(
+                        focusNode: myFocusNodeCity,
+                        controller: cityController,
+                        onChanged: (value) {
+                          setState(() {
+                            _isButtonDisabledColor = false;
+                            _isButtonDisabled = false;
+                          });
+                        },
+                        style: TextStyle(
+                          //fontFamily: "PoppinsBold",
+                            fontSize: 17.0,
+                            color: Colors.black87),
+                        decoration: InputDecoration(
+                          border: InputBorder.none,
+                          counterStyle: TextStyle(height: double.minPositive,),
+                          counterText: "",
+                          contentPadding: const EdgeInsets.symmetric(vertical: 0.0),
+                          enabledBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                                color: kPrimaryColorBlue,
+                                width: 0.5
+                            ),
+                            borderRadius: const BorderRadius.all(Radius.circular(35.0)),
+                          ),
+                          focusedBorder: new OutlineInputBorder(
+                            borderSide: BorderSide(
+                                color: kPrimaryColorBlue,
+                                width: 0.5),
+                            borderRadius: const BorderRadius.all(Radius.circular(35.0)),
+                          ),
+                          prefixIcon: Icon(
+                            FontAwesomeIcons.city,
+                            color: kPrimaryColorBlue,
+                            size: 23.0,
+                          ),
+                          labelText: "City",
+                          labelStyle: TextStyle(
+                              fontFamily: "PoppinsLight", fontSize: 13.0, color: kPrimaryColorBlue),
+                        ),
+                      ),
+                    ),
+                    Container(
+                      width: size.width * 0.95,
+                      padding: EdgeInsets.only(top: 0.0, bottom: 10.0, left: 0.0, right: 0.0),
+                      child: new TextField(
+                        focusNode: myFocusNodeArea,
+                        controller: areaController,
+                        onChanged: (value) {
+                          setState(() {
+                            _isButtonDisabledColor = false;
+                            _isButtonDisabled = false;
+                          });
+                        },
+                        style: TextStyle(
+                          //fontFamily: "PoppinsBold",
+                            fontSize: 17.0,
+                            color: Colors.black87),
+                        decoration: InputDecoration(
+                          border: InputBorder.none,
+                          counterStyle: TextStyle(height: double.minPositive,),
+                          counterText: "",
+                          contentPadding: const EdgeInsets.symmetric(vertical: 0.0),
+                          enabledBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                                color: kPrimaryColorBlue,
+                                width: 0.5
+                            ),
+                            borderRadius: const BorderRadius.all(Radius.circular(35.0)),
+                          ),
+                          focusedBorder: new OutlineInputBorder(
+                            borderSide: BorderSide(
+                                color: kPrimaryColorBlue,
+                                width: 0.5),
+                            borderRadius: const BorderRadius.all(Radius.circular(35.0)),
+                          ),
+                          prefixIcon: Icon(
+                            FontAwesomeIcons.map,
+                            color: kPrimaryColorBlue,
+                            size: 23.0,
+                          ),
+                          labelText: "Area",
+                          labelStyle: TextStyle(
+                              fontFamily: "PoppinsLight", fontSize: 13.0, color: kPrimaryColorBlue),
+                        ),
+                      ),
+                    ),
+
+                    Container(
+                      width: size.width * 0.95,
+                      padding: EdgeInsets.only(top: 0.0, bottom: 10.0, left: 0.0, right: 0.0),
+                      child: new TextField(
+                        focusNode: myFocusNodeDistrict,
+                        controller: districtController,
+                        onChanged: (value) {
+                          setState(() {
+                            _isButtonDisabledColor = false;
+                            _isButtonDisabled = false;
+                          });
+                        },
+                        style: TextStyle(
+                          //fontFamily: "PoppinsBold",
+                            fontSize: 17.0,
+                            color: Colors.black87),
+                        decoration: InputDecoration(
+                          border: InputBorder.none,
+                          counterStyle: TextStyle(height: double.minPositive,),
+                          counterText: "",
+                          contentPadding: const EdgeInsets.symmetric(vertical: 0.0),
+                          enabledBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                                color: kPrimaryColorBlue,
+                                width: 0.5
+                            ),
+                            borderRadius: const BorderRadius.all(Radius.circular(35.0)),
+                          ),
+                          focusedBorder: new OutlineInputBorder(
+                            borderSide: BorderSide(
+                                color: kPrimaryColorBlue,
+                                width: 0.5),
+                            borderRadius: const BorderRadius.all(Radius.circular(35.0)),
+                          ),
+                          prefixIcon: Icon(
+                            FontAwesomeIcons.locationArrow,
+                            color: kPrimaryColorBlue,
+                            size: 23.0,
+                          ),
+                          labelText: "District*",
+                          labelStyle: TextStyle(
+                              fontFamily: "PoppinsLight", fontSize: 13.0, color: kPrimaryColorBlue),
+                        ),
+                      ),
+                    ),
+                    Container(
+                      width: size.width * 0.95,
+                      padding: EdgeInsets.only(top: 0.0, bottom: 10.0, left: 0.0, right: 0.0),
+                      child: new TextField(
+                        focusNode: myFocusNodeState,
+                        controller: stateController,
+                        onChanged: (value) {
+                          setState(() {
+                            _isButtonDisabledColor = false;
+                            _isButtonDisabled = false;
+                          });
+                        },
+                        style: TextStyle(
+                          //fontFamily: "PoppinsBold",
+                            fontSize: 17.0,
+                            color: Colors.black87),
+                        decoration: InputDecoration(
+                          border: InputBorder.none,
+                          counterStyle: TextStyle(height: double.minPositive,),
+                          counterText: "",
+                          contentPadding: const EdgeInsets.symmetric(vertical: 0.0),
+                          enabledBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                                color: kPrimaryColorBlue,
+                                width: 0.5
+                            ),
+                            borderRadius: const BorderRadius.all(Radius.circular(35.0)),
+                          ),
+                          focusedBorder: new OutlineInputBorder(
+                            borderSide: BorderSide(
+                                color: kPrimaryColorBlue,
+                                width: 0.5),
+                            borderRadius: const BorderRadius.all(Radius.circular(35.0)),
+                          ),
+                          prefixIcon: Icon(
+                            FontAwesomeIcons.mapSigns,
+                            color: kPrimaryColorBlue,
+                            size: 23.0,
+                          ),
+                          labelText: "State",
+                          labelStyle: TextStyle(
+                              fontFamily: "PoppinsLight", fontSize: 13.0, color: kPrimaryColorBlue),
+                        ),
+                      ),
+                    ),
+                    Container(
+                      width: size.width * 0.95,
                       child: new TextField(
                         focusNode: myFocusNodePin,
                         controller: pinController,
@@ -420,7 +889,7 @@ class _MyGeneralSettingEditState extends State<GeneralSettingEdit> {
                           });
                         },
                         style: TextStyle(
-                            //fontFamily: "PoppinsBold",
+                          //fontFamily: "PoppinsBold",
                             fontSize: 17.0,
                             color: Colors.black87),
                         decoration: InputDecoration(
@@ -452,838 +921,471 @@ class _MyGeneralSettingEditState extends State<GeneralSettingEdit> {
                         ),
                       ),
                     ),
-                    Container(
-                      width: size.width * 0.45,
-                      child: new TextField(
-                        keyboardType:TextInputType.name,
-                        inputFormatters: [FilteringTextInputFormatter.allow(RegExp("[a-zA-Z]")),],
-                        maxLength: 15,
-                        focusNode: myFocusNodeCity,
-                        controller: cityController,
-                        onChanged: (value) {
-                          setState(() {
-                            _isButtonDisabledColor = false;
-                            _isButtonDisabled = false;
-                          });
-                        },
-                        style: TextStyle(
+                  ],
+                ),
+              ),
+
+              SizedBox(height: 20.0,),
+
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Container(
+                  width: MediaQuery.of(context).size.width,
+                  height: 45,
+
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(25.0),
+                    color: AppColors.kPrimaryColorBlue,
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.only(top: 7.0),
+                    child: Text("Additional Details",textAlign: TextAlign.center,
+                      style: TextStyle(
+                        fontSize: 20,
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                      ),),
+                  ),
+                ),
+              ),
+              SizedBox(height: 20.0,),
+              Card(
+                child:Column(
+                    children:[
+                      Container(
+                        width: size.width * 0.95,
+                        padding: EdgeInsets.only(top: 0.0, bottom: 10.0, left: 0.0, right: 0.0),
+                        child: new TextField(
+                          focusNode: myFocusNodePan,
+                          controller: panController,
+                          keyboardType: TextInputType.text,
+                          maxLength: 10,
+                          textCapitalization: TextCapitalization.characters,
+                          onChanged: (value) {
+                            if (value.length <= maxPan) {
+                              textPan = value;
+                            } else {
+                              panController.value = new TextEditingValue(
+                                  text: textPan,
+                                  selection: new TextSelection(
+                                      baseOffset: maxPan,
+                                      extentOffset: maxPan,
+                                      affinity: TextAffinity.downstream,
+                                      isDirectional: false),
+                                  composing: new TextRange(start: 0, end: maxPan));
+                              panController.text = textPan;
+                            }
+
+                            setState(() {
+                              _isButtonDisabledColor = false;
+                              _isButtonDisabled = false;
+                            });
+                            if (value.length == 10) {
+                              validatePan(value)
+                                  ? showInSnackBar('Valid Pan Number', 2)
+                                  : showInSnackBar("Invalid Pan Number", 2);
+                            }
+                          },
+                          style: TextStyle(
                             //fontFamily: "PoppinsBold",
-                            fontSize: 17.0,
-                            color: Colors.black87),
-                        decoration: InputDecoration(
-                          border: InputBorder.none,
-                          counterStyle: TextStyle(height: double.minPositive,),
-                          counterText: "",
-                          contentPadding: const EdgeInsets.symmetric(vertical: 0.0),
-                          enabledBorder: OutlineInputBorder(
-                            borderSide: BorderSide(
-                                color: kPrimaryColorBlue,
-                                width: 0.5
+                              fontSize: 17.0,
+                              color: Colors.black87),
+                          decoration: InputDecoration(
+                            border: InputBorder.none,
+                            counterStyle: TextStyle(height: double.minPositive,),
+                            counterText: "",
+                            contentPadding: const EdgeInsets.symmetric(vertical: 0.0),
+                            enabledBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                  color: kPrimaryColorBlue,
+                                  width: 0.5
+                              ),
+                              borderRadius: const BorderRadius.all(Radius.circular(35.0)),
                             ),
-                            borderRadius: const BorderRadius.all(Radius.circular(35.0)),
+                            focusedBorder: new OutlineInputBorder(
+                              borderSide: BorderSide(
+                                  color: kPrimaryColorBlue,
+                                  width: 0.5),
+                              borderRadius: const BorderRadius.all(Radius.circular(35.0)),
+                            ),
+                            prefixIcon: Icon(
+                              FontAwesomeIcons.idCard,
+                              color: kPrimaryColorBlue,
+                              size: 23.0,
+                            ),
+                            labelText: "Pan No.*",
+                            labelStyle: TextStyle(
+                                fontFamily: "PoppinsLight", fontSize: 13.0, color: kPrimaryColorBlue),
                           ),
-                          focusedBorder: new OutlineInputBorder(
-                            borderSide: BorderSide(
-                                color: kPrimaryColorBlue,
-                                width: 0.5),
-                            borderRadius: const BorderRadius.all(Radius.circular(35.0)),
-                          ),
-                          prefixIcon: Icon(
-                            FontAwesomeIcons.city,
-                            color: kPrimaryColorBlue,
-                            size: 23.0,
-                          ),
-                          labelText: "City*",
-                          labelStyle: TextStyle(
-                              fontFamily: "PoppinsLight", fontSize: 13.0, color: kPrimaryColorBlue),
                         ),
                       ),
-                    ),
-                  ],
-                ),
-              ),
-              Container(
-                width: size.width * 0.95,
-                padding: EdgeInsets.only(top: 0.0, bottom: 10.0, left: 0.0, right: 0.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Container(
-                      width: size.width * 0.45,
-                      child: new TextField(
-                        keyboardType:TextInputType.name,
-                        inputFormatters: [FilteringTextInputFormatter.allow(RegExp("[a-zA-Z]")),],
-                        maxLength: 15,
-                        focusNode: myFocusNodeArea,
-                        controller: areaController,
-                        onChanged: (value) {
-                          setState(() {
-                            _isButtonDisabledColor = false;
-                            _isButtonDisabled = false;
-                          });
-                        },
-                        style: TextStyle(
+                      Container(
+                        width: size.width * 0.95,
+                        padding: EdgeInsets.only(top: 0.0, bottom: 10.0, left: 0.0, right: 0.0),
+                        child: new TextField(
+                          focusNode: myFocusNodeGst,
+                          controller: gstController,
+                          keyboardType: TextInputType.text,
+                          maxLength: 15,
+                          textCapitalization: TextCapitalization.characters,
+                          onChanged: (value) {
+                            if (value.length <= maxGst) {
+                              textGst = value;
+                            } else {
+                              gstController.value = new TextEditingValue(
+                                  text: textGst,
+                                  selection: new TextSelection(
+                                      baseOffset: maxGst,
+                                      extentOffset: maxGst,
+                                      affinity: TextAffinity.downstream,
+                                      isDirectional: false),
+                                  composing: new TextRange(start: 0, end: maxGst));
+                              gstController.text = textGst;
+                            }
+
+                            setState(() {
+                              _isButtonDisabledColor = false;
+                              _isButtonDisabled = false;
+                            });
+                          },
+                          style: TextStyle(
                             //fontFamily: "PoppinsBold",
-                            fontSize: 17.0,
-                            color: Colors.black87),
-                        decoration: InputDecoration(
-                          border: InputBorder.none,
-                          counterStyle: TextStyle(height: double.minPositive,),
-                          counterText: "",
-                          contentPadding: const EdgeInsets.symmetric(vertical: 0.0),
-                          enabledBorder: OutlineInputBorder(
-                            borderSide: BorderSide(
-                                color: kPrimaryColorBlue,
-                                width: 0.5
+                              fontSize: 17.0,
+                              color: Colors.black87),
+                          decoration: InputDecoration(
+                            border: InputBorder.none,
+                            counterStyle: TextStyle(height: double.minPositive,),
+                            counterText: "",
+                            contentPadding: const EdgeInsets.symmetric(vertical: 0.0),
+                            enabledBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                  color: kPrimaryColorBlue,
+                                  width: 0.5
+                              ),
+                              borderRadius: const BorderRadius.all(Radius.circular(35.0)),
                             ),
-                            borderRadius: const BorderRadius.all(Radius.circular(35.0)),
+                            focusedBorder: new OutlineInputBorder(
+                              borderSide: BorderSide(
+                                  color: kPrimaryColorBlue,
+                                  width: 0.5),
+                              borderRadius: const BorderRadius.all(Radius.circular(35.0)),
+                            ),
+                            prefixIcon: Icon(
+                              FontAwesomeIcons.creditCard,
+                              color: kPrimaryColorBlue,
+                              size: 23.0,
+                            ),
+                            labelText: "GSTIN*",
+                            labelStyle: TextStyle(
+                                fontFamily: "PoppinsLight", fontSize: 13.0, color: kPrimaryColorBlue),
                           ),
-                          focusedBorder: new OutlineInputBorder(
-                            borderSide: BorderSide(
-                                color: kPrimaryColorBlue,
-                                width: 0.5),
-                            borderRadius: const BorderRadius.all(Radius.circular(35.0)),
-                          ),
-                          prefixIcon: Icon(
-                            FontAwesomeIcons.map,
-                            color: kPrimaryColorBlue,
-                            size: 23.0,
-                          ),
-                          labelText: "Area*",
-                          labelStyle: TextStyle(
-                              fontFamily: "PoppinsLight", fontSize: 13.0, color: kPrimaryColorBlue),
                         ),
                       ),
-                    ),
-                    Container(
-                      width: size.width * 0.45,
-                      child: new TextField(
-                        keyboardType:TextInputType.name,
-                        inputFormatters: [FilteringTextInputFormatter.allow(RegExp("[a-zA-Z]")),],
-                        maxLength: 15,
-                        focusNode: myFocusNodeDistrict,
-                        controller: districtController,
-                        onChanged: (value) {
-                          setState(() {
-                            _isButtonDisabledColor = false;
-                            _isButtonDisabled = false;
-                          });
-                        },
-                        style: TextStyle(
+
+                      Container(
+                        width: size.width * 0.95,
+                        padding: EdgeInsets.only(top: 0.0, bottom: 10.0, left: 0.0, right: 0.0),
+                        child: new TextField(
+                          focusNode: myFocusNodeCin,
+                          controller: cinController,
+                          keyboardType: TextInputType.text,
+                          maxLength: 21,
+                          textCapitalization: TextCapitalization.characters,
+                          onChanged: (value) {
+                            setState(() {
+                              if (value.length <= maxCin) {
+                                textCin = value;
+                              } else {
+                                cinController.value = new TextEditingValue(
+                                    text: textCin,
+                                    selection: new TextSelection(
+                                        baseOffset: maxCin,
+                                        extentOffset: maxCin,
+                                        affinity: TextAffinity.downstream,
+                                        isDirectional: false),
+                                    composing: new TextRange(start: 0, end: maxCin));
+                                cinController.text = textCin;
+                              }
+
+                              _isButtonDisabledColor = false;
+                              _isButtonDisabled = false;
+                            });
+                          },
+                          style: TextStyle(
                             //fontFamily: "PoppinsBold",
-                            fontSize: 17.0,
-                            color: Colors.black87),
-                        decoration: InputDecoration(
-                          border: InputBorder.none,
-                          counterStyle: TextStyle(height: double.minPositive,),
-                          counterText: "",
-                          contentPadding: const EdgeInsets.symmetric(vertical: 0.0),
-                          enabledBorder: OutlineInputBorder(
-                            borderSide: BorderSide(
-                                color: kPrimaryColorBlue,
-                                width: 0.5
+                              fontSize: 17.0,
+                              color: Colors.black87),
+                          decoration: InputDecoration(
+                            border: InputBorder.none,
+                            counterStyle: TextStyle(height: double.minPositive,),
+                            counterText: "",
+                            contentPadding: const EdgeInsets.symmetric(vertical: 0.0),
+                            enabledBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                  color: kPrimaryColorBlue,
+                                  width: 0.5
+                              ),
+                              borderRadius: const BorderRadius.all(Radius.circular(35.0)),
                             ),
-                            borderRadius: const BorderRadius.all(Radius.circular(35.0)),
+                            focusedBorder: new OutlineInputBorder(
+                              borderSide: BorderSide(
+                                  color: kPrimaryColorBlue,
+                                  width: 0.5),
+                              borderRadius: const BorderRadius.all(Radius.circular(35.0)),
+                            ),
+                            prefixIcon: Icon(
+                              FontAwesomeIcons.creditCard,
+                              color: kPrimaryColorBlue,
+                              size: 23.0,
+                            ),
+                            labelText: "CIN*",
+                            labelStyle: TextStyle(
+                                fontFamily: "PoppinsLight", fontSize: 13.0, color: kPrimaryColorBlue),
                           ),
-                          focusedBorder: new OutlineInputBorder(
-                            borderSide: BorderSide(
-                                color: kPrimaryColorBlue,
-                                width: 0.5),
-                            borderRadius: const BorderRadius.all(Radius.circular(35.0)),
-                          ),
-                          prefixIcon: Icon(
-                            FontAwesomeIcons.locationArrow,
-                            color: kPrimaryColorBlue,
-                            size: 23.0,
-                          ),
-                          labelText: "District*",
-                          labelStyle: TextStyle(
-                              fontFamily: "PoppinsLight", fontSize: 13.0, color: kPrimaryColorBlue),
                         ),
                       ),
-                    )
-                  ],
+                    ]
                 ),
               ),
-              Container(
-                width: size.width * 0.95,
-                padding: EdgeInsets.only(top: 0.0, bottom: 10.0, left: 0.0, right: 0.0),
-                child: new TextField(
-                  focusNode: myFocusNodeState,
-                  controller: stateController,
-                  onChanged: (value) {
-                    setState(() {
-                      _isButtonDisabledColor = false;
-                      _isButtonDisabled = false;
-                    });
-                  },
-                  style: TextStyle(
-                      //fontFamily: "PoppinsBold",
-                      fontSize: 17.0,
-                      color: Colors.black87),
-                  decoration: InputDecoration(
-                    border: InputBorder.none,
-                    counterStyle: TextStyle(height: double.minPositive,),
-                    counterText: "",
-                    contentPadding: const EdgeInsets.symmetric(vertical: 0.0),
-                    enabledBorder: OutlineInputBorder(
-                      borderSide: BorderSide(
-                          color: kPrimaryColorBlue,
-                          width: 0.5
-                      ),
-                      borderRadius: const BorderRadius.all(Radius.circular(35.0)),
-                    ),
-                    focusedBorder: new OutlineInputBorder(
-                      borderSide: BorderSide(
-                          color: kPrimaryColorBlue,
-                          width: 0.5),
-                      borderRadius: const BorderRadius.all(Radius.circular(35.0)),
-                    ),
-                    prefixIcon: Icon(
-                      FontAwesomeIcons.mapSigns,
-                      color: kPrimaryColorBlue,
-                      size: 23.0,
-                    ),
-                    labelText: "State*",
-                    labelStyle: TextStyle(
-                        fontFamily: "PoppinsLight", fontSize: 13.0, color: kPrimaryColorBlue),
-                  ),
-                ),
-              ),
-              Container(
-                width: size.width * 0.95,
-                padding: EdgeInsets.only(top: 0.0, bottom: 10.0, left: 0.0, right: 0.0),
-                child: new TextField(
-                  focusNode: myFocusNodeAddress,
-                  controller: addressController,
-                  onChanged: (value) {
-                    setState(() {
-                      _isButtonDisabledColor = false;
-                      _isButtonDisabled = false;
-                    });
-                  },
-                  style: TextStyle(
-                      //fontFamily: "PoppinsBold",
-                      fontSize: 17.0,
-                      color: Colors.black87),
-                  decoration: InputDecoration(
-                    border: InputBorder.none,
-                    counterStyle: TextStyle(height: double.minPositive,),
-                    counterText: "",
-                    contentPadding: const EdgeInsets.symmetric(vertical: 0.0),
-                    enabledBorder: OutlineInputBorder(
-                      borderSide: BorderSide(
-                          color: kPrimaryColorBlue,
-                          width: 0.5
-                      ),
-                      borderRadius: const BorderRadius.all(Radius.circular(35.0)),
-                    ),
-                    focusedBorder: new OutlineInputBorder(
-                      borderSide: BorderSide(
-                          color: kPrimaryColorBlue,
-                          width: 0.5),
-                      borderRadius: const BorderRadius.all(Radius.circular(35.0)),
-                    ),
-                    prefixIcon: Icon(
-                      FontAwesomeIcons.solidMap,
-                      color: kPrimaryColorBlue,
-                      size: 23.0,
-                    ),
-                    labelText: "Address*",
-                    labelStyle: TextStyle(
-                        fontFamily: "PoppinsLight", fontSize: 13.0, color: kPrimaryColorBlue),
-                  ),
-                ),
-              ),
-              Container(
-                width: size.width * 0.95,
-                padding: EdgeInsets.only(top: 0.0, bottom: 10.0, left: 0.0, right: 0.0),
-                child: new TextField(
-                  focusNode: myFocusNodeTele,
-                  controller: teleController,
-                  keyboardType: TextInputType.number,
-                  maxLength: 16,
-                  inputFormatters: <TextInputFormatter>[
-                    FilteringTextInputFormatter.digitsOnly
-                  ],
-                  onChanged: (value) {
-                    setState(() {
-                      _isButtonDisabledColor = false;
-                      _isButtonDisabled = false;
-                    });
-                  },
-                  style: TextStyle(
-                      //fontFamily: "PoppinsBold",
-                      fontSize: 17.0,
-                      color: Colors.black87),
-                  decoration: InputDecoration(
-                    border: InputBorder.none,
-                    counterStyle: TextStyle(height: double.minPositive,),
-                    counterText: "",
-                    contentPadding: const EdgeInsets.symmetric(vertical: 0.0),
-                    enabledBorder: OutlineInputBorder(
-                      borderSide: BorderSide(
-                          color: kPrimaryColorBlue,
-                          width: 0.5
-                      ),
-                      borderRadius: const BorderRadius.all(Radius.circular(35.0)),
-                    ),
-                    focusedBorder: new OutlineInputBorder(
-                      borderSide: BorderSide(
-                          color: kPrimaryColorBlue,
-                          width: 0.5),
-                      borderRadius: const BorderRadius.all(Radius.circular(35.0)),
-                    ),
-                    prefixIcon: Icon(
-                      FontAwesomeIcons.phoneAlt,
-                      color: kPrimaryColorBlue,
-                      size: 23.0,
-                    ),
-                    labelText: "Landline No.",
-                    labelStyle: TextStyle(
-                        fontFamily: "PoppinsLight", fontSize: 13.0, color: kPrimaryColorBlue),
-                  ),
-                ),
-              ),
-              Container(
-                width: size.width * 0.95,
-                padding: EdgeInsets.only(top: 0.0, bottom: 10.0, left: 0.0, right: 0.0),
-                child: new TextField(
-                  focusNode: myFocusNodeMob,
-                  controller: mobController,
-                  keyboardType: TextInputType.number,
-                  maxLength: 10,
-                  inputFormatters: <TextInputFormatter>[
-                    FilteringTextInputFormatter.digitsOnly
-                  ],
-                  onChanged: (value) {
-                    setState(() {
-                      _isButtonDisabledColor = false;
-                      _isButtonDisabled = false;
-                    });
-                  },
-                  style: TextStyle(
-                      //fontFamily: "PoppinsBold",
-                      fontSize: 17.0,
-                      color: Colors.black87),
-                  decoration: InputDecoration(
-                    border: InputBorder.none,
-                    counterStyle: TextStyle(height: double.minPositive,),
-                    counterText: "",
-                    contentPadding: const EdgeInsets.symmetric(vertical: 0.0),
-                    enabledBorder: OutlineInputBorder(
-                      borderSide: BorderSide(
-                          color: kPrimaryColorBlue,
-                          width: 0.5
-                      ),
-                      borderRadius: const BorderRadius.all(Radius.circular(35.0)),
-                    ),
-                    focusedBorder: new OutlineInputBorder(
-                      borderSide: BorderSide(
-                          color: kPrimaryColorBlue,
-                          width: 0.5),
-                      borderRadius: const BorderRadius.all(Radius.circular(35.0)),
-                    ),
-                    prefixIcon: Icon(
-                      FontAwesomeIcons.mobileAlt,
-                      color: kPrimaryColorBlue,
-                      size: 23.0,
-                    ),
-                    labelText: "Alternate Mobile No.*",
-                    labelStyle: TextStyle(
-                        fontFamily: "PoppinsLight", fontSize: 13.0, color: kPrimaryColorBlue),
-                  ),
-                ),
-              ),
-              Container(
-                width: size.width * 0.95,
-                padding: EdgeInsets.only(top: 0.0, bottom: 10.0, left: 0.0, right: 0.0),
-                child: new TextField(
-                  focusNode: myFocusNodeCemail,
-                  controller: cemailController,
-                  keyboardType: TextInputType.emailAddress,
-                  onChanged: (value) {
-                    setState(() {
-                      _isButtonDisabledColor = false;
-                      _isButtonDisabled = false;
-                    });
-                  },
-                  style: TextStyle(
-                      //fontFamily: "PoppinsBold",
-                      fontSize: 17.0,
-                      color: Colors.black87),
-                  decoration: InputDecoration(
-                    border: InputBorder.none,
-                    counterStyle: TextStyle(height: double.minPositive,),
-                    counterText: "",
-                    contentPadding: const EdgeInsets.symmetric(vertical: 0.0),
-                    enabledBorder: OutlineInputBorder(
-                      borderSide: BorderSide(
-                          color: kPrimaryColorBlue,
-                          width: 0.5
-                      ),
-                      borderRadius: const BorderRadius.all(Radius.circular(35.0)),
-                    ),
-                    focusedBorder: new OutlineInputBorder(
-                      borderSide: BorderSide(
-                          color: kPrimaryColorBlue,
-                          width: 0.5),
-                      borderRadius: const BorderRadius.all(Radius.circular(35.0)),
-                    ),
-                    prefixIcon: Icon(
-                      FontAwesomeIcons.envelope,
-                      color: kPrimaryColorBlue,
-                      size: 23.0,
-                    ),
-                    labelText: "Company Email*",
-                    labelStyle: TextStyle(
-                        fontFamily: "PoppinsLight", fontSize: 13.0, color: kPrimaryColorBlue),
-                  ),
-                ),
-              ),
-              Container(
-                width: size.width * 0.95,
-                padding: EdgeInsets.only(top: 0.0, bottom: 10.0, left: 0.0, right: 0.0),
-                child: new TextField(
-                  focusNode: myFocusNodeEmail,
-                  controller: emailController,
-                  keyboardType: TextInputType.emailAddress,
-                  onChanged: (value) {
-                    setState(() {
-                      _isButtonDisabledColor = false;
-                      _isButtonDisabled = false;
-                    });
-                  },
-                  style: TextStyle(
-                      //fontFamily: "PoppinsBold",
-                      fontSize: 17.0,
-                      color: Colors.black87),
-                  decoration: InputDecoration(
-                    border: InputBorder.none,
-                    counterStyle: TextStyle(height: double.minPositive,),
-                    counterText: "",
-                    contentPadding: const EdgeInsets.symmetric(vertical: 0.0),
-                    enabledBorder: OutlineInputBorder(
-                      borderSide: BorderSide(
-                          color: kPrimaryColorBlue,
-                          width: 0.5
-                      ),
-                      borderRadius: const BorderRadius.all(Radius.circular(35.0)),
-                    ),
-                    focusedBorder: new OutlineInputBorder(
-                      borderSide: BorderSide(
-                          color: kPrimaryColorBlue,
-                          width: 0.5),
-                      borderRadius: const BorderRadius.all(Radius.circular(35.0)),
-                    ),
-                    prefixIcon: Icon(
-                      FontAwesomeIcons.envelope,
-                      color: kPrimaryColorBlue,
-                      size: 23.0,
-                    ),
-                    labelText: "Alternate Email",
-                    labelStyle: TextStyle(
-                        fontFamily: "PoppinsLight", fontSize: 13.0, color: kPrimaryColorBlue),
-                  ),
-                ),
-              ),
-              Container(
-                width: size.width * 0.95,
-                padding: EdgeInsets.only(top: 0.0, bottom: 10.0, left: 0.0, right: 0.0),
-                child: new TextField(
-                  focusNode: myFocusNodePan,
-                  controller: panController,
-                  keyboardType: TextInputType.text,
-                  maxLength: 10,
-                  textCapitalization: TextCapitalization.characters,
-                  onChanged: (value) {
-                    if (value.length <= maxPan) {
-                      textPan = value;
-                    } else {
-                      panController.value = new TextEditingValue(
-                          text: textPan,
-                          selection: new TextSelection(
-                              baseOffset: maxPan,
-                              extentOffset: maxPan,
-                              affinity: TextAffinity.downstream,
-                              isDirectional: false),
-                          composing: new TextRange(start: 0, end: maxPan));
-                      panController.text = textPan;
-                    }
 
-                    setState(() {
-                      _isButtonDisabledColor = false;
-                      _isButtonDisabled = false;
-                    });
-                    if (value.length == 10) {
-                      validatePan(value)
-                          ? showInSnackBar('Valid Pan Number', 2)
-                          : showInSnackBar("Invalid Pan Number", 2);
-                    }
-                  },
-                  style: TextStyle(
-                      //fontFamily: "PoppinsBold",
-                      fontSize: 17.0,
-                      color: Colors.black87),
-                  decoration: InputDecoration(
-                    border: InputBorder.none,
-                    counterStyle: TextStyle(height: double.minPositive,),
-                    counterText: "",
-                    contentPadding: const EdgeInsets.symmetric(vertical: 0.0),
-                    enabledBorder: OutlineInputBorder(
-                      borderSide: BorderSide(
-                          color: kPrimaryColorBlue,
-                          width: 0.5
-                      ),
-                      borderRadius: const BorderRadius.all(Radius.circular(35.0)),
-                    ),
-                    focusedBorder: new OutlineInputBorder(
-                      borderSide: BorderSide(
-                          color: kPrimaryColorBlue,
-                          width: 0.5),
-                      borderRadius: const BorderRadius.all(Radius.circular(35.0)),
-                    ),
-                    prefixIcon: Icon(
-                      FontAwesomeIcons.idCard,
-                      color: kPrimaryColorBlue,
-                      size: 23.0,
-                    ),
-                    labelText: "Pan No.*",
-                    labelStyle: TextStyle(
-                        fontFamily: "PoppinsLight", fontSize: 13.0, color: kPrimaryColorBlue),
-                  ),
-                ),
-              ),
-              Container(
-                width: size.width * 0.95,
-                padding: EdgeInsets.only(top: 0.0, bottom: 10.0, left: 0.0, right: 0.0),
-                child: new TextField(
-                  focusNode: myFocusNodeGst,
-                  controller: gstController,
-                  keyboardType: TextInputType.text,
-                  maxLength: 15,
-                  textCapitalization: TextCapitalization.characters,
-                  onChanged: (value) {
-                    if (value.length <= maxGst) {
-                      textGst = value;
-                    } else {
-                      gstController.value = new TextEditingValue(
-                          text: textGst,
-                          selection: new TextSelection(
-                              baseOffset: maxGst,
-                              extentOffset: maxGst,
-                              affinity: TextAffinity.downstream,
-                              isDirectional: false),
-                          composing: new TextRange(start: 0, end: maxGst));
-                      gstController.text = textGst;
-                    }
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Container(
+                  width: MediaQuery.of(context).size.width,
+                  height: 45,
 
-                    setState(() {
-                      _isButtonDisabledColor = false;
-                      _isButtonDisabled = false;
-                    });
-                  },
-                  style: TextStyle(
-                      //fontFamily: "PoppinsBold",
-                      fontSize: 17.0,
-                      color: Colors.black87),
-                  decoration: InputDecoration(
-                    border: InputBorder.none,
-                    counterStyle: TextStyle(height: double.minPositive,),
-                    counterText: "",
-                    contentPadding: const EdgeInsets.symmetric(vertical: 0.0),
-                    enabledBorder: OutlineInputBorder(
-                      borderSide: BorderSide(
-                          color: kPrimaryColorBlue,
-                          width: 0.5
-                      ),
-                      borderRadius: const BorderRadius.all(Radius.circular(35.0)),
-                    ),
-                    focusedBorder: new OutlineInputBorder(
-                      borderSide: BorderSide(
-                          color: kPrimaryColorBlue,
-                          width: 0.5),
-                      borderRadius: const BorderRadius.all(Radius.circular(35.0)),
-                    ),
-                    prefixIcon: Icon(
-                      FontAwesomeIcons.creditCard,
-                      color: kPrimaryColorBlue,
-                      size: 23.0,
-                    ),
-                    labelText: "GSTIN",
-                    labelStyle: TextStyle(
-                        fontFamily: "PoppinsLight", fontSize: 13.0, color: kPrimaryColorBlue),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(25.0),
+                    color: AppColors.kPrimaryColorBlue,
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.only(top: 7.0),
+                    child: Text("Bank Details",textAlign: TextAlign.center,
+                      style: TextStyle(
+                        fontSize: 20,
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                      ),),
                   ),
                 ),
               ),
-              Container(
-                width: size.width * 0.95,
-                padding: EdgeInsets.only(top: 0.0, bottom: 10.0, left: 0.0, right: 0.0),
-                child: new TextField(
-                  focusNode: myFocusNodeCin,
-                  controller: cinController,
-                  keyboardType: TextInputType.text,
-                  maxLength: 21,
-                  textCapitalization: TextCapitalization.characters,
-                  onChanged: (value) {
-                    setState(() {
-                      if (value.length <= maxCin) {
-                        textCin = value;
-                      } else {
-                        cinController.value = new TextEditingValue(
-                            text: textCin,
-                            selection: new TextSelection(
-                                baseOffset: maxCin,
-                                extentOffset: maxCin,
-                                affinity: TextAffinity.downstream,
-                                isDirectional: false),
-                            composing: new TextRange(start: 0, end: maxCin));
-                        cinController.text = textCin;
-                      }
+              SizedBox(height: 20.0,),
+              Card(
+                child:
+                Column(
+                    children:[
+                      Container(
+                        width: size.width * 0.95,
+                        padding: EdgeInsets.only(top: 0.0, bottom: 10.0, left: 0.0, right: 0.0),
+                        child: new TextField(
+                          focusNode: myFocusNodeAccount,
+                          controller: accController,
+                          keyboardType: TextInputType.number,
+                          inputFormatters: <TextInputFormatter>[
+                            FilteringTextInputFormatter.digitsOnly
+                          ],
+                          onChanged: (value) {
+                            setState(() {
+                              _isButtonDisabledColor = false;
+                              _isButtonDisabled = false;
+                            });
+                          },
+                          style: TextStyle(
+                            //fontFamily: "PoppinsBold",
+                              fontSize: 17.0,
+                              color: Colors.black87),
+                          decoration: InputDecoration(
+                            border: InputBorder.none,
+                            counterStyle: TextStyle(height: double.minPositive,),
+                            counterText: "",
+                            contentPadding: const EdgeInsets.symmetric(vertical: 0.0),
+                            enabledBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                  color: kPrimaryColorBlue,
+                                  width: 0.5
+                              ),
+                              borderRadius: const BorderRadius.all(Radius.circular(35.0)),
+                            ),
+                            focusedBorder: new OutlineInputBorder(
+                              borderSide: BorderSide(
+                                  color: kPrimaryColorBlue,
+                                  width: 0.5),
+                              borderRadius: const BorderRadius.all(Radius.circular(35.0)),
+                            ),
+                            prefixIcon: Icon(
+                              FontAwesomeIcons.university,
+                              color: kPrimaryColorBlue,
+                              size: 23.0,
+                            ),
+                            labelText: "Bank Account No.*",
+                            labelStyle: TextStyle(
+                                fontFamily: "PoppinsLight", fontSize: 13.0, color: kPrimaryColorBlue),
+                          ),
+                        ),
+                      ),
+                      Container(
+                        width: size.width * 0.95,
+                        padding: EdgeInsets.only(top: 0.0, bottom: 10.0, left: 0.0, right: 0.0),
+                        child: new TextField(
+                          focusNode: myFocusNodeIfsc,
+                          controller: ifscController,
+                          maxLength: 11,
+                          textCapitalization: TextCapitalization.characters,
+                          onChanged: (value) {
+                            if (value.length <= maxIfsc) {
+                              textIfsc = value;
+                            } else {
+                              gstController.value = new TextEditingValue(
+                                  text: textIfsc,
+                                  selection: new TextSelection(
+                                      baseOffset: maxIfsc,
+                                      extentOffset: maxIfsc,
+                                      affinity: TextAffinity.downstream,
+                                      isDirectional: false),
+                                  composing: new TextRange(start: 0, end: maxIfsc));
+                              ifscController.text = textIfsc;
+                            }
 
-                      _isButtonDisabledColor = false;
-                      _isButtonDisabled = false;
-                    });
-                  },
-                  style: TextStyle(
-                      //fontFamily: "PoppinsBold",
-                      fontSize: 17.0,
-                      color: Colors.black87),
-                  decoration: InputDecoration(
-                    border: InputBorder.none,
-                    counterStyle: TextStyle(height: double.minPositive,),
-                    counterText: "",
-                    contentPadding: const EdgeInsets.symmetric(vertical: 0.0),
-                    enabledBorder: OutlineInputBorder(
-                      borderSide: BorderSide(
-                          color: kPrimaryColorBlue,
-                          width: 0.5
+                            setState(() {
+                              _isButtonDisabledColor = false;
+                              _isButtonDisabled = false;
+                            });
+                            if (value.length == 11) {
+                              validateIFSC(value)
+                                  ? showInSnackBar('Valid IFSC Code', 2)
+                                  : showInSnackBar("Invalid IFSC Code", 2);
+                            }
+                          },
+                          style: TextStyle(
+                            //fontFamily: "PoppinsBold",
+                              fontSize: 17.0,
+                              color: Colors.black87),
+                          decoration: InputDecoration(
+                            border: InputBorder.none,
+                            counterStyle: TextStyle(height: double.minPositive,),
+                            counterText: "",
+                            contentPadding: const EdgeInsets.symmetric(vertical: 0.0),
+                            enabledBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                  color: kPrimaryColorBlue,
+                                  width: 0.5
+                              ),
+                              borderRadius: const BorderRadius.all(Radius.circular(35.0)),
+                            ),
+                            focusedBorder: new OutlineInputBorder(
+                              borderSide: BorderSide(
+                                  color: kPrimaryColorBlue,
+                                  width: 0.5),
+                              borderRadius: const BorderRadius.all(Radius.circular(35.0)),
+                            ),
+                            prefixIcon: Icon(
+                              FontAwesomeIcons.university,
+                              color: kPrimaryColorBlue,
+                              size: 23.0,
+                            ),
+                            labelText: "Bank IFSC Code*",
+                            labelStyle: TextStyle(
+                                fontFamily: "PoppinsLight", fontSize: 13.0, color: kPrimaryColorBlue),
+                          ),
+                        ),
                       ),
-                      borderRadius: const BorderRadius.all(Radius.circular(35.0)),
-                    ),
-                    focusedBorder: new OutlineInputBorder(
-                      borderSide: BorderSide(
-                          color: kPrimaryColorBlue,
-                          width: 0.5),
-                      borderRadius: const BorderRadius.all(Radius.circular(35.0)),
-                    ),
-                    prefixIcon: Icon(
-                      FontAwesomeIcons.creditCard,
-                      color: kPrimaryColorBlue,
-                      size: 23.0,
-                    ),
-                    labelText: "CIN",
-                    labelStyle: TextStyle(
-                        fontFamily: "PoppinsLight", fontSize: 13.0, color: kPrimaryColorBlue),
-                  ),
+                      Container(
+                        width: size.width * 0.95,
+                        padding: EdgeInsets.only(top: 0.0, bottom: 10.0, left: 0.0, right: 0.0),
+                        child: new TextField(
+                          focusNode: myFocusNodeBank,
+                          controller: bnameController,
+                          onChanged: (value) {
+                            setState(() {
+                              _isButtonDisabledColor = false;
+                              _isButtonDisabled = false;
+                            });
+                          },
+                          style: TextStyle(
+                            //fontFamily: "PoppinsBold",
+                              fontSize: 17.0,
+                              color: Colors.black87),
+                          decoration: InputDecoration(
+                            border: InputBorder.none,
+                            counterStyle: TextStyle(height: double.minPositive,),
+                            counterText: "",
+                            contentPadding: const EdgeInsets.symmetric(vertical: 0.0),
+                            enabledBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                  color: kPrimaryColorBlue,
+                                  width: 0.5
+                              ),
+                              borderRadius: const BorderRadius.all(Radius.circular(35.0)),
+                            ),
+                            focusedBorder: new OutlineInputBorder(
+                              borderSide: BorderSide(
+                                  color: kPrimaryColorBlue,
+                                  width: 0.5),
+                              borderRadius: const BorderRadius.all(Radius.circular(35.0)),
+                            ),
+                            prefixIcon: Icon(
+                              FontAwesomeIcons.university,
+                              color: kPrimaryColorBlue,
+                              size: 23.0,
+                            ),
+                            labelText: "Bank Name*",
+                            labelStyle: TextStyle(
+                                fontFamily: "PoppinsLight", fontSize: 13.0, color: kPrimaryColorBlue),
+                          ),
+                        ),
+                      ),
+                      Container(
+                        width: size.width * 0.95,
+                        padding: EdgeInsets.only(top: 0.0, bottom: 10.0, left: 0.0, right: 0.0),
+                        child: new TextField(
+                          focusNode: myFocusNodeBranch,
+                          controller: branchController,
+                          onChanged: (value) {
+                            setState(() {
+                              _isButtonDisabledColor = false;
+                              _isButtonDisabled = false;
+                            });
+                          },
+                          style: TextStyle(
+                            //fontFamily: "PoppinsBold",
+                              fontSize: 17.0,
+                              color: Colors.black87),
+                          decoration: InputDecoration(
+                            border: InputBorder.none,
+                            counterStyle: TextStyle(height: double.minPositive,),
+                            counterText: "",
+                            contentPadding: const EdgeInsets.symmetric(vertical: 0.0),
+                            enabledBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                  color: kPrimaryColorBlue,
+                                  width: 0.5
+                              ),
+                              borderRadius: const BorderRadius.all(Radius.circular(35.0)),
+                            ),
+                            focusedBorder: new OutlineInputBorder(
+                              borderSide: BorderSide(
+                                  color: kPrimaryColorBlue,
+                                  width: 0.5),
+                              borderRadius: const BorderRadius.all(Radius.circular(35.0)),
+                            ),
+                            prefixIcon: Icon(
+                              FontAwesomeIcons.university,
+                              color: kPrimaryColorBlue,
+                              size: 23.0,
+                            ),
+                            labelText: "Branch Name*",
+                            labelStyle: TextStyle(
+                                fontFamily: "PoppinsLight", fontSize: 13.0, color: kPrimaryColorBlue),
+                          ),
+                        ),
+                      ),
+                    ]
                 ),
               ),
-              Container(
-                width: size.width * 0.95,
-                padding: EdgeInsets.only(top: 0.0, bottom: 10.0, left: 0.0, right: 0.0),
-                child: new TextField(
-                  focusNode: myFocusNodeAccount,
-                  controller: accController,
-                  keyboardType: TextInputType.number,
-                  inputFormatters: <TextInputFormatter>[
-                    FilteringTextInputFormatter.digitsOnly
-                  ],
-                  onChanged: (value) {
-                    setState(() {
-                      _isButtonDisabledColor = false;
-                      _isButtonDisabled = false;
-                    });
-                  },
-                  style: TextStyle(
-                      //fontFamily: "PoppinsBold",
-                      fontSize: 17.0,
-                      color: Colors.black87),
-                  decoration: InputDecoration(
-                    border: InputBorder.none,
-                    counterStyle: TextStyle(height: double.minPositive,),
-                    counterText: "",
-                    contentPadding: const EdgeInsets.symmetric(vertical: 0.0),
-                    enabledBorder: OutlineInputBorder(
-                      borderSide: BorderSide(
-                          color: kPrimaryColorBlue,
-                          width: 0.5
-                      ),
-                      borderRadius: const BorderRadius.all(Radius.circular(35.0)),
-                    ),
-                    focusedBorder: new OutlineInputBorder(
-                      borderSide: BorderSide(
-                          color: kPrimaryColorBlue,
-                          width: 0.5),
-                      borderRadius: const BorderRadius.all(Radius.circular(35.0)),
-                    ),
-                    prefixIcon: Icon(
-                      FontAwesomeIcons.university,
-                      color: kPrimaryColorBlue,
-                      size: 23.0,
-                    ),
-                    labelText: "Bank Account No.*",
-                    labelStyle: TextStyle(
-                        fontFamily: "PoppinsLight", fontSize: 13.0, color: kPrimaryColorBlue),
-                  ),
-                ),
-              ),
-              Container(
-                width: size.width * 0.95,
-                padding: EdgeInsets.only(top: 0.0, bottom: 10.0, left: 0.0, right: 0.0),
-                child: new TextField(
-                  focusNode: myFocusNodeIfsc,
-                  controller: ifscController,
-                  maxLength: 11,
-                  textCapitalization: TextCapitalization.characters,
-                  onChanged: (value) {
-                    if (value.length <= maxIfsc) {
-                      textIfsc = value;
-                    } else {
-                      gstController.value = new TextEditingValue(
-                          text: textIfsc,
-                          selection: new TextSelection(
-                              baseOffset: maxIfsc,
-                              extentOffset: maxIfsc,
-                              affinity: TextAffinity.downstream,
-                              isDirectional: false),
-                          composing: new TextRange(start: 0, end: maxIfsc));
-                      ifscController.text = textIfsc;
-                    }
 
-                    setState(() {
-                      _isButtonDisabledColor = false;
-                      _isButtonDisabled = false;
-                    });
-                    if (value.length == 11) {
-                      validateIFSC(value)
-                          ? showInSnackBar('Valid IFSC Code', 2)
-                          : showInSnackBar("Invalid IFSC Code", 2);
-                    }
-                  },
-                  style: TextStyle(
-                      //fontFamily: "PoppinsBold",
-                      fontSize: 17.0,
-                      color: Colors.black87),
-                  decoration: InputDecoration(
-                    border: InputBorder.none,
-                    counterStyle: TextStyle(height: double.minPositive,),
-                    counterText: "",
-                    contentPadding: const EdgeInsets.symmetric(vertical: 0.0),
-                    enabledBorder: OutlineInputBorder(
-                      borderSide: BorderSide(
-                          color: kPrimaryColorBlue,
-                          width: 0.5
-                      ),
-                      borderRadius: const BorderRadius.all(Radius.circular(35.0)),
-                    ),
-                    focusedBorder: new OutlineInputBorder(
-                      borderSide: BorderSide(
-                          color: kPrimaryColorBlue,
-                          width: 0.5),
-                      borderRadius: const BorderRadius.all(Radius.circular(35.0)),
-                    ),
-                    prefixIcon: Icon(
-                      FontAwesomeIcons.university,
-                      color: kPrimaryColorBlue,
-                      size: 23.0,
-                    ),
-                    labelText: "Bank IFSC Code*",
-                    labelStyle: TextStyle(
-                        fontFamily: "PoppinsLight", fontSize: 13.0, color: kPrimaryColorBlue),
-                  ),
-                ),
-              ),
-              Container(
-                width: size.width * 0.95,
-                padding: EdgeInsets.only(top: 0.0, bottom: 10.0, left: 0.0, right: 0.0),
-                child: new TextField(
-                  focusNode: myFocusNodeBank,
-                  controller: bnameController,
-                  onChanged: (value) {
-                    setState(() {
-                      _isButtonDisabledColor = false;
-                      _isButtonDisabled = false;
-                    });
-                  },
-                  style: TextStyle(
-                      //fontFamily: "PoppinsBold",
-                      fontSize: 17.0,
-                      color: Colors.black87),
-                  decoration: InputDecoration(
-                    border: InputBorder.none,
-                    counterStyle: TextStyle(height: double.minPositive,),
-                    counterText: "",
-                    contentPadding: const EdgeInsets.symmetric(vertical: 0.0),
-                    enabledBorder: OutlineInputBorder(
-                      borderSide: BorderSide(
-                          color: kPrimaryColorBlue,
-                          width: 0.5
-                      ),
-                      borderRadius: const BorderRadius.all(Radius.circular(35.0)),
-                    ),
-                    focusedBorder: new OutlineInputBorder(
-                      borderSide: BorderSide(
-                          color: kPrimaryColorBlue,
-                          width: 0.5),
-                      borderRadius: const BorderRadius.all(Radius.circular(35.0)),
-                    ),
-                    prefixIcon: Icon(
-                      FontAwesomeIcons.university,
-                      color: kPrimaryColorBlue,
-                      size: 23.0,
-                    ),
-                    labelText: "Bank Name*",
-                    labelStyle: TextStyle(
-                        fontFamily: "PoppinsLight", fontSize: 13.0, color: kPrimaryColorBlue),
-                  ),
-                ),
-              ),
-              Container(
-                width: size.width * 0.95,
-                padding: EdgeInsets.only(top: 0.0, bottom: 10.0, left: 0.0, right: 0.0),
-                child: new TextField(
-                  focusNode: myFocusNodeBranch,
-                  controller: branchController,
-                  onChanged: (value) {
-                    setState(() {
-                      _isButtonDisabledColor = false;
-                      _isButtonDisabled = false;
-                    });
-                  },
-                  style: TextStyle(
-                      //fontFamily: "PoppinsBold",
-                      fontSize: 17.0,
-                      color: Colors.black87),
-                  decoration: InputDecoration(
-                    border: InputBorder.none,
-                    counterStyle: TextStyle(height: double.minPositive,),
-                    counterText: "",
-                    contentPadding: const EdgeInsets.symmetric(vertical: 0.0),
-                    enabledBorder: OutlineInputBorder(
-                      borderSide: BorderSide(
-                          color: kPrimaryColorBlue,
-                          width: 0.5
-                      ),
-                      borderRadius: const BorderRadius.all(Radius.circular(35.0)),
-                    ),
-                    focusedBorder: new OutlineInputBorder(
-                      borderSide: BorderSide(
-                          color: kPrimaryColorBlue,
-                          width: 0.5),
-                      borderRadius: const BorderRadius.all(Radius.circular(35.0)),
-                    ),
-                    prefixIcon: Icon(
-                      FontAwesomeIcons.university,
-                      color: kPrimaryColorBlue,
-                      size: 23.0,
-                    ),
-                    labelText: "Branch Name*",
-                    labelStyle: TextStyle(
-                        fontFamily: "PoppinsLight", fontSize: 13.0, color: kPrimaryColorBlue),
-                  ),
-                ),
-              ),
+
+
+
             ],
           ),
         ),

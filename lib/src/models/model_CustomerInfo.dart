@@ -31,19 +31,31 @@ class CInfo {
 class Datum {
   Datum({
     this.mobileNo,
-    this.amount,
+    this.name,
+    this.email,
+    this.state,
+    this.city,
   });
 
   String mobileNo;
-  String amount;
+  String name;
+  String email;
+  String state;
+  String city;
 
   factory Datum.fromJson(Map<String, dynamic> json) => Datum(
-    mobileNo: (json["mobile_no"].toString().isEmpty) ? "--//--" : json["mobile_no"],
-    amount: (json["amount"].toString().isEmpty) ? "--//--" : json["amount"],
+    mobileNo: (json["mobile_no"].toString().isEmpty) ? "" : json["mobile_no"],
+    name: (json["name"].toString().isEmpty) ? "" : json["name"],
+    email: (json["email"].toString().isEmpty) ? "" : json["email"],
+    state: (json["state"].toString().isEmpty) ? "" : json["state"],
+    city: (json["city"].toString().isEmpty) ? "" : json["city"],
   );
 
   Map<String, dynamic> toJson() => {
     "mobile_no": mobileNo,
-    "amount": amount,
+    "name": name,
+    "email": email,
+    "state": state,
+    "city": city,
   };
 }

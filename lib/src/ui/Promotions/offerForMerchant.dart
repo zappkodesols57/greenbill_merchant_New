@@ -178,8 +178,8 @@ class _MyOfferListState extends State<MyOfferList> {
                                     "Audience : "+snapshot.data[index].offerType.toString(),
                                     style: TextStyle(fontSize: 13.0, fontFamily: "PoppinsMedium", fontWeight: FontWeight.bold)
                                 ),
-                                subtitle: Text((snapshot.data[index].status=="0")?'Status : Waiting For Approval \nValid Till : ${snapshot.data[index].validThrough}':'Status :Approved \nValid Till : ${snapshot.data[index].validThrough}',
-                                    style: TextStyle(fontSize: 10.0)) ,
+                                subtitle: Text((snapshot.data[index].status=="0")?'Status : Waiting For Approval \nValid Till : ${snapshot.data[index].validThrough}': (snapshot.data[index].status == "2") ?'Status : Disapproved \nValid Till : ${snapshot.data[index].validThrough}' :'Status : Approved \nValid Till : ${snapshot.data[index].validThrough}',
+                                    style: TextStyle(fontSize: 10.0)),
                                 trailing: Wrap(
                                   spacing: 12, // space between two icons
                                   crossAxisAlignment:

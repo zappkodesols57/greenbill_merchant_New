@@ -177,13 +177,17 @@ class CustomerInfoState extends State<CustomerInfo> {
                                 return Card(
                                   child: ListTile(
                                     title: Text(
-                                        snapshot.data[index].mobileNo,
+                                        "Mobile No. : ${snapshot.data[index].mobileNo}",
                                         style: TextStyle(fontSize: 15.0)
                                     ),
-                                    trailing: Text("₹ ${snapshot.data[index].amount+"0"}", style: TextStyle(fontWeight: FontWeight.bold)),
+                                    subtitle: Text(
+                                      "Name : ${snapshot.data[index].name}\nEmail : ${snapshot.data[index].email}\nState : ${snapshot.data[index].state}\nCity : ${snapshot.data[index].city}",
+                                        style: TextStyle(fontSize: 12.0)
+                                    ),
+                                    // trailing: Text("₹ ${snapshot.data[index].amount}", style: TextStyle(fontWeight: FontWeight.bold)),
                                     onTap: (){
                                       Navigator.push(context, MaterialPageRoute(builder:  (context)=>CustomerDetailInfo(token, id, storeID,
-                                          snapshot.data[index].mobileNo, snapshot.data[index].amount+"0")));
+                                          snapshot.data[index].mobileNo)));
                                     },
                                   ),
                                 );

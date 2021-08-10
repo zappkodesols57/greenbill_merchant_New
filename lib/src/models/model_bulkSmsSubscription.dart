@@ -40,14 +40,24 @@ class Datu {
     this.discountAmount,
     this.createdDate,
     this.isActive,
+    this.totalAmt,
+    this.gstAmt,
+    this.cgst,
+    this.igst,
+    this.sgst,
   });
 
   int id;
   String subscriptionName;
   String totalSms;
   String perSmsCost;
-  String totalSmsCost;
+  double totalSmsCost;
   String discountIn;
+  String totalAmt;
+  String gstAmt;
+  int sgst;
+  int cgst;
+  int igst;
   String discountPercentage;
   String discountAmount;
   DateTime createdDate;
@@ -63,6 +73,11 @@ class Datu {
     discountPercentage: json["discount_percentage"],
     discountAmount: json["discount_amount"],
     createdDate: DateTime.parse(json["created_date"]),
+    totalAmt: json["total_amount"],
+    gstAmt: json["gst_amount"],
+    sgst: json["sgst_value"],
+    cgst: json["cgst_value"],
+    igst: json["igst_value"],
     isActive: json["is_active"],
   );
 
@@ -75,6 +90,11 @@ class Datu {
     "discount_in": discountIn,
     "discount_percentage": discountPercentage,
     "discount_amount": discountAmount,
+    "total_amount": totalAmt,
+    "gst_amount": gstAmt,
+    "sgst_value": sgst,
+    "cgst_value": cgst,
+    "igst_value": igst,
     "created_date": createdDate.toIso8601String(),
     "is_active": isActive,
   };

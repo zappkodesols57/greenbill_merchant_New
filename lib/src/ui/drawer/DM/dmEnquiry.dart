@@ -287,7 +287,7 @@ class DmEnquiryState extends State<DmEnquiry> {
                     );
                   }).toList(),
                   hint: Text(
-                    "Select Business",
+                    "Select Business *",
                     style: TextStyle(
                         fontFamily: "PoppinsLight",
                         fontSize: 13.0,

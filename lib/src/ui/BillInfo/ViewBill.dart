@@ -134,7 +134,6 @@ class _ViewBillState extends State<ViewBill> {
           body: Column(
             children: [
 
-
               Expanded(
                 child: (widget.billUrl.isEmpty) ? Center(
                     child: CircularProgressIndicator(

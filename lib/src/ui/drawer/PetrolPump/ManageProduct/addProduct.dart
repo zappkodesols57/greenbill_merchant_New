@@ -175,9 +175,8 @@ class AddProductsState extends State<AddProducts> {
               controller: costController,
               keyboardType: TextInputType.number,
               inputFormatters: <TextInputFormatter>[
-                FilteringTextInputFormatter.digitsOnly
+                LengthLimitingTextInputFormatter(5)
               ],
-              maxLength: 5,
               style: TextStyle(
                   fontFamily: "PoppinsMedium",
                   fontSize: 13.0,
