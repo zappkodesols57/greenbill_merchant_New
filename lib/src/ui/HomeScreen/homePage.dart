@@ -1547,7 +1547,7 @@ class _HomePageState extends State<HomePage> {
                 SizedBox(height: 10.0,),
                 (!_headerEnabled) ? Container(
                     width: size.width * 0.95,
-                    height: size.height * 0.5,
+                    height: size.height * 0.45,
                     padding: EdgeInsets.only(top: 10.0, bottom: 10.0),
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.all(Radius.circular(30)),
@@ -1676,7 +1676,6 @@ class _HomePageState extends State<HomePage> {
       legend: Legend(isVisible: true, position: LegendPosition.bottom),
 
       primaryXAxis: CategoryAxis(
-        visibleMaximum: 7.0,
           majorGridLines: MajorGridLines(width: 0),
           labelPlacement: LabelPlacement.onTicks),
 
@@ -1749,10 +1748,9 @@ class _HomePageState extends State<HomePage> {
       legend: Legend(
         isVisible: true,
         position: LegendPosition.bottom,
-        overflowMode: LegendItemOverflowMode.wrap,
+        // overflowMode: LegendItemOverflowMode.wrap,
       ),
       primaryXAxis: CategoryAxis(
-          visibleMaximum: 7.0,
           majorGridLines: MajorGridLines(width: 0),
           labelPlacement: LabelPlacement.onTicks),
       primaryYAxis: NumericAxis(

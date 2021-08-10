@@ -14,7 +14,15 @@ class TabBarPromotions extends StatelessWidget {
         length: 2,
         child: Scaffold(
           appBar: AppBar(
-            toolbarHeight: 50.0,
+            title: Text('Promotions'),
+            elevation: 0,
+            leading: IconButton(
+              icon: Icon(Icons.arrow_back_ios),
+              onPressed: () {
+                Navigator.pop(context, false);
+              },
+            ),
+            toolbarHeight: 110.0,
             backgroundColor:  kPrimaryColorBlue,
             bottom: TabBar(
               tabs: [

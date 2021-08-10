@@ -755,10 +755,10 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
                     Navigator.push(context,
                         MaterialPageRoute(builder: (context) => ReceivedPayments()));
                   }),*/
-
+                if(storeCatID != "11" && storeCatID != "12")
                 ListTile(
                     dense: false,
-                    title: Text("Offers"),
+                    title: Text("Promotions"),
                     leading: Container(
                       width: 35.0,
                       height: 35.0,
@@ -768,13 +768,13 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
                         borderRadius: new BorderRadius.circular(25.0),
                       ),
                       alignment: Alignment.center,
-                      child: new Icon(CupertinoIcons.gift,
+                      child: new Icon(CupertinoIcons.ticket,
                           color: kPrimaryColorBlue, size: 25.0),
                     ),
                     onTap: () {
                       Navigator.of(context).pop();
                       Navigator.push(context,
-                          MaterialPageRoute(builder: (context) => OffersList()));
+                          MaterialPageRoute(builder: (context) => TabBarPromotions()));
                     }
                 ),
                 if(storeCatID == "12")
@@ -1069,7 +1069,7 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
           HomePage(),
           BillsTab(storeCatID,length),
           PayLinks(),
-          TabBarPromotions(),
+          OffersList(),
           HistoryTab(),
 
         ],
@@ -1156,18 +1156,18 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
           ),
           (_page == 3)
               ? Icon(
-            CupertinoIcons.ticket,
+            CupertinoIcons.gift,
             color: Colors.white,
           )
               : Column(
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
               Icon(
-                CupertinoIcons.ticket,
+                CupertinoIcons.gift,
                 color: Colors.white,
               ),
               Text(
-                "Promotions",
+                "Offers",
                 style: TextStyle(
                     color: Colors.white,
                     fontSize: 10.0,

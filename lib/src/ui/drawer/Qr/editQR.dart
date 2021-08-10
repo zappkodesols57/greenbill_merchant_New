@@ -71,6 +71,7 @@ class EditQRState extends State<EditQR> {
   capture() async {
     print("capturing...........................");
     screenshotController.capture(pixelRatio: 2).then((File image) {
+
       Share.shareFiles([image.path], text: nameController.text);
     }).catchError((onError) {
       print(onError);
