@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:greenbill_merchant/src/constants.dart';
+import 'package:greenbill_merchant/src/ui/MySubcription/newSubFile.dart';
 import 'package:greenbill_merchant/src/ui/Profile/generalSetting.dart';
 import 'package:greenbill_merchant/src/ui/drawer/Settings/feedback.dart';
 import 'package:greenbill_merchant/src/ui/drawer/Settings/suggestBrand.dart';
@@ -132,6 +133,12 @@ class SettingsState extends State<Settings> {
           _buildListItem("General Settings", CupertinoIcons.settings, () {
             Navigator.push(context,
                 MaterialPageRoute(builder: (context) => GeneralSetting()));
+          }),
+          Divider(
+            thickness: 1.0,
+          ),
+          _buildListItem("My Subscription", CupertinoIcons.purchased, () {
+            Navigator.push(context, MaterialPageRoute(builder: (context) => subUpdated()));
           }),
           Divider(
             thickness: 1.0,

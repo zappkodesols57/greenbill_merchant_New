@@ -1169,7 +1169,6 @@ class MySubState extends State<MySub> {
                   ),
                 ]
             ),
-
           ),
           SizedBox(
             height: MediaQuery.of(context).size.width * 0.01,
@@ -1196,7 +1195,6 @@ class MySubState extends State<MySub> {
                   ),
                 ]
             ),
-
           ),
 
           SizedBox(
@@ -1223,7 +1221,6 @@ class MySubState extends State<MySub> {
                   ),
                 ]
             ),
-
           ),
           SizedBox(
             height: MediaQuery.of(context).size.width * 0.01,
@@ -1250,7 +1247,6 @@ class MySubState extends State<MySub> {
                   ),
                 ]
             ),
-
           ),
           SizedBox(
             height: MediaQuery.of(context).size.width * 0.03,
@@ -1261,8 +1257,9 @@ class MySubState extends State<MySub> {
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: <Widget>[
 
-                  Text("(Software Maintainance Cost :"+"₹"+
-                      data.softwareMaintainaceCost+")",
+                  Text((data.softwareMaintainaceCost == null)
+                    ?"(Software Maintainance Cost :"+"₹"+")"
+                    :"(Software Maintainance Cost :"+"₹"+ data.softwareMaintainaceCost+")",
                     style: TextStyle(
                         color: Colors.red,
                         fontSize: 12.0,

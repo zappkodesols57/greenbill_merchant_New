@@ -4,6 +4,8 @@ import 'package:dio/dio.dart';
 import 'package:greenbill_merchant/src/models/model_addOn.dart';
 import 'package:greenbill_merchant/src/models/model_transactional.dart';
 import 'package:greenbill_merchant/src/ui/HomeScreen/widgets/data_viz/circle/neuomorphic_circle.dart';
+import 'package:greenbill_merchant/src/ui/MySubcription/otherBuy.dart';
+import 'package:greenbill_merchant/src/ui/MySubcription/proceedToBuy.dart';
 import 'package:greenbill_merchant/src/ui/values/values.dart';
 import 'package:uuid/uuid.dart';
 import 'dart:io';
@@ -597,11 +599,13 @@ class RechargeState extends State<Recharge> {
                                                   ),
                                                   onPressed: () {
                                                     print(">>>>>>>>>${_launchPayURL}");
+                                                    print("User${snapshot.data[index].numberOfUsers}");
+                                                    Navigator.push(context, MaterialPageRoute(builder: (context) => ProceedToBuy(snapshot.data[index].numberOfUsers,snapshot.data[index].costPerUser,snapshot.data[index].igst.toString(),snapshot.data[index].cgst.toString(),snapshot.data[index].rechargeAmount.toString())));
                                                     // WebView(
                                                     //   javascriptMode: JavascriptMode.unrestricted,
                                                     //   initialUrl:"http://157.230.228.250/my-bill-merchant/58cSUH117fs/" ,
                                                     // );
-                                                    _launchPayURL(snapshot.data[index].totalAmt, snapshot.data[index].id.toString(),"Green Bill Subscription");
+                                                    // _launchPayURL(snapshot.data[index].totalAmt, snapshot.data[index].id.toString(),"Green Bill Subscription");
                                                   }),
                                             ],
                                           ),
@@ -858,7 +862,9 @@ class RechargeState extends State<Recharge> {
                                                   ),
                                                 ),
                                                 onPressed: () {
-                                                  _launchPayURL(snapshot.data[index].totalAmt, snapshot.data[index].id.toString(),"Promotional Sms Subscription");
+                                                  Navigator.push(context, MaterialPageRoute(builder: (context) => OtherBuy(snapshot.data[index].totalSmsCost,snapshot.data[index].igst.toString())));
+
+                                                  // _launchPayURL(snapshot.data[index].totalAmt, snapshot.data[index].id.toString(),"Promotional Sms Subscription");
 
                                                 }),
 
@@ -1143,7 +1149,8 @@ class RechargeState extends State<Recharge> {
                                                   ),
                                                 ),
                                                 onPressed: () {
-                                                  _launchPayURL(snapshot.data[index].totalAmt, snapshot.data[index].id.toString(),"Transactional Sms Subscription");
+                                                  Navigator.push(context, MaterialPageRoute(builder: (context) => OtherBuy(snapshot.data[index].totalSmsCost,snapshot.data[index].igst.toString())));
+                                                  // _launchPayURL(snapshot.data[index].totalAmt, snapshot.data[index].id.toString(),"Transactional Sms Subscription");
 
                                                 }),
 
@@ -1408,7 +1415,7 @@ class RechargeState extends State<Recharge> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           Container(
-            height: 80,
+            height: 60,
             width: double.maxFinite,
             child: Card(
               shape: RoundedRectangleBorder(
@@ -1425,19 +1432,11 @@ class RechargeState extends State<Recharge> {
                         crossAxisAlignment: CrossAxisAlignment.center,
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: <Widget>[
-                          Text(data.totalAmt,
+                          Text("₹ "+data.totalAmt,
                             textAlign: TextAlign.center,
                             style: TextStyle(
                                 color: Colors.white,
                                 fontSize: 20.0,
-                                fontFamily: "PoppinsBold"),
-                          ),
-                          Text(
-                            "Plan For - "+data.validForMonth+" Months",
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 12.0,
                                 fontFamily: "PoppinsBold"),
                           ),
                         ],

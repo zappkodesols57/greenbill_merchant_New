@@ -671,27 +671,27 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
                             MaterialPageRoute(builder: (context) => CustomerInfo()));
                       }
                   ),
-                ListTile(
-                    dense: false,
-                    title: Text("My Subscription"),
-                    leading: Container(
-                      width: 35.0,
-                      height: 35.0,
-                      margin: const EdgeInsets.only(right: 10.0),
-                      decoration: new BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: new BorderRadius.circular(25.0),
-                      ),
-                      alignment: Alignment.center,
-                      child: new Icon(CupertinoIcons.purchased,
-                          color: kPrimaryColorBlue, size: 25.0),
-                    ),
-                    onTap: () {
-                      Navigator.of(context).pop();
-                      Navigator.push(context,
-                          MaterialPageRoute(builder: (context) => subUpdated()));
-                    }
-                ),
+                // ListTile(
+                //     dense: false,
+                //     title: Text("My Subscription"),
+                //     leading: Container(
+                //       width: 35.0,
+                //       height: 35.0,
+                //       margin: const EdgeInsets.only(right: 10.0),
+                //       decoration: new BoxDecoration(
+                //         color: Colors.white,
+                //         borderRadius: new BorderRadius.circular(25.0),
+                //       ),
+                //       alignment: Alignment.center,
+                //       child: new Icon(CupertinoIcons.purchased,
+                //           color: kPrimaryColorBlue, size: 25.0),
+                //     ),
+                //     onTap: () {
+                //       Navigator.of(context).pop();
+                //       Navigator.push(context,
+                //           MaterialPageRoute(builder: (context) => subUpdated()));
+                //     }
+                // ),
                 ListTile(
                     dense: false,
                     title: Text("Ratings"),
