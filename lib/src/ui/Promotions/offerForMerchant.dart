@@ -170,7 +170,7 @@ class _MyOfferListState extends State<MyOfferList> {
                         return Hero(
                           tag: snapshot.data[index].id,
                           child: Card(
-                            elevation: 0.0,
+                            elevation: 5.0,
                             child: Center(
                               child: ListTile(
                                 dense: true,
@@ -181,25 +181,25 @@ class _MyOfferListState extends State<MyOfferList> {
                                 subtitle: Text((snapshot.data[index].status=="0")?'Status : Waiting For Approval \nValid Till : ${snapshot.data[index].validThrough}': (snapshot.data[index].status == "2") ?'Status : Disapproved \nValid Till : ${snapshot.data[index].validThrough}' :'Status : Approved \nValid Till : ${snapshot.data[index].validThrough}',
                                     style: TextStyle(fontSize: 10.0)),
                                 trailing: Wrap(
-                                  spacing: 12, // space between two icons
+                                  spacing: 30, // space between two icons
                                   crossAxisAlignment:
                                   WrapCrossAlignment.center,
                                   children: <Widget>[
 
                                     Text(
-                                        '\nClicks : ${snapshot.data[index].cout}',
+                                        'Clicks : ${snapshot.data[index].cout}',
                                         style: TextStyle(fontSize: 10.0,color: Colors.black54)),
-                                    IconButton(
-                                      icon: Icon(
-                                        CupertinoIcons.pencil_circle,
-                                        color: Colors.black,
-                                      ),
-                                      onPressed: () async {
-                                        _showLoaderDialog(context);
-                                        Navigator.of(context, rootNavigator: true).pop();
-                                        Navigator.push(context, MaterialPageRoute(builder: (context) => Offers(snapshot.data[index].offerName,snapshot.data[index].offerCaption,snapshot.data[index].offerImage,snapshot.data[index].validFrom,snapshot.data[index].validThrough,snapshot.data[index].offerType,snapshot.data[index].offerBusinessCategory,snapshot.data[index].id.toString())));
-                                      },
-                                    ),
+                                    // IconButton(
+                                    //   icon: Icon(
+                                    //     CupertinoIcons.pencil_circle,
+                                    //     color: Colors.black,
+                                    //   ),
+                                    //   onPressed: () async {
+                                    //     _showLoaderDialog(context);
+                                    //     Navigator.of(context, rootNavigator: true).pop();
+                                    //     Navigator.push(context, MaterialPageRoute(builder: (context) => Offers(snapshot.data[index].offerName,snapshot.data[index].offerCaption,snapshot.data[index].offerImage,snapshot.data[index].validFrom,snapshot.data[index].validThrough,snapshot.data[index].offerType,snapshot.data[index].offerBusinessCategory,snapshot.data[index].id.toString())));
+                                    //   },
+                                    // ),
                                     IconButton(
                                       icon: Icon(
                                         CupertinoIcons.delete,

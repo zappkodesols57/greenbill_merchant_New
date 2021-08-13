@@ -66,7 +66,7 @@ class BillRejectedState extends State<BillRejected> {
           .where((element) =>
       element.mobileNo.toString().toLowerCase().contains(query.text) ||
           element.invoiceNo.toString().toLowerCase().contains(query.text) ||
-          element.billId.toString().toLowerCase().contains(query.text))
+          element.billId.toString().toLowerCase().contains(query.text)|| element.amount.toString().contains(query.text))
           .toList();
 
     } else {

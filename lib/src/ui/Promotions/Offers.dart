@@ -876,7 +876,7 @@ class _OffersState extends State<Offers> {
       showInSnackBar("Please select To Date");
       return null;
     }
-    if (radioItem.isEmpty) {
+    if (radioItem == null) {
       showInSnackBar("Please select Audience");
       return null;
     }

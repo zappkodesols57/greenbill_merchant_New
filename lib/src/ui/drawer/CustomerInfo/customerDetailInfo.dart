@@ -12,9 +12,9 @@ import 'package:open_file/open_file.dart';
 import 'package:path_provider/path_provider.dart';
 
 class CustomerDetailInfo extends StatefulWidget {
-  final String token, id, storeID, mobileNo;
+  final String token, id, storeID, mobileNo,email,name;
   CustomerDetailInfo(
-      this.token, this.id, this.storeID, this.mobileNo);
+      this.token, this.id, this.storeID, this.mobileNo, this.email, this.name);
 
   @override
   CustomerDetailInfoState createState() => CustomerDetailInfoState();
@@ -118,19 +118,19 @@ class CustomerDetailInfoState extends State<CustomerDetailInfo> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  "Name         : ${snapshot.data.personalDetails.firstName} ${snapshot.data.personalDetails.lastName}",
+                                  "Name         : ${widget.name}",
                                   style: TextStyle(
                                       fontFamily: "PoppinsMedium",
                                       fontWeight: FontWeight.bold),
                                 ),
                                 Text(
-                                  "Mobile No.  : ${snapshot.data.personalDetails.mobileNo}",
+                                  "Mobile No.  : ${widget.mobileNo}",
                                   style: TextStyle(
                                       fontFamily: "PoppinsMedium",
                                       fontWeight: FontWeight.bold),
                                 ),
                                 Text(
-                                  "Email ID      : ${snapshot.data.personalDetails.email}",
+                                  "Email ID      : ${widget.email}",
                                   style: TextStyle(
                                       fontFamily: "PoppinsMedium",
                                       fontWeight: FontWeight.bold),

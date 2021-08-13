@@ -76,7 +76,7 @@ class BillIncomingState extends State<BillIncoming> {
           .where((element) =>
       element.businessName.toString().contains(query.text) ||
           element.invoiceNo.toString().toLowerCase().contains(query.text) ||
-          element.billId.toString().toLowerCase().contains(query.text))
+          element.billId.toString().toLowerCase().contains(query.text)|| element.billAmount.toString().contains(query.text))
           .toList();
 
     } else {

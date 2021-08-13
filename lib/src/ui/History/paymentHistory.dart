@@ -87,6 +87,7 @@ class HistoryState extends State<History> {
     final param = {
       "merchant_business_id": storeID,
     };
+
     final res = await http.post("http://157.230.228.250/merchant-get-payment-history-api/",
         body: param, headers: {HttpHeaders.authorizationHeader: "Token $token"});
 
@@ -262,7 +263,7 @@ class HistoryState extends State<History> {
                                         children: <Widget>[
 
                                           Text(
-                                              "₹ ${snapshot.data[index].cost.toString()}0",
+                                              "₹ ${snapshot.data[index].cost.toString()}",
                                               style: TextStyle(fontSize: 15.0, fontFamily: "PoppinsMedium", fontWeight: FontWeight.bold)
                                           ),
                                         ],

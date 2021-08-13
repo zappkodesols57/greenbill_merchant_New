@@ -551,7 +551,7 @@ class RechargeState extends State<Recharge> {
                                                     top: 0.0, bottom: 5.0, left: 5.0, right: 5.0),
                                                 width: size.width * 0.4,
                                                 child: Text(
-                                                  "₹ "+snapshot.data[index].subscriptionPlanCost.toString(),
+                                                  "₹ "+snapshot.data[index].costPerUser,
                                                   textAlign: TextAlign.center,
                                                   style: TextStyle(
                                                       color: kPrimaryColorBlue,
@@ -600,7 +600,7 @@ class RechargeState extends State<Recharge> {
                                                   onPressed: () {
                                                     print(">>>>>>>>>${_launchPayURL}");
                                                     print("User${snapshot.data[index].numberOfUsers}");
-                                                    Navigator.push(context, MaterialPageRoute(builder: (context) => ProceedToBuy(snapshot.data[index].numberOfUsers,snapshot.data[index].costPerUser,snapshot.data[index].igst.toString(),snapshot.data[index].cgst.toString(),snapshot.data[index].rechargeAmount.toString())));
+                                                    Navigator.push(context, MaterialPageRoute(builder: (context) => ProceedToBuy(snapshot.data[index].numberOfUsers,snapshot.data[index].costPerUser,snapshot.data[index].igst.toString(),snapshot.data[index].cgst.toString(),snapshot.data[index].rechargeAmount)));
                                                     // WebView(
                                                     //   javascriptMode: JavascriptMode.unrestricted,
                                                     //   initialUrl:"http://157.230.228.250/my-bill-merchant/58cSUH117fs/" ,
@@ -1543,6 +1543,45 @@ class RechargeState extends State<Recharge> {
                       top: 0.0, bottom: 5.0, left: 5.0, right: 5.0),
                   //width:MediaQuery.of(context).size.width* 0.5,
                   child: Text(
+                    "Recharge Amount",
+
+                    style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 12.0,
+                        fontFamily: "PoppinsBold"),
+                  ),
+                ),
+
+                Container(
+                  padding: EdgeInsets.only(
+                      top: 0.0, bottom: 5.0, left: 5.0, right: 5.0),
+                  // width:MediaQuery.of(context).size.width* 0.5,
+                  child: Text(
+                    "₹ "+data.rechargeAmount.toString(),
+                    textAlign: TextAlign.end,
+                    style: TextStyle(
+                        color: kPrimaryColorBlue,
+                        fontSize: 12.0,
+                        fontFamily: "PoppinsBold"),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          Container(
+            //width: MediaQuery.of(context).size.width,
+            padding: EdgeInsets.only(
+                top: 0.0, bottom: 5.0, left: 5.0, right: 5.0),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: <Widget>[
+
+                Container(
+                  padding: EdgeInsets.only(
+                      top: 0.0, bottom: 5.0, left: 5.0, right: 5.0),
+                  //width:MediaQuery.of(context).size.width* 0.5,
+                  child: Text(
                     "Per Bill Cost",
 
                     style: TextStyle(
@@ -1557,8 +1596,7 @@ class RechargeState extends State<Recharge> {
                       top: 0.0, bottom: 5.0, left: 5.0, right: 5.0),
                   // width:MediaQuery.of(context).size.width* 0.5,
                   child: Text(
-                    data.perBillCost.toString().contains(".")?
-                    "₹ "+data.perBillCost : "₹ "+data.perBillCost +".00",
+                    "₹ "+data.perBillCost.toString(),
                     textAlign: TextAlign.end,
                     style: TextStyle(
                         color: kPrimaryColorBlue,
@@ -1598,7 +1636,7 @@ class RechargeState extends State<Recharge> {
                       top: 0.0, bottom: 5.0, left: 5.0, right: 5.0),
                   // width:MediaQuery.of(context).size.width* 0.5,
                   child: Text(
-                    data.perDigitalBillCost.toString(),
+                    "₹ "+data.perDigitalBillCost.toString(),
                     textAlign: TextAlign.end,
                     style: TextStyle(
                         color: kPrimaryColorBlue,

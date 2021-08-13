@@ -1,7 +1,10 @@
+import 'dart:convert';
 import 'dart:core';
 import 'dart:io';
+import 'package:crypto/crypto.dart';
 import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:greenbill_merchant/src/models/model_getStoreCat.dart';
 import 'package:greenbill_merchant/src/ui/BillInfo/ViewBill.dart';
 import 'package:greenbill_merchant/src/ui/values/values.dart';
 import 'package:http/http.dart' as http;
@@ -11,6 +14,8 @@ import 'package:greenbill_merchant/src/models/model_getStore.dart';
 import 'package:greenbill_merchant/src/ui/HomeScreen/Home.dart';
 import 'package:multi_select_flutter/dialog/multi_select_dialog_field.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:url_launcher/url_launcher.dart';
+import 'package:uuid/uuid.dart';
 class OtherBuy extends StatefulWidget {
   final String igst;
   final double amount;
@@ -28,15 +33,31 @@ class _OtherBuyState extends State<OtherBuy> {
   String store = 'GB', storeID, storeAddress;
   PageController _pageController;
 
-  String token, businessLogo, storeCatID;
+  String token, businessLogo, storeCatID,number,nameOfBuss,userId,emailAddress,busId;
   int CPU,NOU,id;
   double IGST,Total;
+  List checkedValue = List();
 
   @override
   void initState() {
 
     super.initState();
     calculation();
+    getCredentials();
+  }
+
+  getCredentials() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    setState(() {
+      number = prefs.getString("mobile");
+      token = prefs.getString("token");
+      nameOfBuss=prefs.getString("fName");
+      userId=prefs.getInt("userID").toString();
+      emailAddress=prefs.getString("email");
+      busId =prefs.getString("businessID");
+      storeCatID = prefs.getString("businessCategoryID");
+    });
+    print('$token\n$busId');
   }
 
   calculation(){
@@ -44,6 +65,18 @@ class _OtherBuyState extends State<OtherBuy> {
       IGST = (18*widget.amount)/100;
       Total = widget.amount+IGST;
     });
+  }
+
+  void _onCategorySelected(bool selected, category_id) {
+    if (selected == true) {
+      setState(() {
+        checkedValue.add(category_id);
+      });
+    } else {
+      setState(() {
+        checkedValue.remove(category_id);
+      });
+    }
   }
 
 
@@ -67,55 +100,92 @@ class _OtherBuyState extends State<OtherBuy> {
             child: Center(
               child: Column(
                 children: [
+
                   Container(
-                    width: size.width * 0.90,
-                    padding: EdgeInsets.only(
-                        top: 20.0, bottom: 10.0, left: 0.0, right: 0.0),
-                    child: Container(
-                      child: new TextField(
-                        focusNode: new AlwaysDisabledFocusNode(),
-                        // inputFormatters: [FilteringTextInputFormatter.allow(RegExp("[a-zA-Z]")),],
-                        controller: nameController,
-                        maxLength: 20,
-                        style: TextStyle(
-                          //fontFamily: "PoppinsBold",
-                            fontSize: 17.0,
-                            color: Colors.black87),
-                        decoration: InputDecoration(
-                          border: InputBorder.none,
-                          counterStyle: TextStyle(
-                            height: double.minPositive,
-                          ),
-                          counterText: "",
-                          contentPadding: const EdgeInsets.symmetric(vertical: 0.0,horizontal: 15.0),
-                          enabledBorder: OutlineInputBorder(
-                            borderSide:
-                            BorderSide(color: kPrimaryColorBlue, width: 0.5),
-                            borderRadius:
-                            const BorderRadius.all(Radius.circular(35.0)),
-                          ),
-                          focusedBorder: new OutlineInputBorder(
-                            borderSide:
-                            BorderSide(color: kPrimaryColorBlue, width: 0.5),
-                            borderRadius:
-                            const BorderRadius.all(Radius.circular(35.0)),
-                          ),
-                          suffixIcon: IconButton(
-                            icon: Icon(Icons.arrow_drop_down),
-                            color: kPrimaryColorBlue,
-                            iconSize: 23.0,
-                          ),
-                          labelText: "Select business *",
-                          labelStyle: TextStyle(
-                              fontFamily: "PoppinsLight",
-                              fontSize: 13.0,
-                              color: kPrimaryColorBlue),
-                        ),
-                        onTap: (){
-                          showStoreDialog(context);
-                        },
-                      ),
+                    width: size.width * 0.95,
+                    height: size.height * 0.23,
+                    padding: EdgeInsets.only(top: 10.0, bottom: 10.0),
+                    child: FutureBuilder<List<Datus>>(
+                      future: getStoreCatList(),
+                      builder: (BuildContext context, AsyncSnapshot<List<Datus>> snapshot) {
+                        print(">>>>>>>>>>>>$snapshot");
+                        if (snapshot.connectionState == ConnectionState.waiting)
+                          return Center(
+                            child: Center(
+                                child: CircularProgressIndicator(
+                                  valueColor: AlwaysStoppedAnimation<Color>(kPrimaryColorBlue),
+                                )),
+                          );
+                        else if (snapshot.hasError) {
+                          print(">>>>${snapshot.error}");
+                          return Center(
+                            child: Text("No Business Found"),
+                          );
+                        } else {
+                          if (snapshot.hasData && snapshot.data.isNotEmpty) {
+                            WidgetsBinding.instance.addPostFrameCallback((_) {
+                              if (_controller.hasClients) {
+                                _controller.animateTo(_controller.position.minScrollExtent,
+                                    duration: Duration(milliseconds: 500),
+                                    curve: Curves.fastLinearToSlowEaseIn);
+                              } else {
+                                setState(() => null);
+                              }
+                            });
+                            return Column(
+                              children: [
+                                Text("Select Businesses",
+                                  style: TextStyle(fontFamily: "PoppinsLight", fontSize: 16.0,color: AppColors.kPrimaryColorBlue,fontWeight: FontWeight.bold),
+                                ),
+                                Expanded(
+                                  child: Scrollbar(
+                                    isAlwaysShown: true,
+                                    controller: _controller,
+                                    thickness: 3.0,
+                                    child: ListView.builder(
+                                        itemCount: snapshot.data.length,
+                                        shrinkWrap: true,
+                                        reverse: false,
+                                        controller: _controller,
+                                        itemBuilder: (BuildContext context, int index) {
+                                          return new CheckboxListTile(
+                                            value: checkedValue.contains(snapshot.data[index].id),
+                                            onChanged: (bool selected){
+                                              _onCategorySelected(selected, snapshot.data[index].id);
+                                              print(">>Value $checkedValue");
+                                            },
+                                            title: Text(
+                                                snapshot.data[index].business,
+                                                style: TextStyle(fontSize: 15.0)
+                                            ),
+                                            // trailing: Checkbox(
+                                            //   value: checkedValue,
+                                            //   onChanged: (newVal){
+                                            //     // setState(() {
+                                            //     //   checkedValue = newVal;
+                                            //     // });
+                                            //   },
+                                            // ),
+                                            // onTap: (){
+                                            //   setState(() {
+                                            //     checkedValue = !checkedValue;
+                                            //   });
+                                            // },
+                                          );
+                                        }
+                                    ),
+                                  ),
+                                )
+                              ],
+                            );
+                          } else {
+                            return Center(
+                              child: Text("No Businesses Available"),
+                            );                              }
+                        }
+                      },
                     ),
+
                   ),
 
                   SizedBox(height: 20.0,),
@@ -125,12 +195,13 @@ class _OtherBuyState extends State<OtherBuy> {
                     padding: EdgeInsets.only(
                         top: 20.0, bottom: 10.0, left: 10.0, right: 0.0) ,
                     child: Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        Text("Total Amount",style: TextStyle(fontFamily: "PoppinsLight", fontSize: 16.0,color: AppColors.kPrimaryColorBlue),),
+                        Text("Total Amount      ",style: TextStyle(fontFamily: "PoppinsLight", fontSize: 16.0,color: AppColors.kPrimaryColorBlue,fontWeight: FontWeight.bold),),
                         SizedBox(height: 5.0,),
                         Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Container(
                               width: size.width * 0.40,
@@ -140,7 +211,7 @@ class _OtherBuyState extends State<OtherBuy> {
                                   color: AppColors.kPrimaryColorBlue)),
                             ),
                             Container(
-                              width: size.width * 0.40,
+                              width: size.width * 0.25,
                               child: Text(": ${widget.amount} ",style:
                               TextStyle(fontFamily: "PoppinsLight",
                                   fontSize: 14.0,
@@ -151,6 +222,7 @@ class _OtherBuyState extends State<OtherBuy> {
 
                         if(widget.igst == "18")
                           Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Container(
                                 width: size.width * 0.40,
@@ -160,7 +232,7 @@ class _OtherBuyState extends State<OtherBuy> {
                                     color: AppColors.kPrimaryColorBlue)),
                               ),
                               Container(
-                                width: size.width * 0.40,
+                                width: size.width * 0.25,
                                 child: Text(widget.igst == "18" ?": $IGST":": 0",style:
                                 TextStyle(fontFamily: "PoppinsLight",
                                     fontSize: 14.0,
@@ -170,6 +242,7 @@ class _OtherBuyState extends State<OtherBuy> {
                           ),
                         if(widget.igst == "1")
                           Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Container(
                                 width: size.width * 0.40,
@@ -179,7 +252,7 @@ class _OtherBuyState extends State<OtherBuy> {
                                     color: AppColors.kPrimaryColorBlue)),
                               ),
                               Container(
-                                width: size.width * 0.40,
+                                width: size.width * 0.25,
                                 child: Text(": $IGST",style:
                                 TextStyle(fontFamily: "PoppinsLight",
                                     fontSize: 14.0,
@@ -189,6 +262,7 @@ class _OtherBuyState extends State<OtherBuy> {
                           ),
 
                         Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Container(
                               width: size.width * 0.40,
@@ -198,7 +272,7 @@ class _OtherBuyState extends State<OtherBuy> {
                                   color: AppColors.kPrimaryColorBlue)),
                             ),
                             Container(
-                              width: size.width * 0.40,
+                              width: size.width * 0.25,
                               child: Text(": $Total",style:
                               TextStyle(fontFamily: "PoppinsLight",
                                   fontSize: 14.0,
@@ -243,7 +317,7 @@ class _OtherBuyState extends State<OtherBuy> {
                           padding: const EdgeInsets.symmetric(
                               vertical: 10.0, horizontal: 42.0),
                           child: Text(
-                            "Send",
+                            "Buy",
                             style: TextStyle(
                                 color: Colors.white,
                                 fontSize: 22.0,
@@ -251,7 +325,8 @@ class _OtherBuyState extends State<OtherBuy> {
                           ),
                         ),
                         onPressed: () {
-                          // submit();
+                          _launchPayURL(Total.toString(),checkedValue.toString(),"Green Bill Subscription");
+
                         }),
                   ),
                 ],
@@ -373,6 +448,89 @@ class _OtherBuyState extends State<OtherBuy> {
     );
   }
 
+  _launchPayURL(amount,id,planType)async {
+    if(checkedValue.isEmpty){
+      showInSnackBar("Please select At leat 1 Business");
+      return null;
+    }
+
+
+    String key="IUZdcF";
+    String salt="7ViVXMy1";
+
+    var uuid = Uuid();
+    var txId=(uuid.v4());
+    var bytes = utf8.encode("$key|$txId|$amount|$planType|$nameOfBuss|$emailAddress|||||||||||$salt"); // data being hashed
+    var digest = sha512.convert(bytes);
+    print("$digest\n$txId");
+
+    final paramss={
+      'key':key,
+      'txnid':txId,
+      'amount':amount,
+      'productinfo':planType,
+      'firstname':nameOfBuss,
+      'email':emailAddress,
+      'phone':number,
+      'lastname':id,
+      'address1':busId,
+      'address2':userId,
+      'surl':'http://157.230.228.250/merchant-subscription-purchased-success/',
+      'furl':'http://157.230.228.250/merchant-subscription-purchased-failed/',
+      'hash':digest.toString(),
+      'SALT':salt
+    };
+
+    print("Parameters....$paramss");
+
+    final responses=await http.post("https://secure.payu.in/_payment",headers: {
+      "accept":"application/json",
+      "Content-Type":"application/x-www-form-urlencoded",
+    },body: paramss);
+
+    launch(responses.headers.values.elementAt(10));
+  }
+
+  void showInSnackBar(String value) {
+    FocusScope.of(context).requestFocus(new FocusNode());
+    _scaffoldKey.currentState?.removeCurrentSnackBar();
+    _scaffoldKey.currentState.showSnackBar(new SnackBar(
+      content: new Text(
+        value,
+        textAlign: TextAlign.center,
+        style: TextStyle(
+            color: Colors.white, fontSize: 16.0, fontFamily: "PoppinsMedium"),
+      ),
+      backgroundColor: kPrimaryColorBlue,
+      duration: Duration(seconds: 2),
+    ));
+  }
+
+
+  Future<List<Datus>> getStoreCatList() async {
+
+
+    final param = {
+      "user_id": userId.toString(),
+      "merchant_business_category" : storeCatID.toString(),
+    };
+
+    print(">>>>>$id>>>>$storeCatID>>>>$token");
+
+    final res = await http.post(
+      "http://157.230.228.250/merchant-get-businessname-by-category-api/",
+      body: param,
+      headers: {HttpHeaders.authorizationHeader: "Token $token"},
+    );
+
+    print("RESPONSE ${res.body}");
+    if (200 == res.statusCode) {
+      print(getStoreCatFromJson(res.body).data.length);
+      return getStoreCatFromJson(res.body).data;
+    } else {
+      throw Exception('Failed to load Stores List');
+    }
+  }
 
   showStoreDialog(BuildContext context) {
     showDialog(
