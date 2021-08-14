@@ -600,7 +600,7 @@ class RechargeState extends State<Recharge> {
                                                   onPressed: () {
                                                     print(">>>>>>>>>${_launchPayURL}");
                                                     print("User${snapshot.data[index].numberOfUsers}");
-                                                    Navigator.push(context, MaterialPageRoute(builder: (context) => ProceedToBuy(snapshot.data[index].numberOfUsers,snapshot.data[index].costPerUser,snapshot.data[index].igst.toString(),snapshot.data[index].cgst.toString(),snapshot.data[index].rechargeAmount)));
+                                                    Navigator.push(context, MaterialPageRoute(builder: (context) => ProceedToBuy(snapshot.data[index].numberOfUsers,snapshot.data[index].costPerUser,snapshot.data[index].igst,snapshot.data[index].cgst.toString(),snapshot.data[index].rechargeAmount)));
                                                     // WebView(
                                                     //   javascriptMode: JavascriptMode.unrestricted,
                                                     //   initialUrl:"http://157.230.228.250/my-bill-merchant/58cSUH117fs/" ,
@@ -862,7 +862,7 @@ class RechargeState extends State<Recharge> {
                                                   ),
                                                 ),
                                                 onPressed: () {
-                                                  Navigator.push(context, MaterialPageRoute(builder: (context) => OtherBuy(snapshot.data[index].totalSmsCost,snapshot.data[index].igst.toString())));
+                                                  Navigator.push(context, MaterialPageRoute(builder: (context) => OtherBuy(snapshot.data[index].totalSmsCost,snapshot.data[index].igst)));
 
                                                   // _launchPayURL(snapshot.data[index].totalAmt, snapshot.data[index].id.toString(),"Promotional Sms Subscription");
 
@@ -1149,7 +1149,7 @@ class RechargeState extends State<Recharge> {
                                                   ),
                                                 ),
                                                 onPressed: () {
-                                                  Navigator.push(context, MaterialPageRoute(builder: (context) => OtherBuy(snapshot.data[index].totalSmsCost,snapshot.data[index].igst.toString())));
+                                                  Navigator.push(context, MaterialPageRoute(builder: (context) => OtherBuy(snapshot.data[index].totalSmsCost,snapshot.data[index].igst)));
                                                   // _launchPayURL(snapshot.data[index].totalAmt, snapshot.data[index].id.toString(),"Transactional Sms Subscription");
 
                                                 }),

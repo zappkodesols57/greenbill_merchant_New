@@ -405,7 +405,7 @@ class FlagBillsState extends State<FlagBills> {
 
     snapshot = filterSearch.where((element) => element.mobileNo.toLowerCase().contains(value.toLowerCase()) ||
         element.invoiceNo.toLowerCase().contains(value.toLowerCase()) || element.amount.toLowerCase().contains(value.toLowerCase())
-        || element.flaggedBy.toLowerCase().contains(value.toLowerCase()) || element.flaggedReason.toLowerCase().contains(value.toLowerCase())).toList();
+        || element.flaggedBy.toUpperCase().toLowerCase().contains(value.toLowerCase()) || element.flaggedReason.toUpperCase().toLowerCase().contains(value.toLowerCase())).toList();
 
     setState(() {
       snapshot.toList();

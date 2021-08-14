@@ -15,9 +15,10 @@ class ParkingPass extends StatefulWidget {
 
 class ParkingPassState extends State<ParkingPass> {
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
-  String token, mobile;
+  String token, mobile,business;
   final ScrollController _controller = ScrollController();
   TextEditingController query = new TextEditingController();
+
 
   @override
   void initState() {
@@ -37,15 +38,16 @@ class ParkingPassState extends State<ParkingPass> {
     setState(() {
       token = prefs.getString("token");
       mobile = prefs.getString("mobile");
+      business = prefs.getString("businessID");
     });
     print('$token\n$mobile');
   }
 
   Future<List<Datum>> getPassLists() async {
     final param = {
-      "mobile_no": mobile,
+      "m_business_id": business,
     };
-    final res = await http.post("http://157.230.228.250/parking-lot-pass-list-api/",
+    final res = await http.post("http://157.230.228.250/merchant-parking-lot-pass-list-api/",
         body: param, headers: {HttpHeaders.authorizationHeader: "Token $token"});
 
     print(res.body);

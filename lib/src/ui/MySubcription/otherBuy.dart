@@ -17,7 +17,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:uuid/uuid.dart';
 class OtherBuy extends StatefulWidget {
-  final String igst;
+  final int igst;
   final double amount;
   OtherBuy(this.amount,this.igst);
 
@@ -212,7 +212,7 @@ class _OtherBuyState extends State<OtherBuy> {
                             ),
                             Container(
                               width: size.width * 0.25,
-                              child: Text(": ${widget.amount} ",style:
+                              child: Text(": ₹ ${widget.amount} ",style:
                               TextStyle(fontFamily: "PoppinsLight",
                                   fontSize: 14.0,
                                   color: AppColors.kPrimaryColorBlue)),
@@ -220,7 +220,7 @@ class _OtherBuyState extends State<OtherBuy> {
                           ],
                         ),
 
-                        if(widget.igst == "18")
+                        if(widget.igst == 18)
                           Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
@@ -233,14 +233,14 @@ class _OtherBuyState extends State<OtherBuy> {
                               ),
                               Container(
                                 width: size.width * 0.25,
-                                child: Text(widget.igst == "18" ?": $IGST":": 0",style:
+                                child: Text(widget.igst == "18" ?": ₹ $IGST":": ₹ 0",style:
                                 TextStyle(fontFamily: "PoppinsLight",
                                     fontSize: 14.0,
                                     color: AppColors.kPrimaryColorBlue)),
                               ),
                             ],
                           ),
-                        if(widget.igst == "1")
+                        if(widget.igst == 1)
                           Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
@@ -253,7 +253,7 @@ class _OtherBuyState extends State<OtherBuy> {
                               ),
                               Container(
                                 width: size.width * 0.25,
-                                child: Text(": $IGST",style:
+                                child: Text(": ₹ $IGST",style:
                                 TextStyle(fontFamily: "PoppinsLight",
                                     fontSize: 14.0,
                                     color: AppColors.kPrimaryColorBlue)),
@@ -273,7 +273,7 @@ class _OtherBuyState extends State<OtherBuy> {
                             ),
                             Container(
                               width: size.width * 0.25,
-                              child: Text(": $Total",style:
+                              child: Text(": ₹ $Total",style:
                               TextStyle(fontFamily: "PoppinsLight",
                                   fontSize: 14.0,
                                   color: AppColors.kPrimaryColorBlue)),

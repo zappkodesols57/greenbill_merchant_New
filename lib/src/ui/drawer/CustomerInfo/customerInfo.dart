@@ -57,7 +57,8 @@ class CustomerInfoState extends State<CustomerInfo> {
     print(res.body);
     if(200 == res.statusCode){
       print(cInfoFromJson(res.body).data.length);
-      return cInfoFromJson(res.body).data.where((element) => element.mobileNo.toString().toLowerCase().contains(query.text)).toList();
+      return cInfoFromJson(res.body).data.where((element) => element.mobileNo.toString().toLowerCase().contains(query.text)||
+          element.name.toString().toLowerCase().contains(query.text)).toList();
     } else{
       throw Exception('Failed to load Stores List');
     }

@@ -18,8 +18,9 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:uuid/uuid.dart';
 class ProceedToBuy extends StatefulWidget {
-  final String numberOfUser,igst,costPerUser,cgst,rechargeAMT;
-  ProceedToBuy(this.numberOfUser,this.igst,this.costPerUser,this.cgst,this.rechargeAMT);
+  final String numberOfUser,costPerUser,cgst,rechargeAMT;
+  int igst;
+  ProceedToBuy(this.numberOfUser,this.costPerUser,this.igst,this.cgst,this.rechargeAMT);
   // const ProceedToBuy({Key key}) : super(key: key);
 
   @override
@@ -278,7 +279,7 @@ class _ProceedToBuyState extends State<ProceedToBuy> {
                     children: [
                       Container(
                         width: size.width * 0.95,
-                        height: size.height * 0.20,
+                        height: size.height * 0.27,
                         padding: EdgeInsets.only(top: 10.0, bottom: 10.0),
                         child: FutureBuilder<List<Datus>>(
                           future: getStoreCatList(),
@@ -462,7 +463,7 @@ class _ProceedToBuyState extends State<ProceedToBuy> {
                         ),
                               Container(
                                 width: size.width * 0.25,
-                                child: Text(CPU == null ? ": 0" :": $CPU",style:
+                                child: Text(CPU == null ? ": ₹ 0.00" :": ₹ $CPU.00",style:
                                 TextStyle(fontFamily: "PoppinsLight",
                                     fontSize: 14.0,
                                     color: AppColors.kPrimaryColorBlue)),
@@ -481,7 +482,7 @@ class _ProceedToBuyState extends State<ProceedToBuy> {
                               ),
                               Container(
                                 width: size.width * 0.25,
-                                child: Text(": ${widget.rechargeAMT} ",style:
+                                child: Text(widget.rechargeAMT.contains('.')?": ₹ ${widget.rechargeAMT}" :": ₹ ${widget.rechargeAMT}.00",style:
                                 TextStyle(fontFamily: "PoppinsLight",
                                     fontSize: 14.0,
                                     color: AppColors.kPrimaryColorBlue)),
@@ -489,7 +490,7 @@ class _ProceedToBuyState extends State<ProceedToBuy> {
                             ],
                           ),
 
-                          if(widget.igst == "18")
+                          if(widget.igst == 18)
                           Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
@@ -502,14 +503,14 @@ class _ProceedToBuyState extends State<ProceedToBuy> {
                               ),
                               Container(
                                 width: size.width * 0.25,
-                                child: Text(widget.igst == "18" ?": $IGST":": 0",style:
+                                child: Text(widget.igst == 18 ?": ₹ $IGST":": 0",style:
                                 TextStyle(fontFamily: "PoppinsLight",
                                     fontSize: 14.0,
                                     color: AppColors.kPrimaryColorBlue)),
                               ),
                             ],
                           ),
-                          if(widget.igst == "1")
+                          if(widget.igst == 1)
                           Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
@@ -522,7 +523,7 @@ class _ProceedToBuyState extends State<ProceedToBuy> {
                               ),
                               Container(
                                 width: size.width * 0.25,
-                                child: Text(": $IGST",style:
+                                child: Text(": ₹ $IGST",style:
                                 TextStyle(fontFamily: "PoppinsLight",
                                     fontSize: 14.0,
                                     color: AppColors.kPrimaryColorBlue)),
@@ -542,7 +543,7 @@ class _ProceedToBuyState extends State<ProceedToBuy> {
                               ),
                               Container(
                                 width: size.width * 0.25,
-                                child: Text(": $Total",style:
+                                child: Text(": ₹ $Total",style:
                                 TextStyle(fontFamily: "PoppinsLight",
                                     fontSize: 14.0,
                                     color: AppColors.kPrimaryColorBlue)),

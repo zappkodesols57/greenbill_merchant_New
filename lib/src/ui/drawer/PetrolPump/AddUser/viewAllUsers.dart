@@ -115,8 +115,6 @@ class ViewAllUsersState extends State<ViewAllUsers> {
                 thickness: 3.0,
                 child: ListView.builder(
                     itemCount: snapshot.data.data.length,
-                    shrinkWrap: true,
-                    reverse: false,
                     controller: _controller,
                     itemBuilder: (BuildContext context, int index) {
                       return new Card(
@@ -141,8 +139,7 @@ class ViewAllUsersState extends State<ViewAllUsers> {
                                     25.0),
                               ),
                               alignment: Alignment.center,
-                              child: new Text(snapshot.data.data[index].name
-                                    .substring(0, 1)
+                              child: new Text(snapshot.data.data[index].name.characters.getRange(0,1).toString()
                                     .toUpperCase(),
                                 style: TextStyle(
                                   fontSize: 23.0,

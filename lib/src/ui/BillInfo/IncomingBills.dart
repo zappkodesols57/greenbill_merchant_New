@@ -74,8 +74,8 @@ class BillIncomingState extends State<BillIncoming> {
       print(incomingBillsFromJson(res.body).data.length);
       return incomingBillsFromJson(res.body).data
           .where((element) =>
-      element.businessName.toString().contains(query.text) ||
-          element.invoiceNo.toString().toLowerCase().contains(query.text) ||
+      element.businessName.toString().toLowerCase().toUpperCase().contains(query.text) ||
+          element.invoiceNo.toString().toUpperCase().toLowerCase().contains(query.text) ||
           element.billId.toString().toLowerCase().contains(query.text)|| element.billAmount.toString().contains(query.text))
           .toList();
 
