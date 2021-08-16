@@ -253,7 +253,7 @@ class BulkSMSState extends State<BulkSMS> {
                       color: kPrimaryColorBlue,
                       size: 20.0,
                     ),
-                    labelText: "SMS Header",
+                    labelText: "SMS Header *",
                     labelStyle: TextStyle(
                         fontFamily: "PoppinsLight", fontSize: 13.0,color: kPrimaryColorBlue),
                   ),
@@ -300,7 +300,7 @@ class BulkSMSState extends State<BulkSMS> {
                       color: kPrimaryColorBlue,
                       size: 20.0,
                     ),
-                    labelText: "Template",
+                    labelText: "Template *",
                     labelStyle: TextStyle(
                         fontFamily: "PoppinsLight", fontSize: 13.0,color: kPrimaryColorBlue),
                   ),
@@ -387,7 +387,7 @@ class BulkSMSState extends State<BulkSMS> {
                       color: kPrimaryColorBlue,
                       size: 20.0,
                     ),
-                    labelText: "State",
+                    labelText: "State *",
                     labelStyle: TextStyle(
                         fontFamily: "PoppinsLight", fontSize: 13.0,color: kPrimaryColorBlue),
                   ),
@@ -440,7 +440,7 @@ class BulkSMSState extends State<BulkSMS> {
                            color: kPrimaryColorBlue,
                            size: 20.0,
                          ),
-                         labelText: "City",
+                         labelText: "City *",
                          labelStyle: TextStyle(
                              fontFamily: "PoppinsLight", fontSize: 13.0,color: kPrimaryColorBlue),
                        ),
@@ -487,14 +487,12 @@ class BulkSMSState extends State<BulkSMS> {
                            color: kPrimaryColorBlue,
                            size: 20.0,
                          ),
-                         labelText: "Area",
+                         labelText: "Area *",
                          labelStyle: TextStyle(
                              fontFamily: "PoppinsLight", fontSize: 13.0,color: kPrimaryColorBlue),
                        ),
                      ),
                    ),
-
-
                    ],
                    )
                 )
@@ -1005,7 +1003,6 @@ class BulkSMSState extends State<BulkSMS> {
               return Center(child: Text("No City Found"),);
             }
           }
-
         },
       ),
     );
@@ -1179,7 +1176,7 @@ class BulkSMSState extends State<BulkSMS> {
 
   create() async {
 
-    if(radioItem.isEmpty){
+    if(radioItem == null){
       showInSnackBar("Please Select SMS Type");
       return null;
     }

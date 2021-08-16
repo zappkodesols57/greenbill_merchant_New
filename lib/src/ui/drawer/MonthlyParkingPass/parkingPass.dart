@@ -124,7 +124,7 @@ class ParkingPassState extends State<ParkingPass> {
                       size: 25.0,
                     ),
                   ),
-                  hintText: "Search Bills",
+                  hintText: "Search Passes",
                   hintStyle: TextStyle(
                       fontFamily: "PoppinsMedium",
                       fontSize: 15.0,
