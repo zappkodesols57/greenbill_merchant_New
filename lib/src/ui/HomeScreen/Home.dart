@@ -119,7 +119,7 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
       storeID = prefs.getString("businessID");
       businessLogo = prefs.getString("businessLogo");
       storeCatID = prefs.getString("businessCategoryID");
-      print('$id  $token $store $storeID $businessLogo');
+      print('$id $token $store $storeID $businessLogo');
     });
 
     final param = {

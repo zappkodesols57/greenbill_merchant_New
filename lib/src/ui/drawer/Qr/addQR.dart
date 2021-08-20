@@ -87,7 +87,9 @@ class AddQRState extends State<AddQR> {
                     top: 20.0, bottom: 10.0, left: 0.0, right: 0.0),
                 child: TextField(
                   controller: nameController,
-                  inputFormatters: [new LengthLimitingTextInputFormatter(15),],
+                  inputFormatters: [new
+                  FilteringTextInputFormatter.allow(RegExp("[a-zA-Z]")),
+                  LengthLimitingTextInputFormatter(15),],
                   style: TextStyle(
                       //fontFamily: "PoppinsBold",
                       fontSize: 17.0,
@@ -252,7 +254,7 @@ class AddQRState extends State<AddQR> {
                   controller: vehicleNumController,
                   textCapitalization: TextCapitalization.characters,
                   inputFormatters: [
-                    new WhitelistingTextInputFormatter(RegExp("[a-z A-Z0-9]")),
+                    FilteringTextInputFormatter.allow(RegExp("[a-zA-Z]")),
                     LengthLimitingTextInputFormatter(13),
                   ],
                   style: TextStyle(

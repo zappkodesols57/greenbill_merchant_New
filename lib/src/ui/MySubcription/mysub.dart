@@ -35,6 +35,7 @@ class Recharge extends StatefulWidget {
 class RechargeState extends State<Recharge> {
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
   String token, busId,mobile,number,emailAddress,nameOfBuss,userId,storeCatID;
+  int subID;
   final ScrollController _controller = ScrollController();
   TextEditingController query = new TextEditingController();
   String _chosenValue="Green Bill Subscription Plan";
@@ -86,6 +87,7 @@ class RechargeState extends State<Recharge> {
       "user_id":userId,
       "business_id":busId,
     };
+
     print(">>>>>>>>>$busId");
 
     final res = await http.post("http://157.230.228.250/merchant-get-promotional-sms-subscription-api/",
@@ -126,7 +128,6 @@ class RechargeState extends State<Recharge> {
   Future<List<Datumii>> getAddOn() async {
     final param = {
       "user_id":userId,
-      "business_id":busId,
     };
 
     final res = await http.post("http://157.230.228.250/merchant-get-addon-recharge-api/",
@@ -318,6 +319,8 @@ class RechargeState extends State<Recharge> {
                     });
                   } ,
                 ),
+
+                if(storeCatID != "11" || storeCatID != "12")
                 InkWell(
                   child:Container(
                     decoration: BoxDecoration(
@@ -342,6 +345,8 @@ class RechargeState extends State<Recharge> {
                     });
                   } ,
                 ),
+
+                if(storeCatID != "11" || storeCatID != "12")
                 InkWell(
 
                   child:Container(
@@ -600,7 +605,7 @@ class RechargeState extends State<Recharge> {
                                                   onPressed: () {
                                                     print(">>>>>>>>>${_launchPayURL}");
                                                     print("User${snapshot.data[index].numberOfUsers}");
-                                                    Navigator.push(context, MaterialPageRoute(builder: (context) => ProceedToBuy(snapshot.data[index].numberOfUsers,snapshot.data[index].costPerUser,snapshot.data[index].igst,snapshot.data[index].cgst.toString(),snapshot.data[index].rechargeAmount)));
+                                                    Navigator.push(context, MaterialPageRoute(builder: (context) => ProceedToBuy(snapshot.data[index].id,snapshot.data[index].numberOfUsers,snapshot.data[index].costPerUser,snapshot.data[index].igst,snapshot.data[index].cgst.toString(),snapshot.data[index].rechargeAmount)));
                                                     // WebView(
                                                     //   javascriptMode: JavascriptMode.unrestricted,
                                                     //   initialUrl:"http://157.230.228.250/my-bill-merchant/58cSUH117fs/" ,
@@ -827,7 +832,6 @@ class RechargeState extends State<Recharge> {
                                         ),
                                       ),
 
-
                                       Container(
                                         width: size.width * 0.9,
                                         padding: EdgeInsets.only(
@@ -862,7 +866,7 @@ class RechargeState extends State<Recharge> {
                                                   ),
                                                 ),
                                                 onPressed: () {
-                                                  Navigator.push(context, MaterialPageRoute(builder: (context) => OtherBuy(snapshot.data[index].totalSmsCost,snapshot.data[index].igst)));
+                                                  Navigator.push(context, MaterialPageRoute(builder: (context) => OtherBuy(snapshot.data[index].id,snapshot.data[index].totalSmsCost,snapshot.data[index].igst)));
 
                                                   // _launchPayURL(snapshot.data[index].totalAmt, snapshot.data[index].id.toString(),"Promotional Sms Subscription");
 
@@ -1076,7 +1080,7 @@ class RechargeState extends State<Recharge> {
                                                   top: 0.0, bottom: 5.0, left: 5.0, right: 5.0),
                                               width: size.width * 0.4,
                                               child: Text(
-                                                "₹ "+snapshot.data[index].totalSmsCost.toString(),
+                                                "₹ "+snapshot.data[index].totalSmsCost.toStringAsFixed(2),
                                                 textAlign: TextAlign.center,
                                                 style: TextStyle(
                                                     color: kPrimaryColorBlue,
@@ -1149,7 +1153,7 @@ class RechargeState extends State<Recharge> {
                                                   ),
                                                 ),
                                                 onPressed: () {
-                                                  Navigator.push(context, MaterialPageRoute(builder: (context) => OtherBuy(snapshot.data[index].totalSmsCost,snapshot.data[index].igst)));
+                                                  Navigator.push(context, MaterialPageRoute(builder: (context) => OtherBuy(snapshot.data[index].id,snapshot.data[index].totalSmsCost,snapshot.data[index].igst)));
                                                   // _launchPayURL(snapshot.data[index].totalAmt, snapshot.data[index].id.toString(),"Transactional Sms Subscription");
 
                                                 }),

@@ -331,7 +331,6 @@ class _PayLinksState extends State<PayLinks> {
       "description": decController.text,
       "send_sms": rememberMe.toString(),
       "m_business_id": storeID,
-
     };
 
     final response = await http.post(

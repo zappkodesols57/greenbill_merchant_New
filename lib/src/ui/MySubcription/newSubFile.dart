@@ -55,6 +55,7 @@ class subUpdatedState extends State<subUpdated> {
     setState(() {
       token = prefs.getString("token");
       busId =prefs.getString("businessID");
+
     });
     print('$token\n$busId');
     getAmount();
@@ -398,7 +399,7 @@ class subUpdatedState extends State<subUpdated> {
                                                   top: 10.0, bottom: 5.0, left: 5.0, right: 5.0),
                                               width: size.width * 0.4,
                                               child: Text(
-                                                "₹ "+snapshot.data[index].purchaseCost.toString()+"0",
+                                                "₹ "+snapshot.data[index].purchaseCost.toString(),
                                                 textAlign: TextAlign.center,
                                                 style: TextStyle(
                                                     color: kPrimaryColorBlue,
@@ -594,7 +595,7 @@ class subUpdatedState extends State<subUpdated> {
                                               padding: EdgeInsets.only(
                                                   top: 0.0, bottom: 5.0, left: 5.0, right: 5.0),
                                               width: size.width * 0.4,
-                                              child: Text(snapshot.data[index].totalAmountAvilable == null ? "₹ 0" :"₹ "+snapshot.data[index].totalAmountAvilable.toString(),
+                                              child: Text("₹ "+snapshot.data[index].totalAmountAvilable.toStringAsFixed(2),
                                                 textAlign: TextAlign.center,
                                                 style: TextStyle(
                                                     color: kPrimaryColorBlue,

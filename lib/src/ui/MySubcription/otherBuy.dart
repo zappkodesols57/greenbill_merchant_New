@@ -17,9 +17,9 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:uuid/uuid.dart';
 class OtherBuy extends StatefulWidget {
-  final int igst;
+  final int igst,subID;
   final double amount;
-  OtherBuy(this.amount,this.igst);
+  OtherBuy(this.subID,this.amount,this.igst);
 
   @override
   _OtherBuyState createState() => _OtherBuyState();
@@ -472,8 +472,8 @@ class _OtherBuyState extends State<OtherBuy> {
       'firstname':nameOfBuss,
       'email':emailAddress,
       'phone':number,
-      'lastname':id,
-      'address1':busId,
+      'lastname':widget.subID.toString(),
+      'address1':id,
       'address2':userId,
       'surl':'http://157.230.228.250/merchant-subscription-purchased-success/',
       'furl':'http://157.230.228.250/merchant-subscription-purchased-failed/',

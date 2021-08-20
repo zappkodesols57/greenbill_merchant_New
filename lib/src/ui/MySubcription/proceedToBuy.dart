@@ -19,8 +19,8 @@ import 'package:url_launcher/url_launcher.dart';
 import 'package:uuid/uuid.dart';
 class ProceedToBuy extends StatefulWidget {
   final String numberOfUser,costPerUser,cgst,rechargeAMT;
-  int igst;
-  ProceedToBuy(this.numberOfUser,this.costPerUser,this.igst,this.cgst,this.rechargeAMT);
+  int igst,subID;
+  ProceedToBuy(this.subID,this.numberOfUser,this.costPerUser,this.igst,this.cgst,this.rechargeAMT);
   // const ProceedToBuy({Key key}) : super(key: key);
 
   @override
@@ -596,6 +596,7 @@ class _ProceedToBuyState extends State<ProceedToBuy> {
                           ),
                         ),
                         onPressed: () {
+                          print(">><><><<$Total ______ $checkedValue");
                           _launchPayURL(Total.toString(),checkedValue.toString(),"Green Bill Subscription");
 
                         }),
@@ -637,8 +638,8 @@ class _ProceedToBuyState extends State<ProceedToBuy> {
       'firstname':nameOfBuss,
       'email':emailAddress,
       'phone':number,
-      'lastname':id,
-      'address1':busId,
+      'lastname':widget.subID.toString(), //subid
+      'address1':id,
       'address2':userId,
       'surl':'http://157.230.228.250/merchant-subscription-purchased-success/',
       'furl':'http://157.230.228.250/merchant-subscription-purchased-failed/',

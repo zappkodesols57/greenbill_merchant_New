@@ -190,7 +190,7 @@ class AddUserState extends State<AddUser> {
               child: TextField(
                 controller: fNameController,
                 inputFormatters: [
-                  new WhitelistingTextInputFormatter(RegExp("[a-z A-Z]")),
+                  FilteringTextInputFormatter.allow(RegExp("[a-zA-Z]")),
                   LengthLimitingTextInputFormatter(13),
                 ],
                 style: TextStyle(
@@ -233,7 +233,7 @@ class AddUserState extends State<AddUser> {
               child: TextField(
                 controller: lNameController,
                 inputFormatters: [
-                  new WhitelistingTextInputFormatter(RegExp("[a-z A-Z]")),
+                  FilteringTextInputFormatter.allow(RegExp("[a-zA-Z]")),
                   LengthLimitingTextInputFormatter(13),
                 ],
                 style: TextStyle(
