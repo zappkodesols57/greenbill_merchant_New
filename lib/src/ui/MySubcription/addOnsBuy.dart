@@ -562,6 +562,9 @@ class _AddOnBuyState extends State<AddOnBuy> {
     },body: paramss);
 
     launch(responses.headers.values.elementAt(10));
+
+    Navigator.pop(context);
+
   }
 
   void showInSnackBar(String value) {

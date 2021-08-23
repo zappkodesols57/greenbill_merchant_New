@@ -657,6 +657,9 @@ class _ProceedToBuyState extends State<ProceedToBuy> {
     launch(responses.headers.values.elementAt(10));
 
     print(">>>>>>>>>response ${responses.body}");
+
+    Navigator.pop(context);
+
   }
 
 
