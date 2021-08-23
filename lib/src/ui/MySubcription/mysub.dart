@@ -1262,7 +1262,6 @@ class RechargeState extends State<Recharge> {
                                           ),
                                         ),
 
-
                                         // Container(
                                         //   width: size.width * 0.9,
                                         //   padding: EdgeInsets.only(
@@ -1341,7 +1340,6 @@ class RechargeState extends State<Recharge> {
                                         //     ],
                                         //   ),
                                         // ),
-
 
                                         Container(
                                           width: size.width * 0.9,

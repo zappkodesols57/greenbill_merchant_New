@@ -320,7 +320,7 @@ class _AddOnBuyState extends State<AddOnBuy> {
                               ),
                               Container(
                                 width: size.width * 0.25,
-                                child: Text(": ₹ $IGST",style:
+                                child: Text(IGST == null ? ": ₹ 0.0" :": ₹ ${IGST.toStringAsFixed(2)}",style:
                                 TextStyle(fontFamily: "PoppinsLight",
                                     fontSize: 14.0,
                                     color: AppColors.kPrimaryColorBlue)),
@@ -340,7 +340,7 @@ class _AddOnBuyState extends State<AddOnBuy> {
                             ),
                             Container(
                               width: size.width * 0.25,
-                              child: Text(": ₹ $Total",style:
+                              child: Text(Total == null ?": ₹ 0.0" :": ₹ ${Total.toStringAsFixed(2)}",style:
                               TextStyle(fontFamily: "PoppinsLight",
                                   fontSize: 14.0,
                                   color: AppColors.kPrimaryColorBlue)),
@@ -515,14 +515,17 @@ class _AddOnBuyState extends State<AddOnBuy> {
   }
 
   _launchPayURL(amount,id,planType)async {
+
+    if(_chosenValue == null){
+      showInSnackBar("Please select Amount");
+      return null;
+    }
+
     if(checkedValue.isEmpty){
       showInSnackBar("Please select At leat 1 Business");
       return null;
     }
-    if(_chosenValue.isEmpty){
-      showInSnackBar("Please select Amount");
-      return null;
-    }
+
 
 
     String key="IUZdcF";
