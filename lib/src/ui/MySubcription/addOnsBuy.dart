@@ -16,21 +16,21 @@ import 'package:multi_select_flutter/dialog/multi_select_dialog_field.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:uuid/uuid.dart';
-class OtherBuy extends StatefulWidget {
+class AddOnBuy extends StatefulWidget {
+  final String totalAMT,cgst,rechargeAMT;
   final int igst,subID;
-  final double amount;
-  OtherBuy(this.subID,this.amount,this.igst);
+  AddOnBuy(this.subID,this.totalAMT,this.igst,this.cgst,this.rechargeAMT);
 
   @override
-  _OtherBuyState createState() => _OtherBuyState();
+  _AddOnBuyState createState() => _AddOnBuyState();
 }
 
-class _OtherBuyState extends State<OtherBuy> {
+class _AddOnBuyState extends State<AddOnBuy> {
 
   TextEditingController nameController = TextEditingController();
   AnimationController animationController;
   final ScrollController _controller = ScrollController();
-  String store = 'GB', storeID, storeAddress;
+  String store = 'GB', storeID, storeAddress,_chosenValue;
   PageController _pageController;
 
   String token, businessLogo, storeCatID,number,nameOfBuss,userId,emailAddress,busId;
@@ -42,7 +42,6 @@ class _OtherBuyState extends State<OtherBuy> {
   void initState() {
 
     super.initState();
-    calculation();
     getCredentials();
   }
 
@@ -58,13 +57,16 @@ class _OtherBuyState extends State<OtherBuy> {
       storeCatID = prefs.getString("businessCategoryID");
     });
     print('$token\n$busId');
+    this.getAmounts();
+    // calculation();
   }
 
   calculation(){
     setState(() {
-      IGST = (18*widget.amount)/100;
-      Total = widget.amount+IGST;
+      IGST = (18*(int.parse(_chosenValue))/100);
+      Total = IGST+int.parse(_chosenValue);
     });
+    print("IGST $IGST ______ Total $Total");
   }
 
   void _onCategorySelected(bool selected, category_id) {
@@ -100,11 +102,76 @@ class _OtherBuyState extends State<OtherBuy> {
             child: Center(
               child: Column(
                 children: [
+                  Container(
+                    width: size.width * 0.90,
+                    padding: EdgeInsets.only(
+                        top: 10.0, bottom: 0.0, left: 0.0, right: 0.0) ,
+                    child: Text("*Note: Kindly select Amounts",style: TextStyle(fontFamily: "PoppinsLight", fontSize: 12.0,color: Colors.red),),
+                  ),
 
+                  SizedBox(height: 10.0,),
+
+                  Container(
+                    child: Text("Select Amount",
+                      style: TextStyle(fontFamily: "PoppinsLight", fontSize: 16.0,color: AppColors.kPrimaryColorBlue,fontWeight: FontWeight.bold),
+                    ),
+                  ),
+                  SizedBox(height: 10.0,),
+
+                  Container(
+                      width: size.width * 0.95,
+                      padding: EdgeInsets.only(
+                          top: 0.0, bottom: 0.0, left: 15.0, right: 15.0) ,
+                      decoration: BoxDecoration(
+                        border: Border.all(color: kPrimaryColorBlue, width: 0.5),
+                        borderRadius: BorderRadius.circular(40),
+                      ),
+                      child: Center(
+                        child: new DropdownButton(
+                          iconEnabledColor: kPrimaryColorBlue,
+                          //elevation: 5,
+                          isExpanded: true,
+                          style: TextStyle(color: kPrimaryColorBlue, fontFamily: "PoppinsBold",fontSize: 17.0),
+                          underline: Container(
+                              height: 2,
+                              width: 95,
+                              color: Colors.transparent),
+                          items: data.map((item){
+                            return DropdownMenuItem(
+                              child: new Text(item['all_recharge_amount']),
+                              value: item['all_recharge_amount'].toString(),
+                            );
+                          }).toList(),
+                          hint: Text(
+                            "Select Amount",
+                            style: TextStyle(
+                              color: kPrimaryColorBlue,
+                              fontSize: 13.0,
+                              fontFamily: "PoppinsLight",),
+                          ),
+                          onChanged: (String value) {
+                            setState(() {
+                              _chosenValue = value;
+                              IGST = (18*(int.parse(_chosenValue))/100);
+                              Total = IGST+int.parse(_chosenValue);
+                            });
+                          },
+                          value: _chosenValue,
+                        ),
+                      )
+                  ),
+                  SizedBox(height: 10.0,),
+
+                  Container(
+                    width: size.width * 0.90,
+                    padding: EdgeInsets.only(
+                        top: 10.0, bottom: 0.0, left: 0.0, right: 0.0) ,
+                    child: Text("*Note: Kindly select Businesses",style: TextStyle(fontFamily: "PoppinsLight", fontSize: 12.0,color: Colors.red),),
+                  ),
                   Container(
                     width: size.width * 0.95,
                     height: size.height * 0.23,
-                    padding: EdgeInsets.only(top: 10.0, bottom: 10.0),
+                    padding: EdgeInsets.only(top: 0.0, bottom: 10.0),
                     child: FutureBuilder<List<Datus>>(
                       future: getStoreCatList(),
                       builder: (BuildContext context, AsyncSnapshot<List<Datus>> snapshot) {
@@ -181,11 +248,11 @@ class _OtherBuyState extends State<OtherBuy> {
                           } else {
                             return Center(
                               child: Text("No Businesses Available"),
-                            );                              }
+                            );
+                          }
                         }
                       },
                     ),
-
                   ),
 
                   SizedBox(height: 20.0,),
@@ -205,14 +272,14 @@ class _OtherBuyState extends State<OtherBuy> {
                           children: [
                             Container(
                               width: size.width * 0.40,
-                              child: Text("Min Recharge",style:
+                              child: Text("Selected Amount",style:
                               TextStyle(fontFamily: "PoppinsLight",
                                   fontSize: 14.0,
                                   color: AppColors.kPrimaryColorBlue)),
                             ),
                             Container(
                               width: size.width * 0.25,
-                              child: Text(": ₹ ${widget.amount} ",style:
+                              child: Text(_chosenValue == null ? ": ₹ 0" :": ₹ $_chosenValue",style:
                               TextStyle(fontFamily: "PoppinsLight",
                                   fontSize: 14.0,
                                   color: AppColors.kPrimaryColorBlue)),
@@ -233,7 +300,7 @@ class _OtherBuyState extends State<OtherBuy> {
                               ),
                               Container(
                                 width: size.width * 0.25,
-                                child: Text(widget.igst == "18" ?": ₹ $IGST":": ₹ 0",style:
+                                child: Text(widget.igst == "18" ?": ₹ ${IGST}":": ₹ 0",style:
                                 TextStyle(fontFamily: "PoppinsLight",
                                     fontSize: 14.0,
                                     color: AppColors.kPrimaryColorBlue)),
@@ -326,7 +393,6 @@ class _OtherBuyState extends State<OtherBuy> {
                         ),
                         onPressed: () {
                           _launchPayURL(Total.toString(),checkedValue.toString(),"Green Bill Subscription");
-
                         }),
                   ),
                 ],
@@ -337,7 +403,7 @@ class _OtherBuyState extends State<OtherBuy> {
   Future<List<StoreList>> getStoreList() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     setState(() {
-       id = prefs.getInt("userID");
+      id = prefs.getInt("userID");
       token = prefs.getString("token");
       store = prefs.getString("businessName");
       storeID = prefs.getString("businessID");
@@ -453,6 +519,10 @@ class _OtherBuyState extends State<OtherBuy> {
       showInSnackBar("Please select At leat 1 Business");
       return null;
     }
+    if(_chosenValue.isEmpty){
+      showInSnackBar("Please select Amount");
+      return null;
+    }
 
 
     String key="IUZdcF";
@@ -520,7 +590,8 @@ class _OtherBuyState extends State<OtherBuy> {
     final res = await http.post(
       "http://157.230.228.250/merchant-get-businessname-by-category-api/",
       body: param,
-      headers: {HttpHeaders.authorizationHeader: "Token $token"});
+      headers: {HttpHeaders.authorizationHeader: "Token $token"},
+    );
 
     print("RESPONSE ${res.body}");
     if (200 == res.statusCode) {
@@ -557,4 +628,25 @@ class _OtherBuyState extends State<OtherBuy> {
           );
         });
   }
+
+
+  List data = List();
+  Future<String> getAmounts() async {
+    final param = {
+      "plan_id": widget.subID.toString(),
+    };
+
+    print(param);
+    final res = await http.post("http://157.230.228.250/merchant-get-all-addon-amounts-api/",
+        body: param, headers: { HttpHeaders.authorizationHeader: "Token $token"});
+    final resBody = json.decode(res.body);
+    setState(() {
+      data = resBody;
+    });
+
+    print(resBody);
+    return "Success";
+  }
+
+
 }

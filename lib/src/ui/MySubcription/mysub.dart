@@ -4,6 +4,7 @@ import 'package:dio/dio.dart';
 import 'package:greenbill_merchant/src/models/model_addOn.dart';
 import 'package:greenbill_merchant/src/models/model_transactional.dart';
 import 'package:greenbill_merchant/src/ui/HomeScreen/widgets/data_viz/circle/neuomorphic_circle.dart';
+import 'package:greenbill_merchant/src/ui/MySubcription/addOnsBuy.dart';
 import 'package:greenbill_merchant/src/ui/MySubcription/otherBuy.dart';
 import 'package:greenbill_merchant/src/ui/MySubcription/proceedToBuy.dart';
 import 'package:greenbill_merchant/src/ui/values/values.dart';
@@ -820,7 +821,7 @@ class RechargeState extends State<Recharge> {
                                                   top: 0.0, bottom: 5.0, left: 5.0, right: 5.0),
                                               width: size.width * 0.4,
                                               child: Text(
-                                                "₹ "+snapshot.data[index].totalSmsCost.toString(),
+                                                "₹ "+snapshot.data[index].totalSmsCost.toStringAsFixed(2),
                                                 textAlign: TextAlign.center,
                                                 style: TextStyle(
                                                     color: kPrimaryColorBlue,
@@ -1262,84 +1263,84 @@ class RechargeState extends State<Recharge> {
                                         ),
 
 
-                                        Container(
-                                          width: size.width * 0.9,
-                                          padding: EdgeInsets.only(
-                                              top: 0.0, bottom: 5.0, left: 5.0, right: 5.0),
-                                          child: Row(
-                                            crossAxisAlignment: CrossAxisAlignment.center,
-                                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                            children: <Widget>[
-
-                                              Container(
-                                                padding: EdgeInsets.only(
-                                                    top: 0.0, bottom: 5.0, left: 5.0, right: 5.0),
-                                                width: size.width * 0.4,
-                                                child: Text(
-                                                  "Recharge Amount",
-
-                                                  style: TextStyle(
-                                                      color: Colors.black,
-                                                      fontSize: 12.0,
-                                                      fontFamily: "PoppinsBold"),
-                                                ),
-                                              ),
-
-                                              Container(
-                                                padding: EdgeInsets.only(
-                                                    top: 0.0, bottom: 5.0, left: 5.0, right: 5.0),
-                                                width: size.width * 0.4,
-                                                child: Text(
-                                                  "₹ "+snapshot.data[index].totalAmt.toString(),
-                                                  textAlign: TextAlign.center,
-                                                  style: TextStyle(
-                                                      color: kPrimaryColorBlue,
-                                                      fontSize: 12.0,
-                                                      fontFamily: "PoppinsBold"),
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                        ),
-                                        Container(
-                                          width: size.width * 0.9,
-                                          padding: EdgeInsets.only(
-                                              top: 0.0, bottom: 5.0, left: 5.0, right: 5.0),
-                                          child: Row(
-                                            crossAxisAlignment: CrossAxisAlignment.center,
-                                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                            children: <Widget>[
-
-                                              Container(
-                                                padding: EdgeInsets.only(
-                                                    top: 0.0, bottom: 5.0, left: 5.0, right: 5.0),
-                                                width: size.width * 0.4,
-                                                child: Text(
-                                                  "Amount",
-
-                                                  style: TextStyle(
-                                                      color: Colors.black,
-                                                      fontSize: 12.0,
-                                                      fontFamily: "PoppinsBold"),
-                                                ),
-                                              ),
-
-                                              Container(
-                                                padding: EdgeInsets.only(
-                                                    top: 0.0, bottom: 5.0, left: 5.0, right: 5.0),
-                                                width: size.width * 0.4,
-                                                child: Text(
-                                                  "₹ "+snapshot.data[index].rechargeAmount.toString(),
-                                                  textAlign: TextAlign.center,
-                                                  style: TextStyle(
-                                                      color: kPrimaryColorBlue,
-                                                      fontSize: 12.0,
-                                                      fontFamily: "PoppinsBold"),
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                        ),
+                                        // Container(
+                                        //   width: size.width * 0.9,
+                                        //   padding: EdgeInsets.only(
+                                        //       top: 0.0, bottom: 5.0, left: 5.0, right: 5.0),
+                                        //   child: Row(
+                                        //     crossAxisAlignment: CrossAxisAlignment.center,
+                                        //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                        //     children: <Widget>[
+                                        //
+                                        //       Container(
+                                        //         padding: EdgeInsets.only(
+                                        //             top: 0.0, bottom: 5.0, left: 5.0, right: 5.0),
+                                        //         width: size.width * 0.4,
+                                        //         child: Text(
+                                        //           "Recharge Amount",
+                                        //
+                                        //           style: TextStyle(
+                                        //               color: Colors.black,
+                                        //               fontSize: 12.0,
+                                        //               fontFamily: "PoppinsBold"),
+                                        //         ),
+                                        //       ),
+                                        //
+                                        //       Container(
+                                        //         padding: EdgeInsets.only(
+                                        //             top: 0.0, bottom: 5.0, left: 5.0, right: 5.0),
+                                        //         width: size.width * 0.4,
+                                        //         child: Text(
+                                        //           "₹ "+snapshot.data[index].totalAmt.toString(),
+                                        //           textAlign: TextAlign.center,
+                                        //           style: TextStyle(
+                                        //               color: kPrimaryColorBlue,
+                                        //               fontSize: 12.0,
+                                        //               fontFamily: "PoppinsBold"),
+                                        //         ),
+                                        //       ),
+                                        //     ],
+                                        //   ),
+                                        // ),
+                                        // Container(
+                                        //   width: size.width * 0.9,
+                                        //   padding: EdgeInsets.only(
+                                        //       top: 0.0, bottom: 5.0, left: 5.0, right: 5.0),
+                                        //   child: Row(
+                                        //     crossAxisAlignment: CrossAxisAlignment.center,
+                                        //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                        //     children: <Widget>[
+                                        //
+                                        //       Container(
+                                        //         padding: EdgeInsets.only(
+                                        //             top: 0.0, bottom: 5.0, left: 5.0, right: 5.0),
+                                        //         width: size.width * 0.4,
+                                        //         child: Text(
+                                        //           "Amount",
+                                        //
+                                        //           style: TextStyle(
+                                        //               color: Colors.black,
+                                        //               fontSize: 12.0,
+                                        //               fontFamily: "PoppinsBold"),
+                                        //         ),
+                                        //       ),
+                                        //
+                                        //       Container(
+                                        //         padding: EdgeInsets.only(
+                                        //             top: 0.0, bottom: 5.0, left: 5.0, right: 5.0),
+                                        //         width: size.width * 0.4,
+                                        //         child: Text(
+                                        //           "₹ "+snapshot.data[index].rechargeAmount.toString(),
+                                        //           textAlign: TextAlign.center,
+                                        //           style: TextStyle(
+                                        //               color: kPrimaryColorBlue,
+                                        //               fontSize: 12.0,
+                                        //               fontFamily: "PoppinsBold"),
+                                        //         ),
+                                        //       ),
+                                        //     ],
+                                        //   ),
+                                        // ),
 
 
                                         Container(
@@ -1350,15 +1351,15 @@ class RechargeState extends State<Recharge> {
                                             crossAxisAlignment: CrossAxisAlignment.center,
                                             mainAxisAlignment: MainAxisAlignment.spaceAround,
                                             children: <Widget>[
-                                              TextButton(
-                                                onPressed: () {
-                                                  showDialog(
-                                                    context: context,
-                                                    builder: (BuildContext context) => _buildPopupDialogAddOn(context,snapshot.data[index]),
-                                                  );
-                                                },
-                                                child: Text('View Details'),
-                                              ),
+                                              // TextButton(
+                                              //   onPressed: () {
+                                              //     showDialog(
+                                              //       context: context,
+                                              //       builder: (BuildContext context) => _buildPopupDialogAddOn(context,snapshot.data[index]),
+                                              //     );
+                                              //   },
+                                              //   child: Text('View Details'),
+                                              // ),
                                               MaterialButton(
 
                                                   splashColor: kPrimaryColorBlue,
@@ -1376,7 +1377,9 @@ class RechargeState extends State<Recharge> {
                                                     ),
                                                   ),
                                                   onPressed: () {
-                                                    _launchPayURL(snapshot.data[index].totalAmt, snapshot.data[index].id.toString(),"Add's On Subscription");
+                                                    Navigator.push(context, MaterialPageRoute(builder: (context) => AddOnBuy(snapshot.data[index].id,snapshot.data[index].totalAmt,snapshot.data[index].igst,snapshot.data[index].cgst.toString(),snapshot.data[index].rechargeAmount.toString())));
+
+                                                    // _launchPayURL(snapshot.data[index].totalAmt, snapshot.data[index].id.toString(),"Add's On Subscription");
 
                                                   }),
 

@@ -211,8 +211,8 @@ class _PayLinksState extends State<PayLinks> {
                               padding: EdgeInsets.only(left: 10.0, right: 10.0, bottom: 5.0),
                               child: PayLinksCard(size, snapshot.data[index],
                                   (){
-                                    // send(snapshot.data[index].id);
-                                    Navigator.push(context, MaterialPageRoute(builder: (context) => PayUWebView("Pay", "url")));
+                                    send(snapshot.data[index].id);
+                                    // Navigator.push(context, MaterialPageRoute(builder: (context) => PayUWebView("Pay", "url")));
                                   },
                                   (){
                                     delete(snapshot.data[index].id);
