@@ -349,8 +349,8 @@ class EditQRState extends State<EditQR> {
                 controller: vehicleNumController,
                 textCapitalization: TextCapitalization.characters,
                 inputFormatters: [
-                  new WhitelistingTextInputFormatter(RegExp("[a-z A-Z0-9]")),
-                  LengthLimitingTextInputFormatter(13),
+                  new FilteringTextInputFormatter.allow(RegExp("[0-9a-zA-Z]")),
+                  LengthLimitingTextInputFormatter(10),
                 ],
                 onChanged: (value){
                   setState(() {

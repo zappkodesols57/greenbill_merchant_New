@@ -2183,7 +2183,7 @@ class RechargeState extends State<Recharge> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: <Widget>[
                           Text(
-                            "₹ "+data.totalAmt.toString(),
+                            "₹ "+data.totalAmt.toString().length.toStringAsFixed(2),
                             textAlign: TextAlign.center,
                             style: TextStyle(
                                 color: Colors.white,
@@ -2250,7 +2250,7 @@ class RechargeState extends State<Recharge> {
                       top: 0.0, bottom: 5.0, left: 5.0, right: 5.0),
                   // width:MediaQuery.of(context).size.width* 0.5,
                   child: Text(
-                    "₹"+data.totalAmt.toString(),
+                    "₹ "+data.totalAmt.toString().length.toStringAsFixed(2),
                     textAlign: TextAlign.center,
                     style: TextStyle(
                         color: kPrimaryColorBlue,
@@ -2328,7 +2328,7 @@ class RechargeState extends State<Recharge> {
                       top: 0.0, bottom: 5.0, left: 5.0, right: 5.0),
                   // width:MediaQuery.of(context).size.width* 0.5,
                   child: Text(
-                    "₹"+data.perSmsCost,
+                    "₹ "+data.perSmsCost,
                     textAlign: TextAlign.center,
                     style: TextStyle(
                         color: kPrimaryColorBlue,
@@ -2479,7 +2479,7 @@ class RechargeState extends State<Recharge> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: <Widget>[
                           Text(
-                            "₹ "+data.totalAmt.toString(),
+                            "₹ "+data.totalAmt.toString().length.toStringAsFixed(2),
                             textAlign: TextAlign.center,
                             style: TextStyle(
                                 color: Colors.white,
@@ -2545,7 +2545,7 @@ class RechargeState extends State<Recharge> {
                       top: 0.0, bottom: 5.0, left: 5.0, right: 5.0),
                   // width:MediaQuery.of(context).size.width* 0.5,
                   child: Text(
-                    "₹"+data.totalAmt.toString(),
+                    "₹ "+data.totalAmt.toString().length.toStringAsFixed(2),
                     textAlign: TextAlign.center,
                     style: TextStyle(
                         color: kPrimaryColorBlue,

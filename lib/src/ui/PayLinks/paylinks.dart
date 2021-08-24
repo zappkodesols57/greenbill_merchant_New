@@ -107,7 +107,8 @@ class _PayLinksState extends State<PayLinks> {
           ),
           CustomTextField(
             controller: nameController,
-            formatter: [new WhitelistingTextInputFormatter(RegExp("[a-z A-Z]")),],
+            formatter: [new FilteringTextInputFormatter.allow(RegExp("[a-z A-Z]")),
+                            LengthLimitingTextInputFormatter(30)],
             prefixIcon: CupertinoIcons.person,
             hintText: "Name *",
             padding: EdgeInsets.only(top: 0.0, right: 15.0, left: 15.0, bottom: 10.0),
@@ -133,7 +134,7 @@ class _PayLinksState extends State<PayLinks> {
           CustomTextField(
             controller: decController,
             maxLength: 30,
-            formatter: [new WhitelistingTextInputFormatter(RegExp("[a-z A-Z]")),],
+            formatter: [new FilteringTextInputFormatter.allow(RegExp("[a-z A-Z]")),],
             prefixIcon: CupertinoIcons.quote_bubble,
             hintText: "Description *",
             padding: EdgeInsets.only(top: 0.0, right: 15.0, left: 15.0, bottom: 10.0),

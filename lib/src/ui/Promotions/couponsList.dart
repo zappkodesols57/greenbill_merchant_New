@@ -75,51 +75,51 @@ class _CouponsListState extends State<CouponsList> {
     return Scaffold(
       key: _scaffoldKey,
       backgroundColor: Color(0xFFF7F7F7),
-      floatingActionButton: AnimatedContainer(
-          duration: Duration(milliseconds: 400),
-          curve: Curves.easeInOut,
-          child: RawMaterialButton(
-              elevation: 5.0,
-              shape: isGoingDown
-                  ? RoundedRectangleBorder(
-                  borderRadius: BorderRadius.all(Radius.circular(25.0)))
-                  : CircleBorder(),
-              onPressed: () async{
-                SharedPreferences prefs = await SharedPreferences.getInstance();
-                // File file = await downloadPicture(prefs.getString("businessLogo"));
-                Navigator.push(context,
-                    HeroDialogRoute(builder: (context) => Coupons("", "", "", "", "", "", "", "", "", "")))
-                .then((value) => (value??false) ? couponCreated() : null);
-              },
-              fillColor: kPrimaryColorBlue,
-              child: Padding(
-                padding: const EdgeInsets.all(12.0),
-                child: isGoingDown
-                    ? Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        const Icon(
-                          CupertinoIcons.ticket,
-                          color: Colors.white,
-                        ),
-                        SizedBox(
-                          width: 5.0,
-                        ),
-                        Text(
-                          "Add Coupon",
-                          style: TextStyle(
-                              color: Colors.white,
-                              fontFamily: "PoppinsMedium",
-                              fontWeight: FontWeight.bold
-                          ),
-                        )
-                      ],
-                    )
-                    : const Icon(
-                  CupertinoIcons.ticket,
-                  color: Colors.white,
-                ),
-              ))),
+      // floatingActionButton: AnimatedContainer(
+      //     duration: Duration(milliseconds: 400),
+      //     curve: Curves.easeInOut,
+      //     child: RawMaterialButton(
+      //         elevation: 5.0,
+      //         shape: isGoingDown
+      //             ? RoundedRectangleBorder(
+      //             borderRadius: BorderRadius.all(Radius.circular(25.0)))
+      //             : CircleBorder(),
+      //         onPressed: () async{
+      //           SharedPreferences prefs = await SharedPreferences.getInstance();
+      //           // File file = await downloadPicture(prefs.getString("businessLogo"));
+      //           Navigator.push(context,
+      //               HeroDialogRoute(builder: (context) => Coupons("", "", "", "", "", "", "", "", "", "")))
+      //           .then((value) => (value??false) ? couponCreated() : null);
+      //         },
+      //         fillColor: kPrimaryColorBlue,
+      //         child: Padding(
+      //           padding: const EdgeInsets.all(12.0),
+      //           child: isGoingDown
+      //               ? Row(
+      //                 mainAxisSize: MainAxisSize.min,
+      //                 children: [
+      //                   const Icon(
+      //                     CupertinoIcons.ticket,
+      //                     color: Colors.white,
+      //                   ),
+      //                   SizedBox(
+      //                     width: 5.0,
+      //                   ),
+      //                   Text(
+      //                     "Add Coupon",
+      //                     style: TextStyle(
+      //                         color: Colors.white,
+      //                         fontFamily: "PoppinsMedium",
+      //                         fontWeight: FontWeight.bold
+      //                     ),
+      //                   )
+      //                 ],
+      //               )
+      //               : const Icon(
+      //             CupertinoIcons.ticket,
+      //             color: Colors.white,
+      //           ),
+      //         ))),
       body: NotificationListener<ScrollNotification>(
         onNotification: (onScrollNotification) {
           if (onScrollNotification is ScrollUpdateNotification) {

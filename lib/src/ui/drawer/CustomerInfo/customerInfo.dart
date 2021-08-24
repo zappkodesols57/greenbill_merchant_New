@@ -57,8 +57,12 @@ class CustomerInfoState extends State<CustomerInfo> {
     print(res.body);
     if(200 == res.statusCode){
       print(cInfoFromJson(res.body).data.length);
-      return cInfoFromJson(res.body).data.where((element) => element.mobileNo.toString().toLowerCase().contains(query.text)||
-          element.name.toString().toLowerCase().contains(query.text)).toList();
+      return cInfoFromJson(res.body).data.where((element) =>
+          element.mobileNo.toString().toLowerCase().contains(query.text)||
+          element.name.toUpperCase().toLowerCase().contains(query.text.toUpperCase().toLowerCase())||
+          element.city.toUpperCase().toLowerCase().contains(query.text.toUpperCase().toLowerCase())||
+          element.state.toUpperCase().toLowerCase().contains(query.text.toUpperCase().toLowerCase())).toList();
+
     } else{
       throw Exception('Failed to load Stores List');
     }
@@ -97,7 +101,6 @@ class CustomerInfoState extends State<CustomerInfo> {
                 onChanged: (value){
                   getCustomerInfoList();
                   setState(() {
-
                   });
                 },
                 // inputFormatters: <TextInputFormatter>[
@@ -171,7 +174,7 @@ class CustomerInfoState extends State<CustomerInfo> {
                           thickness: 3.0,
                           child: ListView.builder(
                               controller: _controller,
-                              reverse: true,
+                              reverse: false,
                               shrinkWrap: true,
                               itemCount: snapshot.data.length,
                               itemBuilder: (BuildContext context, int index) {

@@ -126,7 +126,7 @@ class DmEnquiryState extends State<DmEnquiry> {
                 padding: EdgeInsets.only(
                     top: 20.0, bottom: 10.0, left: 0.0, right: 0.0),
                 child: new TextField(
-                  inputFormatters: [FilteringTextInputFormatter.allow(RegExp("[a-zA-Z]")),],
+                  inputFormatters: [FilteringTextInputFormatter.allow(RegExp("[a-z A-Z]")),],
                   controller: nameController,
                   maxLength: 20,
                   style: TextStyle(

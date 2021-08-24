@@ -171,6 +171,7 @@ class _OffersDetailsState extends State<OffersDetails> {
                       ),
                     ],
                   ),
+
                   Padding(
                       padding: const EdgeInsets.only(top: 10.0, bottom: 5.0, left: 25.0, right: 25.0),
                       child: Text(
@@ -181,6 +182,7 @@ class _OffersDetailsState extends State<OffersDetails> {
                         ),
                       )
                   ),
+
                   Padding(
                       padding: const EdgeInsets.only(top: 0.0, bottom: 5.0, left: 25.0, right: 25.0),
                       child: Text(
@@ -191,7 +193,9 @@ class _OffersDetailsState extends State<OffersDetails> {
                         ),
                       )
                   ),
+
                   Divider(thickness: 1.0, indent: 20.0, endIndent: 20.0,),
+
                   Padding(
                       padding: const EdgeInsets.only(top: 10.0, bottom: 5.0, left: 25.0, right: 25.0),
                       child: Text(

@@ -35,7 +35,7 @@ class _AddOnBuyState extends State<AddOnBuy> {
 
   String token, businessLogo, storeCatID,number,nameOfBuss,userId,emailAddress,busId;
   int CPU,NOU,id;
-  double IGST,Total;
+  double IGST = 0.0,Total = 0.0;
   List checkedValue = List();
 
   @override
@@ -313,14 +313,35 @@ class _AddOnBuyState extends State<AddOnBuy> {
                             children: [
                               Container(
                                 width: size.width * 0.40,
-                                child: Text("CGST(9%)SGST(9%)",style:
+                                child: Text("CGST(9%)",style:
+                                TextStyle(fontFamily: "PoppinsLight",
+                                    fontSize: 14.0,
+                                    color: AppColors.kPrimaryColorBlue)),
+                              ),
+
+                              Container(
+                                width: size.width * 0.25,
+                                child: Text(": ₹ ${(IGST/2).toStringAsFixed(2)}",style:
+                                TextStyle(fontFamily: "PoppinsLight",
+                                    fontSize: 14.0,
+                                    color: AppColors.kPrimaryColorBlue)),
+                              ),
+                            ],
+                          ),
+                        if(widget.igst == 1)
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Container(
+                                width: size.width * 0.40,
+                                child: Text("SGST(9%)",style:
                                 TextStyle(fontFamily: "PoppinsLight",
                                     fontSize: 14.0,
                                     color: AppColors.kPrimaryColorBlue)),
                               ),
                               Container(
                                 width: size.width * 0.25,
-                                child: Text(IGST == null ? ": ₹ 0.0" :": ₹ ${IGST.toStringAsFixed(2)}",style:
+                                child: Text(": ₹ ${(IGST/2).toStringAsFixed(2)}",style:
                                 TextStyle(fontFamily: "PoppinsLight",
                                     fontSize: 14.0,
                                     color: AppColors.kPrimaryColorBlue)),

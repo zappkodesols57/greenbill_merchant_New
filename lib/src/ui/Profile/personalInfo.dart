@@ -298,6 +298,9 @@ class _MyPersonalInfoState extends State<PersonalInfo> {
               padding: EdgeInsets.only(
                   top: 20.0, bottom: 10.0, left: 0.0, right: 0.0),
               child: TextField(
+                inputFormatters: [
+                  FilteringTextInputFormatter.allow(RegExp("[a-zA-Z]")),
+                  LengthLimitingTextInputFormatter(15)],
                 focusNode: myFocusNodeFname,
                 controller: fnameController,
                 onChanged: (value) {
@@ -344,6 +347,9 @@ class _MyPersonalInfoState extends State<PersonalInfo> {
               padding: EdgeInsets.only(
                   top: 0.0, bottom: 10.0, left: 0.0, right: 0.0),
               child: TextField(
+                inputFormatters: [
+                  FilteringTextInputFormatter.allow(RegExp("[a-zA-Z]")),
+                  LengthLimitingTextInputFormatter(15)],
                 focusNode: myFocusNodeLname,
                 controller: lnameController,
                 onChanged: (value) {
