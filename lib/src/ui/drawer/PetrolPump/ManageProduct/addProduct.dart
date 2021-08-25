@@ -133,6 +133,8 @@ class AddProductsState extends State<AddProducts> {
             padding: EdgeInsets.only(
                 top: 10.0, bottom: 10.0, left: 10.0, right: 10.0),
             child: TextField(
+              inputFormatters: [LengthLimitingTextInputFormatter(20)],
+
               controller: productController,
               style: TextStyle(
                   fontFamily: "PoppinsMedium",

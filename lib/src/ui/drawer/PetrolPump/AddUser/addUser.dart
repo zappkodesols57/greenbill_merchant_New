@@ -273,6 +273,8 @@ class AddUserState extends State<AddUser> {
               padding: EdgeInsets.only(
                   top: 0.0, bottom: 10.0, left: 10.0, right: 10.0),
               child: TextField(
+                inputFormatters: [FilteringTextInputFormatter.deny(RegExp('[ ]')),
+                LengthLimitingTextInputFormatter(30)],
                 controller: emailController,
                 keyboardType: TextInputType.emailAddress,
                 style: TextStyle(

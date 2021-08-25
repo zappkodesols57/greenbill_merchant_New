@@ -135,6 +135,7 @@ class AddAddonState extends State<AddAddon> {
             padding: EdgeInsets.only(
                 top: 10.0, bottom: 10.0, left: 10.0, right: 10.0),
             child: TextField(
+              maxLength: 20,
               controller: productController,
               style: TextStyle(
                   fontFamily: "PoppinsMedium",
@@ -176,9 +177,6 @@ class AddAddonState extends State<AddAddon> {
             child: TextField(
               controller: costController,
               keyboardType: TextInputType.number,
-              inputFormatters: <TextInputFormatter>[
-                FilteringTextInputFormatter.digitsOnly
-              ],
               maxLength: 5,
               style: TextStyle(
                   fontFamily: "PoppinsMedium",

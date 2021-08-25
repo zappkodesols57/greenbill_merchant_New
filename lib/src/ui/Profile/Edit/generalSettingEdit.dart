@@ -427,6 +427,8 @@ class _MyGeneralSettingEditState extends State<GeneralSettingEdit> {
                         width: size.width * 0.95,
                         padding: EdgeInsets.only(top: 0.0, bottom: 10.0, left: 0.0, right: 0.0),
                         child: new TextField(
+                          inputFormatters: [FilteringTextInputFormatter.deny('[ ]'),
+                          LengthLimitingTextInputFormatter(30)],
                           focusNode: myFocusNodeCemail,
                           controller: cemailController,
                           keyboardType: TextInputType.emailAddress,
@@ -524,6 +526,8 @@ class _MyGeneralSettingEditState extends State<GeneralSettingEdit> {
                         width: size.width * 0.95,
                         padding: EdgeInsets.only(top: 0.0, bottom: 10.0, left: 0.0, right: 0.0),
                         child: new TextField(
+                          inputFormatters: [FilteringTextInputFormatter.deny('[ ]'),
+                            LengthLimitingTextInputFormatter(30)],
                           focusNode: myFocusNodeEmail,
                           controller: emailController,
                           keyboardType: TextInputType.emailAddress,
@@ -649,6 +653,7 @@ class _MyGeneralSettingEditState extends State<GeneralSettingEdit> {
                       width: size.width * 0.95,
                       padding: EdgeInsets.only(top: 0.0, bottom: 10.0, left: 0.0, right: 0.0),
                       child: new TextField(
+                        inputFormatters: [LengthLimitingTextInputFormatter(50)],
                         focusNode: myFocusNodeAddress,
                         controller: addressController,
                         onChanged: (value) {
@@ -694,6 +699,7 @@ class _MyGeneralSettingEditState extends State<GeneralSettingEdit> {
                       width: size.width * 0.95,
                       padding: EdgeInsets.only(top: 0.0, bottom: 10.0, left: 0.0, right: 0.0),
                       child: new TextField(
+                        inputFormatters: [LengthLimitingTextInputFormatter(20)],
                         focusNode: myFocusNodeCity,
                         controller: cityController,
                         onChanged: (value) {
@@ -739,6 +745,7 @@ class _MyGeneralSettingEditState extends State<GeneralSettingEdit> {
                       width: size.width * 0.95,
                       padding: EdgeInsets.only(top: 0.0, bottom: 10.0, left: 0.0, right: 0.0),
                       child: new TextField(
+                        inputFormatters: [LengthLimitingTextInputFormatter(20)],
                         focusNode: myFocusNodeArea,
                         controller: areaController,
                         onChanged: (value) {
@@ -785,6 +792,7 @@ class _MyGeneralSettingEditState extends State<GeneralSettingEdit> {
                       width: size.width * 0.95,
                       padding: EdgeInsets.only(top: 0.0, bottom: 10.0, left: 0.0, right: 0.0),
                       child: new TextField(
+                        inputFormatters: [LengthLimitingTextInputFormatter(20)],
                         focusNode: myFocusNodeDistrict,
                         controller: districtController,
                         onChanged: (value) {
@@ -830,6 +838,7 @@ class _MyGeneralSettingEditState extends State<GeneralSettingEdit> {
                       width: size.width * 0.95,
                       padding: EdgeInsets.only(top: 0.0, bottom: 10.0, left: 0.0, right: 0.0),
                       child: new TextField(
+                        inputFormatters: [LengthLimitingTextInputFormatter(20)],
                         focusNode: myFocusNodeState,
                         controller: stateController,
                         onChanged: (value) {
@@ -839,6 +848,7 @@ class _MyGeneralSettingEditState extends State<GeneralSettingEdit> {
                           });
                         },
                         style: TextStyle(
+
                           //fontFamily: "PoppinsBold",
                             fontSize: 17.0,
                             color: Colors.black87),
@@ -956,6 +966,7 @@ class _MyGeneralSettingEditState extends State<GeneralSettingEdit> {
                         width: size.width * 0.95,
                         padding: EdgeInsets.only(top: 0.0, bottom: 10.0, left: 0.0, right: 0.0),
                         child: new TextField(
+                          inputFormatters: [FilteringTextInputFormatter.deny('[ ]')],
                           focusNode: myFocusNodePan,
                           controller: panController,
                           keyboardType: TextInputType.text,
@@ -1023,6 +1034,7 @@ class _MyGeneralSettingEditState extends State<GeneralSettingEdit> {
                         width: size.width * 0.95,
                         padding: EdgeInsets.only(top: 0.0, bottom: 10.0, left: 0.0, right: 0.0),
                         child: new TextField(
+                          inputFormatters: [FilteringTextInputFormatter.deny('[ ]')],
                           focusNode: myFocusNodeGst,
                           controller: gstController,
                           keyboardType: TextInputType.text,
@@ -1086,6 +1098,7 @@ class _MyGeneralSettingEditState extends State<GeneralSettingEdit> {
                         width: size.width * 0.95,
                         padding: EdgeInsets.only(top: 0.0, bottom: 10.0, left: 0.0, right: 0.0),
                         child: new TextField(
+                          inputFormatters: [FilteringTextInputFormatter.deny('[ ]')],
                           focusNode: myFocusNodeCin,
                           controller: cinController,
                           keyboardType: TextInputType.text,
@@ -1178,6 +1191,7 @@ class _MyGeneralSettingEditState extends State<GeneralSettingEdit> {
                         width: size.width * 0.95,
                         padding: EdgeInsets.only(top: 0.0, bottom: 10.0, left: 0.0, right: 0.0),
                         child: new TextField(
+                          maxLength: 20,
                           focusNode: myFocusNodeAccount,
                           controller: accController,
                           keyboardType: TextInputType.number,
@@ -1227,6 +1241,7 @@ class _MyGeneralSettingEditState extends State<GeneralSettingEdit> {
                         width: size.width * 0.95,
                         padding: EdgeInsets.only(top: 0.0, bottom: 10.0, left: 0.0, right: 0.0),
                         child: new TextField(
+                          inputFormatters: [FilteringTextInputFormatter.deny('[ ]')],
                           focusNode: myFocusNodeIfsc,
                           controller: ifscController,
                           maxLength: 11,
@@ -1293,6 +1308,7 @@ class _MyGeneralSettingEditState extends State<GeneralSettingEdit> {
                         width: size.width * 0.95,
                         padding: EdgeInsets.only(top: 0.0, bottom: 10.0, left: 0.0, right: 0.0),
                         child: new TextField(
+                          maxLength: 30,
                           focusNode: myFocusNodeBank,
                           controller: bnameController,
                           onChanged: (value) {
@@ -1338,6 +1354,7 @@ class _MyGeneralSettingEditState extends State<GeneralSettingEdit> {
                         width: size.width * 0.95,
                         padding: EdgeInsets.only(top: 0.0, bottom: 10.0, left: 0.0, right: 0.0),
                         child: new TextField(
+                          maxLength: 30,
                           focusNode: myFocusNodeBranch,
                           controller: branchController,
                           onChanged: (value) {

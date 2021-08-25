@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
+import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:greenbill_merchant/src/models/model_getGeneralSetting.dart';
 import 'package:greenbill_merchant/src/ui/drawer/Settings/cancelledCheck.dart';
@@ -315,6 +316,8 @@ class _MyGeneralSettingState extends State<GeneralSetting> {
                         width: size.width * 0.95,
                         padding: EdgeInsets.only(top: 0.0, bottom: 10.0, left: 0.0, right: 0.0),
                         child: new TextField(
+                          inputFormatters: [FilteringTextInputFormatter.deny(RegExp("[ ]")),
+                            LengthLimitingTextInputFormatter(40)],
                           enableInteractiveSelection: false, // will disable paste operation
                           focusNode: new AlwaysDisabledFocusNode(),
                           controller: cemailController,
@@ -395,6 +398,8 @@ class _MyGeneralSettingState extends State<GeneralSetting> {
                         width: size.width * 0.95,
                         padding: EdgeInsets.only(top: 0.0, bottom: 10.0, left: 0.0, right: 0.0),
                         child: new TextField(
+                          inputFormatters: [FilteringTextInputFormatter.deny(RegExp("[ ]")),
+                            LengthLimitingTextInputFormatter(40)],
                           enableInteractiveSelection: false, // will disable paste operation
                           focusNode: new AlwaysDisabledFocusNode(),
                           controller: emailController,
@@ -475,7 +480,9 @@ class _MyGeneralSettingState extends State<GeneralSetting> {
                     ],
                   ),
                 ),
+
                 SizedBox(height: 20.0,),
+
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Container(
@@ -505,6 +512,7 @@ class _MyGeneralSettingState extends State<GeneralSetting> {
                             width: size.width * 0.95,
                             padding: EdgeInsets.only(top: 0.0, bottom: 10.0, left: 0.0, right: 0.0),
                             child: new TextField(
+                              inputFormatters: [LengthLimitingTextInputFormatter(60)],
                               enableInteractiveSelection: false, // will disable paste operation
                               focusNode: new AlwaysDisabledFocusNode(),
                               controller: addressController,

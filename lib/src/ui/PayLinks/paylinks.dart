@@ -115,6 +115,8 @@ class _PayLinksState extends State<PayLinks> {
           ),
           CustomTextField(
             controller: emailController,
+            formatter: [new FilteringTextInputFormatter.deny(RegExp("[ ]")),
+              LengthLimitingTextInputFormatter(50)],
             inputType: TextInputType.emailAddress,
             prefixIcon: CupertinoIcons.mail,
             hintText: "Email",
@@ -303,6 +305,7 @@ class _PayLinksState extends State<PayLinks> {
           emailController.text.contains('edu') ||
           emailController.text.contains('org') ||
           emailController.text.contains('mil') ||
+          emailController.text.contains('in')  ||
           emailController.text.contains('gov')) {
         if (validateEmail(emailController.text) == false) {
           showInSnackBar("Invalid Email");

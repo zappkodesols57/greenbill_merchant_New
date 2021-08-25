@@ -114,7 +114,7 @@ class ManageChargesState extends State<ManageCharges> {
                 child: ListView.builder(
                     itemCount: snapshot.data.data.length,
                     shrinkWrap: true,
-                    reverse: true,
+                    reverse: false,
                     controller: _controller,
                     itemBuilder: (BuildContext context, int index) {
                       return new Card(

@@ -126,9 +126,9 @@ class DmEnquiryState extends State<DmEnquiry> {
                 padding: EdgeInsets.only(
                     top: 20.0, bottom: 10.0, left: 0.0, right: 0.0),
                 child: new TextField(
-                  inputFormatters: [FilteringTextInputFormatter.allow(RegExp("[a-z A-Z]")),],
+                  inputFormatters: [FilteringTextInputFormatter.allow(RegExp("[a-z A-Z]")),
+                  LengthLimitingTextInputFormatter(30)],
                   controller: nameController,
-                  maxLength: 20,
                   style: TextStyle(
                       //fontFamily: "PoppinsBold",
                       fontSize: 17.0,
@@ -217,6 +217,8 @@ class DmEnquiryState extends State<DmEnquiry> {
                 padding: EdgeInsets.only(
                     top: 0.0, bottom: 10.0, left: 0.0, right: 0.0),
                 child: new TextField(
+                  inputFormatters: [FilteringTextInputFormatter.deny(RegExp("[ ]")),
+                  LengthLimitingTextInputFormatter(40)],
                   controller: emailController,
                   keyboardType: TextInputType.emailAddress,
                   style: TextStyle(
