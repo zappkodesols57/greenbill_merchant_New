@@ -929,7 +929,7 @@ class _HomePageState extends State<HomePage> {
                                         padding: EdgeInsets.only(
                                             top: 0.0, bottom: 0.0, left: 10.0, right: 0.0),
                                         child: Text(
-                                          newsCustomerValue.toString(),
+                                          newsCustomerText.toString(),
                                           textAlign: TextAlign.center,
                                           style: TextStyle(
                                               color: kPrimaryColorBlue,
@@ -969,7 +969,7 @@ class _HomePageState extends State<HomePage> {
                                         padding: EdgeInsets.only(
                                             top: 0.0, bottom: 0.0, left: 10.0, right: 0.0),
                                         child: Text(
-                                          returningCustomerValue.toString(),
+                                          returningCustomerText.toString(),
                                           textAlign: TextAlign.center,
                                           style: TextStyle(
                                               color: kPrimaryColorBlue,

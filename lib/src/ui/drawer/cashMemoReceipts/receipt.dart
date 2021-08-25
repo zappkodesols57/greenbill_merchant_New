@@ -348,11 +348,11 @@ class _ReceiptState extends State<Receipt>{
       if(data.status == "success"){
         Navigator.of(context, rootNavigator: true).pop();
         showInSnackBar("Receipt Sent Successfully");
-      } else showInSnackBar(data.status);
+      } else showInSnackBar(data.message);
     } else {
       Navigator.of(context, rootNavigator: true).pop();
       print(data.status);
-      showInSnackBar(data.status);
+      showInSnackBar(data.message);
       return null;
     }
 

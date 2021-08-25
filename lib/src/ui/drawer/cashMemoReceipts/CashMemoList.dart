@@ -309,7 +309,6 @@ class CashMemoListState extends State<CashMemoList> {
           )
         ],
       ),
-
     );
   }
 
@@ -339,6 +338,7 @@ class CashMemoListState extends State<CashMemoList> {
         print(data.status);
       }
     } else {
+      showInSnackBar(data.message);
       print(data.status);
     }
   }
@@ -387,7 +387,6 @@ class CashMemoListState extends State<CashMemoList> {
       "m_business_id": busId,
       "cash_memo_id": id.toString(),
     };
-
 
     final response = await http.post(
       "http://157.230.228.250/merchant-cash-memo-delete-api/",
