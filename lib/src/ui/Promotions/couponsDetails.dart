@@ -275,6 +275,18 @@ class _CouponsDetailsState extends State<CouponsDetails> {
                   Padding(
                       padding: const EdgeInsets.only(top: 10.0, bottom: 0.0, left: 25.0, right: 25.0),
                       child: Text(
+                        "Coupon Details : ${data.couponCaption}",
+                        style: TextStyle(
+                          fontSize: 14.0,
+                          fontFamily: "PoppinsMedium",
+                          fontWeight: FontWeight.bold,
+                        ),
+                      )
+                  ),
+
+                  Padding(
+                      padding: const EdgeInsets.only(top: 0.0, bottom: 0.0, left: 25.0, right: 25.0),
+                      child: Text(
                         "Green Points : ${data.greenPoint}",
                         style: TextStyle(
                           fontSize: 14.0,
@@ -321,7 +333,7 @@ class _CouponsDetailsState extends State<CouponsDetails> {
                         ],
                       )
                   ),
-                  SizedBox(height: 70.0,)
+                  SizedBox(height: 40.0,)
                 ],
               ),
             ),
