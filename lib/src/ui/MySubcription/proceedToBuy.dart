@@ -463,7 +463,7 @@ class _ProceedToBuyState extends State<ProceedToBuy> {
                         ),
                               Container(
                                 width: size.width * 0.25,
-                                child: Text(CPU == null ? ": ₹ 0.00" :": ₹ $CPU.00",style:
+                                child: Text(CPU == null ? ": ₹ 0.00" :": ₹ ${double.parse(CPU.toString()).toStringAsFixed(2)}",style:
                                 TextStyle(fontFamily: "PoppinsLight",
                                     fontSize: 14.0,
                                     color: AppColors.kPrimaryColorBlue)),
@@ -482,7 +482,7 @@ class _ProceedToBuyState extends State<ProceedToBuy> {
                               ),
                               Container(
                                 width: size.width * 0.25,
-                                child: Text(widget.rechargeAMT.contains('.')?": ₹ ${widget.rechargeAMT}" :": ₹ ${widget.rechargeAMT}.00",style:
+                                child: Text(":₹ ${double.parse(widget.rechargeAMT).toStringAsFixed(2)}",style:
                                 TextStyle(fontFamily: "PoppinsLight",
                                     fontSize: 14.0,
                                     color: AppColors.kPrimaryColorBlue)),
@@ -521,6 +521,7 @@ class _ProceedToBuyState extends State<ProceedToBuy> {
                                       fontSize: 14.0,
                                       color: AppColors.kPrimaryColorBlue)),
                                 ),
+
                                 Container(
                                   width: size.width * 0.25,
                                   child: Text(": ₹ ${(IGST/2).toStringAsFixed(2)}",style:
@@ -563,7 +564,7 @@ class _ProceedToBuyState extends State<ProceedToBuy> {
                               ),
                               Container(
                                 width: size.width * 0.25,
-                                child: Text(": ₹ $Total",style:
+                                child: Text(": ₹ ${(Total).toStringAsFixed(2)}",style:
                                 TextStyle(fontFamily: "PoppinsLight",
                                     fontSize: 14.0,
                                     color: AppColors.kPrimaryColorBlue)),
@@ -617,7 +618,7 @@ class _ProceedToBuyState extends State<ProceedToBuy> {
                         ),
                         onPressed: () {
                           print(">><><><<$Total ______ $checkedValue");
-                          _launchPayURL(Total.toString(),checkedValue.toString(),"Green Bill Subscription");
+                          _launchPayURL(Total.toStringAsFixed(2),checkedValue.toString(),"Green Bill Subscription");
 
                         }),
                   ),

@@ -65,7 +65,7 @@ class PayLinksCardState extends State<PayLinksCard> {
     double iconDimen = cardDimenWidth * 0.06;
     double iconSize = iconDimen * 0.6;
     return Container(
-      height: cardDimenHeight,
+      height: 200.0,
       width: cardDimenWidth,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.all(Radius.circular(10)),
@@ -127,7 +127,7 @@ class PayLinksCardState extends State<PayLinksCard> {
                       Padding(
                         padding: EdgeInsets.only(left: 10.0),
                         child: Text(
-                          "${widget.data.name} - ${widget.data.mobileNo}",
+                          "${widget.data.name}\n${widget.data.mobileNo}",
                           style: TextStyle(
                             fontSize: cardDimenWidth * 0.05,
                             fontFamily: "PoppinsMedium",
@@ -153,7 +153,7 @@ class PayLinksCardState extends State<PayLinksCard> {
               Padding(
                 padding: EdgeInsets.only(left: (cardDimenWidth * 0.11) + 25,),
                 child: Text(
-                  "Amount : ${"₹ "+widget.data.amount+".00"} . Date : ${widget.data.createdAt.day}-${widget.data
+                  "Amount : ${"₹ "+widget.data.amount+".00"}\nDate : ${widget.data.createdAt.day}-${widget.data
                       .createdAt.month}-${widget.data.createdAt.year}",
                   style: TextStyle(
                     fontSize: cardDimenWidth * 0.04,

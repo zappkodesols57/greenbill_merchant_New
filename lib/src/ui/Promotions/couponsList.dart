@@ -74,7 +74,7 @@ class _CouponsListState extends State<CouponsList> {
   Widget build(BuildContext context) {
     return Scaffold(
       key: _scaffoldKey,
-      backgroundColor: Color(0xFFF7F7F7),
+      backgroundColor: Colors.white,
       // floatingActionButton: AnimatedContainer(
       //     duration: Duration(milliseconds: 400),
       //     curve: Curves.easeInOut,

@@ -147,19 +147,19 @@ class HistoryState extends State<History> {
                               Container(
                                 alignment: Alignment.center,
                                 width: size.width * 0.4,
-                                child: Text("₹"+total.toString()
-                                  ,
+                                child: Text("₹"+total.toString(),
                                   style: TextStyle(
                                       color: Colors.black,
                                       fontSize: 12.0,
                                       fontFamily: "PoppinsBold"),
                                 ),
                               ),
-                            ],),
+                            ],
+                          ),
                         ),
-
                       ),
                     ),
+
                     Container(
 
                       child:Card(
@@ -263,7 +263,7 @@ class HistoryState extends State<History> {
                                         children: <Widget>[
 
                                           Text(
-                                              "₹ ${snapshot.data[index].cost.toString()}",
+                                              "₹ ${(snapshot.data[index].cost).toStringAsFixed(2)}",
                                               style: TextStyle(fontSize: 15.0, fontFamily: "PoppinsMedium", fontWeight: FontWeight.bold)
                                           ),
                                         ],

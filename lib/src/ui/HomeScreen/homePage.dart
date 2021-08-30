@@ -1370,6 +1370,7 @@ class _HomePageState extends State<HomePage> {
                   ],
                 ),
                 SizedBox(height: 10.0,),
+
                 Container(
                   width: size.width * 0.95,
                   child: Column(

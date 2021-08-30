@@ -413,7 +413,7 @@ class _AddOnBuyState extends State<AddOnBuy> {
                           ),
                         ),
                         onPressed: () {
-                          _launchPayURL(Total.toString(),checkedValue.toString(),"Green Bill Subscription");
+                          _launchPayURL(Total.toStringAsFixed(2),checkedValue.toString(),"Green Bill Subscription");
                         }),
                   ),
                 ],

@@ -294,7 +294,7 @@ class FlagBillsState extends State<FlagBills> {
                                     controller.toggle(index);
                                   });
                                 },
-                                title: Text((snapshot[index].mobileNo.isEmpty ? "--//--" : snapshot[index].mobileNo),
+                                title: Text((snapshot[index].mobileNo.isEmpty ? "" : snapshot[index].mobileNo),
                                     style: TextStyle(fontSize: 15.0)
                                 ),
                                 subtitle: Text('${snapshot[index].flaggedTime} . ${snapshot[index].invoiceNo}\n${snapshot[index].flaggedDate} . ${snapshot[index].flaggedBy}'
@@ -309,7 +309,7 @@ class FlagBillsState extends State<FlagBills> {
                                       children: <Widget>[
                                         Container(
                                           width: 60.0,
-                                          child: Text(snapshot[index].amount.contains(".")?"₹ ${snapshot[index].amount.split(".").first+".00"}":"₹ ${snapshot[index].amount+".00"}", style: TextStyle(fontWeight: FontWeight.bold)),
+                                          child: Text("₹ ${double.parse(snapshot[index].amount).toStringAsFixed(2)}", style: TextStyle(fontWeight: FontWeight.bold)),
                                         ),
                                       ],
                                     ),

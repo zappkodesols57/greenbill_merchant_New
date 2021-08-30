@@ -283,11 +283,9 @@ class BillInfoState extends State<BillInfo> {
                                         ),
                                         Container(
                                             width: 70.0,
-                                            child: Text(snapshot.data[index].amount.contains(".")?
-                                                "₹ ${snapshot.data[index].amount.split(".").first+".00"}":"₹ ${snapshot.data[index].amount+".00"}",
+                                            child: Text("₹ ${double.parse(snapshot.data[index].amount).toStringAsFixed(2)}",
                                                 style: TextStyle(
-                                                    fontWeight:
-                                                        FontWeight.bold))),
+                                                    fontWeight: FontWeight.bold))),
                                       ],
                                     ),
                                   ),

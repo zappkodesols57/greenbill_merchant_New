@@ -206,7 +206,7 @@ class ReceivedPaymentsState extends State<ReceivedPayments> {
                               Container(
                                 alignment: Alignment.center,
                                 width: size.width * 0.4,
-                                child: Text("₹ ${total.toString()}0",
+                                child: Text("₹ ${total.toStringAsFixed(2)}",
                                   style: TextStyle(
                                       color: Colors.black,
                                       fontSize: 14.0,
@@ -319,7 +319,7 @@ class ReceivedPaymentsState extends State<ReceivedPayments> {
                                         children: <Widget>[
 
                                           Text(
-                                              "₹ ${snapshot.data[index].amount.toString()}",
+                                              "₹ ${double.parse(snapshot.data[index].amount).toStringAsFixed(2)}",
                                               style: TextStyle(fontSize: 15.0, fontFamily: "PoppinsMedium", fontWeight: FontWeight.bold)
                                           ),
                                         ],

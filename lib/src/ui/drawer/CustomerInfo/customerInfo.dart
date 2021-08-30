@@ -130,7 +130,6 @@ class CustomerInfoState extends State<CustomerInfo> {
                   // ),
                   suffixIcon: GestureDetector(
                     onTap:(){
-
                     },
                     child: Icon(
                       CupertinoIcons.search,
@@ -144,6 +143,7 @@ class CustomerInfoState extends State<CustomerInfo> {
                 ),
               ),
             ),
+
             Expanded(
               child: SingleChildScrollView(
                 child: FutureBuilder<List<Datum>>(
@@ -155,6 +155,7 @@ class CustomerInfoState extends State<CustomerInfo> {
                       return Center(
                         child: Text("No Data Found!"),
                       );
+
                     } else{
                       if (snapshot.connectionState == ConnectionState.done &&
                           snapshot.hasData) {

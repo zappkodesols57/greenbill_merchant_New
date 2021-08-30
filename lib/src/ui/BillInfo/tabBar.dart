@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:greenbill_merchant/src/constants.dart';
-import 'package:greenbill_merchant/src/ui/BillInfo/IncomingBills.dart';
+import 'package:greenbill_merchant/src/ui/BillInfo/ReceivedBills.dart';
 import 'package:greenbill_merchant/src/ui/BillInfo/RejectedBills.dart';
-import 'package:greenbill_merchant/src/ui/BillInfo/billInfoList.dart';
+import 'package:greenbill_merchant/src/ui/BillInfo/SentBills.dart';
 import 'package:greenbill_merchant/src/ui/BillInfo/flagBills.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 

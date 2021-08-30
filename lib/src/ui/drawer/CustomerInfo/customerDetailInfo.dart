@@ -266,7 +266,7 @@ class CustomerDetailInfoState extends State<CustomerDetailInfo> {
                                   Container(
                                     width: 80.0,
                                     child: Text(
-                                        "    ₹ ${snapshot.data.allBills[index].amount}",
+                                        "    ₹ ${double.parse(snapshot.data.allBills[index].amount).toStringAsFixed(2)}",
                                         style: TextStyle(
                                             fontWeight: FontWeight.bold)),
                                   ),

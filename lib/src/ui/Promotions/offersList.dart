@@ -51,7 +51,7 @@ class _OffersListState extends State<OffersList> {
       "user_id": userID.toString(),
     };
     final res = await http.post(
-      "http://157.230.228.250:8001/merchant-get-offers-api/",
+      "http://157.230.228.250/merchant-get-offers-api/",
       body: params, headers: {HttpHeaders.authorizationHeader: "Token $token"},
     );
 

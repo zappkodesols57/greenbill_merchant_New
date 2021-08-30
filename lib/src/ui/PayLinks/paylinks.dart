@@ -395,11 +395,11 @@ class _PayLinksState extends State<PayLinks> {
       if(data.status == "success"){
         Navigator.of(context, rootNavigator: true).pop();
         showInSnackBar("Link Send Successfully");
-      } else showInSnackBar(data.status);
+      } else showInSnackBar(data.message);
     } else {
       Navigator.of(context, rootNavigator: true).pop();
       print(data.status);
-      showInSnackBar(data.status);
+      showInSnackBar(data.message);
       return null;
     }
 
@@ -434,14 +434,12 @@ class _PayLinksState extends State<PayLinks> {
 
         });
         showInSnackBar("Receipt Deleted Successfully");
-      } else showInSnackBar(data.status);
+      } else showInSnackBar(data.message);
     } else {
       Navigator.of(context, rootNavigator: true).pop();
       print(data.status);
-      showInSnackBar(data.status);
+      showInSnackBar(data.message);
       return null;
     }
-
   }
-
 }
