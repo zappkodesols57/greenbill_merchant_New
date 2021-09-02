@@ -88,86 +88,27 @@ class CustomerDetailInfoState extends State<CustomerDetailInfo> {
             if (snapshot.connectionState == ConnectionState.done &&
                 snapshot.hasData) {
               return Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Container(
-                      height: 150.0,
-                      child: Column(
-                        children: [
-                          Container(
-                            color: kPrimaryColorBlue.withOpacity(0.3),
-                            child: Text(
-                              "Customer Personal Details",
-                              textAlign: TextAlign.left,
-                              style: TextStyle(
-                                  fontSize: 20.0,
-                                  color: Colors.white,
-                                  fontFamily: "PoppinsMedium",
-                                  fontWeight: FontWeight.bold),
-                            ),
-                            padding: EdgeInsets.only(left: 20.0, top: 3.0),
-                            height: 40.0,
-                            width: size.width,
-                          ),
-                          Container(
-                            height: 100.0,
-                            width: size.width,
-                            padding: EdgeInsets.only(left: 20.0),
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  "Name         : ${widget.name}",
-                                  style: TextStyle(
-                                      fontFamily: "PoppinsMedium",
-                                      fontWeight: FontWeight.bold),
-                                ),
-                                Text(
-                                  "Mobile No.  : ${widget.mobileNo}",
-                                  style: TextStyle(
-                                      fontFamily: "PoppinsMedium",
-                                      fontWeight: FontWeight.bold),
-                                ),
-                                Text(
-                                  "Email ID      : ${widget.email}",
-                                  style: TextStyle(
-                                      fontFamily: "PoppinsMedium",
-                                      fontWeight: FontWeight.bold),
-                                ),
-                              ],
-                            ),
-                          ),
-                          // Container(
-                          //   color: kPrimaryColorBlue.withOpacity(0.3),
-                          //   child: Text(
-                          //     "Payment Details",
-                          //     textAlign: TextAlign.left,
-                          //     style: TextStyle(
-                          //         fontSize: 20.0,
-                          //         color: Colors.white,
-                          //         fontFamily: "PoppinsMedium",
-                          //         fontWeight: FontWeight.bold),
-                          //   ),
-                          //   padding: EdgeInsets.only(left: 20.0, top: 3.0),
-                          //   height: 40.0,
-                          //   width: size.width,
-                          // ),
-                          // Row(
-                          //   children: [
-                          //     Container(
-                          //       padding: EdgeInsets.only(top: 10.0, left: 20.0),
-                          //       child: Text(
-                          //         "Total Money Received: ₹ ${widget.amount}",
-                          //         style: TextStyle(
-                          //             fontFamily: "PoppinsMedium",
-                          //             fontWeight: FontWeight.bold),
-                          //       ),
-                          //     )
-                          //   ],
-                          // )
-                        ],
+                    padding: EdgeInsets.only(top: 10.0,bottom: 10.0),
+                      color: kPrimaryColorBlue.withOpacity(0.5),
+                      child: Container(
+                        alignment: Alignment.center,
+                        child: Text(
+                          "Mobile No.  : ${widget.mobileNo}",
+                          textAlign: TextAlign.left,
+                          style: TextStyle(
+                              fontSize: 22.0,
+                              color: Colors.white,
+                              fontFamily: "PoppinsMedium",
+                              fontWeight: FontWeight.bold),
+                        ),
+                        // padding: EdgeInsets.only(left: 20.0, top: 3.0),
+                        // height: 40.0,
+                        // width: size.width,
                       )),
+
                   ListTile(
                     tileColor: kPrimaryColorBlue,
                     title: Text(

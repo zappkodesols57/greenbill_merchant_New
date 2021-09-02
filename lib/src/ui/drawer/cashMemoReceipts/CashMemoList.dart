@@ -281,7 +281,7 @@ class CashMemoListState extends State<CashMemoList> {
                                     Container(
                                         width: 80.0,
                                         child: Text(
-                                            "   ₹ ${snapshot.data[index].total}",
+                                            "   ₹ ${snapshot.data[index].total.toStringAsFixed(2)}",
                                             style: TextStyle(
                                                 fontWeight:
                                                 FontWeight.bold))),

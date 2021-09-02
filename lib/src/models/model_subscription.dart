@@ -68,10 +68,10 @@ class PromotionalSmsDatum {
   factory PromotionalSmsDatum.fromJson(Map<String, dynamic> json) => PromotionalSmsDatum(
     promotionalSmsSubscriptionName: json["promotional_sms_subscription_name"],
     promotionalSmsPurchaseDate: json["promotional_sms_purchase_date"],
-    promotionalSmsPurchaseCost: json["promotional_sms_purchase_cost"],
+    promotionalSmsPurchaseCost: json["promotional_sms_purchase_cost"] == null ? 0 :json["promotional_sms_purchase_cost"],
     promotionalSmsTotalSms: json["promotional_sms_total_sms"],
     promotionalSmsPerSmsCost: json["promotional_sms_per_sms_cost"],
-    promotionalSmsTotalSmsAvilable: json["promotional_sms_total_sms_avilable"],
+    promotionalSmsTotalSmsAvilable: json["promotional_sms_total_sms_avilable"] == null ? 0 :json["promotional_sms_total_sms_avilable"],
   );
 
   Map<String, dynamic> toJson() => {
@@ -121,7 +121,7 @@ class SubscriptionDatum {
     subscriptionName: json["subscription_name"],
     purchaseDate: json["purchase_date"],
     purchaseCost: json["purchase_cost"].toDouble(),
-    totalAmountAvilable: json["total_amount_avilable"],
+    totalAmountAvilable: json["total_amount_avilable"] == null ? 0 : json["total_amount_avilable"],
     expiryDate: json["expiry_date"],
   );
 
@@ -160,10 +160,10 @@ class TransactionalSmsDatum {
   factory TransactionalSmsDatum.fromJson(Map<String, dynamic> json) => TransactionalSmsDatum(
     transactionalSmsSubscriptionName: json["transactional_sms_subscription_name"],
     transactionalSmsPurchaseDate: json["transactional_sms_purchase_date"],
-    transactionalSmsPurchaseCost: json["transactional_sms_purchase_cost"],
+    transactionalSmsPurchaseCost: json["transactional_sms_purchase_cost"] == null ? 0 :json["transactional_sms_purchase_cost"],
     transactionalSmsTotalSms: json["transactional_sms_total_sms"],
     transactionalSmsPerSmsCost: json["transactional_sms_per_sms_cost"],
-    transactionalSmsTotalSmsAvilable: json["transactional_sms_total_sms_avilable"],
+    transactionalSmsTotalSmsAvilable: json["transactional_sms_total_sms_avilable"] == null ? 0 :json["transactional_sms_total_sms_avilable"],
   );
 
   Map<String, dynamic> toJson() => {

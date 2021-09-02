@@ -185,10 +185,6 @@ class CustomerInfoState extends State<CustomerInfo> {
                                         "Mobile No. : ${snapshot.data[index].mobileNo}",
                                         style: TextStyle(fontSize: 15.0)
                                     ),
-                                    subtitle: Text(
-                                      "Name : ${snapshot.data[index].name}\nEmail : ${snapshot.data[index].email}\nState : ${snapshot.data[index].state}\nCity : ${snapshot.data[index].city}",
-                                        style: TextStyle(fontSize: 12.0)
-                                    ),
                                     // trailing: Text("₹ ${snapshot.data[index].amount}", style: TextStyle(fontWeight: FontWeight.bold)),
                                     onTap: (){
                                       Navigator.push(context, MaterialPageRoute(builder:  (context)=>CustomerDetailInfo(token, id, storeID,

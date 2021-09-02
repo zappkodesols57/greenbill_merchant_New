@@ -701,7 +701,7 @@ class subUpdatedState extends State<subUpdated> {
                                                     top: 10.0, bottom: 5.0, left: 5.0, right: 5.0),
                                                 width: size.width * 0.4,
                                                 child: Text(
-                                                  "₹ "+snapshot.data[index].promotionalSmsPurchaseCost.toString().split(".").first+"00",
+                                                  "₹ "+snapshot.data[index].promotionalSmsPurchaseCost.toStringAsFixed(2),
                                                   textAlign: TextAlign.center,
                                                   style: TextStyle(
                                                       color: kPrimaryColorBlue,
@@ -1123,7 +1123,7 @@ class subUpdatedState extends State<subUpdated> {
                                                     top: 0.0, bottom: 5.0, left: 5.0, right: 5.0),
                                                 width: size.width * 0.4,
                                                 child: Text(
-                                                  snapshot.data[index].transactionalSmsTotalSmsAvilable.toString().split(".").first,
+                                                  snapshot.data[index].transactionalSmsTotalSmsAvilable.toStringAsFixed(2),
                                                   textAlign: TextAlign.center,
                                                   style: TextStyle(
                                                       color: kPrimaryColorBlue,

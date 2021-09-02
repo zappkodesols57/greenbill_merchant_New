@@ -45,8 +45,11 @@ class _ProceedToBuyState extends State<ProceedToBuy> {
   int months;
   String selected1;
   List<String> value1 = ['1','2'];
-  List<String> value2 = ['1','2','3','4','5'];
-  List<String> value3 = ['1','2','3','4','5','6','7','8','9','10'];
+  List<String> value2 = ['3','4','5'];
+  List<String> value3 = ['6','7','8','9','10'];
+  List<String> value4 = ['11','12','13','14','15','16','17','18','19','20','21','22','23','24','25'];
+  List<String> value5 = ['26','27','28','29','30','31','32','33','34','35','36','37','38','39','40','41','42','43','44','45','46','47','48','49','50'];
+  List<String> value6 = ['51','52','53','54','55','56','57','58','59','60','61','62','63','64','65','66','67','68','69','70','71','72','73','74','75','76','77','78','79','80','81','82','83','84','85','86','87','88','89','90','91','92','93','94','95','96','97','98','99','100'];
   List<String> plan = ['6 Months','12 Months'];
   String selectedPlan;
 
@@ -223,6 +226,105 @@ class _ProceedToBuyState extends State<ProceedToBuy> {
                           });
                         },
                         items: value3.map((valuefnl){
+                          return DropdownMenuItem(
+                            child: new Text(valuefnl.toString()),
+                            value: valuefnl,
+                          );
+                        },
+                        ).toList(),
+                      ),
+                    ),
+
+                  if(widget.numberOfUser == "25")
+                    Container(
+                      width: size.width * 0.90,
+                      decoration: BoxDecoration(
+                        border: Border.all(color: kPrimaryColorBlue, width: 0.5),
+                        borderRadius: BorderRadius.circular(40),
+                      ),
+                      padding: EdgeInsets.only(
+                          top: 0.0, bottom: 0.0, left: 15.0, right: 15.0),
+                      child: DropdownButton(
+                        underline: Container(color: Colors.transparent,),
+                        isExpanded: true,
+                        hint: Text('Select Number Of User *',style: TextStyle(
+                            fontFamily: "PoppinsLight",
+                            fontSize: 13.0,
+                            color: kPrimaryColorBlue)),
+                        value: selected1,
+                        onChanged: (newValue){
+                          setState(() {
+                            selected1 = newValue;
+                            calculation();
+                          });
+                        },
+                        items: value4.map((valuefnl){
+                          return DropdownMenuItem(
+                            child: new Text(valuefnl.toString()),
+                            value: valuefnl,
+                          );
+                        },
+                        ).toList(),
+                      ),
+                    ),
+
+                  if(widget.numberOfUser == "50")
+                    Container(
+                      width: size.width * 0.90,
+                      decoration: BoxDecoration(
+                        border: Border.all(color: kPrimaryColorBlue, width: 0.5),
+                        borderRadius: BorderRadius.circular(40),
+                      ),
+                      padding: EdgeInsets.only(
+                          top: 0.0, bottom: 0.0, left: 15.0, right: 15.0),
+                      child: DropdownButton(
+                        underline: Container(color: Colors.transparent,),
+                        isExpanded: true,
+                        hint: Text('Select Number Of User *',style: TextStyle(
+                            fontFamily: "PoppinsLight",
+                            fontSize: 13.0,
+                            color: kPrimaryColorBlue)),
+                        value: selected1,
+                        onChanged: (newValue){
+                          setState(() {
+                            selected1 = newValue;
+                            calculation();
+                          });
+                        },
+                        items: value5.map((valuefnl){
+                          return DropdownMenuItem(
+                            child: new Text(valuefnl.toString()),
+                            value: valuefnl,
+                          );
+                        },
+                        ).toList(),
+                      ),
+                    ),
+
+                  if(widget.numberOfUser == "100")
+                    Container(
+                      width: size.width * 0.90,
+                      decoration: BoxDecoration(
+                        border: Border.all(color: kPrimaryColorBlue, width: 0.5),
+                        borderRadius: BorderRadius.circular(40),
+                      ),
+                      padding: EdgeInsets.only(
+                          top: 0.0, bottom: 0.0, left: 15.0, right: 15.0),
+                      child: DropdownButton(
+                        underline: Container(color: Colors.transparent,),
+                        isExpanded: true,
+                        hint: Text('Select Number Of User *',style: TextStyle(
+                            fontFamily: "PoppinsLight",
+                            fontSize: 13.0,
+                            color: kPrimaryColorBlue)),
+                        value: selected1,
+                        onChanged: (newValue){
+                          setState(() {
+                            selected1 = newValue;
+                            calculation();
+                          });
+                        },
+                        items: value6.map((valuefnl){
                           return DropdownMenuItem(
                             child: new Text(valuefnl.toString()),
                             value: valuefnl,

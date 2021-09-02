@@ -259,7 +259,7 @@ class _ReceiptState extends State<Receipt>{
                                       Container(
                                           width: 70.0,
                                           child: Text(
-                                              "   ₹ ${snapshot.data[index].total.toString()}",
+                                              "   ₹ ${snapshot.data[index].total.toStringAsFixed(2)}",
                                               style: TextStyle(fontWeight: FontWeight.bold))),
                                     ],
                                   ),
