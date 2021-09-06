@@ -350,9 +350,9 @@ class _ReceiptState extends State<Receipt>{
         showInSnackBar("Receipt Sent Successfully");
       } else showInSnackBar(data.message);
     } else {
+      showInSnackBar(data.message);
       Navigator.of(context, rootNavigator: true).pop();
       print(data.status);
-      showInSnackBar(data.message);
       return null;
     }
 

@@ -91,8 +91,7 @@ class HistoryState extends State<History> {
     final res = await http.post("http://157.230.228.250/merchant-get-payment-history-api/",
         body: param, headers: {HttpHeaders.authorizationHeader: "Token $token"});
 
-    //print(res.body);
-   // print(res.statusCode);
+
     if (200 == res.statusCode) {
       print(paymentHistoryFromJson(res.body).data.length);
       total=paymentHistoryFromJson(res.body).totalAmountSpent;

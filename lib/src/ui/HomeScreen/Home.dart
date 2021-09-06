@@ -704,7 +704,7 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
                         borderRadius: new BorderRadius.circular(25.0),
                       ),
                       alignment: Alignment.center,
-                      child: new Icon(CupertinoIcons.star_fill,
+                      child: new Icon(CupertinoIcons.star,
                           color: kPrimaryColorBlue, size: 25.0),
                     ),
                     onTap: () {

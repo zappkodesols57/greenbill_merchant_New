@@ -45,6 +45,8 @@ class _HomePageState extends State<HomePage> {
   ParkingDashboardData parkingData;
   final ScrollController _controller = ScrollController();
 
+  String vahicleLabels;
+
   @override
   void initState() {
     _headerEnabled = true;
@@ -154,8 +156,8 @@ class _HomePageState extends State<HomePage> {
       print(data.status);
       return null;
     }
-
   }
+
 
   Future<List<DoughnutChartData>> fetchProductOrVehicleWiseEarnData() async {
     final param = {
@@ -316,7 +318,6 @@ class _HomePageState extends State<HomePage> {
     return data;
   }
 
-
   Future<List<ChartParkingData>> fetchAllParkingCollection() async {
     final param = {
       "m_business_id": storeID,
@@ -337,16 +338,11 @@ class _HomePageState extends State<HomePage> {
 
     final body = json.decode(response.body);
     print(body);
-    for (int i = 0; i < body["labels"].length; i++) {
+    print(">>>>>>>${body["month_labels"]}");
+    for (int i = 0; i < body["month_labels"].length; i++) {
       sessionData.add(ChartParkingData(
         x: body["month_labels"][i],
-        twoWheeler: body["2 - Wheeler"][i],
-        threeWheeler: body["3 - Wheeler"][i],
-        fourWheeler: body["4 - Wheeler"][i],
-        truck: body["Truck"][i],
-        // lorry: body["Lorry"][i],
-        cycle: body["Cycle"][i],
-        specialVehicle: body["Special Vehicle"][i],
+        y: body["Amount"][i],
       ));
     }
     return sessionData;
@@ -371,15 +367,11 @@ class _HomePageState extends State<HomePage> {
     }
     final body = json.decode(response.body);
     print(body);
-    for (int i = 0; i < body["labels"].length; i++) {
+    for (int i = 0; i < body["month_labels"].length; i++) {
       sessionData1.add(ChartPetrolData(
         x: body["month_labels"][i],
-        petrol: body["Petrol"][i],
-        diesel: body["Diesel"][i],
-        // petrolPower : body["petrol power"][i],
-        cng : body["CNG"][i],
-        // wheels : body["wheels"][i],
-        oil : body["Oil"][i],
+        y: body["Amount"][i],
+
 
       ));
     }
@@ -1548,7 +1540,7 @@ class _HomePageState extends State<HomePage> {
                 SizedBox(height: 10.0,),
                 (!_headerEnabled) ? Container(
                     width: size.width * 0.95,
-                    height: size.height * 0.45,
+                    height: size.height * 0.35,
                     padding: EdgeInsets.only(top: 10.0, bottom: 10.0),
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.all(Radius.circular(30)),
@@ -1573,7 +1565,7 @@ class _HomePageState extends State<HomePage> {
                           return Center(child: CircularProgressIndicator(valueColor:AlwaysStoppedAnimation<Color>(kPrimaryColorBlue),));
                         else if (snapshot.hasError) {
                           return Center(
-                            child: Text("No Data Found!"),
+                            child: Text("Graph Not Available"),
                           );
                         } else {
                           if (snapshot.connectionState == ConnectionState.done &&
@@ -1607,7 +1599,7 @@ class _HomePageState extends State<HomePage> {
                         else if (snapshot.hasError) {
                           print(">>>>>>${snapshot.error}");
                           return Center(
-                            child: Text("No Data Found!"),
+                            child: Text("Graph Not Available"),
                           );
                         } else {
                           if (snapshot.connectionState == ConnectionState.done &&
@@ -1674,61 +1666,26 @@ class _HomePageState extends State<HomePage> {
       // ),,
       plotAreaBorderWidth: 0,
 
-      legend: Legend(isVisible: true, position: LegendPosition.bottom),
 
       primaryXAxis: CategoryAxis(
           majorGridLines: MajorGridLines(width: 0),
-          labelPlacement: LabelPlacement.onTicks),
-
+          labelPlacement: LabelPlacement.onTicks,
+          labelRotation: -30,
+          maximumLabels: 12,
+      ),
       primaryYAxis: NumericAxis(
           axisLine: AxisLine(width: 0),
           edgeLabelPlacement: EdgeLabelPlacement.shift,
           labelFormat: '₹ {value}',
           majorTickLines: MajorTickLines(size: 0)
       ),
-      series: <SplineSeries<ChartPetrolData, String>>[
-        SplineSeries<ChartPetrolData, String>(
+      series: <LineSeries<ChartPetrolData, String>>[
+        LineSeries<ChartPetrolData, String>(
           dataSource: data,
           xValueMapper: (ChartPetrolData sales, _) => sales.x,
-          yValueMapper: (ChartPetrolData sales, _) => sales.petrol,
+          yValueMapper: (ChartPetrolData sales, _) => double.parse(sales.y),
           markerSettings: MarkerSettings(isVisible: true),
-          name: 'Petrol',
         ),
-        SplineSeries<ChartPetrolData, String>(
-          dataSource: data,
-          name: 'Diesel',
-          markerSettings: MarkerSettings(isVisible: true),
-          xValueMapper: (ChartPetrolData sales, _) => sales.x,
-          yValueMapper: (ChartPetrolData sales, _) => sales.diesel,
-        ),
-        // SplineSeries<ChartPetrolData, String>(
-        //   dataSource: data,
-        //   name: 'Petrol Power',
-        //   markerSettings: MarkerSettings(isVisible: true),
-        //   xValueMapper: (ChartPetrolData sales, _) => sales.x,
-        //   yValueMapper: (ChartPetrolData sales, _) => sales.petrolPower,
-        // ),
-        SplineSeries<ChartPetrolData, String>(
-          dataSource: data,
-          name: 'CNG',
-          markerSettings: MarkerSettings(isVisible: true),
-          xValueMapper: (ChartPetrolData sales, _) => sales.x,
-          yValueMapper: (ChartPetrolData sales, _) => sales.cng,
-        ),
-        // SplineSeries<ChartPetrolData, String>(
-        //   dataSource: data,
-        //   name: 'Wheels',
-        //   markerSettings: MarkerSettings(isVisible: true),
-        //   xValueMapper: (ChartPetrolData sales, _) => sales.x,
-        //   yValueMapper: (ChartPetrolData sales, _) => sales.wheels,
-        // ) ,
-        SplineSeries<ChartPetrolData, String>(
-          dataSource: data,
-          name: 'Oil',
-          markerSettings: MarkerSettings(isVisible: true),
-          xValueMapper: (ChartPetrolData sales, _) => sales.x,
-          yValueMapper: (ChartPetrolData sales, _) => sales.oil,
-        )
       ],
       tooltipBehavior: TooltipBehavior(enable: true),
     );
@@ -1737,22 +1694,11 @@ class _HomePageState extends State<HomePage> {
   /// Returns the default spline chart.
   SfCartesianChart _buildParkingSplineChart(List<ChartParkingData> data) {
     return SfCartesianChart(
-      // title: ChartTitle(
-      //     text: "Bills Collection",
-      //     textStyle: TextStyle(
-      //       color: kPrimaryColorBlue,
-      //       fontSize: size.width * 0.04,
-      //       fontFamily: "PoppinsBold",
-      //     )
-      // ),,
       plotAreaBorderWidth: 0,
-      legend: Legend(
-        isVisible: true,
-        position: LegendPosition.bottom,
-        // overflowMode: LegendItemOverflowMode.wrap,
-      ),
       primaryXAxis: CategoryAxis(
           majorGridLines: MajorGridLines(width: 0),
+          labelRotation: -30,
+          maximumLabels: 12,
           labelPlacement: LabelPlacement.onTicks),
       primaryYAxis: NumericAxis(
           axisLine: AxisLine(width: 0),
@@ -1761,57 +1707,14 @@ class _HomePageState extends State<HomePage> {
           majorTickLines: MajorTickLines(size: 0)
       ),
 
-      series: <SplineSeries<ChartParkingData, String>>[
-        SplineSeries<ChartParkingData, String>(
+      series: <LineSeries<ChartParkingData, String>>[
+        LineSeries<ChartParkingData, String>(
           dataSource: data,
           xValueMapper: (ChartParkingData sales, _) => sales.x,
-          yValueMapper: (ChartParkingData sales, _) => sales.twoWheeler,
+          yValueMapper: (ChartParkingData sales, _) => double.parse(sales.y),
           markerSettings: MarkerSettings(isVisible: true),
-          name: '2 - Wheeler',
-        ),
-        SplineSeries<ChartParkingData, String>(
-          dataSource: data,
-          name: '3 - Wheeler',
-          markerSettings: MarkerSettings(isVisible: true),
-          xValueMapper: (ChartParkingData sales, _) => sales.x,
-          yValueMapper: (ChartParkingData sales, _) => sales.threeWheeler,
         ),
 
-        SplineSeries<ChartParkingData, String>(
-          dataSource: data,
-          name: '4 - Wheeler',
-          markerSettings: MarkerSettings(isVisible: true),
-          xValueMapper: (ChartParkingData sales, _) => sales.x,
-          yValueMapper: (ChartParkingData sales, _) => sales.fourWheeler,
-        ),
-        SplineSeries<ChartParkingData, String>(
-          dataSource: data,
-          name: 'Truck',
-          markerSettings: MarkerSettings(isVisible: true),
-          xValueMapper: (ChartParkingData sales, _) => sales.x,
-          yValueMapper: (ChartParkingData sales, _) => sales.truck,
-        ),
-        SplineSeries<ChartParkingData, String>(
-          dataSource: data,
-          name: 'Cycle',
-          markerSettings: MarkerSettings(isVisible: true),
-          xValueMapper: (ChartParkingData sales, _) => sales.x,
-          yValueMapper: (ChartParkingData sales, _) => sales.cycle,
-        ),
-        SplineSeries<ChartParkingData, String>(
-          dataSource: data,
-          name: 'Special Vehicle',
-          markerSettings: MarkerSettings(isVisible: true),
-          xValueMapper: (ChartParkingData sales, _) => sales.x,
-          yValueMapper: (ChartParkingData sales, _) => sales.specialVehicle,
-        ),
-        // SplineSeries<ChartParkingData, String>(
-        //   dataSource: data,
-        //   name: 'Lorry',
-        //   markerSettings: MarkerSettings(isVisible: true),
-        //   xValueMapper: (ChartParkingData sales, _) => sales.x,
-        //   yValueMapper: (ChartParkingData sales, _) => sales.lorry,
-        // ),
       ],
       tooltipBehavior: TooltipBehavior(enable: true),
     );
@@ -1857,28 +1760,16 @@ class AnalysisData {
 }
 
 class ChartPetrolData {
-  ChartPetrolData({this.x, this.petrol, this.diesel,this.cng,this.oil});
+  ChartPetrolData({this.x,this.y});
   String x;
-  int petrol;
-  int diesel;
-  // int petrolPower;
-  int cng;
-  // int wheels;
-  int oil;
+  String y;
 }
 
 class ChartParkingData {
-  ChartParkingData({this.x, this.twoWheeler, this.threeWheeler, this.fourWheeler, this.truck, this.cycle, this.specialVehicle,this.months});
+  ChartParkingData({this.x, this.y});
   String x;
-  int twoWheeler;
-  String months;
-  int threeWheeler;
-  int fourWheeler;
-  int truck;
-  int cycle;
-  int specialVehicle;
-  // int lorry;
-  // int others;
+  String y;
+
 }
 class BillingAnalysis {
   BillingAnalysis({this.x, this.data});

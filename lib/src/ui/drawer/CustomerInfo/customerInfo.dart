@@ -188,7 +188,7 @@ class CustomerInfoState extends State<CustomerInfo> {
                                     // trailing: Text("₹ ${snapshot.data[index].amount}", style: TextStyle(fontWeight: FontWeight.bold)),
                                     onTap: (){
                                       Navigator.push(context, MaterialPageRoute(builder:  (context)=>CustomerDetailInfo(token, id, storeID,
-                                          snapshot.data[index].mobileNo,snapshot.data[index].email,snapshot.data[index].name)));
+                                          snapshot.data[index].mobileNo,snapshot.data[index].email,snapshot.data[index].name,snapshot.data[index].state,snapshot.data[index].city)));
                                     },
                                   ),
                                 );

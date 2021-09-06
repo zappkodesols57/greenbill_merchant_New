@@ -467,78 +467,7 @@ class _ProceedToBuyState extends State<ProceedToBuy> {
                       ),
                     ],
                   ),
-                  // Container(
-                  //   width: size.width * 0.90,
-                  //   padding: EdgeInsets.only(
-                  //       top: 00.0, bottom: 10.0, left: 0.0, right: 0.0),
-                  //   child: Container(
-                  //     child:
-                  //     // MultiSelectDialogField(
-                  //     //   height:size.width * 0.75,
-                  //     //   items: _items,
-                  //     //   title: Text("Select Businesses"),
-                  //     //   selectedColor: kPrimaryColorBlue,
-                  //     //
-                  //     //
-                  //     //   buttonText: Text(
-                  //     //     "Select  Businesses",
-                  //     //     style: TextStyle(
-                  //     //       fontFamily: "PoppinsLight",
-                  //     //       fontSize: 13.0,
-                  //     //       color: kPrimaryColorBlue,
-                  //     //     ),
-                  //     //   ),
-                  //     //   onConfirm: (results) {
-                  //     //     //_selectedAnimals = results;
-                  //     //     // print(_selectedAnimals.toString());
-                  //     //
-                  //     //   },
-                  //     // )
-                  //     new TextField(
-                  //      focusNode: new AlwaysDisabledFocusNode(),
-                  //       // inputFormatters: [FilteringTextInputFormatter.allow(RegExp("[a-zA-Z]")),],
-                  //       controller: nameController,
-                  //       maxLength: 20,
-                  //       style: TextStyle(
-                  //         //fontFamily: "PoppinsBold",
-                  //           fontSize: 17.0,
-                  //           color: Colors.black87),
-                  //       decoration: InputDecoration(
-                  //         border: InputBorder.none,
-                  //         counterStyle: TextStyle(
-                  //           height: double.minPositive,
-                  //         ),
-                  //         counterText: "",
-                  //         contentPadding: const EdgeInsets.symmetric(vertical: 0.0,horizontal: 15.0),
-                  //         enabledBorder: OutlineInputBorder(
-                  //           borderSide:
-                  //           BorderSide(color: kPrimaryColorBlue, width: 0.5),
-                  //           borderRadius:
-                  //           const BorderRadius.all(Radius.circular(35.0)),
-                  //         ),
-                  //         focusedBorder: new OutlineInputBorder(
-                  //           borderSide:
-                  //           BorderSide(color: kPrimaryColorBlue, width: 0.5),
-                  //           borderRadius:
-                  //           const BorderRadius.all(Radius.circular(35.0)),
-                  //         ),
-                  //         suffixIcon: IconButton(
-                  //          icon: Icon(Icons.arrow_drop_down),
-                  //           color: kPrimaryColorBlue,
-                  //           iconSize: 23.0,
-                  //         ),
-                  //         labelText: "Select business *",
-                  //         labelStyle: TextStyle(
-                  //             fontFamily: "PoppinsLight",
-                  //             fontSize: 13.0,
-                  //             color: kPrimaryColorBlue),
-                  //       ),
-                  //       onTap: (){
-                  //         // showStoreDialog(context);
-                  //       },
-                  //     ),
-                  //   ),
-                  // ),
+
 
                   SizedBox(height: 20.0,),
 

@@ -335,11 +335,12 @@ class CashMemoListState extends State<CashMemoList> {
       if (data.status == "success") {
         showInSnackBar("Cash Memo Sent Successfully");
       } else {
-        print(data.status);
+          print(data.status);
       }
     } else {
       showInSnackBar(data.message);
-      print(data.status);
+      print(response.statusCode);
+      return null;
     }
   }
 
