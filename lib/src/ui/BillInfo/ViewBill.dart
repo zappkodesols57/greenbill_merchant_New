@@ -115,12 +115,6 @@ class _ViewBillState extends State<ViewBill> {
                     on PlatformException catch (error) {
                       print(error);
                     }
-                      // downloadFile().then((value) => showInSnackBar("Download Complete"));
-                   // openBill(
-                     //     widget.billUrl,widget.billUrl
-                      // .split("/")
-                   //       .last
-                    //     );
                    },
                    icon: Icon(CupertinoIcons.cloud_download),
                   ),

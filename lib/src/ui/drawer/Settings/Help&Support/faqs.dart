@@ -53,14 +53,9 @@ class _FaqsState extends State<Faqs> {
               child: ListTile(
                 dense: false,
                 title: Text(widget.faqs[index].question, style: TextStyle(fontSize: 15.0, fontWeight: FontWeight.bold, color: Colors.black)),
-                subtitle: ReadMoreText(
+                subtitle: Text(
                   widget.faqs[index].answer,
                   style: TextStyle(color: Colors.black),
-                  trimLines: 1,
-                  colorClickableText: kPrimaryColorBlue,
-                  trimMode: TrimMode.Line,
-                  trimCollapsedText: 'Show more',
-                  trimExpandedText: 'Show less',
                 ),
               ),
             );
