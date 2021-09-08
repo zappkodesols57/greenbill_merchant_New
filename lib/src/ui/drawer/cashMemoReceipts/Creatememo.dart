@@ -476,7 +476,7 @@ class _CreateReceiptsState extends State<CreateMemo> {
                               inputFormatters: <TextInputFormatter>[
                                 FilteringTextInputFormatter.digitsOnly
                               ],
-                              maxLength: 10,
+                              maxLength: 7,
                               style: TextStyle(
                                   fontFamily: "PoppinsLight",
                                   fontSize: 17.0,
@@ -685,7 +685,7 @@ class _CreateReceiptsState extends State<CreateMemo> {
                                   right: 10.0),
                               width: size.width * 0.5,
                               child: TextField(
-                                maxLength: 10,
+                                maxLength: 7,
                                 controller: newRate,
                                 keyboardType: TextInputType.phone,
                                 inputFormatters: <TextInputFormatter>[
@@ -742,7 +742,7 @@ class _CreateReceiptsState extends State<CreateMemo> {
                                 inputFormatters: <TextInputFormatter>[
                                   FilteringTextInputFormatter.digitsOnly
                                 ],
-                                maxLength: 10,
+                                maxLength: 7,
                                 style: TextStyle(
                                     fontFamily: "PoppinsLight",
                                     fontSize: 17.0,
@@ -1003,7 +1003,7 @@ class _CreateReceiptsState extends State<CreateMemo> {
                                 inputFormatters: <TextInputFormatter>[
                                   FilteringTextInputFormatter.digitsOnly
                                 ],
-                                maxLength: 10,
+                                maxLength: 7,
                                 style: TextStyle(
                                     fontFamily: "PoppinsLight",
                                     fontSize: 17.0,
@@ -1265,7 +1265,7 @@ class _CreateReceiptsState extends State<CreateMemo> {
                                 inputFormatters: <TextInputFormatter>[
                                   FilteringTextInputFormatter.digitsOnly
                                 ],
-                                maxLength: 10,
+                                maxLength: 7,
                                 style: TextStyle(
                                     fontFamily: "PoppinsLight",
                                     fontSize: 17.0,
@@ -1622,16 +1622,10 @@ class _CreateReceiptsState extends State<CreateMemo> {
       return null;
     }
 
-
     if (dateController.text.isEmpty) {
       showInSnackBar("Please Select Date");
       return null;
     }
-
-    // if (dropdownValue == "Select Cash Memo Template") {
-    //   showInSnackBar("Please Select Cash Memo Template");
-    //   return null;
-    // }
 
 
     if (amtForController.text.isNotEmpty) {
@@ -1657,11 +1651,35 @@ class _CreateReceiptsState extends State<CreateMemo> {
     if (newRate.text.isNotEmpty) {
       rateAll.add(newRate.text.toString());
     }
+    if(double.parse(newRate.text) > 50000.00){
+      showInSnackBar("Rate Must be less than 50000");
+      return null;
+    }
+    if(double.parse(newRate.text) == 0.00){
+      showInSnackBar("Rate should not be 0");
+      return null;
+    }
     if (newRate2.text.isNotEmpty) {
       rateAll.add(newRate2.text.toString());
     }
+    if(double.parse(newRate2.text) > 50000.00){
+      showInSnackBar("Rate Must be less than 50000");
+      return null;
+    }
+    if(double.parse(newRate2.text) == 0.00){
+      showInSnackBar("Rate should not be 0");
+      return null;
+    }
     if (newRate3.text.isNotEmpty) {
       rateAll.add(newRate3.text.toString());
+    }
+    if(double.parse(newRate3.text) > 50000.00){
+      showInSnackBar("Rate Must be less than 50000");
+      return null;
+    }
+    if(double.parse(newRate3.text) == 0.00){
+      showInSnackBar("Rate should not be 0");
+      return null;
     }
 
 

@@ -125,9 +125,9 @@ class _PayLinksState extends State<PayLinks> {
           CustomTextField(
             controller: amountController,
             inputType: TextInputType.number,
-            maxLength: 8,
-            formatter: <TextInputFormatter>[
-              FilteringTextInputFormatter.digitsOnly
+            formatter : <TextInputFormatter>[
+              LengthLimitingTextInputFormatter(8),
+              FilteringTextInputFormatter.allow( RegExp(r'^(\d+)?\.?\d{0,2}'),)
             ],
             prefixIcon: CupertinoIcons.arrow_down_right,
             hintText: "Amount *",
@@ -318,6 +318,14 @@ class _PayLinksState extends State<PayLinks> {
     }
     if(amountController.text.isEmpty){
       showInSnackBar("Please enter Amount");
+      return null;
+    }
+    if(double.parse(amountController.text) > 50000.00){
+      showInSnackBar("Amount Must be less than 50000");
+      return null;
+    }
+    if(double.parse(amountController.text) == 0.00){
+      showInSnackBar("Amount should not be 0");
       return null;
     }
     if(decController.text.isEmpty){

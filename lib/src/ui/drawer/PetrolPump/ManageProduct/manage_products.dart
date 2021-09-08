@@ -92,7 +92,7 @@ class ManageProductsState extends State<ManageProducts> {
             return Center(child: CircularProgressIndicator(valueColor:AlwaysStoppedAnimation<Color>(kPrimaryColorBlue),));
           else if (snapshot.hasError) {
             return Center(
-              child: Text("No Data Found!"),
+              child: Text("No Product Found!"),
             );
           } else {
             if (snapshot.connectionState == ConnectionState.done &&
@@ -187,7 +187,7 @@ class ManageProductsState extends State<ManageProducts> {
                                         style: TextStyle(fontFamily: "PoppinsBold"),
                                       ),
                                     ),
-                                    Text(snapshot.data.data[index].productCost,
+                                    Text(double.parse(snapshot.data.data[index].productCost).toStringAsFixed(2),
                                       textAlign: TextAlign.center,
                                       style: TextStyle(fontFamily: "PoppinsBold"),
                                     ),

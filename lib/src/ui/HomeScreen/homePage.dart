@@ -760,113 +760,113 @@ class _HomePageState extends State<HomePage> {
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Container(
-                        width: size.width,
-                        height: 70.0,
-                        child: Card(
-                          elevation: 10.0,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10.0),
-                          ),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: [
-                              Container(
-                                color: Colors.white,
-                                width: size.width * 0.4,
-                                height: 40.0,
-                                child: TextField(
-                                  enableInteractiveSelection:
-                                  false,
-                                  focusNode: new AlwaysDisabledFocusNode(),
-                                  controller: fromDateController,
-                                  onTap: () {
-                                    _selectDateStart(context);
-                                  },
-                                  style: TextStyle(
-                                      fontFamily: "PoppinsBold",
-                                      fontSize: 13.0,
-                                      color: kPrimaryColorBlue),
-                                  decoration: InputDecoration(
-                                    border: InputBorder.none,
-                                    contentPadding:
-                                    const EdgeInsets.symmetric(vertical: 10.0),
-                                    enabledBorder: OutlineInputBorder(
-                                      borderSide: BorderSide(
-                                          color: kPrimaryColorBlue, width: 0.5),
-                                      borderRadius:
-                                      const BorderRadius.all(Radius.circular(35.0)),
-                                    ),
-                                    focusedBorder: new OutlineInputBorder(
-                                      borderSide: BorderSide(
-                                          color: kPrimaryColorBlue, width: 0.5),
-                                      borderRadius:
-                                      const BorderRadius.all(Radius.circular(35.0)),
-                                    ),
-                                    prefixIcon: Icon(
-                                      FontAwesomeIcons.calendar,
-                                      color: kPrimaryColorBlue,
-                                      size: 20.0,
-                                    ),
-                                    hintText: "From",
-                                    hintStyle: TextStyle(
-                                        fontFamily: "PoppinsBold",
-                                        fontSize: 13.0,
-                                        color: kPrimaryColorBlue),
-                                  ),
-                                ),
-                              ),
-                              Container(
-                                width: size.width * 0.4,
-                                height: 40.0,
-                                child: TextField(
-                                  enableInteractiveSelection:
-                                  false,
-                                  focusNode: new AlwaysDisabledFocusNode(),
-                                  controller: toDateController,
-                                  onTap: () {
-                                    _selectDateEnd(context);
-                                  },
-                                  style: TextStyle(
-                                      fontFamily: "PoppinsBold",
-                                      fontSize: 13.0,
-                                      color: kPrimaryColorBlue),
-                                  decoration: InputDecoration(
-                                    border: InputBorder.none,
-                                    contentPadding:
-                                    const EdgeInsets.symmetric(vertical: 10.0),
-                                    enabledBorder: OutlineInputBorder(
-                                      borderSide: BorderSide(
-                                          color: kPrimaryColorBlue, width: 0.5),
-                                      borderRadius:
-                                      const BorderRadius.all(Radius.circular(35.0)),
-                                    ),
-                                    focusedBorder: new OutlineInputBorder(
-                                      borderSide: BorderSide(
-                                          color: kPrimaryColorBlue, width: 0.5),
-                                      borderRadius:
-                                      const BorderRadius.all(Radius.circular(35.0)),
-                                    ),
-                                    prefixIcon: Icon(
-                                      FontAwesomeIcons.calendar,
-                                      color: kPrimaryColorBlue,
-                                      size: 20.0,
-                                    ),
-                                    hintText: "To",
-
-                                    hintStyle: TextStyle(
-                                        fontFamily: "PoppinsBold",
-                                        fontSize: 13.0,
-                                        color: kPrimaryColorBlue),
-                                  ),
-                                ),
-                              ),
-                            ]
-                          ),
-                        ),
-                      ),
-
-                      SizedBox(height: 10.0,),
+                      // Container(
+                      //   width: size.width,
+                      //   height: 70.0,
+                      //   child: Card(
+                      //     elevation: 10.0,
+                      //     shape: RoundedRectangleBorder(
+                      //       borderRadius: BorderRadius.circular(10.0),
+                      //     ),
+                      //     child: Row(
+                      //       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      //       children: [
+                      //         Container(
+                      //           color: Colors.white,
+                      //           width: size.width * 0.4,
+                      //           height: 40.0,
+                      //           child: TextField(
+                      //             enableInteractiveSelection:
+                      //             false,
+                      //             focusNode: new AlwaysDisabledFocusNode(),
+                      //             controller: fromDateController,
+                      //             onTap: () {
+                      //               _selectDateStart(context);
+                      //             },
+                      //             style: TextStyle(
+                      //                 fontFamily: "PoppinsBold",
+                      //                 fontSize: 13.0,
+                      //                 color: kPrimaryColorBlue),
+                      //             decoration: InputDecoration(
+                      //               border: InputBorder.none,
+                      //               contentPadding:
+                      //               const EdgeInsets.symmetric(vertical: 10.0),
+                      //               enabledBorder: OutlineInputBorder(
+                      //                 borderSide: BorderSide(
+                      //                     color: kPrimaryColorBlue, width: 0.5),
+                      //                 borderRadius:
+                      //                 const BorderRadius.all(Radius.circular(35.0)),
+                      //               ),
+                      //               focusedBorder: new OutlineInputBorder(
+                      //                 borderSide: BorderSide(
+                      //                     color: kPrimaryColorBlue, width: 0.5),
+                      //                 borderRadius:
+                      //                 const BorderRadius.all(Radius.circular(35.0)),
+                      //               ),
+                      //               prefixIcon: Icon(
+                      //                 FontAwesomeIcons.calendar,
+                      //                 color: kPrimaryColorBlue,
+                      //                 size: 20.0,
+                      //               ),
+                      //               hintText: "From",
+                      //               hintStyle: TextStyle(
+                      //                   fontFamily: "PoppinsBold",
+                      //                   fontSize: 13.0,
+                      //                   color: kPrimaryColorBlue),
+                      //             ),
+                      //           ),
+                      //         ),
+                      //         Container(
+                      //           width: size.width * 0.4,
+                      //           height: 40.0,
+                      //           child: TextField(
+                      //             enableInteractiveSelection:
+                      //             false,
+                      //             focusNode: new AlwaysDisabledFocusNode(),
+                      //             controller: toDateController,
+                      //             onTap: () {
+                      //               _selectDateEnd(context);
+                      //             },
+                      //             style: TextStyle(
+                      //                 fontFamily: "PoppinsBold",
+                      //                 fontSize: 13.0,
+                      //                 color: kPrimaryColorBlue),
+                      //             decoration: InputDecoration(
+                      //               border: InputBorder.none,
+                      //               contentPadding:
+                      //               const EdgeInsets.symmetric(vertical: 10.0),
+                      //               enabledBorder: OutlineInputBorder(
+                      //                 borderSide: BorderSide(
+                      //                     color: kPrimaryColorBlue, width: 0.5),
+                      //                 borderRadius:
+                      //                 const BorderRadius.all(Radius.circular(35.0)),
+                      //               ),
+                      //               focusedBorder: new OutlineInputBorder(
+                      //                 borderSide: BorderSide(
+                      //                     color: kPrimaryColorBlue, width: 0.5),
+                      //                 borderRadius:
+                      //                 const BorderRadius.all(Radius.circular(35.0)),
+                      //               ),
+                      //               prefixIcon: Icon(
+                      //                 FontAwesomeIcons.calendar,
+                      //                 color: kPrimaryColorBlue,
+                      //                 size: 20.0,
+                      //               ),
+                      //               hintText: "To",
+                      //
+                      //               hintStyle: TextStyle(
+                      //                   fontFamily: "PoppinsBold",
+                      //                   fontSize: 13.0,
+                      //                   color: kPrimaryColorBlue),
+                      //             ),
+                      //           ),
+                      //         ),
+                      //       ]
+                      //     ),
+                      //   ),
+                      // ),
+                      //
+                      // SizedBox(height: 10.0,),
 
                       FutureBuilder<List<DoughnutChartData>>(
                         future:  BilllingAnalysis(),
@@ -1218,7 +1218,7 @@ class _HomePageState extends State<HomePage> {
                     CardItem(
                       size,
                       title: "Payments",
-                      category: (storeCatID == "11") ? "Cash - ₹ ${data.todaysPayments.cash}" : "Cash - ₹ ${parkingData.todaysPayments.cash}",
+                      category: (storeCatID == "11") ? "Cash - ₹ ${(data.todaysPayments.cash).toStringAsFixed(2)}" : "Cash - ₹ ${(parkingData.todaysPayments.cash).toStringAsFixed(2)}",
                       categoryTwo: (storeCatID == "11") ? "Online - ₹ ${data.todaysPayments.online}" : "Online - ₹ ${parkingData.todaysPayments.online}",
                       iconData: FontAwesomeIcons.wallet,
                     ),

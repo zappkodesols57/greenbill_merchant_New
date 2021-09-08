@@ -211,7 +211,8 @@ class AddChargesState extends State<AddCharges> {
                           controller: chargesController,
                           keyboardType: TextInputType.number,
                           inputFormatters: <TextInputFormatter>[
-                            FilteringTextInputFormatter.digitsOnly
+                            LengthLimitingTextInputFormatter(8),
+                            FilteringTextInputFormatter.allow( RegExp(r'^(\d+)?\.?\d{0,2}'))
                           ],
                           style: TextStyle(
                             fontFamily: "PoppinsLight",
@@ -315,7 +316,8 @@ class AddChargesState extends State<AddCharges> {
                             controller: addChargesController,
                             keyboardType: TextInputType.number,
                             inputFormatters: <TextInputFormatter>[
-                              FilteringTextInputFormatter.digitsOnly
+                              LengthLimitingTextInputFormatter(8),
+                              FilteringTextInputFormatter.allow( RegExp(r'^(\d+)?\.?\d{0,2}'))
                             ],
                             style: TextStyle(
                               fontFamily: "PoppinsLight",
@@ -413,14 +415,30 @@ class AddChargesState extends State<AddCharges> {
       showInSnackBar("Please enter Fixed Charge");
       return null;
     }
-    if(addHours.isEmpty || addHours == null){
-      showInSnackBar("Please select Additional Hours");
+    if(double.parse(chargesController.text) > 50000.00){
+      showInSnackBar("Amount Must be less than 50000");
       return null;
     }
-    if(addChargesController.text.isEmpty){
-      showInSnackBar("Please enter Fixed Charge");
+    if(double.parse(chargesController.text) == 0.00){
+      showInSnackBar("Amount should not be 0");
       return null;
     }
+    // if(addHours.isEmpty || addHours == null){
+    //   showInSnackBar("Please select Additional Hours");
+    //   return null;
+    // }
+    // if(addChargesController.text.isEmpty){
+    //   showInSnackBar("Please enter Additional Charge");
+    //   return null;
+    // }
+    // if(double.parse(addChargesController.text) > 50000.00){
+    //   showInSnackBar("Amount Must be less than 50000");
+    //   return null;
+    // }
+    // if(double.parse(addChargesController.text) == 0.00){
+    //   showInSnackBar("Amount should not be 0");
+    //   return null;
+    // }
 
     _showLoaderDialog(context);
 
@@ -430,8 +448,8 @@ class AddChargesState extends State<AddCharges> {
       "vehicle_type": vehicleType,
       "for_hours": forHours,
       "charges": chargesController.text,
-      "for_additional_hours": addHours,
-      "additional_hours_charges": addChargesController.text,
+      "for_additional_hours": addHours.isEmpty || addHours == null ? "" : addHours,
+      "additional_hours_charges": addChargesController.text.isEmpty ? "" : addChargesController.text,
     };
 
     final response = await http.post(
@@ -452,12 +470,11 @@ class AddChargesState extends State<AddCharges> {
       if(data.status == "success"){
         Navigator.of(context, rootNavigator: true).pop();
         Navigator.pop(context, true);
-      } else showInSnackBar(data.status);
+      } else showInSnackBar(data.message);
     } else {
       Navigator.of(context, rootNavigator: true).pop();
-      print(data.status);
       print(data.message);
-      showInSnackBar(data.message);
+      showInSnackBar("Vehicle already Exists, Please change vehicle type !!!");
       return null;
     }
 

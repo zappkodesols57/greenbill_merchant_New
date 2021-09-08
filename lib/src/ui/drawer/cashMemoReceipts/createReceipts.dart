@@ -267,7 +267,7 @@ class _CreateReceiptsState extends State<CreateReceipts> {
                 padding: EdgeInsets.only(
                     top: 0.0, bottom: 10.0, left: 0.0, right: 0.0),
                 child: TextField(
-                  maxLength: 10,
+                  maxLength: 7,
                   controller: totalController,
                   keyboardType: TextInputType.phone,
                   inputFormatters: <TextInputFormatter>[
@@ -795,6 +795,14 @@ class _CreateReceiptsState extends State<CreateReceipts> {
     }
     if (totalController.text.isEmpty) {
       showInSnackBar("Please enter Total");
+      return null;
+    }
+    if(double.parse(totalController.text) > 50000.00){
+      showInSnackBar("Amount Must be less than 50000");
+      return null;
+    }
+    if(double.parse(totalController.text) == 0.00){
+      showInSnackBar("Amount should not be 0");
       return null;
     }
 

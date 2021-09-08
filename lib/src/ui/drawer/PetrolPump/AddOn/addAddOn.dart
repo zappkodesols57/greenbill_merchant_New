@@ -63,6 +63,14 @@ class AddAddonState extends State<AddAddon> {
       showInSnackBar("Please enter Product Cost");
       return null;
     }
+    if(double.parse(costController.text) > 50000.00){
+      showInSnackBar("Amount Must be less than 50000");
+      return null;
+    }
+    if(double.parse(costController.text) == 0.00){
+      showInSnackBar("Amount should not be 0");
+      return null;
+    }
     if(_chosenValue == "Select Product Availability"){
       showInSnackBar("Please select Product");
       return null;
@@ -177,7 +185,10 @@ class AddAddonState extends State<AddAddon> {
             child: TextField(
               controller: costController,
               keyboardType: TextInputType.number,
-              maxLength: 5,
+              inputFormatters: [
+                LengthLimitingTextInputFormatter(8),
+                FilteringTextInputFormatter.allow( RegExp(r'^(\d+)?\.?\d{0,2}'))
+              ],
               style: TextStyle(
                   fontFamily: "PoppinsMedium",
                   fontSize: 13.0,

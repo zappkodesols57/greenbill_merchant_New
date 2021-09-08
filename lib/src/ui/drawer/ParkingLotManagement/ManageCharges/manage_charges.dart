@@ -92,7 +92,7 @@ class ManageChargesState extends State<ManageCharges> {
             return Center(child: CircularProgressIndicator(valueColor:AlwaysStoppedAnimation<Color>(kPrimaryColorBlue),));
           else if (snapshot.hasError) {
             return Center(
-              child: Text("No Data Found!"),
+              child: Text("No Charges Found!"),
             );
           } else {
             if (snapshot.connectionState == ConnectionState.done &&
@@ -100,7 +100,7 @@ class ManageChargesState extends State<ManageCharges> {
               WidgetsBinding.instance.addPostFrameCallback((_) {
                 if (_controller.hasClients) {
                   _controller.animateTo(
-                      _controller.position.maxScrollExtent,
+                      _controller.position.minScrollExtent,
                       duration: Duration(milliseconds: 500),
                       curve: Curves.fastLinearToSlowEaseIn);
                 } else {
@@ -112,9 +112,8 @@ class ManageChargesState extends State<ManageCharges> {
                 controller: _controller,
                 thickness: 3.0,
                 child: ListView.builder(
+                  shrinkWrap: true,
                     itemCount: snapshot.data.data.length,
-                    shrinkWrap: true,
-                    reverse: false,
                     controller: _controller,
                     itemBuilder: (BuildContext context, int index) {
                       return new Card(
@@ -130,13 +129,15 @@ class ManageChargesState extends State<ManageCharges> {
                               Text("For Hours: ${snapshot.data.data[index].forHours}",
                                 style: TextStyle(fontFamily: "PoppinsBold"),
                               ),
-                              Text("Charges: ${snapshot.data.data[index].charges}",
+                              Text("Charges: ${double.parse(snapshot.data.data[index].charges).toStringAsFixed(2)}",
                                 style: TextStyle(fontFamily: "PoppinsBold"),
                               ),
+                              if(snapshot.data.data[index].forAdditionalHours != "")
                               Text("For Additional Hours: ${snapshot.data.data[index].forAdditionalHours}",
                                 style: TextStyle(fontFamily: "PoppinsBold"),
                               ),
-                              Text("Additional Hours Charges: ${snapshot.data.data[index].additionalHoursCharges}",
+                              if(snapshot.data.data[index].additionalHoursCharges != "")
+                              Text("Additional Hours Charges: ${snapshot.data.data[index].additionalHoursCharges == "" ? "0.00" :double.parse(snapshot.data.data[index].additionalHoursCharges).toStringAsFixed(2)}",
                                 style: TextStyle(fontFamily: "PoppinsBold"),
                               ),
                             ],

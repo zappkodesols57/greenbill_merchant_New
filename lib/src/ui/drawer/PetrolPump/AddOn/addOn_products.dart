@@ -190,7 +190,7 @@ class AddonProductsState extends State<AddonProducts> {
                                         style: TextStyle(fontFamily: "PoppinsBold"),
                                       ),
                                     ),
-                                    Text(snapshot.data.data[index].productCost,
+                                    Text(double.parse(snapshot.data.data[index].productCost).toStringAsFixed(2),
                                       textAlign: TextAlign.center,
                                       style: TextStyle(fontFamily: "PoppinsBold"),
                                     ),
