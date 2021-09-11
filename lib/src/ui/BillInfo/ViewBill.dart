@@ -12,6 +12,7 @@ import 'package:path_provider/path_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 import 'package:path/path.dart' as path;
+import 'package:url_launcher/url_launcher.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
 import '../../constants.dart';
@@ -127,15 +128,16 @@ class _ViewBillState extends State<ViewBill> {
 
           body: Column(
             children: [
-
               Expanded(
                 child: (widget.billUrl.isEmpty) ? Center(
                     child: CircularProgressIndicator(
                       valueColor: AlwaysStoppedAnimation<Color>(kPrimaryColorBlue),
-                    )) : WebView(
+                    )) : InkWell(
+                      child: WebView(
                   javascriptMode: JavascriptMode.unrestricted,
                   initialUrl: widget.billUrl,
                 ),
+                    ),
               ),
             ],
           )

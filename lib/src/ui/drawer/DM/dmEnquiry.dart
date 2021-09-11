@@ -476,6 +476,10 @@ class DmEnquiryState extends State<DmEnquiry> {
       showInSnackBar("Please enter Name");
       return null;
     }
+    if (nameController.text.startsWith(" ")) {
+      showInSnackBar("Please enter Name");
+      return null;
+    }
     if (mobController.text.isEmpty) {
       showInSnackBar("Please enter Mobile No.");
       return null;

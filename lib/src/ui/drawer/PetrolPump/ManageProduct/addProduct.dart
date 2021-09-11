@@ -141,7 +141,8 @@ class AddProductsState extends State<AddProducts> {
             padding: EdgeInsets.only(
                 top: 10.0, bottom: 10.0, left: 10.0, right: 10.0),
             child: TextField(
-              inputFormatters: [LengthLimitingTextInputFormatter(20)],
+              inputFormatters: [LengthLimitingTextInputFormatter(20),
+            FilteringTextInputFormatter.allow(RegExp("[a-z A-Z]"))],
 
               controller: productController,
               style: TextStyle(

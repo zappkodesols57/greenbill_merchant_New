@@ -370,7 +370,6 @@ class ValidateRegistrationState extends State<ValidateRegistration> {
                 )
             );
           });
-
         }
     );
   }
@@ -391,8 +390,5 @@ class ValidateRegistrationState extends State<ValidateRegistration> {
         showInSnackBar(generateOTP.message);
       }
     });
-
   }
-
-
 }

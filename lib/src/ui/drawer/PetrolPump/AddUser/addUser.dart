@@ -69,6 +69,9 @@ class AddUserState extends State<AddUser> {
     setState(() {
       data = resBody;
     });
+    if (data.isEmpty){
+      showInSnackBar("No Role Available for you");
+    }
     print(res.body);
     return "Success";
   }
@@ -378,7 +381,8 @@ class AddUserState extends State<AddUser> {
                   color: Colors.transparent,
                 ),
                 items: data.map((item) {
-                  return DropdownMenuItem(
+                  return
+                    DropdownMenuItem(
                     child: new Text(item['role_name']),
                     value: item['id'].toString(),
                   );

@@ -1105,8 +1105,60 @@ class _HomePageState extends State<HomePage> {
 
                             ],),),),
 
-                      Container(//child: RingChart(dataMap,size)
-                      ),
+                      // Container(
+                      //     width: size.width * 0.95,
+                      //     height: size.height * 0.35,
+                      //     padding: EdgeInsets.only(top: 10.0, bottom: 10.0),
+                      //     decoration: BoxDecoration(
+                      //         borderRadius: BorderRadius.all(Radius.circular(30)),
+                      //         color: Colors.white,
+                      //         boxShadow: [
+                      //           BoxShadow(
+                      //               color: Constants.softHighlightColor,
+                      //               offset: Offset(-10, -10),
+                      //               spreadRadius: 0,
+                      //               blurRadius: 10),
+                      //           BoxShadow(
+                      //               color: Constants.softShadowColor,
+                      //               offset: Offset(5, 5),
+                      //               spreadRadius: 0,
+                      //               blurRadius: 10)
+                      //         ]
+                      //     ),
+                      //     child: FutureBuilder<List<ChartPetrolData>>(
+                      //       future: fetchAllPetrolCollection(),
+                      //       builder: (BuildContext context, AsyncSnapshot<List<ChartPetrolData>> snapshot) {
+                      //         if (snapshot.connectionState == ConnectionState.waiting)
+                      //           return Center(child: CircularProgressIndicator(valueColor:AlwaysStoppedAnimation<Color>(kPrimaryColorBlue),));
+                      //         else if (snapshot.hasError) {
+                      //           return Center(
+                      //             child: Text("Graph Not Available"),
+                      //           );
+                      //         } else {
+                      //           if (snapshot.connectionState == ConnectionState.done &&
+                      //               snapshot.hasData) {
+                      //             return Column(
+                      //               children: [
+                      //                 Text("Bills Collection",
+                      //                   style: TextStyle(
+                      //                     color: kPrimaryColorBlue,
+                      //                     fontSize: size.width * 0.04,
+                      //                     fontFamily: "PoppinsBold",
+                      //                   ),
+                      //                 ),
+                      //                 Expanded(
+                      //                   child: _buildDefaultSplineChart(snapshot.data),
+                      //
+                      //                 )
+                      //               ],
+                      //             );
+                      //           } else {
+                      //             return Center(child: CircularProgressIndicator(valueColor:AlwaysStoppedAnimation<Color>(kPrimaryColorBlue),));
+                      //           }
+                      //         }
+                      //       },
+                      //    )
+                      // )
 
                     ],
                   ),

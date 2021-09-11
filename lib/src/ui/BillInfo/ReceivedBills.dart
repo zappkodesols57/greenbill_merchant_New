@@ -18,6 +18,7 @@ import 'package:open_file/open_file.dart';
 import 'package:image_downloader/image_downloader.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import 'ViewBill.dart';
 
@@ -297,16 +298,25 @@ class BillIncomingState extends State<BillIncoming> {
               title: Container(
                 margin: const EdgeInsets.only(left: 10.0, right: 0.0),
                 child: Text(
-                  "Invoice Number",
+                  "Business",
                   textAlign: TextAlign.start,
                   style: TextStyle(
                       color: Colors.white, fontFamily: "PoppinsBold"),
                 ),
               ),
               trailing:Wrap(
-                spacing: 12, // space between two icons
+                spacing: 10, // space between two icons
                 crossAxisAlignment: WrapCrossAlignment.center,
                 children: <Widget>[
+                  Container(
+                    width: 50.0,
+                    child: Text(
+                      "Bill ",
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                          color: Colors.white, fontFamily: "PoppinsBold"),
+                    ),
+                  ),
                   Container(
                     width: 50.0,
                     child: Text(
@@ -380,26 +390,31 @@ class BillIncomingState extends State<BillIncoming> {
                                     dense: true,
                                     title: Text(snapshot.data[index].businessName,
                                         style: TextStyle(fontSize: 15.0)),
-                                    subtitle: Text("Date : ${snapshot.data[index].billDate}\nInvoice Number : ${snapshot.data[index].invoiceNo}",
+                                    subtitle: Text("Date : ${snapshot.data[index].billDate}\nInvoice : ${snapshot.data[index].invoiceNo}",
                                         style: TextStyle(
                                             fontSize: 11.0,
                                             color: Colors.grey)),
                                     isThreeLine: false,
-                                    // leading: Container(
-                                    //   width: 45.0,
-                                    //   height: 45.0,
-                                    //   decoration: new BoxDecoration(
-                                    //     color: kPrimaryColorBlue,
-                                    //     borderRadius: new BorderRadius.circular(25.0),
-                                    //   ),
-                                    //   alignment: Alignment.center,
-                                    //   child: Icon(Icons.receipt_long, color: Colors.white,),
-                                    // ),
+
                                     trailing: Wrap(
-                                      spacing: 12, // space between two icons
+                                      spacing: 7, // space between two icons
                                       crossAxisAlignment:
                                       WrapCrossAlignment.center,
                                       children: <Widget>[
+                                        IconButton(
+                                          icon: Icon(
+                                            Icons.download_outlined,
+                                            color: Colors.black,
+                                          ),
+                                          onPressed: () async {
+                                            try {
+                                              await ImageDownloader.downloadImage("http://157.230.228.250/"+snapshot.data[index].billImage).then((context) => showInSnackBar("Download Complete"));
+                                            }
+                                            on PlatformException catch (error) {
+                                              print(error);
+                                            }
+                                          },
+                                        ),
                                         IconButton(
                                           icon: Icon(
                                             Icons.switch_account,
@@ -415,6 +430,8 @@ class BillIncomingState extends State<BillIncoming> {
                                           },
                                         ),
 
+                                        SizedBox(width: 3.0,),
+
                                         Container(
                                             width: 70.0,
                                             child: Text("₹ ${double.parse(snapshot.data[index].billAmount).toStringAsFixed(2)}",
@@ -424,13 +441,14 @@ class BillIncomingState extends State<BillIncoming> {
                                       ],
                                     ),
                                     onTap: () {
-                                      Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) => ViewBill("0", snapshot.data[index].billImage,
-                                                snapshot.data[index].billUrl, snapshot.data[index].billDate, snapshot.data[index].billAmount,
-                                                snapshot.data[index].businessName)),
-                                      );
+                                      launch(snapshot.data[index].billUrl);
+                                      // Navigator.push(
+                                      //   context,
+                                      //   MaterialPageRoute(
+                                      //       builder: (context) => ViewBill("0", snapshot.data[index].billImage,
+                                      //           snapshot.data[index].billUrl, snapshot.data[index].billDate, snapshot.data[index].billAmount,
+                                      //           snapshot.data[index].businessName)),
+                                      // );
                                     },
                                   ),
                                 ),

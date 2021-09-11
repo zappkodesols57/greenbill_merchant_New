@@ -75,51 +75,6 @@ class _CouponsListState extends State<CouponsList> {
     return Scaffold(
       key: _scaffoldKey,
       backgroundColor: Colors.white,
-      // floatingActionButton: AnimatedContainer(
-      //     duration: Duration(milliseconds: 400),
-      //     curve: Curves.easeInOut,
-      //     child: RawMaterialButton(
-      //         elevation: 5.0,
-      //         shape: isGoingDown
-      //             ? RoundedRectangleBorder(
-      //             borderRadius: BorderRadius.all(Radius.circular(25.0)))
-      //             : CircleBorder(),
-      //         onPressed: () async{
-      //           SharedPreferences prefs = await SharedPreferences.getInstance();
-      //           // File file = await downloadPicture(prefs.getString("businessLogo"));
-      //           Navigator.push(context,
-      //               HeroDialogRoute(builder: (context) => Coupons("", "", "", "", "", "", "", "", "", "")))
-      //           .then((value) => (value??false) ? couponCreated() : null);
-      //         },
-      //         fillColor: kPrimaryColorBlue,
-      //         child: Padding(
-      //           padding: const EdgeInsets.all(12.0),
-      //           child: isGoingDown
-      //               ? Row(
-      //                 mainAxisSize: MainAxisSize.min,
-      //                 children: [
-      //                   const Icon(
-      //                     CupertinoIcons.ticket,
-      //                     color: Colors.white,
-      //                   ),
-      //                   SizedBox(
-      //                     width: 5.0,
-      //                   ),
-      //                   Text(
-      //                     "Add Coupon",
-      //                     style: TextStyle(
-      //                         color: Colors.white,
-      //                         fontFamily: "PoppinsMedium",
-      //                         fontWeight: FontWeight.bold
-      //                     ),
-      //                   )
-      //                 ],
-      //               )
-      //               : const Icon(
-      //             CupertinoIcons.ticket,
-      //             color: Colors.white,
-      //           ),
-      //         ))),
       body: NotificationListener<ScrollNotification>(
         onNotification: (onScrollNotification) {
           if (onScrollNotification is ScrollUpdateNotification) {
@@ -185,19 +140,7 @@ class _CouponsListState extends State<CouponsList> {
 
                                     Text('\nRedeemed : ${snapshot.data[index].couponRedeem}\nClicks : ${snapshot.data[index].cout}',
                                     style: TextStyle(fontSize: 10.0,color: Colors.black54)),
-                                    // IconButton(
-                                    //   icon: Icon(
-                                    //     CupertinoIcons.pencil_circle,
-                                    //     color: Colors.black,
-                                    //   ),
-                                    //   onPressed: () async {
-                                    //     _showLoaderDialog(context);
-                                    //     Navigator.of(context, rootNavigator: true).pop();
-                                    //     Navigator.push(context, MaterialPageRoute(builder: (context) => Coupons(snapshot.data[index].couponName,
-                                    //         snapshot.data[index].couponCode, snapshot.data[index].greenPoint, snapshot.data[index].validFrom, snapshot.data[index].validThrough, snapshot.data[index].couponCaption,
-                                    //         snapshot.data[index].couponValue, snapshot.data[index].couponValidForUser, snapshot.data[index].amountIn, snapshot.data[index].id.toString())));
-                                    //   },
-                                    // ),
+
                                     IconButton(
                                       icon: Icon(
                                         CupertinoIcons.delete,

@@ -147,7 +147,7 @@ class CashMemoListState extends State<CashMemoList> {
               TextStyle(color: Colors.white, fontFamily: "PoppinsBold"),
             ),
             trailing: Wrap(
-              spacing: 11, // space between two icons
+              spacing: 14, // space between two icons
               crossAxisAlignment: WrapCrossAlignment.center,
               children: <Widget>[
                 Container(

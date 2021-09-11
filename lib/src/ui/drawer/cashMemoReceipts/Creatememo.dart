@@ -113,18 +113,20 @@ class _CreateReceiptsState extends State<CreateMemo> {
       storeID = prefs.getString("businessID");
     });
     checkTemplate();
+    dateController.text = DateFormat('dd-MM-yyyy').format(DateTime.now());
   }
 
   Future<void> _selectDate(BuildContext context) async {
     showDatePicker(
       context: context,
       initialDate: DateTime.now(),
-      firstDate: DateTime.now(),
+      firstDate: DateTime(1950, 1),
       lastDate: DateTime.now(),
     ).then((pickedDate) {
       dateController.text = DateFormat('dd-MM-yyyy').format(pickedDate);
     });
   }
+
 
   @override
   Widget build(BuildContext context) {
@@ -1651,36 +1653,37 @@ class _CreateReceiptsState extends State<CreateMemo> {
     if (newRate.text.isNotEmpty) {
       rateAll.add(newRate.text.toString());
     }
-    if(double.parse(newRate.text) > 50000.00){
-      showInSnackBar("Rate Must be less than 50000");
-      return null;
-    }
-    if(double.parse(newRate.text) == 0.00){
-      showInSnackBar("Rate should not be 0");
-      return null;
-    }
+    // if(double.parse(newRate.text) > 50000.00){
+    //   showInSnackBar("Rate Must be less than 50000");
+    //   return null;
+    // }
+    // if(double.parse(newRate.text) == 0.00){
+    //   showInSnackBar("Rate should not be 0");
+    //   return null;
+    // }
     if (newRate2.text.isNotEmpty) {
       rateAll.add(newRate2.text.toString());
     }
-    if(double.parse(newRate2.text) > 50000.00){
-      showInSnackBar("Rate Must be less than 50000");
-      return null;
-    }
-    if(double.parse(newRate2.text) == 0.00){
-      showInSnackBar("Rate should not be 0");
-      return null;
-    }
+    // if(double.parse(newRate2.text) > 50000.00){
+    //   showInSnackBar("Rate Must be less than 50000");
+    //   return null;
+    // }
+    // if(double.parse(newRate2.text) == 0.00){
+    //   showInSnackBar("Rate should not be 0");
+    //   return null;
+    // }
     if (newRate3.text.isNotEmpty) {
       rateAll.add(newRate3.text.toString());
     }
-    if(double.parse(newRate3.text) > 50000.00){
-      showInSnackBar("Rate Must be less than 50000");
-      return null;
-    }
-    if(double.parse(newRate3.text) == 0.00){
-      showInSnackBar("Rate should not be 0");
-      return null;
-    }
+
+    // if(double.parse(newRate3.text) > 50000.00){
+    //   showInSnackBar("Rate Must be less than 50000");
+    //   return null;
+    // }
+    // if(double.parse(newRate3.text) == 0.00){
+    //   showInSnackBar("Rate should not be 0");
+    //   return null;
+    // }
 
 
     if (quantityController.text.isNotEmpty) {

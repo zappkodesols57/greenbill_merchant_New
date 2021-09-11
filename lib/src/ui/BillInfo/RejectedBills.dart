@@ -189,16 +189,7 @@ class BillRejectedState extends State<BillRejected> {
                   } else {
                     if (snapshot.connectionState == ConnectionState.done &&
                         snapshot.hasData) {
-                      // WidgetsBinding.instance.addPostFrameCallback((_) {
-                      //   if (_controller.hasClients) {
-                      //     _controller.animateTo(
-                      //         _controller.position.maxScrollExtent,
-                      //         duration: Duration(milliseconds: 100),
-                      //         curve: Curves.);
-                      //   } else {
-                      //     setState(() => null);
-                      //   }
-                      // });
+
                       return Scrollbar(
                         isAlwaysShown: true,
                         controller: _controller,
@@ -220,16 +211,7 @@ class BillRejectedState extends State<BillRejected> {
                                             fontSize: 11.0,
                                             color: Colors.grey)),
                                     isThreeLine: false,
-                                    // leading: Container(
-                                    //   width: 45.0,
-                                    //   height: 45.0,
-                                    //   decoration: new BoxDecoration(
-                                    //     color: kPrimaryColorBlue,
-                                    //     borderRadius: new BorderRadius.circular(25.0),
-                                    //   ),
-                                    //   alignment: Alignment.center,
-                                    //   child: Icon(Icons.receipt_long, color: Colors.white,),
-                                    // ),
+
                                     trailing: Wrap(
                                       spacing: 12, // space between two icons
                                       crossAxisAlignment:

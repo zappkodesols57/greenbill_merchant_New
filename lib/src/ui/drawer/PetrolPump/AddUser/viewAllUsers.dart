@@ -94,7 +94,7 @@ class ViewAllUsersState extends State<ViewAllUsers> {
             return Center(child: CircularProgressIndicator(valueColor:AlwaysStoppedAnimation<Color>(kPrimaryColorBlue),));
           else if (snapshot.hasError) {
             return Center(
-              child: Text("No Data Found!"),
+              child: Text("No Users Found!"),
             );
           } else {
             if (snapshot.connectionState == ConnectionState.done &&
@@ -102,7 +102,7 @@ class ViewAllUsersState extends State<ViewAllUsers> {
               WidgetsBinding.instance.addPostFrameCallback((_) {
                 if (_controller.hasClients) {
                   _controller.animateTo(
-                      _controller.position.maxScrollExtent,
+                      _controller.position.minScrollExtent,
                       duration: Duration(milliseconds: 500),
                       curve: Curves.fastLinearToSlowEaseIn);
                 } else {

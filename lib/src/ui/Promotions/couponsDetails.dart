@@ -189,6 +189,14 @@ class _CouponsDetailsState extends State<CouponsDetails> {
                   Padding(
                       padding: const EdgeInsets.only(top: 10.0, bottom: 10.0, left: 25.0, right: 25.0),
                       child: (data.amountIn == "percentage") ?
+                      (data.couponValue.isEmpty)?
+                      Text(
+                        "${data.couponCaption} on $storeName",
+                        style: TextStyle(
+                          fontSize: 20.0,
+                          fontFamily: "PoppinsMedium",
+                        ),
+                      ):
                       Text(
                         "${data.couponValue} off on $storeName",
                         style: TextStyle(
@@ -196,6 +204,14 @@ class _CouponsDetailsState extends State<CouponsDetails> {
                           fontFamily: "PoppinsMedium",
                         ),
                       ) :
+                      (data.couponValue.isEmpty)?
+                      Text(
+                        "${data.couponCaption} on $storeName",
+                        style: TextStyle(
+                          fontSize: 20.0,
+                          fontFamily: "PoppinsMedium",
+                        ),
+                      ):
                       Text(
                         "₹${data.couponValue} off on $storeName",
                         style: TextStyle(
@@ -272,17 +288,7 @@ class _CouponsDetailsState extends State<CouponsDetails> {
                       ],
                     ),
                   ),
-                  Padding(
-                      padding: const EdgeInsets.only(top: 10.0, bottom: 0.0, left: 25.0, right: 25.0),
-                      child: Text(
-                        "Coupon Details : ${data.couponCaption}",
-                        style: TextStyle(
-                          fontSize: 14.0,
-                          fontFamily: "PoppinsMedium",
-                          fontWeight: FontWeight.bold,
-                        ),
-                      )
-                  ),
+
 
                   Padding(
                       padding: const EdgeInsets.only(top: 0.0, bottom: 0.0, left: 25.0, right: 25.0),
@@ -295,45 +301,23 @@ class _CouponsDetailsState extends State<CouponsDetails> {
                         ),
                       )
                   ),
-                  // Padding(
-                  //     padding: const EdgeInsets.only(top: 0.0, bottom: 0.0, left: 25.0, right: 25.0),
-                  //     child: Column(
-                  //       crossAxisAlignment: CrossAxisAlignment.start,
-                  //       children: [
-                  //         Text(
-                  //           "Valid From : ${data.validFrom}",
-                  //           style: TextStyle(
-                  //             fontSize: 14.0,
-                  //             fontFamily: "PoppinsMedium",
-                  //           ),
-                  //         ),
-                  //       ],
-                  //     )
-                  // ),
                   Padding(
                       padding: const EdgeInsets.only(top: 0.0, bottom: 0.0, left: 25.0, right: 25.0),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            "Expiry Date",
+                            "Expiry On : ${getDate(data.validThrough)}",
                             style: TextStyle(
                               fontSize: 14.0,
                               fontFamily: "PoppinsMedium",
                               fontWeight: FontWeight.bold,
                             ),
                           ),
-                          Text(
-                            getDate(data.validThrough),
-                            style: TextStyle(
-                              fontSize: 12.0,
-                              fontFamily: "PoppinsMedium",
-                            ),
-                          )
                         ],
                       )
                   ),
-                  SizedBox(height: 40.0,)
+                  SizedBox(height: 10.0,)
                 ],
               ),
             ),

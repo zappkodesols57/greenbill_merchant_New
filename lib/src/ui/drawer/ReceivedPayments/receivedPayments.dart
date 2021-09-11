@@ -215,7 +215,6 @@ class ReceivedPaymentsState extends State<ReceivedPayments> {
                               ),
                             ],),
                         ),
-
                       ),
                     ),
                     Container(
@@ -281,7 +280,7 @@ class ReceivedPaymentsState extends State<ReceivedPayments> {
                   else if (snapshot.hasError) {
                     print(snapshot.error);
                     return Center(
-                      child: Text("No History Available"),
+                      child: Text("No Payments Available"),
                     );
                   } else {
                     if (snapshot.connectionState == ConnectionState.done &&

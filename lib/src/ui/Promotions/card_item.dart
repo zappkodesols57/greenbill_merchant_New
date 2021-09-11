@@ -36,7 +36,7 @@ class CardItemState extends State<CardItem> {
   Widget build(BuildContext context) {
     double cardDimenWidth = widget.size.width * 0.43;
     double cardDimenHeight = widget.size.width * 0.43;
-    double cardTitle = cardDimenWidth * 0.115;
+    double cardTitle = cardDimenWidth * 0.108;
     double cardSubTitle = cardDimenWidth * 0.075;
     double iconDimen = cardDimenWidth * 0.25;
     double iconSize = iconDimen * 0.6;
@@ -93,6 +93,16 @@ class CardItemState extends State<CardItem> {
                     Container(
                       padding: EdgeInsets.only(top: 5.0, left: 10.0, right: 0.0),
                       child: (widget.data.amountIn == "percentage") ?
+                      (widget.data.couponValue.isEmpty)?
+                      Text(
+                        "${widget.data.couponCaption}\non $storeName",
+                        style: TextStyle(
+                          fontSize: cardTitle,
+                          fontFamily: "PoppinsMedium",
+                          color: Colors.black87,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ):
                       Text(
                         "${widget.data.couponValue} off\non $storeName",
                         style: TextStyle(
@@ -102,6 +112,16 @@ class CardItemState extends State<CardItem> {
                           fontWeight: FontWeight.w600,
                         ),
                       ) :
+                      (widget.data.couponValue.isEmpty)?
+                      Text(
+                        "${widget.data.couponCaption}\non $storeName",
+                        style: TextStyle(
+                          fontSize: cardTitle,
+                          fontFamily: "PoppinsMedium",
+                          color: Colors.black87,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ):
                       Text(
                         "₹${widget.data.couponValue} off\non $storeName",
                         style: TextStyle(

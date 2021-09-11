@@ -73,6 +73,7 @@ class _CreateReceiptsState extends State<CreateReceipts> {
       storeID = prefs.getString("businessID");
     });
     checkTemplate();
+    dateController.text = DateFormat('dd-MM-yyyy').format(DateTime.now());
   }
 
   Future<void> _selectDate(BuildContext context) async {
@@ -80,7 +81,7 @@ class _CreateReceiptsState extends State<CreateReceipts> {
       context: context,
 
       initialDate: DateTime.now(),
-      firstDate: DateTime.now(),
+      firstDate: DateTime(1950, 1),
       lastDate: DateTime.now(),
     ).then((pickedDate) {
       dateController.text = DateFormat('dd-MM-yyyy').format(pickedDate);

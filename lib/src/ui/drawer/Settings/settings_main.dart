@@ -10,6 +10,7 @@ import 'package:greenbill_merchant/src/ui/drawer/Settings/webView.dart';
 import 'package:greenbill_merchant/src/ui/login/login_Page_Merchant.dart';
 import 'package:package_info/package_info.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import 'Help&Support/helpAndSupport.dart';
 import 'cancelledCheck.dart';
@@ -21,6 +22,8 @@ class Settings extends StatefulWidget {
 
 class SettingsState extends State<Settings> {
   String version = '';
+  String aboutUS = 'http://www.greenbill.in/about-us/';
+  String  TC = 'http://www.greenbill.in/terms-conditions/';
 
 
   @override
@@ -144,13 +147,15 @@ class SettingsState extends State<Settings> {
             thickness: 1.0,
           ),
           _buildListItem("About Us", CupertinoIcons.info, () {
-            Navigator.push(context, MaterialPageRoute(builder: (context) => WebViewScreen("About Us", "http://www.greenbill.in/about-us/")));
+              launch(aboutUS);
+            // Navigator.push(context, MaterialPageRoute(builder: (context) => WebViewScreen("About Us", "http://www.greenbill.in/about-us/")));
           }),
           Divider(
             thickness: 1.0,
           ),
           _buildListItem("Terms & Conditions", CupertinoIcons.question, () {
-            Navigator.push(context, MaterialPageRoute(builder: (context) => WebViewScreen("T&C", "http://www.greenbill.in/terms-conditions/")));
+            launch(TC);
+            // Navigator.push(context, MaterialPageRoute(builder: (context) => WebViewScreen("T&C", "http://www.greenbill.in/terms-conditions/")));
           }),
           Divider(
             thickness: 1.0,
@@ -166,13 +171,7 @@ class SettingsState extends State<Settings> {
             Navigator.push(context,
                 MaterialPageRoute(builder: (context) => SuggestABrand()));
           }),
-          // Divider(
-          //   thickness: 1.0,
-          // ),
-          // _buildListItem("Cancelled Cheque Photo",Icons.photo, () {
-          //   Navigator.push(context,
-          //       MaterialPageRoute(builder: (context) => CancelledCheck()));
-          // }),
+
           Divider(
             thickness: 1.0,
           ),

@@ -21,6 +21,7 @@ class AddCharges extends StatefulWidget {
 class AddChargesState extends State<AddCharges> {
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
   String token, storeID;
+  int userID;
   String forHours, addHours, vehicleType;
 
   @override
@@ -44,6 +45,7 @@ class AddChargesState extends State<AddCharges> {
     setState(() {
       token = prefs.getString("token");
       storeID = prefs.getString("businessID");
+      userID = prefs.getInt("userID");
       vehicleType = widget.vehicleType;
       forHours = widget.forHours;
       addHours = widget.forAdditionalHours;
@@ -155,100 +157,100 @@ class AddChargesState extends State<AddCharges> {
                   ),
                 ),
                 Container(
-                  width: size.width * 0.95,
-                  padding: EdgeInsets.only(
-                      top: 10.0, bottom: 0.0, left: 0.0, right: 0.0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Container(
-                        width: size.width * 0.45,
-                        decoration: BoxDecoration(
-                          border: Border.all(color: kPrimaryColorBlue, width: 0.5),
-                          borderRadius: BorderRadius.circular(40),
-                        ),
-                        padding: EdgeInsets.only(
-                            top: 0.0, bottom: 0.0, left: 10.0, right: 10.0),
-                        child:new DropdownButton<String>(
-                          iconEnabledColor: Colors.black,
-                          dropdownColor: Colors.white,
-                          value:( forHours.isEmpty || forHours == null) ? "1" : forHours,
-                          isExpanded: true,
-                          hint: Text("Select Hours",
+                    width: size.width * 0.95,
+                    padding: EdgeInsets.only(
+                        top: 10.0, bottom: 0.0, left: 0.0, right: 0.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Container(
+                          width: size.width * 0.45,
+                          decoration: BoxDecoration(
+                            border: Border.all(color: kPrimaryColorBlue, width: 0.5),
+                            borderRadius: BorderRadius.circular(40),
+                          ),
+                          padding: EdgeInsets.only(
+                              top: 0.0, bottom: 0.0, left: 10.0, right: 10.0),
+                          child:new DropdownButton<String>(
+                            iconEnabledColor: Colors.black,
+                            dropdownColor: Colors.white,
+                            value:( forHours.isEmpty || forHours == null) ? "1" : forHours,
+                            isExpanded: true,
+                            hint: Text("Select Hours",
                               style: TextStyle(
-                              fontFamily: "PoppinsMedium",
-                              fontSize: 13.0,
-                              color: kPrimaryColorBlue),
+                                  fontFamily: "PoppinsMedium",
+                                  fontSize: 13.0,
+                                  color: kPrimaryColorBlue),
+                            ),
+                            style: TextStyle(
+                                fontFamily: "PoppinsMedium",
+                                fontSize: 13.0,
+                                color: Colors.black),
+                            underline: Container(
+                              height: 1,
+                              width: 0,
+                              color: Colors.transparent,
+                            ),
+                            onChanged: (String newValue) {
+                              setState(() {
+                                forHours = newValue;
+                              });
+                            },
+                            items: <String>['1','2','3','4','5','6','7','8','9','10','11','12','13','14','15','16','17','18','19','20','21','22','23','24']
+                                .map<DropdownMenuItem<String>>((String value) {
+                              return DropdownMenuItem<String>(
+                                value: value,
+                                child: Text(value),
+                              );
+                            }).toList(),
                           ),
-                          style: TextStyle(
-                              fontFamily: "PoppinsMedium",
-                              fontSize: 13.0,
-                              color: Colors.black),
-                          underline: Container(
-                            height: 1,
-                            width: 0,
-                            color: Colors.transparent,
-                          ),
-                          onChanged: (String newValue) {
-                            setState(() {
-                              forHours = newValue;
-                            });
-                          },
-                          items: <String>['1','2','3','4','5','6','7','8','9','10','11','12','13','14','15','16','17','18','19','20','21','22','23','24']
-                              .map<DropdownMenuItem<String>>((String value) {
-                            return DropdownMenuItem<String>(
-                              value: value,
-                              child: Text(value),
-                            );
-                          }).toList(),
                         ),
-                      ),
-                      Container(
-                        width: size.width * 0.45,
-                        padding: EdgeInsets.only(
-                            top: 10.0, bottom: 10.0, left: 0.0, right: 0.0),
-                        child: TextField(
-                          controller: chargesController,
-                          keyboardType: TextInputType.number,
-                          inputFormatters: <TextInputFormatter>[
-                            LengthLimitingTextInputFormatter(8),
-                            FilteringTextInputFormatter.allow( RegExp(r'^(\d+)?\.?\d{0,2}'))
-                          ],
-                          style: TextStyle(
-                            fontFamily: "PoppinsLight",
-                              fontSize: 13.0,
-                              color: Colors.black87),
-                          decoration: InputDecoration(
-                            border: InputBorder.none,
-                            counterStyle: TextStyle(height: double.minPositive,),
-                            counterText: "",
-                            contentPadding: const EdgeInsets.symmetric(vertical: 0.0),
-                            enabledBorder: OutlineInputBorder(
-                              borderSide: BorderSide(
-                                  color: kPrimaryColorBlue,
-                                  width: 0.5
+                        Container(
+                          width: size.width * 0.45,
+                          padding: EdgeInsets.only(
+                              top: 10.0, bottom: 10.0, left: 0.0, right: 0.0),
+                          child: TextField(
+                            controller: chargesController,
+                            keyboardType: TextInputType.number,
+                            inputFormatters: <TextInputFormatter>[
+                              LengthLimitingTextInputFormatter(8),
+                              FilteringTextInputFormatter.allow( RegExp(r'^(\d+)?\.?\d{0,2}'))
+                            ],
+                            style: TextStyle(
+                                fontFamily: "PoppinsLight",
+                                fontSize: 13.0,
+                                color: Colors.black87),
+                            decoration: InputDecoration(
+                              border: InputBorder.none,
+                              counterStyle: TextStyle(height: double.minPositive,),
+                              counterText: "",
+                              contentPadding: const EdgeInsets.symmetric(vertical: 0.0),
+                              enabledBorder: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                    color: kPrimaryColorBlue,
+                                    width: 0.5
+                                ),
+                                borderRadius: const BorderRadius.all(Radius.circular(35.0)),
                               ),
-                              borderRadius: const BorderRadius.all(Radius.circular(35.0)),
+                              focusedBorder: new OutlineInputBorder(
+                                borderSide: BorderSide(
+                                    color: kPrimaryColorBlue,
+                                    width: 0.5),
+                                borderRadius: const BorderRadius.all(Radius.circular(35.0)),
+                              ),
+                              prefixIcon: Icon(
+                                FontAwesomeIcons.rupeeSign,
+                                color: kPrimaryColorBlue,
+                                size: 23.0,
+                              ),
+                              labelText: "Charges *",
+                              labelStyle: TextStyle(
+                                  fontFamily: "PoppinsLight", fontSize: 13.0, color: kPrimaryColorBlue),
                             ),
-                            focusedBorder: new OutlineInputBorder(
-                              borderSide: BorderSide(
-                                  color: kPrimaryColorBlue,
-                                  width: 0.5),
-                              borderRadius: const BorderRadius.all(Radius.circular(35.0)),
-                            ),
-                            prefixIcon: Icon(
-                              FontAwesomeIcons.rupeeSign,
-                              color: kPrimaryColorBlue,
-                              size: 23.0,
-                            ),
-                            labelText: "Charges *",
-                            labelStyle: TextStyle(
-                                fontFamily: "PoppinsLight", fontSize: 13.0, color: kPrimaryColorBlue),
                           ),
                         ),
-                      ),
-                    ],
-                  )
+                      ],
+                    )
                 ),
                 Container(
                   width: size.width * 0.95,
@@ -320,7 +322,7 @@ class AddChargesState extends State<AddCharges> {
                               FilteringTextInputFormatter.allow( RegExp(r'^(\d+)?\.?\d{0,2}'))
                             ],
                             style: TextStyle(
-                              fontFamily: "PoppinsLight",
+                                fontFamily: "PoppinsLight",
                                 fontSize: 13.0,
                                 color: Colors.black87),
                             decoration: InputDecoration(
@@ -443,13 +445,14 @@ class AddChargesState extends State<AddCharges> {
     _showLoaderDialog(context);
 
     final param = {
-      "id": (widget.id.isEmpty || widget.id == null) ? "" : widget.id,
+      "user_id": userID.toString(),
       "m_business_id": storeID,
       "vehicle_type": vehicleType,
       "for_hours": forHours,
       "charges": chargesController.text,
       "for_additional_hours": addHours.isEmpty || addHours == null ? "" : addHours,
       "additional_hours_charges": addChargesController.text.isEmpty ? "" : addChargesController.text,
+      "id": (widget.id.isEmpty || widget.id == null) ? "" : widget.id,
     };
 
     final response = await http.post(
@@ -459,7 +462,7 @@ class AddChargesState extends State<AddCharges> {
 
     print(response.statusCode);
     CommonData data;
-    var responseJson = json.decode(response.body);
+    var responseJson = json.decode(json.encode(response.body));
     print(response.body);
 
     if (response.statusCode == 200) {
@@ -473,11 +476,7 @@ class AddChargesState extends State<AddCharges> {
       } else showInSnackBar(data.message);
     } else {
       Navigator.of(context, rootNavigator: true).pop();
-      print(data.message);
-      showInSnackBar("Vehicle already Exists, Please change vehicle type !!!");
       return null;
     }
-
   }
-
 }

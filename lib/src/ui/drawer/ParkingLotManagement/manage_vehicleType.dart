@@ -181,7 +181,7 @@ class ManageVehicleTypeState extends State<ManageVehicleType> {
             return Center(child: CircularProgressIndicator(valueColor:AlwaysStoppedAnimation<Color>(kPrimaryColorBlue),));
           else if (snapshot.hasError) {
             return Center(
-              child: Text("No Data Found!"),
+              child: Text("No Vahicles Found!"),
             );
           } else {
             if (snapshot.connectionState == ConnectionState.done &&
