@@ -408,7 +408,7 @@ class BillIncomingState extends State<BillIncoming> {
                                           ),
                                           onPressed: () async {
                                             try {
-                                              await ImageDownloader.downloadImage("http://157.230.228.250/"+snapshot.data[index].billImage).then((context) => showInSnackBar("Download Complete"));
+                                              await ImageDownloader.downloadImage("http://157.230.228.250/"+snapshot.data[index].billImage).then((context) =>  showInSnackBar("Download Complete"));
                                             }
                                             on PlatformException catch (error) {
                                               print(error);

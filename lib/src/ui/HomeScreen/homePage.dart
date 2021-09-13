@@ -379,6 +379,36 @@ class _HomePageState extends State<HomePage> {
     return sessionData1;
   }
 
+
+  Future<List<ChartOtherData>> fetchOtherCollection() async {
+    final param = {
+      "user_id": id,
+    };
+    print(">>>>>>>>>$id");
+    String url = "http://157.230.228.250/other-business-merchant-session-graph-api/";
+
+    final response = await http.post(url, body: param,
+      headers: {HttpHeaders.authorizationHeader: "Token $token"},
+    );
+    List<ChartOtherData> sessionData3 = [];
+    print(response.body);
+    print(response.statusCode);
+    if (response.statusCode == 400) {
+      return null;
+    }
+    final body = json.decode(response.body);
+    print(body);
+    for (int i = 0; i < body["month_labels"].length; i++) {
+      sessionData3.add(ChartOtherData(
+        x: body["month_labels"][i],
+        y: body["Amount"][i],
+
+
+      ));
+    }
+    return sessionData3;
+  }
+
   Future<List<Metadata>> getUsersLists() async {
 
     final param = {
@@ -1105,60 +1135,60 @@ class _HomePageState extends State<HomePage> {
 
                             ],),),),
 
-                      // Container(
-                      //     width: size.width * 0.95,
-                      //     height: size.height * 0.35,
-                      //     padding: EdgeInsets.only(top: 10.0, bottom: 10.0),
-                      //     decoration: BoxDecoration(
-                      //         borderRadius: BorderRadius.all(Radius.circular(30)),
-                      //         color: Colors.white,
-                      //         boxShadow: [
-                      //           BoxShadow(
-                      //               color: Constants.softHighlightColor,
-                      //               offset: Offset(-10, -10),
-                      //               spreadRadius: 0,
-                      //               blurRadius: 10),
-                      //           BoxShadow(
-                      //               color: Constants.softShadowColor,
-                      //               offset: Offset(5, 5),
-                      //               spreadRadius: 0,
-                      //               blurRadius: 10)
-                      //         ]
-                      //     ),
-                      //     child: FutureBuilder<List<ChartPetrolData>>(
-                      //       future: fetchAllPetrolCollection(),
-                      //       builder: (BuildContext context, AsyncSnapshot<List<ChartPetrolData>> snapshot) {
-                      //         if (snapshot.connectionState == ConnectionState.waiting)
-                      //           return Center(child: CircularProgressIndicator(valueColor:AlwaysStoppedAnimation<Color>(kPrimaryColorBlue),));
-                      //         else if (snapshot.hasError) {
-                      //           return Center(
-                      //             child: Text("Graph Not Available"),
-                      //           );
-                      //         } else {
-                      //           if (snapshot.connectionState == ConnectionState.done &&
-                      //               snapshot.hasData) {
-                      //             return Column(
-                      //               children: [
-                      //                 Text("Bills Collection",
-                      //                   style: TextStyle(
-                      //                     color: kPrimaryColorBlue,
-                      //                     fontSize: size.width * 0.04,
-                      //                     fontFamily: "PoppinsBold",
-                      //                   ),
-                      //                 ),
-                      //                 Expanded(
-                      //                   child: _buildDefaultSplineChart(snapshot.data),
-                      //
-                      //                 )
-                      //               ],
-                      //             );
-                      //           } else {
-                      //             return Center(child: CircularProgressIndicator(valueColor:AlwaysStoppedAnimation<Color>(kPrimaryColorBlue),));
-                      //           }
-                      //         }
-                      //       },
-                      //    )
-                      // )
+                      Container(
+                          width: size.width * 0.95,
+                          height: size.height * 0.35,
+                          padding: EdgeInsets.only(top: 10.0, bottom: 10.0),
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.all(Radius.circular(30)),
+                              color: Colors.white,
+                              boxShadow: [
+                                BoxShadow(
+                                    color: Constants.softHighlightColor,
+                                    offset: Offset(-10, -10),
+                                    spreadRadius: 0,
+                                    blurRadius: 10),
+                                BoxShadow(
+                                    color: Constants.softShadowColor,
+                                    offset: Offset(5, 5),
+                                    spreadRadius: 0,
+                                    blurRadius: 10)
+                              ]
+                          ),
+                          child: FutureBuilder<List<ChartOtherData>>(
+                            future: fetchOtherCollection(),
+                            builder: (BuildContext context, AsyncSnapshot<List<ChartOtherData>> snapshot) {
+                              if (snapshot.connectionState == ConnectionState.waiting)
+                                return Center(child: CircularProgressIndicator(valueColor:AlwaysStoppedAnimation<Color>(kPrimaryColorBlue),));
+                              else if (snapshot.hasError) {
+                                return Center(
+                                  child: Text("Graph Not Available"),
+                                );
+                              } else {
+                                if (snapshot.connectionState == ConnectionState.done &&
+                                    snapshot.hasData) {
+                                  return Column(
+                                    children: [
+                                      Text("Bills Collection",
+                                        style: TextStyle(
+                                          color: kPrimaryColorBlue,
+                                          fontSize: size.width * 0.04,
+                                          fontFamily: "PoppinsBold",
+                                        ),
+                                      ),
+                                      Expanded(
+                                        child: _buildOtherSplineChart(snapshot.data),
+
+                                      )
+                                    ],
+                                  );
+                                } else {
+                                  return Center(child: CircularProgressIndicator(valueColor:AlwaysStoppedAnimation<Color>(kPrimaryColorBlue),));
+                                }
+                              }
+                            },
+                         )
+                      )
 
                     ],
                   ),
@@ -1872,6 +1902,34 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
+  SfCartesianChart _buildOtherSplineChart(List<ChartOtherData> data) {
+    return SfCartesianChart(
+      plotAreaBorderWidth: 0,
+
+      primaryXAxis: CategoryAxis(
+          majorGridLines: MajorGridLines(width: 0),
+          labelPlacement: LabelPlacement.onTicks,
+          labelRotation: -30,
+          maximumLabels: 12,
+      ),
+      primaryYAxis: NumericAxis(
+          axisLine: AxisLine(width: 0),
+          edgeLabelPlacement: EdgeLabelPlacement.shift,
+          labelFormat: '₹ {value}',
+          majorTickLines: MajorTickLines(size: 0)
+      ),
+      series: <LineSeries<ChartOtherData, String>>[
+        LineSeries<ChartOtherData, String>(
+          dataSource: data,
+          xValueMapper: (ChartOtherData sales, _) => sales.x,
+          yValueMapper: (ChartOtherData sales, _) => double.parse(sales.y),
+          markerSettings: MarkerSettings(isVisible: true),
+        ),
+      ],
+      tooltipBehavior: TooltipBehavior(enable: true),
+    );
+  }
+
   /// Returns the default spline chart.
   SfCartesianChart _buildParkingSplineChart(List<ChartParkingData> data) {
     return SfCartesianChart(
@@ -1940,6 +1998,12 @@ class AnalysisData {
 
 }
 
+
+class ChartOtherData {
+  ChartOtherData({this.x,this.y});
+  String x;
+  String y;
+}
 
 class ChartPetrolData {
   ChartPetrolData({this.x,this.y});

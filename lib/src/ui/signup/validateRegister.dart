@@ -23,6 +23,12 @@ class ValidateRegistration extends StatefulWidget {
   ValidateRegistrationState createState() => ValidateRegistrationState(mobile, email, pass, business, chosenValue, city, dist, state, pin, signCode, area, referral);
 }
 
+extension StringExtension on String {
+  String capitalize() {
+    return "${this[0].toUpperCase()}${this.substring(1)}";
+  }
+}
+
 class ValidateRegistrationState extends State<ValidateRegistration> {
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
 
@@ -310,13 +316,13 @@ class ValidateRegistrationState extends State<ValidateRegistration> {
       "m_email": email,
       "password": pass,
       "is_merchant": "1",
-      "m_business_name": business,
+      "m_business_name": business.capitalize(),
       "m_business_category": chosenValue,
-      "m_area": area,
+      "m_area": area.capitalize(),
       "m_used_referral_code": referral,
-      "m_city": city,
-      "m_district": dist,
-      "m_state": state,
+      "m_city": city.capitalize(),
+      "m_district": dist.capitalize(),
+      "m_state": state.capitalize(),
       "m_pin_code": pin,
       "is_active": "1",
     };

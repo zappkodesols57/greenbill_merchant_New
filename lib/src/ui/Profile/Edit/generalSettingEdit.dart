@@ -91,6 +91,12 @@ class GeneralSettingEdit extends StatefulWidget {
       id);
 }
 
+extension StringExtension on String {
+  String capitalize() {
+    return "${this[0].toUpperCase()}${this.substring(1)}";
+  }
+}
+
 class _MyGeneralSettingEditState extends State<GeneralSettingEdit> {
   //bool _alertMob = true;
 
@@ -1488,10 +1494,7 @@ class _MyGeneralSettingEditState extends State<GeneralSettingEdit> {
       showInSnackBar("Please enter Business Name", 2);
       return null;
     }
-    // if(_chosenValue == null){
-    //   showInSnackBar("Please select Business Category", 2);
-    //   return null;
-    // }
+
     if (pinController.text.isEmpty) {
       showInSnackBar("Please enter valid Pin Code", 2);
       return null;
@@ -1633,11 +1636,11 @@ class _MyGeneralSettingEditState extends State<GeneralSettingEdit> {
     request.fields['m_business_name'] = nameController.text;
     request.fields['m_business_category_id'] = id;
     request.fields['m_pin_code'] = pinController.text;
-    request.fields['m_city'] = cityController.text;
-    request.fields['m_area'] = areaController.text;
-    request.fields['m_district'] = districtController.text;
-    request.fields['m_state'] = stateController.text;
-    request.fields['m_address'] = addressController.text;
+    request.fields['m_city'] = cityController.text.capitalize();
+    request.fields['m_area'] = areaController.text.capitalize();
+    request.fields['m_district'] = districtController.text.capitalize();
+    request.fields['m_state'] = stateController.text.capitalize();
+    request.fields['m_address'] = addressController.text.capitalize();
     request.fields['m_landline_number'] = teleController.text;
     request.fields['m_alternate_mobile_number'] = mobController.text;
     request.fields['m_company_email'] = cemailController.text;
@@ -1647,8 +1650,8 @@ class _MyGeneralSettingEditState extends State<GeneralSettingEdit> {
     request.fields['m_cin'] = cinController.text;
     request.fields['m_bank_account_number'] = accController.text;
     request.fields['m_bank_IFSC_code'] = ifscController.text;
-    request.fields['m_bank_name'] = bnameController.text;
-    request.fields['m_bank_branch'] = branchController.text;
+    request.fields['m_bank_name'] = bnameController.text.capitalize();
+    request.fields['m_bank_branch'] = branchController.text.capitalize();
     request.fields['m_GSTIN_certificate'] = "";
     request.fields['m_CIN_certificate'] = "";
     request.fields['m_business_logo'] = "";
