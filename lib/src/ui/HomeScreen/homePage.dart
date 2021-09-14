@@ -819,113 +819,6 @@ class _HomePageState extends State<HomePage> {
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      // Container(
-                      //   width: size.width,
-                      //   height: 70.0,
-                      //   child: Card(
-                      //     elevation: 10.0,
-                      //     shape: RoundedRectangleBorder(
-                      //       borderRadius: BorderRadius.circular(10.0),
-                      //     ),
-                      //     child: Row(
-                      //       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      //       children: [
-                      //         Container(
-                      //           color: Colors.white,
-                      //           width: size.width * 0.4,
-                      //           height: 40.0,
-                      //           child: TextField(
-                      //             enableInteractiveSelection:
-                      //             false,
-                      //             focusNode: new AlwaysDisabledFocusNode(),
-                      //             controller: fromDateController,
-                      //             onTap: () {
-                      //               _selectDateStart(context);
-                      //             },
-                      //             style: TextStyle(
-                      //                 fontFamily: "PoppinsBold",
-                      //                 fontSize: 13.0,
-                      //                 color: kPrimaryColorBlue),
-                      //             decoration: InputDecoration(
-                      //               border: InputBorder.none,
-                      //               contentPadding:
-                      //               const EdgeInsets.symmetric(vertical: 10.0),
-                      //               enabledBorder: OutlineInputBorder(
-                      //                 borderSide: BorderSide(
-                      //                     color: kPrimaryColorBlue, width: 0.5),
-                      //                 borderRadius:
-                      //                 const BorderRadius.all(Radius.circular(35.0)),
-                      //               ),
-                      //               focusedBorder: new OutlineInputBorder(
-                      //                 borderSide: BorderSide(
-                      //                     color: kPrimaryColorBlue, width: 0.5),
-                      //                 borderRadius:
-                      //                 const BorderRadius.all(Radius.circular(35.0)),
-                      //               ),
-                      //               prefixIcon: Icon(
-                      //                 FontAwesomeIcons.calendar,
-                      //                 color: kPrimaryColorBlue,
-                      //                 size: 20.0,
-                      //               ),
-                      //               hintText: "From",
-                      //               hintStyle: TextStyle(
-                      //                   fontFamily: "PoppinsBold",
-                      //                   fontSize: 13.0,
-                      //                   color: kPrimaryColorBlue),
-                      //             ),
-                      //           ),
-                      //         ),
-                      //         Container(
-                      //           width: size.width * 0.4,
-                      //           height: 40.0,
-                      //           child: TextField(
-                      //             enableInteractiveSelection:
-                      //             false,
-                      //             focusNode: new AlwaysDisabledFocusNode(),
-                      //             controller: toDateController,
-                      //             onTap: () {
-                      //               _selectDateEnd(context);
-                      //             },
-                      //             style: TextStyle(
-                      //                 fontFamily: "PoppinsBold",
-                      //                 fontSize: 13.0,
-                      //                 color: kPrimaryColorBlue),
-                      //             decoration: InputDecoration(
-                      //               border: InputBorder.none,
-                      //               contentPadding:
-                      //               const EdgeInsets.symmetric(vertical: 10.0),
-                      //               enabledBorder: OutlineInputBorder(
-                      //                 borderSide: BorderSide(
-                      //                     color: kPrimaryColorBlue, width: 0.5),
-                      //                 borderRadius:
-                      //                 const BorderRadius.all(Radius.circular(35.0)),
-                      //               ),
-                      //               focusedBorder: new OutlineInputBorder(
-                      //                 borderSide: BorderSide(
-                      //                     color: kPrimaryColorBlue, width: 0.5),
-                      //                 borderRadius:
-                      //                 const BorderRadius.all(Radius.circular(35.0)),
-                      //               ),
-                      //               prefixIcon: Icon(
-                      //                 FontAwesomeIcons.calendar,
-                      //                 color: kPrimaryColorBlue,
-                      //                 size: 20.0,
-                      //               ),
-                      //               hintText: "To",
-                      //
-                      //               hintStyle: TextStyle(
-                      //                   fontFamily: "PoppinsBold",
-                      //                   fontSize: 13.0,
-                      //                   color: kPrimaryColorBlue),
-                      //             ),
-                      //           ),
-                      //         ),
-                      //       ]
-                      //     ),
-                      //   ),
-                      // ),
-                      //
-                      // SizedBox(height: 10.0,),
 
                       FutureBuilder<List<DoughnutChartData>>(
                         future:  BilllingAnalysis(),
@@ -1220,61 +1113,61 @@ class _HomePageState extends State<HomePage> {
                       ),
 
                       SizedBox(height: 10.0),
-
-                      Container(
-                          width: size.width * 0.95,
-                          height: size.height * 0.35,
-                          padding: EdgeInsets.only(top: 10.0, bottom: 10.0),
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.all(Radius.circular(30)),
-                              color: Colors.white,
-                              boxShadow: [
-                                BoxShadow(
-                                    color: Constants.softHighlightColor,
-                                    offset: Offset(-10, -10),
-                                    spreadRadius: 0,
-                                    blurRadius: 10),
-                                BoxShadow(
-                                    color: Constants.softShadowColor,
-                                    offset: Offset(5, 5),
-                                    spreadRadius: 0,
-                                    blurRadius: 10)
-                              ]
-                          ),
-                          child: FutureBuilder<List<ChartMonthData>>(
-                            future: fetchMonthCollection(),
-                            builder: (BuildContext context, AsyncSnapshot<List<ChartMonthData>> snapshot) {
-                              if (snapshot.connectionState == ConnectionState.waiting)
-                                return Center(child: CircularProgressIndicator(valueColor:AlwaysStoppedAnimation<Color>(kPrimaryColorBlue),));
-                              else if (snapshot.hasError) {
-                                return Center(
-                                  child: Text("Graph Not Available"),
-                                );
-                              } else {
-                                if (snapshot.connectionState == ConnectionState.done &&
-                                    snapshot.hasData) {
-                                  return Column(
-                                    children: [
-                                      Text("Monthly Bills Collection",
-                                        style: TextStyle(
-                                          color: kPrimaryColorBlue,
-                                          fontSize: size.width * 0.04,
-                                          fontFamily: "PoppinsBold",
-                                        ),
-                                      ),
-                                      Expanded(
-                                        child: _buildMonthSplineChart(snapshot.data),
-
-                                      )
-                                    ],
-                                  );
-                                } else {
-                                  return Center(child: CircularProgressIndicator(valueColor:AlwaysStoppedAnimation<Color>(kPrimaryColorBlue),));
-                                }
-                              }
-                            },
-                         )
-                      )
+                      //
+                      // Container(
+                      //     width: size.width * 0.95,
+                      //     height: size.height * 0.35,
+                      //     padding: EdgeInsets.only(top: 10.0, bottom: 10.0),
+                      //     decoration: BoxDecoration(
+                      //         borderRadius: BorderRadius.all(Radius.circular(30)),
+                      //         color: Colors.white,
+                      //         boxShadow: [
+                      //           BoxShadow(
+                      //               color: Constants.softHighlightColor,
+                      //               offset: Offset(-10, -10),
+                      //               spreadRadius: 0,
+                      //               blurRadius: 10),
+                      //           BoxShadow(
+                      //               color: Constants.softShadowColor,
+                      //               offset: Offset(5, 5),
+                      //               spreadRadius: 0,
+                      //               blurRadius: 10)
+                      //         ]
+                      //     ),
+                      //     child: FutureBuilder<List<ChartMonthData>>(
+                      //       future: fetchMonthCollection(),
+                      //       builder: (BuildContext context, AsyncSnapshot<List<ChartMonthData>> snapshot) {
+                      //         if (snapshot.connectionState == ConnectionState.waiting)
+                      //           return Center(child: CircularProgressIndicator(valueColor:AlwaysStoppedAnimation<Color>(kPrimaryColorBlue),));
+                      //         else if (snapshot.hasError) {
+                      //           return Center(
+                      //             child: Text("Graph Not Available"),
+                      //           );
+                      //         } else {
+                      //           if (snapshot.connectionState == ConnectionState.done &&
+                      //               snapshot.hasData) {
+                      //             return Column(
+                      //               children: [
+                      //                 Text("Monthly Bills Collection",
+                      //                   style: TextStyle(
+                      //                     color: kPrimaryColorBlue,
+                      //                     fontSize: size.width * 0.04,
+                      //                     fontFamily: "PoppinsBold",
+                      //                   ),
+                      //                 ),
+                      //                 Expanded(
+                      //                   child: _buildMonthSplineChart(snapshot.data),
+                      //
+                      //                 )
+                      //               ],
+                      //             );
+                      //           } else {
+                      //             return Center(child: CircularProgressIndicator(valueColor:AlwaysStoppedAnimation<Color>(kPrimaryColorBlue),));
+                      //           }
+                      //         }
+                      //       },
+                      //    )
+                      // )
 
                     ],
                   ),
