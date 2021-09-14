@@ -189,8 +189,7 @@ class HistoryState extends State<History> {
                               Container(
                                 alignment: Alignment.center,
                                 width: size.width * 0.4,
-                                child: Text(totalTran.toString()
-                                  ,
+                                child: Text(totalTran.toString(),
                                   style: TextStyle(
                                       color: Colors.black,
                                       fontSize: 12.0,
@@ -252,7 +251,7 @@ class HistoryState extends State<History> {
                                           snapshot.data[index].business,
                                           style: TextStyle(fontSize: 15.0, fontFamily: "PoppinsMedium", fontWeight: FontWeight.bold)
                                       ),
-                                      subtitle: Text('Purchase Date : ${snapshot.data[index].purchaseDate }\nTransaction Id : ${snapshot.data[index].transactionId}',
+                                      subtitle: Text('Purchase Date : ${snapshot.data[index].purchaseDate }\nTransaction Id : ${snapshot.data[index].transactionId == null ? "----" : snapshot.data[index].transactionId}',
                                           style: TextStyle(fontSize: 10.0)) ,
                                       isThreeLine: false,
                                       trailing: Wrap(

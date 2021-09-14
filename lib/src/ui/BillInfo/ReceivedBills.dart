@@ -17,6 +17,7 @@ import 'package:http/http.dart' as http;
 import 'package:open_file/open_file.dart';
 import 'package:image_downloader/image_downloader.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -407,11 +408,12 @@ class BillIncomingState extends State<BillIncoming> {
                                             color: Colors.black,
                                           ),
                                           onPressed: () async {
-                                            try {
-                                              await ImageDownloader.downloadImage("http://157.230.228.250/"+snapshot.data[index].billImage).then((context) =>  showInSnackBar("Download Complete"));
-                                            }
-                                            on PlatformException catch (error) {
-                                              print(error);
+
+                                            if (await Permission.storage.request().isGranted) {
+                                              await ImageDownloader.downloadImage("http://157.230.228.250/"+snapshot.data[index].billImage).then((context) => showInSnackBar("Download Complete"));
+
+                                            } else{
+                                              showInSnackBar("Permission Denied");
                                             }
                                           },
                                         ),

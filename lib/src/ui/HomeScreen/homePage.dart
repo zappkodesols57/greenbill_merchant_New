@@ -409,6 +409,35 @@ class _HomePageState extends State<HomePage> {
     return sessionData3;
   }
 
+  Future<List<ChartMonthData>> fetchMonthCollection() async {
+    final param = {
+      "user_id": id,
+    };
+    print(">>>>>>>>>$id");
+    String url = "http://157.230.228.250/other-business-session-datewise-graph-api/";
+
+    final response = await http.post(url, body: param,
+      headers: {HttpHeaders.authorizationHeader: "Token $token"},
+    );
+    List<ChartMonthData> sessionData4 = [];
+    print(response.body);
+    print(response.statusCode);
+    if (response.statusCode == 400) {
+      return null;
+    }
+    final body = json.decode(response.body);
+    print(body);
+    for (int i = 0; i < body["days_labels"].length; i++) {
+      sessionData4.add(ChartMonthData(
+        x: body["days_labels"][i],
+        y: body["Amount"][i],
+
+
+      ));
+    }
+    return sessionData4;
+  }
+
   Future<List<Metadata>> getUsersLists() async {
 
     final param = {
@@ -631,7 +660,7 @@ class _HomePageState extends State<HomePage> {
                                 padding: EdgeInsets.only(
                                     top: 0.0, bottom: 0.0, left: 40.0, right: 0.0),
                                 child: Text(
-                                  "Average  Transaction",
+                                  "Total  Payments",
                                   textAlign: TextAlign.center,
                                   style: TextStyle(
                                       color: Colors.black,
@@ -757,7 +786,7 @@ class _HomePageState extends State<HomePage> {
                                 padding: EdgeInsets.only(
                                     top: 0.0, bottom: 0.0, left: 40.0, right: 0.0),
                                 child: Text(
-                                  "Average Sales",
+                                  "Average  Sales",
                                   textAlign: TextAlign.center,
                                   style: TextStyle(
                                       color: Colors.black,
@@ -1178,6 +1207,63 @@ class _HomePageState extends State<HomePage> {
                                       ),
                                       Expanded(
                                         child: _buildOtherSplineChart(snapshot.data),
+
+                                      )
+                                    ],
+                                  );
+                                } else {
+                                  return Center(child: CircularProgressIndicator(valueColor:AlwaysStoppedAnimation<Color>(kPrimaryColorBlue),));
+                                }
+                              }
+                            },
+                         )
+                      ),
+
+                      SizedBox(height: 10.0),
+
+                      Container(
+                          width: size.width * 0.95,
+                          height: size.height * 0.35,
+                          padding: EdgeInsets.only(top: 10.0, bottom: 10.0),
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.all(Radius.circular(30)),
+                              color: Colors.white,
+                              boxShadow: [
+                                BoxShadow(
+                                    color: Constants.softHighlightColor,
+                                    offset: Offset(-10, -10),
+                                    spreadRadius: 0,
+                                    blurRadius: 10),
+                                BoxShadow(
+                                    color: Constants.softShadowColor,
+                                    offset: Offset(5, 5),
+                                    spreadRadius: 0,
+                                    blurRadius: 10)
+                              ]
+                          ),
+                          child: FutureBuilder<List<ChartMonthData>>(
+                            future: fetchMonthCollection(),
+                            builder: (BuildContext context, AsyncSnapshot<List<ChartMonthData>> snapshot) {
+                              if (snapshot.connectionState == ConnectionState.waiting)
+                                return Center(child: CircularProgressIndicator(valueColor:AlwaysStoppedAnimation<Color>(kPrimaryColorBlue),));
+                              else if (snapshot.hasError) {
+                                return Center(
+                                  child: Text("Graph Not Available"),
+                                );
+                              } else {
+                                if (snapshot.connectionState == ConnectionState.done &&
+                                    snapshot.hasData) {
+                                  return Column(
+                                    children: [
+                                      Text("Monthly Bills Collection",
+                                        style: TextStyle(
+                                          color: kPrimaryColorBlue,
+                                          fontSize: size.width * 0.04,
+                                          fontFamily: "PoppinsBold",
+                                        ),
+                                      ),
+                                      Expanded(
+                                        child: _buildMonthSplineChart(snapshot.data),
 
                                       )
                                     ],
@@ -1930,6 +2016,34 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
+  SfCartesianChart _buildMonthSplineChart(List<ChartMonthData> data) {
+    return SfCartesianChart(
+      plotAreaBorderWidth: 0,
+
+      primaryXAxis: CategoryAxis(
+          majorGridLines: MajorGridLines(width: 0),
+          labelPlacement: LabelPlacement.onTicks,
+          labelRotation: -90,
+        maximumLabels: 30,
+      ),
+      primaryYAxis: NumericAxis(
+          axisLine: AxisLine(width: 0),
+          edgeLabelPlacement: EdgeLabelPlacement.shift,
+          labelFormat: '₹ {value}',
+          majorTickLines: MajorTickLines(size: 0)
+      ),
+      series: <LineSeries<ChartMonthData, String>>[
+        LineSeries<ChartMonthData, String>(
+          dataSource: data,
+          xValueMapper: (ChartMonthData sales, _) => sales.x.characters.getRange(0,7).toString(),
+          yValueMapper: (ChartMonthData sales, _) => double.parse(sales.y),
+          markerSettings: MarkerSettings(isVisible: true),
+        ),
+      ],
+      tooltipBehavior: TooltipBehavior(enable: true),
+    );
+  }
+
   /// Returns the default spline chart.
   SfCartesianChart _buildParkingSplineChart(List<ChartParkingData> data) {
     return SfCartesianChart(
@@ -1953,12 +2067,10 @@ class _HomePageState extends State<HomePage> {
           yValueMapper: (ChartParkingData sales, _) => double.parse(sales.y),
           markerSettings: MarkerSettings(isVisible: true),
         ),
-
       ],
       tooltipBehavior: TooltipBehavior(enable: true),
     );
   }
-
 }
 
 class Metadata {
@@ -2001,6 +2113,12 @@ class AnalysisData {
 
 class ChartOtherData {
   ChartOtherData({this.x,this.y});
+  String x;
+  String y;
+}
+
+class ChartMonthData {
+  ChartMonthData({this.x,this.y});
   String x;
   String y;
 }

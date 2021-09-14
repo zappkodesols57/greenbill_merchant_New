@@ -180,16 +180,26 @@ class CustomerInfoState extends State<CustomerInfo> {
                               itemCount: snapshot.data.length,
                               itemBuilder: (BuildContext context, int index) {
                                 return Card(
+                                  elevation: 5,
                                   child: ListTile(
                                     title: Text(
                                         "Mobile No. : ${snapshot.data[index].mobileNo}",
                                         style: TextStyle(fontSize: 15.0)
                                     ),
-                                    // trailing: Text("₹ ${snapshot.data[index].amount}", style: TextStyle(fontWeight: FontWeight.bold)),
-                                    onTap: (){
-                                      Navigator.push(context, MaterialPageRoute(builder:  (context)=>CustomerDetailInfo(token, id, storeID,
-                                          snapshot.data[index].mobileNo,snapshot.data[index].email,snapshot.data[index].name,snapshot.data[index].state,snapshot.data[index].city)));
-                                    },
+                                    trailing: RaisedButton(
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius: BorderRadius.circular(15)),
+                                        child: Text("View Details",style: TextStyle(fontSize: 11.0 ,color: Colors.white),),
+                                      color: kPrimaryColorBlue,
+                                      onPressed:(){
+                                        Navigator.push(context, MaterialPageRoute(builder:  (context)=>CustomerDetailInfo(token, id, storeID,
+                                            snapshot.data[index].mobileNo,snapshot.data[index].email,snapshot.data[index].name,snapshot.data[index].state,snapshot.data[index].city)));
+                                      } ,
+                                    ),
+                                    // onTap: (){
+                                    //   Navigator.push(context, MaterialPageRoute(builder:  (context)=>CustomerDetailInfo(token, id, storeID,
+                                    //       snapshot.data[index].mobileNo,snapshot.data[index].email,snapshot.data[index].name,snapshot.data[index].state,snapshot.data[index].city)));
+                                    // },
                                   ),
                                 );
                               }
