@@ -153,22 +153,13 @@ class CustomerInfoState extends State<CustomerInfo> {
                       return Center(child: CircularProgressIndicator(valueColor:AlwaysStoppedAnimation<Color>(kPrimaryColorBlue),));
                     else if (snapshot.hasError) {
                       return Center(
-                        child: Text("No Data Found!"),
+                        child: Text("No Info Found!"),
                       );
 
                     } else{
                       if (snapshot.connectionState == ConnectionState.done &&
                           snapshot.hasData) {
-                        // WidgetsBinding.instance.addPostFrameCallback((_) {
-                        //   if (_controller.hasClients) {
-                        //     _controller.animateTo(
-                        //         _controller.position.maxScrollExtent,
-                        //         duration: Duration(milliseconds: 500),
-                        //         curve: Curves.fastLinearToSlowEaseIn);
-                        //   } else {
-                        //     setState(() => null);
-                        //   }
-                        // });
+
                         return Scrollbar(
                           isAlwaysShown: true,
                           controller: _controller,

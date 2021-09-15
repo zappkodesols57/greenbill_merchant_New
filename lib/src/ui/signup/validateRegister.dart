@@ -305,9 +305,7 @@ class ValidateRegistrationState extends State<ValidateRegistration> {
         otpController.clear();
       }
     });
-
   }
-
 
   Future<void> signUpCallApi() async {
     print('$mobile $email $pass $business $chosenValue $city $referral $dist $state $pin $area');

@@ -65,7 +65,7 @@ class _DoughnutChartState extends State<DoughnutChart> {
                 startAngle: startAngle,
                 endAngle: endAngle,
                 xValueMapper: (DoughnutChartData data, _) => data.x,
-                yValueMapper: (DoughnutChartData data, _) => data.y,
+                yValueMapper: (DoughnutChartData data, _) => double.parse(double.parse(data.y).toStringAsFixed(2)),
                 dataLabelMapper: (DoughnutChartData data, _) => data.text,
                 dataLabelSettings: DataLabelSettings(
                     isVisible: true, labelPosition: ChartDataLabelPosition.outside))

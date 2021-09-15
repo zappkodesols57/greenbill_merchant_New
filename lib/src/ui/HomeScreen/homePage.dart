@@ -171,12 +171,15 @@ class _HomePageState extends State<HomePage> {
     final response = await http.post(url, body: param,
       headers: {HttpHeaders.authorizationHeader: "Token $token"},
     );
-    print(response.body);
+
+    print("><><><>><><>< 1 ${response.body}");
     print(response.statusCode);
+
     List<DoughnutChartData> data = [];
     if (response.statusCode == 400) {
       return null;
     }
+
     final body = json.decode(response.body);
     print(body);
     for (int i = 0; i < body["data"].length; i++) {
@@ -597,7 +600,7 @@ class _HomePageState extends State<HomePage> {
                                 padding: EdgeInsets.only(
                                     top: 0.0, bottom: 0.0, left: 40.0, right: 0.0),
                                 child: Text(
-                                  "Total  Transaction",
+                                  "Total  Transactions",
                                   textAlign: TextAlign.center,
                                   style: TextStyle(
                                       color: Colors.black,
@@ -1692,7 +1695,7 @@ class _HomePageState extends State<HomePage> {
                                               '\nTotal Bills: ${snapshot.data[index].totalBills} . Total Flagged: ${snapshot.data[index].totalFlagged}',
                                               style: TextStyle(fontSize: 10.0)) : Text("Not login yet.", style: TextStyle(fontSize: 10.0)),
                                           trailing: Text(
-                                              "₹ ${snapshot.data[index].totalCollection}",
+                                              "₹ ${double.parse(snapshot.data[index].totalCollection).toStringAsFixed(2)}",
                                               style: TextStyle(
                                                   fontWeight: FontWeight.bold,
                                                   fontSize: 17.0)

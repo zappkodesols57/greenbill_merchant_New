@@ -94,7 +94,7 @@ class OffersCardState extends State<OffersCard> {
                         padding: EdgeInsets.only(top: 5.0, left: 10.0, right: 0.0),
                         child:
                         Text(
-                          "${widget.data.offerName}"+" at "+" ${widget.data.mBusinessName} ",
+                          "${widget.data.offerName}"+" on "+" ${widget.data.mBusinessName} ",
                           style: TextStyle(
                             fontSize: cardTitle,
                             fontFamily: "PoppinsMedium",

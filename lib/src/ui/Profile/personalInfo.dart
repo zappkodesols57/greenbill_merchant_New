@@ -895,10 +895,7 @@ class _MyPersonalInfoState extends State<PersonalInfo> {
       showInSnackBar("Please enter Last Name", 2);
       return null;
     }
-    // if(mobController.text.isEmpty) {
-    //   showInSnackBar("Please enter Mobile Number", 2);
-    //   return null;
-    // }
+
     if (emailController.text.isEmpty) {
       showInSnackBar("Please enter Email", 2);
       return null;
