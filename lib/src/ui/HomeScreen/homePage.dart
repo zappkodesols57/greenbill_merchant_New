@@ -39,8 +39,8 @@ class _HomePageState extends State<HomePage> {
       totalSale,
       avgSale;
   String newsCustomerText, returningCustomerText, c, d;
-  static int newsCustomerValue = 1;
-  static int returningCustomerValue = 1;
+  static String newsCustomerValue = "0";
+  static String returningCustomerValue = "0";
   static Map<String, double> dataMap;
   bool _headerEnabled, _headerBusiness;
 
@@ -590,6 +590,7 @@ class _HomePageState extends State<HomePage> {
         lastDate: DateTime.now());
     eDate = '${e.year.toString()}-${e.month.toString()}-${e.day.toString()}';
     toDateController.text = eDate;
+    getAnalysisa();
     changeState();
     return eDate;
   }

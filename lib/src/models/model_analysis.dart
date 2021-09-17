@@ -37,9 +37,9 @@ class DataU {
   });
 
   String newCustomersText;
-  int newCustomersValue;
+  String newCustomersValue;
   String returningCustomersText;
-  int returningCustomersValue;
+  String returningCustomersValue;
 
   factory DataU.fromJson(Map<String, dynamic> json) => DataU(
     newCustomersText: json["new_customers_text"],
