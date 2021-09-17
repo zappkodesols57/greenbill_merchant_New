@@ -578,7 +578,7 @@ class _HomePageState extends State<HomePage> {
     );
     fDate = '${e.year.toString()}-${e.month.toString()}-${e.day.toString()}';
     fromDateController.text = fDate;
-    changeState();
+    // changeState();
     return fDate;
   }
 
@@ -1929,6 +1929,117 @@ class _HomePageState extends State<HomePage> {
                     SizedBox(
                       height: 10.0,
                     ),
+                    Card(
+                      elevation: 10,
+                      color: Colors.white,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10.0),
+                      ),
+                      child: Container(
+                        width: size.width * 0.95,
+                        height: 60.0,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            Container(
+                              width: size.width * 0.4,
+                              height: 50.0,
+                              padding: EdgeInsets.only(top: 5.0,bottom: 5.0),
+                              child: TextField(
+                                enableInteractiveSelection:
+                                false, // will disable paste operation
+                                focusNode: new AlwaysDisabledFocusNode(),
+                                controller: fromDateController,
+                                onTap: () {
+                                  _selectDateStart(context);
+                                },
+                                style: TextStyle(
+                                    fontFamily: "PoppinsBold",
+                                    fontSize: 12.0,
+                                    color: kPrimaryColorBlue),
+                                decoration: InputDecoration(
+                                  border: InputBorder.none,
+                                  contentPadding:
+                                  const EdgeInsets.symmetric(vertical: 10.0),
+                                  enabledBorder: OutlineInputBorder(
+                                    borderSide: BorderSide(
+                                        color: kPrimaryColorBlue, width: 0.5),
+                                    borderRadius:
+                                    const BorderRadius.all(Radius.circular(35.0)),
+                                  ),
+                                  focusedBorder: new OutlineInputBorder(
+                                    borderSide: BorderSide(
+                                        color: kPrimaryColorBlue, width: 0.5),
+                                    borderRadius:
+                                    const BorderRadius.all(Radius.circular(35.0)),
+                                  ),
+                                  prefixIcon: Icon(
+                                    FontAwesomeIcons.calendar,
+                                    color: kPrimaryColorBlue,
+                                    size: 20.0,
+                                  ),
+                                  hintText: "From",
+
+                                  hintStyle: TextStyle(
+                                      fontFamily: "PoppinsBold",
+                                      fontSize: 12.0,
+                                      color: kPrimaryColorBlue),
+                                ),
+                              ),
+                            ),
+                            Container(
+                              width: size.width * 0.4,
+                              height: 50.0,
+                              padding: EdgeInsets.only(top: 5.0,bottom: 5.0),
+                              child: TextField(
+                                enableInteractiveSelection:
+                                false, // will disable paste operation
+                                focusNode: new AlwaysDisabledFocusNode(),
+                                controller: toDateController,
+                                onTap: () {
+                                  _selectDateEnd(context);
+                                },
+                                style: TextStyle(
+                                    fontFamily: "PoppinsBold",
+                                    fontSize: 12.0,
+                                    color: kPrimaryColorBlue),
+                                decoration: InputDecoration(
+                                  border: InputBorder.none,
+                                  contentPadding:
+                                  const EdgeInsets.symmetric(vertical: 10.0),
+                                  enabledBorder: OutlineInputBorder(
+                                    borderSide: BorderSide(
+                                        color: kPrimaryColorBlue, width: 0.5),
+                                    borderRadius:
+                                    const BorderRadius.all(Radius.circular(35.0)),
+                                  ),
+                                  focusedBorder: new OutlineInputBorder(
+                                    borderSide: BorderSide(
+                                        color: kPrimaryColorBlue, width: 0.5),
+                                    borderRadius:
+                                    const BorderRadius.all(Radius.circular(35.0)),
+                                  ),
+                                  prefixIcon: Icon(
+                                    FontAwesomeIcons.calendar,
+                                    color: kPrimaryColorBlue,
+                                    size: 20.0,
+                                  ),
+                                  hintText: "To",
+
+                                  hintStyle: TextStyle(
+                                      fontFamily: "PoppinsBold",
+                                      fontSize: 12.0,
+                                      color: kPrimaryColorBlue),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+
+                    SizedBox(height: 10.0,),
+
                     Container(
                       width: size.width * 0.95,
                       child: Column(
