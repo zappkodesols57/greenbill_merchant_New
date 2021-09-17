@@ -312,8 +312,7 @@ class _HomePageState extends State<HomePage> {
   Future<List<DoughnutChartData>> coupenDetails() async {
     final param = {
       "merchant_business_id": storeID,
-      "from_date": fDate,
-      "to_date": eDate,
+
     };
     String url = "http://157.230.228.250/merchant-coupons-details-graph-api/";
 
@@ -342,8 +341,6 @@ class _HomePageState extends State<HomePage> {
   Future<List<DoughnutChartData>> offerDetails() async {
     final param = {
       "merchant_business_id": storeID,
-      "from_date": fDate,
-      "to_date": eDate,
     };
     String url = "http://157.230.228.250/merchant-offers-details-graph-api/";
 
