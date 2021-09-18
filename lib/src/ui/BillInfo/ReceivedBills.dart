@@ -146,41 +146,41 @@ class BillIncomingState extends State<BillIncoming> {
                     itemCount: snapshot.data.length,
                     itemBuilder: (BuildContext context, int index) {
 
-                      return ListTile(
-                        title: Text(snapshot.data[index].mBusinessName,
-                            style: TextStyle(fontSize: 15.0)),
-                        subtitle: (snapshot.data[index].mArea.isNotEmpty)
-                            ? Text(
-                            '${snapshot.data[index].mAddress}, ${snapshot.data[index].mArea}, ${snapshot.data[index].mCity}',
-                            style: TextStyle(fontSize: 10.0))
-                            : Text('Address not available',
-                            style: TextStyle(fontSize: 10.0)),
+                      return (snapshot.data[index].id.toString() != storeID) ? ListTile(
+                          title: Text(snapshot.data[index].mBusinessName,
+                              style: TextStyle(fontSize: 15.0)),
+                          subtitle: (snapshot.data[index].mArea.isNotEmpty)
+                              ? Text(
+                              '${snapshot.data[index].mAddress}, ${snapshot.data[index].mArea}, ${snapshot.data[index].mCity}',
+                              style: TextStyle(fontSize: 10.0))
+                              : Text('Address not available',
+                              style: TextStyle(fontSize: 10.0)),
 
 
-                        leading:
-                        (snapshot.data[index].mBusinessLogo != null)
-                            ? CircleAvatar(
-                          backgroundColor: kPrimaryColorBlue,
-                          backgroundImage: NetworkImage(snapshot.data[index].mBusinessLogo),
-                        )
-                            : CircleAvatar(
-                          backgroundColor: kPrimaryColorBlue,
-                          child: Text(
-                            storeID.substring(0, 1).toUpperCase(),
-                            style: TextStyle(
-                              fontSize: 20.0,
-                              color: Colors.white,
-                              fontWeight: FontWeight.bold,
+                          leading:
+                          (snapshot.data[index].mBusinessLogo != null)
+                              ? CircleAvatar(
+                            backgroundColor: kPrimaryColorBlue,
+                            backgroundImage: NetworkImage(snapshot.data[index].mBusinessLogo),
+                          )
+                              : CircleAvatar(
+                            backgroundColor: kPrimaryColorBlue,
+                            child: Text(
+                              storeID.substring(0, 1).toUpperCase(),
+                              style: TextStyle(
+                                fontSize: 20.0,
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold,
+                              ),
                             ),
                           ),
-                        ),
-                        onTap: () async {
-                          setState(() {
-                            storeId=snapshot.data[index].id;
-                          });
-                          sendBill();
-                        },
-                      );
+                          onTap: () async {
+                            setState(() {
+                              storeId=snapshot.data[index].id;
+                            });
+                            sendBill();
+                          },
+                      ) : Container();
                     }));
           } else {
             return Center(
