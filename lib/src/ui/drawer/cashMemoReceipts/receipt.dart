@@ -149,7 +149,7 @@ class _ReceiptState extends State<Receipt>{
               TextStyle(color: Colors.white, fontFamily: "PoppinsBold"),
             ),
             trailing: Wrap(
-              spacing: 11, // space between two icons
+              spacing: 14, // space between two icons
               crossAxisAlignment: WrapCrossAlignment.center,
               children: <Widget>[
                 Container(
@@ -162,18 +162,18 @@ class _ReceiptState extends State<Receipt>{
                   ),
                 ),
                 Container(
-                  width: 50.0,
+                  width: 72.0,
                   child: Text(
-                    "Delete",
+                    "Amount",
                     textAlign: TextAlign.center,
                     style: TextStyle(
                         color: Colors.white, fontFamily: "PoppinsBold"),
                   ),
                 ),
                 Container(
-                  width: 72.0,
+                  width: 50.0,
                   child: Text(
-                    "Amount",
+                    "Delete",
                     textAlign: TextAlign.center,
                     style: TextStyle(
                         color: Colors.white, fontFamily: "PoppinsBold"),
@@ -247,6 +247,11 @@ class _ReceiptState extends State<Receipt>{
                                           send(snapshot.data[index].id, snapshot.data[index].mobileNumber);
                                         },
                                       ),
+                                      Container(
+                                          width: 70.0,
+                                          child: Text(
+                                              "   ₹ ${snapshot.data[index].total.toStringAsFixed(2)}",
+                                              style: TextStyle(fontWeight: FontWeight.bold))),
                                       IconButton(
                                         icon: Icon(
                                           Icons.delete_outline,
@@ -256,11 +261,7 @@ class _ReceiptState extends State<Receipt>{
                                           delete(snapshot.data[index].id);
                                         },
                                       ),
-                                      Container(
-                                          width: 70.0,
-                                          child: Text(
-                                              "   ₹ ${snapshot.data[index].total.toStringAsFixed(2)}",
-                                              style: TextStyle(fontWeight: FontWeight.bold))),
+
                                     ],
                                   ),
                                 ),

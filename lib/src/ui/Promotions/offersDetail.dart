@@ -175,7 +175,7 @@ class _OffersDetailsState extends State<OffersDetails> {
                   Padding(
                       padding: const EdgeInsets.only(top: 10.0, bottom: 5.0, left: 25.0, right: 25.0),
                       child: Text(
-                        widget.data.offerName +" at \n"+widget.data.mBusinessName,
+                        widget.data.offerName +" on \n"+widget.data.mBusinessName,
                         style: TextStyle(
                           fontSize: 20.0,
                           fontFamily: "PoppinsMedium",

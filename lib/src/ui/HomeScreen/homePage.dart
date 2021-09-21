@@ -11,6 +11,7 @@ import 'package:greenbill_merchant/src/models/model_normalBusiness.dart';
 import 'package:greenbill_merchant/src/models/model_parkingDashboard.dart';
 import 'package:greenbill_merchant/src/models/model_petrolDashboard.dart';
 import 'package:greenbill_merchant/src/ui/BillInfo/ViewBill.dart';
+import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:shimmer/shimmer.dart';
 import '../../constants.dart';
@@ -577,7 +578,7 @@ class _HomePageState extends State<HomePage> {
       lastDate: DateTime.now(),
     );
     fDate = '${e.year.toString()}-${e.month.toString()}-${e.day.toString()}';
-    fromDateController.text = fDate;
+    fromDateController.text = DateFormat("dd-MM-yyyy").format(e);
     // changeState();
     return fDate;
   }
@@ -589,7 +590,7 @@ class _HomePageState extends State<HomePage> {
         firstDate: DateTime(2000),
         lastDate: DateTime.now());
     eDate = '${e.year.toString()}-${e.month.toString()}-${e.day.toString()}';
-    toDateController.text = eDate;
+    toDateController.text = DateFormat("dd-MM-yyyy").format(e);
     getAnalysisa();
     changeState();
     return eDate;

@@ -147,7 +147,7 @@ class _HelpAndSupportState extends State<HelpAndSupport> {
                                       );
                                       launch(_emailLaunchUri.toString());
                                     },
-                                    child: Text("get in touch", style: TextStyle(
+                                    child: Text("Get In Touch", style: TextStyle(
                                         color: kPrimaryColorBlue, fontSize: 13.0, fontWeight: FontWeight.w700),)
                                 ),
                               ),

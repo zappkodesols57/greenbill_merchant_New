@@ -34,7 +34,7 @@ class _FaqsState extends State<Faqs> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Faqs'),
+        title: Text('FAQs'),
         elevation: 0,
         leading: IconButton(
           icon: Icon(Icons.arrow_back_ios),

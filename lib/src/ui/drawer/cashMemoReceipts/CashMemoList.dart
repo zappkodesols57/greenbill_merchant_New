@@ -147,7 +147,7 @@ class CashMemoListState extends State<CashMemoList> {
               TextStyle(color: Colors.white, fontFamily: "PoppinsBold"),
             ),
             trailing: Wrap(
-              spacing: 14, // space between two icons
+              spacing: 16, // space between two icons
               crossAxisAlignment: WrapCrossAlignment.center,
               children: <Widget>[
                 Container(
@@ -160,18 +160,18 @@ class CashMemoListState extends State<CashMemoList> {
                   ),
                 ),
                 Container(
-                  width: 50.0,
+                  width: 72.0,
                   child: Text(
-                    "Delete",
+                    "Amount",
                     textAlign: TextAlign.center,
                     style: TextStyle(
                         color: Colors.white, fontFamily: "PoppinsBold"),
                   ),
                 ),
                 Container(
-                  width: 72.0,
+                  width: 50.0,
                   child: Text(
-                    "Amount",
+                    "Delete",
                     textAlign: TextAlign.center,
                     style: TextStyle(
                         color: Colors.white, fontFamily: "PoppinsBold"),
@@ -269,6 +269,13 @@ class CashMemoListState extends State<CashMemoList> {
                                             snapshot.data[index].mobileNumber);
                                       },
                                     ),
+                                    Container(
+                                        width: 80.0,
+                                        child: Text(
+                                            "   ₹ ${snapshot.data[index].total.toStringAsFixed(2)}",
+                                            style: TextStyle(
+                                                fontWeight:
+                                                FontWeight.bold))),
                                     IconButton(
                                       icon: Icon(
                                         Icons.delete_outline,
@@ -278,13 +285,6 @@ class CashMemoListState extends State<CashMemoList> {
                                         delete(snapshot.data[index].id);
                                       },
                                     ),
-                                    Container(
-                                        width: 80.0,
-                                        child: Text(
-                                            "   ₹ ${snapshot.data[index].total.toStringAsFixed(2)}",
-                                            style: TextStyle(
-                                                fontWeight:
-                                                FontWeight.bold))),
                                   ],
                                 ),
                                 // onTap: () {
