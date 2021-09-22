@@ -31,16 +31,28 @@ class CheckMemo {
 class Datum2 {
   Datum2({
     this.templateNo,
+    this.term1,
+    this.term2,
+    this.term3,
   });
 
 
   String templateNo;
+  String term1;
+  String term2;
+  String term3;
 
   factory Datum2.fromJson(Map<String, dynamic> json) => Datum2(
     templateNo: json["template_id"],
+    term1: json["term1"],
+    term2: json["term2"],
+    term3: json["term3"],
   );
 
   Map<String, dynamic> toJson() => {
     "template_id": templateNo,
+    "term1": term1,
+    "term2": term2,
+    "term3": term3,
   };
 }

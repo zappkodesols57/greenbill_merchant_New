@@ -10,7 +10,6 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:greenbill_merchant/src/constants.dart';
 import 'package:greenbill_merchant/src/models/model_Common.dart';
 import 'package:greenbill_merchant/src/models/model_IncomingBills.dart';
-import 'package:greenbill_merchant/src/models/model_billInfoList.dart';
 import 'package:greenbill_merchant/src/models/model_billSend.dart';
 import 'package:greenbill_merchant/src/models/model_getStore.dart';
 import 'package:http/http.dart' as http;

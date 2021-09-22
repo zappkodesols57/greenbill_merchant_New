@@ -899,6 +899,9 @@ class _CreateReceiptsState extends State<CreateReceipts> {
           .templateNo}");
       setState(() {
         templateID = checkReceiptFromJson(response.body).data[0].templateNo;
+        term1.text = checkReceiptFromJson(response.body).data[0].term1;
+        term2.text = checkReceiptFromJson(response.body).data[0].term2;
+        term3.text = checkReceiptFromJson(response.body).data[0].term3;
       });
       return checkReceiptFromJson(response.body).data;
     } else {

@@ -1835,6 +1835,9 @@ class _CreateReceiptsState extends State<CreateMemo> {
       print(">>>>>>>>>>>>>${checkMemoFromJson(response.body).data[0].templateNo}");
       setState(() {
         templateID = checkMemoFromJson(response.body).data[0].templateNo;
+        term1.text = checkMemoFromJson(response.body).data[0].term1;
+        term2.text = checkMemoFromJson(response.body).data[0].term2;
+        term3.text = checkMemoFromJson(response.body).data[0].term3;
       });
       return checkMemoFromJson(response.body).data;
     } else {
