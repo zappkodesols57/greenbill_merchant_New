@@ -175,7 +175,7 @@ class _OffersDetailsState extends State<OffersDetails> {
                   Padding(
                       padding: const EdgeInsets.only(top: 10.0, bottom: 5.0, left: 25.0, right: 25.0),
                       child: Text(
-                        widget.data.offerName +" on \n"+widget.data.mBusinessName,
+                        widget.data.offerName +" on \n"+widget.data.offerCaption,
                         style: TextStyle(
                           fontSize: 20.0,
                           fontFamily: "PoppinsMedium",
@@ -183,23 +183,23 @@ class _OffersDetailsState extends State<OffersDetails> {
                       )
                   ),
 
-                  Padding(
-                      padding: const EdgeInsets.only(top: 0.0, bottom: 5.0, left: 25.0, right: 25.0),
-                      child: Text(
-                        widget.data.offerCaption,
-                        style: TextStyle(
-                          fontSize: 15.0,
-                          fontFamily: "PoppinsMedium",
-                        ),
-                      )
-                  ),
+                  // Padding(
+                  //     padding: const EdgeInsets.only(top: 0.0, bottom: 5.0, left: 25.0, right: 25.0),
+                  //     child: Text(
+                  //       widget.data.offerCaption,
+                  //       style: TextStyle(
+                  //         fontSize: 15.0,
+                  //         fontFamily: "PoppinsMedium",
+                  //       ),
+                  //     )
+                  // ),
 
                   Divider(thickness: 1.0, indent: 20.0, endIndent: 20.0,),
 
                   Padding(
                       padding: const EdgeInsets.only(top: 10.0, bottom: 5.0, left: 25.0, right: 25.0),
                       child: Text(
-                        "⏳   Expires ${getDate(widget.data.validThrough)}",
+                        "⏳  Expires on ${getDate(widget.data.validThrough)}",
                         style: TextStyle(
                           fontSize: 15.0,
                           fontFamily: "PoppinsMedium",
@@ -207,28 +207,7 @@ class _OffersDetailsState extends State<OffersDetails> {
                         ),
                       )
                   ),
-                  // Padding(
-                  //     padding: const EdgeInsets.only(top: 20.0, bottom: 5.0, left: 25.0, right: 25.0),
-                  //     child: Text(
-                  //       "Details",
-                  //       style: TextStyle(
-                  //         fontSize: 13.0,
-                  //         fontFamily: "PoppinsMedium",
-                  //           fontWeight: FontWeight.bold
-                  //       ),
-                  //     )
-                  // ),
-                  // Padding(
-                  //     padding: const EdgeInsets.only(top: 0.0, bottom: 5.0, left: 25.0, right: 25.0),
-                  //     child: Text(
-                  //       "Caption: ${widget.data.offerCaption}",
-                  //       style: TextStyle(
-                  //         fontSize: 15.0,
-                  //         fontFamily: "PoppinsMedium",
-                  //       ),
-                  //     )
-                  // ),
-                  SizedBox(height: 70.0,)
+                  SizedBox(height: 50.0,)
                 ],
               ),
             ),

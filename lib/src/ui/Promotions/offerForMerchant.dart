@@ -79,51 +79,7 @@ class _MyOfferListState extends State<MyOfferList> {
     return Scaffold(
       key: _scaffoldKey,
       backgroundColor: Colors.white,
-      // floatingActionButton: AnimatedContainer(
-      //     duration: Duration(milliseconds: 400),
-      //     curve: Curves.easeInOut,
-      //     child: RawMaterialButton(
-      //         elevation: 5.0,
-      //         shape: isGoingDown
-      //             ? RoundedRectangleBorder(
-      //             borderRadius: BorderRadius.all(Radius.circular(25.0)))
-      //             : CircleBorder(),
-      //         onPressed: () async{
-      //           SharedPreferences prefs = await SharedPreferences.getInstance();
-      //           // File file = await downloadPicture(prefs.getString("businessLogo"));
-      //           Navigator.push(context,
-      //               HeroDialogRoute(builder: (context) => Offers("","", "", "", "", "", "", "")))
-      //               .then((value) => (value??false) ? couponCreated() : null);
-      //         },
-      //         fillColor: kPrimaryColorBlue,
-      //         child: Padding(
-      //           padding: const EdgeInsets.all(12.0),
-      //           child: isGoingDown
-      //               ? Row(
-      //             mainAxisSize: MainAxisSize.min,
-      //             children: [
-      //               const Icon(
-      //                 CupertinoIcons.gift_fill,
-      //                 color: Colors.white,
-      //               ),
-      //               SizedBox(
-      //                 width: 5.0,
-      //               ),
-      //               Text(
-      //                 "Add Offers",
-      //                 style: TextStyle(
-      //                     color: Colors.white,
-      //                     fontFamily: "PoppinsMedium",
-      //                     fontWeight: FontWeight.bold
-      //                 ),
-      //               )
-      //             ],
-      //           )
-      //               : const Icon(
-      //             CupertinoIcons.ticket,
-      //             color: Colors.white,
-      //           ),
-      //         ))),
+
       body: NotificationListener<ScrollNotification>(
         onNotification: (onScrollNotification) {
           if (onScrollNotification is ScrollUpdateNotification) {

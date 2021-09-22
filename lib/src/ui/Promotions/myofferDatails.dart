@@ -194,24 +194,24 @@ class _MyOffersDetailsState extends State<MyOffersDetails> {
                       padding: const EdgeInsets.only(top: 10.0, bottom: 10.0, left: 25.0, right: 25.0),
                       child:
                       Text(
-                        "${data.offerName} on $storeName",
+                        "${data.offerName} on\n${data.offerCaption}",
                         style: TextStyle(
                           fontSize: 20.0,
                           fontFamily: "PoppinsMedium",
                         ),
                       )
                   ),
-                  Padding(
-                      padding: const EdgeInsets.only(top: 0.0, bottom: 10.0, left: 25.0, right: 25.0),
-                      child:
-                      Text(
-                        "${data.offerCaption}",
-                        style: TextStyle(
-                          fontSize: 15.0,
-                          fontFamily: "PoppinsMedium",
-                        ),
-                      )
-                  ),
+                  // Padding(
+                  //     padding: const EdgeInsets.only(top: 0.0, bottom: 10.0, left: 25.0, right: 25.0),
+                  //     child:
+                  //     Text(
+                  //       "${data.offerCaption}",
+                  //       style: TextStyle(
+                  //         fontSize: 15.0,
+                  //         fontFamily: "PoppinsMedium",
+                  //       ),
+                  //     )
+                  // ),
                   Container(
                     padding: EdgeInsets.only(left: 25.0, right: 25.0),
                     child: Column(
@@ -255,7 +255,7 @@ class _MyOffersDetailsState extends State<MyOffersDetails> {
                         ],
                       )
                   ),
-                  SizedBox(height: 70.0,)
+                  SizedBox(height: 50.0,)
                 ],
               ),
             ),
