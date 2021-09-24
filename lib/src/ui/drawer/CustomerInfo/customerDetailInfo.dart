@@ -469,7 +469,7 @@ class CustomerDetailInfoState extends State<CustomerDetailInfo> {
                                         crossAxisAlignment: WrapCrossAlignment.center,
                                         children: <Widget>[
                                           Container(
-                                            width: 40.0,
+                                            width: 50.0,
                                             child: Text(
                                               "Memo",
                                               textAlign: TextAlign.center,
@@ -515,7 +515,7 @@ class CustomerDetailInfoState extends State<CustomerDetailInfo> {
                                                   Container(
                                                     width: 40.0,
                                                     child: Text(
-                                                        "${snapshot.data.datad[index].memoNo}  ",
+                                                        "${snapshot.data.datad[index].memoNo}",
                                                         style: TextStyle(
                                                             fontWeight: FontWeight.bold)),
                                                   ),
@@ -531,7 +531,7 @@ class CustomerDetailInfoState extends State<CustomerDetailInfo> {
                                                   Container(
                                                     width: 80.0,
                                                     child: Text(
-                                                        "    ₹ ${double.parse(snapshot.data.datad[index].amount).toStringAsFixed(2)}",
+                                                        "   ₹ ${double.parse(snapshot.data.datad[index].amount).toStringAsFixed(2)}",
                                                         style: TextStyle(
                                                             fontWeight: FontWeight.bold)),
                                                   ),
