@@ -7,9 +7,11 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:greenbill_merchant/src/constants.dart';
 import 'package:greenbill_merchant/src/models/model_Common.dart';
 import 'package:greenbill_merchant/src/models/model_customerBills.dart';
+import 'package:greenbill_merchant/src/models/model_infoCashmemo.dart';
 import 'package:http/http.dart' as http;
 import 'package:open_file/open_file.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class CustomerDetailInfo extends StatefulWidget {
   final String token, id, storeID, mobileNo,email,name,state,city;
@@ -35,6 +37,7 @@ class CustomerDetailInfoState extends State<CustomerDetailInfo> {
     super.initState();
   }
 
+
   @override
   void dispose() {
     super.dispose();
@@ -58,7 +61,29 @@ class CustomerDetailInfoState extends State<CustomerDetailInfo> {
       print(customerBillsFromJson(res.body).allBills.length);
       return customerBillsFromJson(res.body);
     } else {
-      throw Exception('Failed to load Stores List');
+      throw Exception('Failed to load List');
+    }
+  }
+
+  Future<CustomerCashmemo> getCustomerCashMemo() async {
+    final param = {
+      "user_id": widget.id,
+      "merchant_business_id": widget.storeID,
+      "mobile_no": widget.mobileNo,
+    };
+
+    final res = await http.post(
+      "http://157.230.228.250/get-cash-memo-by-mobile-no-api/",
+      body: param,
+      headers: {HttpHeaders.authorizationHeader: "Token ${widget.token}"},
+    );
+
+    print(res.body);
+    if (200 == res.statusCode) {
+      print(customerMemoFromJson(res.body).datad.length);
+      return customerMemoFromJson(res.body);
+    } else {
+      throw Exception('Failed to load List');
     }
   }
 
@@ -66,6 +91,7 @@ class CustomerDetailInfoState extends State<CustomerDetailInfo> {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
+      backgroundColor: Colors.white,
       key: _scaffoldKey,
       appBar: AppBar(
         title: Text("All Bills"),
@@ -87,7 +113,7 @@ class CustomerDetailInfoState extends State<CustomerDetailInfo> {
             ));
           else if (snapshot.hasError) {
             return Center(
-              child: Text("No Data Found!"),
+              child: Text("No Bills Found!"),
             );
           } else {
             if (snapshot.connectionState == ConnectionState.done &&
@@ -407,7 +433,128 @@ class CustomerDetailInfoState extends State<CustomerDetailInfo> {
                             ),
                           );
                         }),
-                  )
+                  ),
+                  Expanded(
+                    child: FutureBuilder<CustomerCashmemo>(
+                      future: getCustomerCashMemo(),
+                      builder: (BuildContext context, AsyncSnapshot<CustomerCashmemo> snapshot) {
+                        if (snapshot.connectionState == ConnectionState.waiting)
+                          return Center(child: CircularProgressIndicator(valueColor:AlwaysStoppedAnimation<Color>(kPrimaryColorBlue),));
+                        else if (snapshot.hasError) {
+                          return Center(
+                            child: Text("No Cash Memo Available"),
+                          );
+                        }
+                        else if (snapshot.data.datad.isEmpty) {
+                          return Center(
+                            child: Text("No Cash Memo Available"),
+                          );
+                        } else {
+                          if (snapshot.connectionState == ConnectionState.done &&
+                              snapshot.hasData) {
+                            return Column(
+                                children: [
+                                  if(_onTapBox2)
+                                  Container(
+                                    child: ListTile(
+                                      tileColor: kPrimaryColorBlue,
+                                      title: Text(
+                                        "     Date",
+                                        textAlign: TextAlign.start,
+                                        style: TextStyle(
+                                            color: Colors.white, fontFamily: "PoppinsBold"),
+                                      ),
+                                      trailing: Wrap(
+                                        spacing: 15, // space between two icons
+                                        crossAxisAlignment: WrapCrossAlignment.center,
+                                        children: <Widget>[
+                                          Container(
+                                            width: 40.0,
+                                            child: Text(
+                                              "Memo",
+                                              textAlign: TextAlign.center,
+                                              style: TextStyle(
+                                                  color: Colors.white, fontFamily: "PoppinsBold"),
+                                            ),
+                                          ),
+                                          Container(
+                                            width: 40.0,
+                                            child: Text(
+                                              "Send",
+                                              textAlign: TextAlign.center,
+                                              style: TextStyle(
+                                                  color: Colors.white, fontFamily: "PoppinsBold"),
+                                            ),
+                                          ),
+                                          Container(
+                                            width: 80.0,
+                                            child: Text(
+                                              "Amount",
+                                              textAlign: TextAlign.center,
+                                              style: TextStyle(
+                                                  color: Colors.white, fontFamily: "PoppinsBold"),
+                                            ),
+                                          )
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                  if(_onTapBox2)
+                                  Expanded(
+                                    child: ListView.builder(
+                                        itemCount: snapshot.data.datad.length,
+                                        itemBuilder: (BuildContext context, int index) {
+                                          return Card(
+                                            child: ListTile(
+                                              title: Text("${snapshot.data.datad[index].date}",
+                                                  style: TextStyle(fontSize: 15.0)),
+                                              trailing: Wrap(
+                                                spacing: 10, // space between two icons
+                                                crossAxisAlignment: WrapCrossAlignment.center,
+                                                children: <Widget>[
+                                                  Container(
+                                                    width: 40.0,
+                                                    child: Text(
+                                                        "${snapshot.data.datad[index].memoNo}  ",
+                                                        style: TextStyle(
+                                                            fontWeight: FontWeight.bold)),
+                                                  ),
+                                                  IconButton(
+                                                    icon: Icon(
+                                                      Icons.sms_outlined,
+                                                      color: Colors.black,
+                                                    ),
+                                                    onPressed: (){
+
+                                                    },
+                                                  ),
+                                                  Container(
+                                                    width: 80.0,
+                                                    child: Text(
+                                                        "    ₹ ${double.parse(snapshot.data.datad[index].amount).toStringAsFixed(2)}",
+                                                        style: TextStyle(
+                                                            fontWeight: FontWeight.bold)),
+                                                  ),
+                                                ],
+                                              ),
+                                              onTap: () {
+                                                // Navigator.push(context, MaterialPageRoute(builder:  (context)=>MerchantBillList(snapshot.data[index].mBusinessName)));
+                                              },
+                                            ),
+                                          );
+                                        }),
+                                  ),
+                                ],
+                            );
+
+                          } else {
+                            return Center(child: Text("No Cash Memo Available"));
+                          }
+                        }
+
+                      },
+                    ),
+                  ),
                 ],
               );
             } else {
