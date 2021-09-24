@@ -29,7 +29,7 @@ class MyOffersDetails extends StatefulWidget {
 class _MyOffersDetailsState extends State<MyOffersDetails> {
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
 
-  final double _initFabHeight = 230.0;
+  final double _initFabHeight = 200.0;
   double _fabHeight = 0;
   double _panelHeightOpen;
   double _panelHeightClosed;
@@ -201,23 +201,12 @@ class _MyOffersDetailsState extends State<MyOffersDetails> {
                         ),
                       )
                   ),
-                  // Padding(
-                  //     padding: const EdgeInsets.only(top: 0.0, bottom: 10.0, left: 25.0, right: 25.0),
-                  //     child:
-                  //     Text(
-                  //       "${data.offerCaption}",
-                  //       style: TextStyle(
-                  //         fontSize: 15.0,
-                  //         fontFamily: "PoppinsMedium",
-                  //       ),
-                  //     )
-                  // ),
+
                   Container(
                     padding: EdgeInsets.only(left: 25.0, right: 25.0),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-
                         Text(
                           "Offer valid for ${data.offerType}",
                           style: TextStyle(
@@ -238,7 +227,7 @@ class _MyOffersDetailsState extends State<MyOffersDetails> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            "Expiry Date",
+                            "Expires On :",
                             style: TextStyle(
                               fontSize: 14.0,
                               fontFamily: "PoppinsMedium",
@@ -255,7 +244,7 @@ class _MyOffersDetailsState extends State<MyOffersDetails> {
                         ],
                       )
                   ),
-                  SizedBox(height: 50.0,)
+                  SizedBox(height: 20.0,)
                 ],
               ),
             ),

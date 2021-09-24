@@ -14,7 +14,6 @@ class DmEnquiry extends StatefulWidget {
   final String name, mob;
   DmEnquiry(this.name, this.mob);
 
-
   @override
   DmEnquiryState createState() => DmEnquiryState();
 }
@@ -106,6 +105,7 @@ class DmEnquiryState extends State<DmEnquiry> {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
+      backgroundColor: Colors.white,
         key: _scaffoldKey,
         appBar: AppBar(
           title: Text("Digital Marketing"),
@@ -314,19 +314,19 @@ class DmEnquiryState extends State<DmEnquiry> {
                   borderRadius: BorderRadius.circular(40),
                 ),
                 padding: EdgeInsets.only(
-                    top: 0.0, bottom: 5.0, left: 15.0, right: 15.0),
+                    top: 12.3, bottom: 12.3, left: 8.5, right: 8.5),
                 child: MultiSelectDialogField(
-                  height:size.width * 0.75,
+                  height:size.width * 0.80,
                   items: _items,
                   title: Text("Select Interest"),
                   selectedColor: kPrimaryColorBlue,
 
 
                   buttonText: Text(
-                    "Select  Interest",
+                    "Select Interest",
                     style: TextStyle(
                       fontFamily: "PoppinsLight",
-                      fontSize: 13.0,
+                      fontSize: 13.5,
                       color: kPrimaryColorBlue,
                     ),
                   ),

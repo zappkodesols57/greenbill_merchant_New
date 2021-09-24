@@ -320,7 +320,7 @@ class BillIncomingState extends State<BillIncoming> {
                   Container(
                     width: 50.0,
                     child: Text(
-                      "Send ",
+                      "Shift ",
                       textAlign: TextAlign.center,
                       style: TextStyle(
                           color: Colors.white, fontFamily: "PoppinsBold"),

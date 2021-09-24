@@ -295,7 +295,7 @@ class _AddOnBuyState extends State<AddOnBuy> {
                               ),
                               Container(
                                 width: size.width * 0.25,
-                                child: Text(widget.igst == "18" ?": ₹ ${IGST}":": ₹ 0",style:
+                                child: Text("₹ ${IGST.toStringAsFixed(2)}",style:
                                 TextStyle(fontFamily: "PoppinsLight",
                                     fontSize: 14.0,
                                     color: AppColors.kPrimaryColorBlue)),
@@ -473,46 +473,6 @@ class _AddOnBuyState extends State<AddOnBuy> {
                             style: TextStyle(fontSize: 10.0))
                             : Text('Address not available',
                             style: TextStyle(fontSize: 10.0)),
-                        // leading: Container(
-                        //   width: 35.0,
-                        //   height: 35.0,
-                        //   decoration: new BoxDecoration(
-                        //     color: kPrimaryColorBlue,
-                        //     borderRadius: new BorderRadius.circular(25.0),
-                        //   ),
-                        //   alignment: Alignment.center,
-                        //   child: new Icon(Icons.store, color: Colors.white, size: 22.0),
-                        // ),
-
-                        // leading:Checkbox(onChanged: (bool value) {
-                        //
-                        // }, value: null,
-                        //
-                        // ),
-                        // trailing: Checkbox(
-                        //
-                        // ),
-                        // onTap: () async {
-                        //   final SharedPreferences prefs = await SharedPreferences.getInstance();
-                        //   prefs.setString("businessName", snapshot.data[index].mBusinessName);
-                        //   prefs.setString("businessID", snapshot.data[index].id.toString());
-                        //  // prefs.setString("businessLogo", snapshot.data[index].mBusinessLogo);
-                        //  // prefs.setString("businessCategoryID", snapshot.data[index].mBusinessCategory.toString());
-                        //   setState(() {
-                        //     store = snapshot.data[index].mBusinessName;
-                        //     storeID = snapshot.data[index].id.toString();
-                        //     //storeAddress = '${snapshot.data[index].mAddress}, ${snapshot.data[index].mArea}, ${snapshot.data[index].mCity}';
-                        //    //// businessLogo = snapshot.data[index].mBusinessLogo;
-                        //  //   storeCatID = snapshot.data[index].mBusinessCategory.toString();
-                        //   });
-                        //   Navigator.of(context).pop();
-                        //   Navigator.pushAndRemoveUntil(
-                        //     context,
-                        //     MaterialPageRoute(
-                        //         builder: (context) => HomeActivity()),
-                        //         (Route<dynamic> route) => false,
-                        //   );
-                        // },
                       );
                     }));
           } else {
