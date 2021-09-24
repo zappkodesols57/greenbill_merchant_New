@@ -121,39 +121,89 @@ class CustomerDetailInfoState extends State<CustomerDetailInfo> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 if(widget.name != "")
-                                Text(
-                                  "Name         : ${widget.name}",
-                                  style: TextStyle(
-                                      fontFamily: "PoppinsMedium",
-                                      fontWeight: FontWeight.bold),
+                                Row(
+                                  children: [
+                                    Text(
+                                      "Name",
+                                      style: TextStyle(
+                                          fontFamily: "PoppinsMedium",
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                    Text(
+                                      ": ${widget.name}",
+                                      style: TextStyle(
+                                          fontFamily: "PoppinsMedium",
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                  ],
                                 ),
                                 if(widget.mobileNo != "")
-                                Text(
-                                  "Mobile No.  : ${widget.mobileNo}",
-                                  style: TextStyle(
-                                      fontFamily: "PoppinsMedium",
-                                      fontWeight: FontWeight.bold),
+                                Row(
+                                  children: [
+                                    Text(
+                                      "Mobile No.",
+                                      style: TextStyle(
+                                          fontFamily: "PoppinsMedium",
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                    Text(
+                                      ": ${widget.mobileNo}",
+                                      style: TextStyle(
+                                          fontFamily: "PoppinsMedium",
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                  ],
                                 ),
                                 if(widget.email != "")
-                                Text(
-                                  "Email ID      : ${widget.email}",
-                                  style: TextStyle(
-                                      fontFamily: "PoppinsMedium",
-                                      fontWeight: FontWeight.bold),
+                                Row(
+                                  children: [
+                                    Text(
+                                      "Email ID",
+                                      style: TextStyle(
+                                          fontFamily: "PoppinsMedium",
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                    Text(
+                                      ": ${widget.email}",
+                                      style: TextStyle(
+                                          fontFamily: "PoppinsMedium",
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                  ],
                                 ),
                                 if(widget.state != "")
-                                Text(
-                                  "State           : ${widget.state}",
-                                  style: TextStyle(
-                                      fontFamily: "PoppinsMedium",
-                                      fontWeight: FontWeight.bold),
+                                Row(
+                                  children: [
+                                    Text(
+                                      "State",
+                                      style: TextStyle(
+                                          fontFamily: "PoppinsMedium",
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                    Text(
+                                      ": ${widget.state}",
+                                      style: TextStyle(
+                                          fontFamily: "PoppinsMedium",
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                  ],
                                 ),
                                 if(widget.city != "")
-                                Text(
-                                  "City              : ${widget.city}",
-                                  style: TextStyle(
-                                      fontFamily: "PoppinsMedium",
-                                      fontWeight: FontWeight.bold),
+                                Row(
+                                  children: [
+                                    Text(
+                                      "City",
+                                      style: TextStyle(
+                                          fontFamily: "PoppinsMedium",
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                    Text(
+                                      ": ${widget.city}",
+                                      style: TextStyle(
+                                          fontFamily: "PoppinsMedium",
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                  ],
                                 ),
                               ],
                             ),
