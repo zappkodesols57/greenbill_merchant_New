@@ -1508,18 +1508,6 @@ class _HomePageState extends State<HomePage> {
             : Container(
                 child: Column(
                   children: <Widget>[
-                    Container(
-                      width: size.width * 0.9,
-                      padding: EdgeInsets.only(
-                          top: 10.0, bottom: 5.0, left: 5.0, right: 5.0),
-                      child: Text(
-                        "Today's Data",
-                        style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 20.0,
-                            fontFamily: "PoppinsBold"),
-                      ),
-                    ),
                     SizedBox(
                       height: 10.0,
                     ),

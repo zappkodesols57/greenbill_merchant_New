@@ -60,6 +60,7 @@ class AddUserState extends State<AddUser> {
     String token = prefs.getString("token");
     final param = {
       "m_user_id": id,
+      "merchant_business_id": storeID,
     };
     var res = await http.post(Uri.encodeFull(url), body: param, headers: {
       "Accept": "application/json",

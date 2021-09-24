@@ -32,14 +32,14 @@ class CardItem extends StatelessWidget {
       height: cardDimenHeight,
       width: cardDimenWidth,
       decoration: BoxDecoration(
-          borderRadius: BorderRadius.all(Radius.circular(30)),
+          borderRadius: BorderRadius.all(Radius.circular(10)),
           gradient: LinearGradient(
               begin: Alignment.topLeft,
               end: Alignment.bottomCenter,
               colors: [
-                kPrimaryColorBlue,
-                kPrimaryColorBlue,
-                Colors.blueAccent.withOpacity(0.8)
+                Colors.white,
+                Colors.white,
+                Colors.white.withOpacity(0.8)
               ]),
           boxShadow: [
             BoxShadow(
@@ -66,7 +66,7 @@ class CardItem extends StatelessWidget {
                   width: iconDimen,
                   child: NeuomorphicCircle(
                     innerShadow: false,
-                    outerShadow: true,
+                    outerShadow: false,
                     backgroundColor: Colors.white,
                     shadowColor: Constants.softShadowColor,
                     highlightColor: Constants.highlightColor,
@@ -81,7 +81,7 @@ class CardItem extends StatelessWidget {
                 Text(
                   title,
                   style: TextStyle(
-                      color: Colors.white,
+                      color: kPrimaryColorBlue,
                       fontSize: cardTitle,
                       fontFamily: "PoppinsBold",
                       ),
@@ -98,7 +98,7 @@ class CardItem extends StatelessWidget {
                   (category == null) ? SizedBox.shrink() :
                   Text(category,
                       style: TextStyle(
-                        color: kPrimaryColor,
+                        color: kPrimaryColorBlue,
                         fontSize: cardSubTitle,
                           fontFamily: "PoppinsBold",
                           )
@@ -106,7 +106,7 @@ class CardItem extends StatelessWidget {
                   (categoryTwo == null) ? SizedBox.shrink() :
                   Text(categoryTwo,
                       style: TextStyle(
-                          color: kPrimaryColor,
+                          color: kPrimaryColorBlue,
                         fontSize: cardSubTitle,
                         fontFamily: "PoppinsBold",
                       )
@@ -114,7 +114,7 @@ class CardItem extends StatelessWidget {
                   (categoryThree == null) ? SizedBox.shrink() :
                   Text(categoryThree,
                       style: TextStyle(
-                        color: kPrimaryColor,
+                        color: kPrimaryColorBlue,
                         fontSize: cardSubTitle,
                         fontFamily: "PoppinsBold",
                       )
@@ -129,7 +129,7 @@ class CardItem extends StatelessWidget {
                   itemBuilder: (BuildContext context, int index) {
                     return new Text("${data.todaysSales[index].productName} - ₹ ${data.todaysSales[index].totalAmountColleted}",
                         style: TextStyle(
-                          color: kPrimaryColor,
+                          color: kPrimaryColorBlue,
                           fontSize: cardSubTitle,
                           fontFamily: "PoppinsBold",
                         )
@@ -143,7 +143,7 @@ class CardItem extends StatelessWidget {
                   itemBuilder: (BuildContext context, int index) {
                     return new Text("${data.todaysRate[index].productName} - ₹ ${data.todaysRate[index].productCost}",
                         style: TextStyle(
-                          color: kPrimaryColor,
+                          color: kPrimaryColorBlue,
                           fontSize: cardSubTitle,
                           fontFamily: "PoppinsBold",
                         )
@@ -159,7 +159,7 @@ class CardItem extends StatelessWidget {
                   (category == null) ? SizedBox.shrink() :
                   Text(category,
                       style: TextStyle(
-                        color: kPrimaryColor,
+                        color: kPrimaryColorBlue,
                         fontSize: cardSubTitle,
                         fontFamily: "PoppinsBold",
                       )
@@ -167,7 +167,7 @@ class CardItem extends StatelessWidget {
                   (categoryTwo == null) ? SizedBox.shrink() :
                   Text(categoryTwo,
                       style: TextStyle(
-                        color: kPrimaryColor,
+                        color: kPrimaryColorBlue,
                         fontSize: cardSubTitle,
                         fontFamily: "PoppinsBold",
                       )
@@ -175,7 +175,7 @@ class CardItem extends StatelessWidget {
                   (categoryThree == null) ? SizedBox.shrink() :
                   Text(categoryThree,
                       style: TextStyle(
-                        color: kPrimaryColor,
+                        color: kPrimaryColorBlue,
                         fontSize: cardSubTitle,
                         fontFamily: "PoppinsBold",
                       )
@@ -190,7 +190,7 @@ class CardItem extends StatelessWidget {
                   itemBuilder: (BuildContext context, int index) {
                     return new Text("${parkingData.spaceAvailable[index].vehicleType} - ${parkingData.spaceAvailable[index].availableParkingSpace}/${parkingData.spaceAvailable[index].totalSpace}",
                         style: TextStyle(
-                          color: kPrimaryColor,
+                          color: kPrimaryColorBlue,
                           fontSize: cardSubTitle,
                           fontFamily: "PoppinsBold",
                         )
@@ -204,7 +204,7 @@ class CardItem extends StatelessWidget {
                   itemBuilder: (BuildContext context, int index) {
                     return new Text("${parkingData.notExited[index].vehicleType} - ${parkingData.notExited[index].spaceUsed}",
                         style: TextStyle(
-                          color: kPrimaryColor,
+                          color: kPrimaryColorBlue,
                           fontSize: cardSubTitle,
                           fontFamily: "PoppinsBold",
                         )
