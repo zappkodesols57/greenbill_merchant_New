@@ -7,20 +7,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:greenbill_merchant/src/Services/historyServices.dart';
 import 'package:greenbill_merchant/src/constants.dart';
 import 'package:greenbill_merchant/src/models/model_BulkSMS.dart';
-import 'package:greenbill_merchant/src/models/model_Common.dart';
 import 'package:greenbill_merchant/src/models/model_area.dart';
 import 'package:greenbill_merchant/src/models/model_city.dart';
 import 'package:greenbill_merchant/src/models/model_header.dart';
 import 'package:greenbill_merchant/src/models/model_state.dart';
 import 'package:greenbill_merchant/src/models/model_template.dart';
 import 'package:greenbill_merchant/src/ui/BillInfo/ViewBill.dart';
-import 'package:sticky_headers/sticky_headers.dart';
 import 'package:http/http.dart' as http;
-import 'package:open_file/open_file.dart';
-import 'package:path_provider/path_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class BulkSMS extends StatefulWidget {
@@ -59,7 +54,6 @@ class BulkSMSState extends State<BulkSMS> {
     cityController.dispose();
     areaController.dispose();
     query.dispose();
-
   }
 
   TextEditingController headerController = new TextEditingController();
@@ -79,47 +73,6 @@ class BulkSMSState extends State<BulkSMS> {
     });
   }
 
-  //  getInfo() async {
-  //   final param = {
-  //     "merchant_business_id": storeID,
-  //   };
-  //   final res = await http.post("http://157.230.228.250/merchant-get-payment-history-api/",
-  //       body: param, headers: {HttpHeaders.authorizationHeader: "Token $token"});
-  //
-  //   print(res.body);
-  //   print(res.statusCode);
-  //   if (200 == res.statusCode) {
-  //     setState(() {
-  //
-  //     });
-  //     print(headerFromJson(res.body).data.length);
-  //
-  //
-  //
-  //   } else {
-  //     throw Exception('Failed to load List');
-  //   }
-  // }
-
-
-  Future<List<Datum>> getBillInfoList() async {
-    final param = {
-      "merchant_business_id": storeID,
-    };
-    final res = await http.post("http://157.230.228.250/merchant-get-payment-history-api/",
-        body: param, headers: {HttpHeaders.authorizationHeader: "Token $token"});
-
-    //print(res.body);
-   // print(res.statusCode);
-    if (200 == res.statusCode) {
-      print(headerFromJson(res.body).data.length);
-
-      return headerFromJson(res.body).data;
-    } else {
-      throw Exception('Failed to load List');
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -137,7 +90,6 @@ class BulkSMSState extends State<BulkSMS> {
         actions: <Widget>[
           TextButton(
             onPressed: (){
-              // showInSnackBar("You do not have any active SMS Plan to send SMS.");
               create();
             },
             child: Text("SEND", style: TextStyle(color: Colors.white),),
@@ -179,15 +131,16 @@ class BulkSMSState extends State<BulkSMS> {
                 width: size.width * 0.95,
                 padding: EdgeInsets.only(
                     top: 0.0, bottom: 10.0, left: 0.0, right: 0.0),
-                child: Row(
+                child: Column(
                   children: <Widget>[
                     Container(
-                      width: size.width * 0.47,
+                      width: size.width * 0.95,
+                      alignment: Alignment.centerLeft,
                       child: RadioListTile(
                         dense: true,
                         groupValue: radioItem,
                         title: Text('Transactional',style: TextStyle(
-                            fontWeight: FontWeight.bold, fontSize: 14.0, color: kPrimaryColorBlue),),
+                            fontWeight: FontWeight.bold, fontSize: 16.0, color: kPrimaryColorBlue),),
 
                         value: 'transactional',
                         onChanged: (val) {
@@ -198,13 +151,16 @@ class BulkSMSState extends State<BulkSMS> {
                         },
                       ),
                     ),
+
                     Container(
-                      width: size.width * 0.45,
+                      width: size.width * 0.95,
+                      alignment: Alignment.centerLeft,
+
                       child:RadioListTile(
                         dense: true,
                         groupValue: radioItem,
                         title: Text('Promotional',style: TextStyle(
-                            fontWeight: FontWeight.bold, fontSize: 14.0, color: kPrimaryColorBlue),),
+                            fontWeight: FontWeight.bold, fontSize: 16.0, color: kPrimaryColorBlue),),
                         value: 'promotional',
                         onChanged: (val) {
                           setState(() {
