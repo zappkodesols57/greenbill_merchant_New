@@ -33,9 +33,10 @@ class subUpdatedState extends State<subUpdated> {
   TextEditingController query = new TextEditingController();
   bool _onTapBox1 = true;
   bool _onTapBox2 = false;
+  bool _onTapBox3=false;
   Color _colorMerchantContainer = Colors.white;
   Color _colorMerchantText = kPrimaryColorBlue;
-  bool _onTapBox3=false;
+
 
   @override
   void initState() {

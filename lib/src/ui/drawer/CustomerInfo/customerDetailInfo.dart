@@ -24,6 +24,11 @@ class CustomerDetailInfoState extends State<CustomerDetailInfo> {
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
   File media;
   Dio dio = new Dio();
+  bool _onTapBox1 = true;
+  bool _onTapBox2 = false;
+  bool _onTapBox3=false;
+  Color _colorMerchantContainer = Colors.white;
+  Color _colorMerchantText = kPrimaryColorBlue;
 
   @override
   void initState() {
@@ -91,7 +96,6 @@ class CustomerDetailInfoState extends State<CustomerDetailInfo> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Container(
-                      height: 200.0,
                       child: Column(
                         children: [
                           Container(
@@ -110,37 +114,41 @@ class CustomerDetailInfoState extends State<CustomerDetailInfo> {
                             width: size.width,
                           ),
                           Container(
-                            height: 150.0,
                             width: size.width,
                             padding: EdgeInsets.only(left: 20.0),
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
+                                if(widget.name != "")
                                 Text(
                                   "Name         : ${widget.name}",
                                   style: TextStyle(
                                       fontFamily: "PoppinsMedium",
                                       fontWeight: FontWeight.bold),
                                 ),
+                                if(widget.mobileNo != "")
                                 Text(
                                   "Mobile No.  : ${widget.mobileNo}",
                                   style: TextStyle(
                                       fontFamily: "PoppinsMedium",
                                       fontWeight: FontWeight.bold),
                                 ),
+                                if(widget.email != "")
                                 Text(
                                   "Email ID      : ${widget.email}",
                                   style: TextStyle(
                                       fontFamily: "PoppinsMedium",
                                       fontWeight: FontWeight.bold),
                                 ),
+                                if(widget.state != "")
                                 Text(
                                   "State           : ${widget.state}",
                                   style: TextStyle(
                                       fontFamily: "PoppinsMedium",
                                       fontWeight: FontWeight.bold),
                                 ),
+                                if(widget.city != "")
                                 Text(
                                   "City              : ${widget.city}",
                                   style: TextStyle(
@@ -150,36 +158,94 @@ class CustomerDetailInfoState extends State<CustomerDetailInfo> {
                               ],
                             ),
                           ),
-                          // Container(
-                          //   color: kPrimaryColorBlue.withOpacity(0.3),
-                          //   child: Text(
-                          //     "Payment Details",
-                          //     textAlign: TextAlign.left,
-                          //     style: TextStyle(
-                          //         fontSize: 20.0,
-                          //         color: Colors.white,
-                          //         fontFamily: "PoppinsMedium",
-                          //         fontWeight: FontWeight.bold),
-                          //   ),
-                          //   padding: EdgeInsets.only(left: 20.0, top: 3.0),
-                          //   height: 40.0,
-                          //   width: size.width,
-                          // ),
-                          // Row(
-                          //   children: [
-                          //     Container(
-                          //       padding: EdgeInsets.only(top: 10.0, left: 20.0),
-                          //       child: Text(
-                          //         "Total Money Received: ₹ ${widget.amount}",
-                          //         style: TextStyle(
-                          //             fontFamily: "PoppinsMedium",
-                          //             fontWeight: FontWeight.bold),
-                          //       ),
-                          //     )
-                          //   ],
-                          // )
                         ],
                       )),
+
+                  SizedBox(height: 10.0,),
+
+                  Container(
+                    width: size.width ,
+                    height: 30,
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.all(Radius.circular(40))),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        InkWell(
+                          child:Container(
+                            decoration: BoxDecoration(
+                                color: _onTapBox1?kPrimaryColorBlue:_colorMerchantContainer,
+                                border: Border.all(color: kPrimaryColorBlue),
+                                borderRadius: BorderRadius.all(Radius.circular(40))),
+                            width: size.width * 0.30,
+                            child: Center(
+                                child: Text(
+                                  'Customer Bills',
+                                  style: TextStyle(color: _onTapBox1?Colors.white :_colorMerchantText),
+                                )),
+                          ),
+                          onTap:(){
+                            setState(() {
+                              _onTapBox2=false;
+                              _onTapBox3=false;
+                              _onTapBox1=true;
+
+                            });
+                          } ,
+
+                        ),
+                        InkWell(
+
+                          child:Container(
+                            decoration: BoxDecoration(
+                                color: _onTapBox2?kPrimaryColorBlue:_colorMerchantContainer,
+                                border: Border.all(color: kPrimaryColorBlue),
+                                borderRadius: BorderRadius.all(Radius.circular(20))),
+                            width: size.width * 0.30,
+                            child: Center(
+                                child: Text(
+                                  'Cash Memos',
+                                  style: TextStyle(color: _onTapBox2?Colors.white :_colorMerchantText),
+                                )),
+                          ),
+                          onTap:(){
+                            setState(() {
+                              _onTapBox3=false;
+                              _onTapBox1=false;
+                              _onTapBox2=true;
+                            });
+                          } ,
+                        ),
+                        InkWell(
+
+                          child:Container(
+                            decoration: BoxDecoration(
+                                color: _onTapBox3?kPrimaryColorBlue:_colorMerchantContainer,
+                                border: Border.all(color: kPrimaryColorBlue),
+                                borderRadius: BorderRadius.all(Radius.circular(20))),
+                            width: size.width * 0.30,
+                            child: Center(
+                                child: Text(
+                                  'Receipts',
+                                  style: TextStyle(color: _onTapBox3?Colors.white :_colorMerchantText),
+                                )),
+                          ),
+                          onTap:(){
+                            setState(() {
+                              _onTapBox1=false;
+                              _onTapBox2=false;
+                              _onTapBox3=true;
+
+                            });
+                          } ,
+                        ),
+
+                      ],
+                    ),
+                  ),
+                  SizedBox(height: 10.0,),
+
+                  if(_onTapBox1)
                   ListTile(
                     tileColor: kPrimaryColorBlue,
                     title: Text(
@@ -225,6 +291,7 @@ class CustomerDetailInfoState extends State<CustomerDetailInfo> {
                       // Navigator.push(context, MaterialPageRoute(builder:  (context)=>MerchantBillList(snapshot.data[index].mBusinessName)));
                     },
                   ),
+                  if(_onTapBox1)
                   Expanded(
                     child: ListView.builder(
                         itemCount: snapshot.data.allBills.length,
