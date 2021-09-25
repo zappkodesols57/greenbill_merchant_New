@@ -96,7 +96,7 @@ class subUpdatedState extends State<subUpdated> {
     // print(res.statusCode);
     if (200 == res.statusCode) {
       print(subscriptionFromJson(res.body));
-
+print("-----subscription data------");
       print(totalAmountAvail);
       return subscriptionFromJson(res.body).subscriptionData;
 
