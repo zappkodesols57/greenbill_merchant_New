@@ -72,6 +72,7 @@ class subUpdatedState extends State<subUpdated> {
     // print(res.statusCode);
     if (200 == res.statusCode) {
       print(subscriptionFromJson(res.body));
+
       setState(() {
         totalAmountAvail=subscriptionFromJson(res.body).totalAmountAvilable;
         totalSmsAvail=subscriptionFromJson(res.body).totalTransactionalSmsAvilable;
@@ -95,7 +96,6 @@ class subUpdatedState extends State<subUpdated> {
     // print(res.statusCode);
     if (200 == res.statusCode) {
       print(subscriptionFromJson(res.body));
-
 
       print(totalAmountAvail);
       return subscriptionFromJson(res.body).subscriptionData;
@@ -574,6 +574,85 @@ class subUpdatedState extends State<subUpdated> {
                                           ],
                                         ),
                                       ),
+                                      Container(
+                                        width: size.width * 0.9,
+                                        padding: EdgeInsets.only(
+                                            top: 0.0, bottom: 5.0, left: 5.0, right: 5.0),
+                                        child: Row(
+                                          crossAxisAlignment: CrossAxisAlignment.center,
+                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                          children: <Widget>[
+
+                                            Container(
+                                              padding: EdgeInsets.only(
+                                                  top: 0.0, bottom: 5.0, left: 5.0, right: 5.0),
+                                              width: size.width * 0.4,
+                                              child: Text(
+                                                "No. Of Users",
+
+                                                style: TextStyle(
+                                                    color: Colors.black,
+                                                    fontSize: 12.0,
+                                                    fontFamily: "PoppinsBold"),
+                                              ),
+                                            ),
+
+                                            Container(
+                                              padding: EdgeInsets.only(
+                                                  top: 0.0, bottom: 5.0, left: 5.0, right: 5.0),
+                                              width: size.width * 0.4,
+                                              child: Text(snapshot.data[index].noOfUsers,
+                                                textAlign: TextAlign.center,
+                                                style: TextStyle(
+                                                    color: kPrimaryColorBlue,
+                                                    fontSize: 12.0,
+                                                    fontFamily: "PoppinsBold"),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                      Container(
+                                        width: size.width * 0.9,
+                                        padding: EdgeInsets.only(
+                                            top: 0.0, bottom: 5.0, left: 5.0, right: 5.0),
+                                        child: Row(
+                                          crossAxisAlignment: CrossAxisAlignment.center,
+                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                          children: <Widget>[
+
+                                            Container(
+                                              padding: EdgeInsets.only(
+                                                  top: 0.0, bottom: 5.0, left: 5.0, right: 5.0),
+                                              width: size.width * 0.4,
+                                              child: Text(
+                                                "Valid For Months",
+
+                                                style: TextStyle(
+                                                    color: Colors.black,
+                                                    fontSize: 12.0,
+                                                    fontFamily: "PoppinsBold"),
+                                              ),
+                                            ),
+
+                                            Container(
+                                              padding: EdgeInsets.only(
+                                                  top: 0.0, bottom: 5.0, left: 5.0, right: 5.0),
+                                              width: size.width * 0.4,
+                                              child: Text(snapshot.data[index].validForMonth,
+                                                textAlign: TextAlign.center,
+                                                style: TextStyle(
+                                                    color: kPrimaryColorBlue,
+                                                    fontSize: 12.0,
+                                                    fontFamily: "PoppinsBold"),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+
+
+
                                     ],
                                   ),
                                 ),

@@ -97,6 +97,8 @@ class SubscriptionDatum {
     this.purchaseCost,
     this.totalAmountAvilable,
     this.expiryDate,
+    this.validForMonth,
+    this.noOfUsers,
   });
 
   String perBillCost;
@@ -110,6 +112,8 @@ class SubscriptionDatum {
   double purchaseCost;
   double totalAmountAvilable;
   String expiryDate;
+  String validForMonth;
+  String noOfUsers;
 
   factory SubscriptionDatum.fromJson(Map<String, dynamic> json) => SubscriptionDatum(
     perBillCost: json["per_bill_cost"],
@@ -123,6 +127,8 @@ class SubscriptionDatum {
     purchaseCost: json["purchase_cost"].toDouble(),
     totalAmountAvilable: json["total_amount_avilable"] == null ? 0 : json["total_amount_avilable"],
     expiryDate: json["expiry_date"],
+    validForMonth: json["valid_for_month"] ,
+    noOfUsers: json["number_of_users"] ,
   );
 
   Map<String, dynamic> toJson() => {
@@ -137,6 +143,8 @@ class SubscriptionDatum {
     "purchase_cost": purchaseCost,
     "total_amount_avilable": totalAmountAvilable,
     "expiry_date": expiryDate,
+    "valid_for_month": validForMonth,
+    "number_of_users": noOfUsers,
   };
 }
 
