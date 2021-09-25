@@ -745,7 +745,7 @@ class _HomePageState extends State<HomePage> {
                                           highlightColor:
                                               Constants.highlightColor,
                                           child: Icon(
-                                            FontAwesomeIcons.divide,
+                                            FontAwesomeIcons.rupeeSign,
                                             color: Colors.deepOrange
                                                 .withOpacity(0.6),
                                           ),
