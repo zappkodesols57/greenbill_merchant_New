@@ -1,9 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:greenbill_merchant/src/constants.dart';
 import 'package:greenbill_merchant/src/ui/MySubcription/newSubFile.dart';
 import 'package:greenbill_merchant/src/ui/Profile/generalSetting.dart';
 import 'package:greenbill_merchant/src/ui/drawer/Settings/feedback.dart';
+import 'package:greenbill_merchant/src/ui/drawer/Settings/paymentSetting.dart';
 import 'package:greenbill_merchant/src/ui/drawer/Settings/suggestBrand.dart';
 import 'package:greenbill_merchant/src/ui/drawer/Settings/updatePass.dart';
 import 'package:greenbill_merchant/src/ui/drawer/Settings/webView.dart';
@@ -136,6 +138,13 @@ class SettingsState extends State<Settings> {
           _buildListItem("General Settings", CupertinoIcons.settings, () {
             Navigator.push(context,
                 MaterialPageRoute(builder: (context) => GeneralSetting()));
+          }),
+          Divider(
+            thickness: 1.0,
+          ),
+          _buildListItem("Payment Settings", FontAwesomeIcons.rupeeSign, () {
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) => PaymentSetting()));
           }),
           Divider(
             thickness: 1.0,

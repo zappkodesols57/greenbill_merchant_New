@@ -295,7 +295,7 @@ class _AddOnBuyState extends State<AddOnBuy> {
                               ),
                               Container(
                                 width: size.width * 0.25,
-                                child: Text("₹ ${IGST.toStringAsFixed(2)}",style:
+                                child: Text(": ₹ ${IGST.toStringAsFixed(2)}",style:
                                 TextStyle(fontFamily: "PoppinsLight",
                                     fontSize: 14.0,
                                     color: AppColors.kPrimaryColorBlue)),

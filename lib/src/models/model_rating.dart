@@ -39,6 +39,7 @@ class Datum {
     this.storeFeedback,
     this.merchantReplay,
     this.rating,
+    this.ratingId
   });
 
   int id;
@@ -50,6 +51,7 @@ class Datum {
   String billDate;
   String invoiceNo;
   String rating;
+  String ratingId;
 
   factory Datum.fromJson(Map<String, dynamic> json) => Datum(
     id: json["id"],
@@ -59,6 +61,7 @@ class Datum {
     billDate: json["bill_date"],
     invoiceNo: json["invoice_no"],
     rating: json["rating"],
+    ratingId: json["rating_id"],
     storeFeedback: json["store_feedback"],
     merchantReplay: json["merchant_reply"],
   );
@@ -71,6 +74,7 @@ class Datum {
     "bill_date": billDate,
     "invoice_no": invoiceNo,
     "rating": rating,
+    "rating_id": ratingId,
     "store_feedback": storeFeedback,
     "merchant_reply": merchantReplay,
   };

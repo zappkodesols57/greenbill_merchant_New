@@ -146,47 +146,99 @@ print("$busId");
     Size size = MediaQuery.of(context).size;
     return Scaffold(
       key: _scaffoldKey,
-      floatingActionButton: AnimatedContainer(
-          duration: Duration(milliseconds: 400),
-          curve: Curves.easeInOut,
-          child: RawMaterialButton(
-              elevation: 5.0,
-              shape:  RoundedRectangleBorder(
-                  borderRadius: BorderRadius.all(Radius.circular(25.0))),
+      floatingActionButton: Stack(
+        children: <Widget>[
+          Padding(
+            padding: const EdgeInsets.only(left: 30.0),
+            child: Align(
+              alignment: Alignment.bottomLeft,
+              child: AnimatedContainer(
+                  duration: Duration(milliseconds: 400),
+                  curve: Curves.easeInOut,
+                  child: RawMaterialButton(
+                      elevation: 5.0,
+                      shape:  RoundedRectangleBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(25.0))),
 
-              onPressed: () async{
-                SharedPreferences prefs = await SharedPreferences.getInstance();
-                // File file = await downloadPicture(prefs.getString("businessLogo"));
-                Navigator.push(context,
-                    HeroDialogRoute(builder: (context) => Recharge()));
+                      onPressed: () async{
+                        SharedPreferences prefs = await SharedPreferences.getInstance();
+                        // File file = await downloadPicture(prefs.getString("businessLogo"));
+                        Navigator.push(context,
+                            HeroDialogRoute(builder: (context) => Recharge()));
 
-              },
-              fillColor: kPrimaryColorBlue,
-              child: Padding(
-                padding: const EdgeInsets.all(12.0),
-                child: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    const Icon(
-                       FontAwesomeIcons.plusCircle,
-                      color: Colors.white,
-                    ),
-                    SizedBox(
-                      width: 5.0,
-                    ),
-                    Text(
-                      "Recharge",
-                      style: TextStyle(
-                          color: Colors.white,
-                          fontFamily: "PoppinsMedium",
-                          fontWeight: FontWeight.bold
-                      ),
-                    )
-                  ],
-                )
+                      },
+                      fillColor: kPrimaryColorBlue,
+                      child: Padding(
+                          padding: const EdgeInsets.all(12.0),
+                          child: Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              const Icon(
+                                FontAwesomeIcons.rupeeSign,
+                                color: Colors.white,
+                              ),
+                              SizedBox(
+                                width: 5.0,
+                              ),
+                              Text(
+                                "Recharge",
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    fontFamily: "PoppinsMedium",
+                                    fontWeight: FontWeight.bold
+                                ),
+                              )
+                            ],
+                          )
+                      ))),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(left: 30.0),
+            child: Align(
+              alignment: Alignment.bottomRight,
+              child: AnimatedContainer(
+                  duration: Duration(milliseconds: 400),
+                  curve: Curves.easeInOut,
+                  child: RawMaterialButton(
+                      elevation: 5.0,
+                      shape:  RoundedRectangleBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(25.0))),
 
+                      onPressed: () async{
+                        SharedPreferences prefs = await SharedPreferences.getInstance();
+                        Navigator.push(context,
+                            HeroDialogRoute(builder: (context) => subHistory()));
 
-              ))),
+                      },
+                      fillColor: kPrimaryColorBlue,
+                      child: Padding(
+                          padding: const EdgeInsets.all(12.0),
+                          child: Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              const Icon(
+                                FontAwesomeIcons.history,
+                                color: Colors.white,
+                              ),
+                              SizedBox(
+                                width: 5.0,
+                              ),
+                              Text(
+                                "History",
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    fontFamily: "PoppinsMedium",
+                                    fontWeight: FontWeight.bold
+                                ),
+                              )
+                            ],
+                          )
+                      ))),
+            ),
+          ),
+        ],
+      ),
       appBar: AppBar(
         title: Text("Active Subscription"),
         elevation: 0,
@@ -722,7 +774,14 @@ print("$busId");
                                   child: Center(
                                     child: Column(
                                       children: <Widget>[
-
+                                        SizedBox(height: 10.0,),
+                                        Text(snapshot.data[index].promotionalSmsSubscriptionName,
+                                          style: TextStyle(
+                                              color: kPrimaryColorBlue,
+                                              fontSize: 15.0,
+                                              fontFamily: "PoppinsBold"),
+                                        ),
+                                        Divider(color: kPrimaryColorBlue,),
                                         Container(
                                           width: size.width * 0.9,
                                           padding: EdgeInsets.only(
@@ -986,7 +1045,14 @@ print("$busId");
                                   child: Center(
                                     child: Column(
                                       children: <Widget>[
-
+                                        SizedBox(height: 10.0,),
+                                        Text(snapshot.data[index].transactionalSmsSubscriptionName,
+                                          style: TextStyle(
+                                              color: kPrimaryColorBlue,
+                                              fontSize: 15.0,
+                                              fontFamily: "PoppinsBold"),
+                                        ),
+                                        Divider(color: kPrimaryColorBlue,),
                                         Container(
                                           width: size.width * 0.9,
                                           padding: EdgeInsets.only(

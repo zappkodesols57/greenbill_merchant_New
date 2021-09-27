@@ -26,6 +26,7 @@ class ReviewsState extends State<Reviews> {
   String amount="0";
   int totalTran=1;
   int subTotal;
+  bool search = false;
   String total;
   final ScrollController _controller = ScrollController();
   File media;
@@ -66,15 +67,24 @@ class ReviewsState extends State<Reviews> {
 
     print(res.body);
     print(res.statusCode);
+    print(query.text.toString());
     if (200 == res.statusCode) {
-      print(ratingFromJson(res.body).data.length);
-     // total=paymentHistoryFromJson(res.body).totalAmountSpent;
-     // totalTran=paymentHistoryFromJson(res.body).totalTransactionCount;
-      return ratingFromJson(res.body).data.where((element) =>
-          element.invoiceNo.toString().toLowerCase().contains(query.text)||
-              element.mobileNo.toString().toLowerCase().contains(query.text) )
-          .toList();
-    } else {
+      if (search == true) {
+        print(ratingFromJson(res.body).data.length);
+        return ratingFromJson(res.body).data.where((element) =>
+        element.ratingId.contains(query.text.toString()))
+            .toList();
+      }
+      else{
+        print(ratingFromJson(res.body).data.length);
+        return ratingFromJson(res.body).data.where((element) =>
+        element.mobileNo.contains(query.text.toString())||
+        element.invoiceNo.contains(query.text.toString())||
+        element.merchantReplay.contains(query.text.toString())
+        ).toList();
+      }
+    }
+    else {
       throw Exception('Failed to load List');
     }
   }
@@ -97,10 +107,29 @@ class ReviewsState extends State<Reviews> {
         backgroundColor: Colors.white,
         body: Column(
           children: [
+            Row(
+              children: [
+                Container(
+                  child: Checkbox(
+                    value: search,
+                    onChanged: (value) {
+                      setState(() {
+                          search = value;
+                      });
+                    },
+                  ),
+                ),
+              Text("Search By Ratings",style: TextStyle(
+                  fontFamily: "PoppinsMedium",
+                  fontSize: 15.0,
+                  color: kPrimaryColorBlue),
+                   ),
+                ],
+            ),
             Container(
               width: size.width * 0.95,
               padding: EdgeInsets.only(
-                  top: 10.0, bottom: 10.0, left: 0.0, right: 0.0),
+                  top: 0.0, bottom: 10.0, left: 0.0, right: 0.0),
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(32),
               ),
@@ -135,14 +164,15 @@ class ReviewsState extends State<Reviews> {
                     const BorderRadius.all(Radius.circular(35.0)),
                   ),
                   suffixIcon: GestureDetector(
-                    onTap: () {},
+                    onTap: () {
+                    },
                     child: Icon(
                       CupertinoIcons.search,
                       color: kPrimaryColorBlue,
                       size: 25.0,
                     ),
                   ),
-                  hintText: "Search Ratings",
+                  hintText: "Search",
                   hintStyle: TextStyle(
                       fontFamily: "PoppinsMedium",
                       fontSize: 15.0,

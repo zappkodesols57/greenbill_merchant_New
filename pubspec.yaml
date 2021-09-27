@@ -120,6 +120,7 @@ flutter:
     - assets/merchant_createPass.png
     - assets/bills.png
     - assets/promote.png
+    - assets/payments.png
     - assets/analytics.png
     - assets/app/
 

@@ -692,6 +692,7 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
                 //           MaterialPageRoute(builder: (context) => subUpdated()));
                 //     }
                 // ),
+                if(storeCatID != "11" && storeCatID != "12")
                 ListTile(
                     dense: false,
                     title: Text("Ratings"),
