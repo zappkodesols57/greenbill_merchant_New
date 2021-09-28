@@ -216,9 +216,6 @@ class ReviewsState extends State<Reviews> {
                           itemBuilder: (bui, index) {
                             return new Card(
                               elevation: 5,
-                              // shape: RoundedRectangleBorder(
-                              //   borderRadius: BorderRadius.circular(50.0),
-                              // ),
                               child: ListTile(
                                 dense: false,
                                 title: Text('Invoice No : ${snapshot.data[index].invoiceNo}',
