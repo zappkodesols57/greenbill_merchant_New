@@ -119,7 +119,7 @@ class ReviewsState extends State<Reviews> {
                     },
                   ),
                 ),
-              Text("Search By Ratings",style: TextStyle(
+              Text("Search By Ratings ( 1 to 5 )",style: TextStyle(
                   fontFamily: "PoppinsMedium",
                   fontSize: 15.0,
                   color: kPrimaryColorBlue),

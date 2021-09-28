@@ -329,7 +329,7 @@ class BillIncomingState extends State<BillIncoming> {
                   ),
 
                   Container(
-                    width: 72.0,
+                    width: 78.0,
                     child: Text(
                       "Amount",
                       textAlign: TextAlign.center,
@@ -402,6 +402,8 @@ class BillIncomingState extends State<BillIncoming> {
                                       crossAxisAlignment:
                                       WrapCrossAlignment.center,
                                       children: <Widget>[
+
+                                        if(snapshot.data[index].billImage != "")
                                         IconButton(
                                           icon: Icon(
                                             Icons.download_outlined,
@@ -417,6 +419,7 @@ class BillIncomingState extends State<BillIncoming> {
                                             }
                                           },
                                         ),
+                                        if(snapshot.data[index].billImage != "")
                                         IconButton(
                                           icon: Icon(
                                             Icons.switch_account,
@@ -436,7 +439,7 @@ class BillIncomingState extends State<BillIncoming> {
 
                                         Container(
                                             width: 70.0,
-                                            child: Text("₹ ${double.parse(snapshot.data[index].billAmount).toStringAsFixed(2)}",
+                                            child: Text("  ₹ ${double.parse(snapshot.data[index].billAmount).toStringAsFixed(2)}",
                                                 style: TextStyle(
                                                     fontWeight:
                                                     FontWeight.bold))),
@@ -444,13 +447,7 @@ class BillIncomingState extends State<BillIncoming> {
                                     ),
                                     onTap: () {
                                       launch(snapshot.data[index].billUrl);
-                                      // Navigator.push(
-                                      //   context,
-                                      //   MaterialPageRoute(
-                                      //       builder: (context) => ViewBill("0", snapshot.data[index].billImage,
-                                      //           snapshot.data[index].billUrl, snapshot.data[index].billDate, snapshot.data[index].billAmount,
-                                      //           snapshot.data[index].businessName)),
-                                      // );
+
                                     },
                                   ),
                                 ),

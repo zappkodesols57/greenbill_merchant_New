@@ -12,6 +12,7 @@ import 'package:greenbill_merchant/src/models/model_getStore.dart';
 import 'package:greenbill_merchant/src/ui/BillInfo/tabBar.dart';
 import 'package:greenbill_merchant/src/ui/History/historyTab.dart';
 import 'package:greenbill_merchant/src/ui/History/paymentHistory.dart';
+import 'package:greenbill_merchant/src/ui/HomeScreen/notification.dart';
 import 'package:greenbill_merchant/src/ui/MySubcription/newSubFile.dart';
 import 'package:greenbill_merchant/src/ui/MySubcription/tabbarsubscription.dart';
 import 'package:greenbill_merchant/src/ui/PayLinks/paylinks.dart';
@@ -303,7 +304,19 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
       actions: <Widget>[
         Padding(
           padding: const EdgeInsets.only(right: 10.0),
+        ),
 
+        IconButton(
+            onPressed: (){
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => Notifications()));
+            },
+            icon: Icon(
+              CupertinoIcons.bell_fill,
+              color: Colors.white,
+            )),
+        SizedBox(
+          width: 10.0,
         ),
         GestureDetector(
             child: (businessLogo != null)
@@ -327,7 +340,7 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
               showStoreDialog(context);
             }),
         SizedBox(
-          width: 20.0,
+          width: 10.0,
         ),
       ],
     );
@@ -531,26 +544,7 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
                 UserAccountsDrawerHeader(
                   accountName: Text('${profileFName.text} ${profileLName.text}'),
                   accountEmail: null,
-                  // accountEmail: RichText(
-                  //   text: TextSpan(
-                  //       text: 'Checkout Pin: ',
-                  //       style: TextStyle(
-                  //         color: Colors.white,
-                  //       ),
-                  //       children: <TextSpan>[
-                  //         TextSpan(
-                  //           text: profileUid.text,
-                  //           style: TextStyle(
-                  //             color: Colors.white,
-                  //             fontWeight: FontWeight.bold,
-                  //           ),
-                  //           // recognizer: TapGestureRecognizer()
-                  //           //   ..onTap = () {
-                  //           //     // open desired screen
-                  //           //   }
-                  //         ),
-                  //       ]),
-                  // ),
+
                   arrowColor: Colors.transparent,
                   // accountEmail: Text(profileMob.text),
                   currentAccountPicture: GestureDetector(
@@ -671,27 +665,6 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
                             MaterialPageRoute(builder: (context) => CustomerInfo()));
                       }
                   ),
-                // ListTile(
-                //     dense: false,
-                //     title: Text("My Subscription"),
-                //     leading: Container(
-                //       width: 35.0,
-                //       height: 35.0,
-                //       margin: const EdgeInsets.only(right: 10.0),
-                //       decoration: new BoxDecoration(
-                //         color: Colors.white,
-                //         borderRadius: new BorderRadius.circular(25.0),
-                //       ),
-                //       alignment: Alignment.center,
-                //       child: new Icon(CupertinoIcons.purchased,
-                //           color: kPrimaryColorBlue, size: 25.0),
-                //     ),
-                //     onTap: () {
-                //       Navigator.of(context).pop();
-                //       Navigator.push(context,
-                //           MaterialPageRoute(builder: (context) => subUpdated()));
-                //     }
-                // ),
                 if(storeCatID != "11" && storeCatID != "12")
                 ListTile(
                     dense: false,
