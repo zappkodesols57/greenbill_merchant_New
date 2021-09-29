@@ -189,7 +189,7 @@ class _NotificationsState extends State<Notifications> {
                                     title: Text('${snapshot.data[index].noticeTitle}',
                                         style: TextStyle(fontSize: 15.0,fontFamily: "PoppinsBold",color: kPrimaryColorBlue)),
                                     isThreeLine: false,
-                                    subtitle: Text('Sent By : ${snapshot.data[index].name.toString()}\nMessage : ${snapshot.data[index].message.toString()}',
+                                    subtitle: Text('Message : ${snapshot.data[index].message.toString()}\nSent By : ${snapshot.data[index].name.toString()}',
                                         style: TextStyle(fontSize: 11.0,fontFamily: "PoppinsLight",color: kPrimaryColorBlue)),
                                     trailing: Wrap(
                                       spacing: 5, // space between two icons

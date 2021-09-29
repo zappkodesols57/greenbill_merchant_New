@@ -439,8 +439,9 @@ class BillIncomingState extends State<BillIncoming> {
 
                                         Container(
                                             width: 70.0,
-                                            child: Text("  ₹ ${double.parse(snapshot.data[index].billAmount).toStringAsFixed(2)}",
+                                            child: Text(" ₹ ${double.parse(snapshot.data[index].billAmount).toStringAsFixed(2)}",
                                                 style: TextStyle(
+                                                  fontSize: 12.0,
                                                     fontWeight:
                                                     FontWeight.bold))),
                                       ],
