@@ -4,6 +4,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:greenbill_merchant/src/constants.dart';
 import 'package:greenbill_merchant/src/models/model_notification.dart';
+import 'package:image_downloader/image_downloader.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 class Notifications extends StatefulWidget {
@@ -195,15 +197,40 @@ class _NotificationsState extends State<Notifications> {
                                       spacing: 5, // space between two icons
                                       crossAxisAlignment: WrapCrossAlignment.end,
                                       children: <Widget>[
-                                          Text(
-                                              '${snapshot
-                                                  .data[index].createdAt.toString()}',
-                                              style: TextStyle(
-                                                color: kPrimaryColorBlue,
-                                                  fontFamily: "PoppinsBold",
-                                                  fontSize: 15.0)
-                                          ),
+                                          Column(
+                                            children: [
+                                              Container(
+                                                width: 100.0,
+                                                alignment: Alignment.bottomRight ,
+                                                child: Text(
+                                                    '${snapshot
+                                                        .data[index].createdAt.toString()}',
+                                                    style: TextStyle(
+                                                      color: kPrimaryColorBlue,
+                                                        fontFamily: "PoppinsBold",
+                                                        fontSize: 15.0)
+                                                ),
+                                              ),
+                                              if(snapshot.data[index].image != "")
+                                                Container(
+                                                  width: 100.0,
+                                                  alignment: Alignment.bottomRight ,
+                                                  child: IconButton(
+                                                    icon: Icon(Icons.cloud_download_outlined,color: kPrimaryColorBlue,),
+                                                    onPressed: () async {
 
+                                                      if (await Permission.storage.request().isGranted) {
+                                                        await ImageDownloader.downloadImage("http://157.230.228.250/"+snapshot.data[index].image).then((context) => showInSnackBar("Download Complete"));
+
+                                                      } else{
+                                                        showInSnackBar("Permission Denied");
+                                                      }
+                                                    },
+                                                  ),
+
+                                                ),
+                                            ],
+                                          ),
                                       ],
                                     ),
                                     onTap: () {

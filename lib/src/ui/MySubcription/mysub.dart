@@ -120,6 +120,7 @@ class RechargeState extends State<Recharge> {
   Future<List<Datumii>> getAddOn() async {
     final param = {
       "user_id":userId,
+      "business_id":busId,
     };
 
     final res = await http.post("http://157.230.228.250/merchant-get-addon-recharge-api/",
@@ -234,10 +235,12 @@ class RechargeState extends State<Recharge> {
 
     launch(paymentLaunchUri.toString());
   }
+
   Future<List<Datum>> getLists() async {
     final param = {
       "user_id":userId,
-      "business_category_id":(storeCatID == "11")? storeCatID : storeCatID =="12"? storeCatID : "",
+      "m_business_id":busId,
+      "business_category_id":(storeCatID == "11")? storeCatID : storeCatID =="12"? storeCatID : storeCatID,
     };
 
     print(">>>>>>>>>>>>>$storeCatID");
@@ -349,7 +352,7 @@ class RechargeState extends State<Recharge> {
                     width: size.width * 0.23,
                     child: Center(
                         child: Text(
-                          'Transactional ',
+                          'Transactional',
                           style: TextStyle(color: _onTapBox3?Colors.white :_colorMerchantText,fontSize: 12.0),
                         )),
                   ),
@@ -598,11 +601,6 @@ class RechargeState extends State<Recharge> {
                                                     print(">>>>>>>>>${_launchPayURL}");
                                                     print("User${snapshot.data[index].numberOfUsers}");
                                                     Navigator.push(context, MaterialPageRoute(builder: (context) => ProceedToBuy(snapshot.data[index].id,snapshot.data[index].numberOfUsers,snapshot.data[index].costPerUser,snapshot.data[index].igst,snapshot.data[index].cgst.toString(),snapshot.data[index].rechargeAmount)));
-                                                    // WebView(
-                                                    //   javascriptMode: JavascriptMode.unrestricted,
-                                                    //   initialUrl:"http://157.230.228.250/my-bill-merchant/58cSUH117fs/" ,
-                                                    // );
-                                                    // _launchPayURL(snapshot.data[index].totalAmt, snapshot.data[index].id.toString(),"Green Bill Subscription");
                                                   }),
                                             ],
                                           ),
@@ -1428,7 +1426,7 @@ class RechargeState extends State<Recharge> {
                         crossAxisAlignment: CrossAxisAlignment.center,
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: <Widget>[
-                          Text("₹ "+double.parse(data.totalAmt).toStringAsFixed(2),
+                          Text("₹ "+double.parse(data.rechargeAmount).toStringAsFixed(2),
                             textAlign: TextAlign.center,
                             style: TextStyle(
                                 color: Colors.white,
@@ -1690,7 +1688,6 @@ class RechargeState extends State<Recharge> {
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
-
                 Container(
                   padding: EdgeInsets.only(
                       top: 0.0, bottom: 5.0, left: 5.0, right: 5.0),

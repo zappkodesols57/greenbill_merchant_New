@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:webview_flutter/webview_flutter.dart';
+import 'package:flutter_webview_plugin/flutter_webview_plugin.dart';
 
 class WebViewScreen extends StatefulWidget {
   final String title, url;
@@ -33,9 +33,13 @@ class _WebViewScreenState extends State<WebViewScreen> {
           icon: Icon(Icons.arrow_back_ios),
         ),
       ),
-      body: WebView(
-        javascriptMode: JavascriptMode.unrestricted,
-        initialUrl: widget.url,
+      body: WebviewScaffold(
+        url: widget.url,
+        withJavascript: true,
+        withZoom: true,
+        resizeToAvoidBottomInset: true,
+        useWideViewPort: true,
+        scrollBar: true,
       ),
     );
   }

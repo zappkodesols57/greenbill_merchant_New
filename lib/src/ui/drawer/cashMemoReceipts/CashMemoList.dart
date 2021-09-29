@@ -287,14 +287,14 @@ class CashMemoListState extends State<CashMemoList> {
                                     ),
                                   ],
                                 ),
-                                // onTap: () {
-                                //   Navigator.push(
-                                //     context,
-                                //     MaterialPageRoute(
-                                //         builder: (context) => WebViewScreen("View Memo", snapshot.data[index].memoUrl)),
-                                //   );
-                                //
-                                // },
+                                onTap: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => WebViewScreen("View Memo", snapshot.data[index].memoUrl)),
+                                  );
+
+                                },
                               ),
                             );
                           }),

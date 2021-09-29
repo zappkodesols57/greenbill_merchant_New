@@ -31,6 +31,7 @@ class Bell {
     this.noticeTitle,
     this.message,
     this.createdAt,
+    this.image,
 
   });
 
@@ -39,6 +40,7 @@ class Bell {
   String noticeTitle;
   String message;
   String createdAt;
+  String image;
 
 
   factory Bell.fromJson(Map<String, dynamic> json) => Bell(
@@ -47,6 +49,7 @@ class Bell {
     noticeTitle: json["notice_title"],
     message: json["message"],
     createdAt: json["created_at"],
+    image: json["notice_file"],
 
   );
 
@@ -56,6 +59,7 @@ class Bell {
     "notice_title": noticeTitle,
     "message": message,
     "created_at": createdAt,
+    "notice_file": image,
 
   };
 }

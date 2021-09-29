@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:greenbill_merchant/src/models/model_Common.dart';
 import 'package:greenbill_merchant/src/models/model_receiptList.dart';
+import 'package:greenbill_merchant/src/ui/drawer/Settings/webView.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -261,9 +262,15 @@ class _ReceiptState extends State<Receipt>{
                                           delete(snapshot.data[index].id);
                                         },
                                       ),
-
                                     ],
                                   ),
+                                  onTap: (){
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) => WebViewScreen("View Receipts", snapshot.data[index].receiptUrl)),
+                                    );
+                                  },
                                 ),
                               ),
                             );

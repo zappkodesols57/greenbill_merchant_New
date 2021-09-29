@@ -541,7 +541,7 @@ class _ProceedToBuyState extends State<ProceedToBuy> {
                               ),
                             ],
                           ),
-                          if(widget.igst == 1)
+                          if(widget.igst == 0)
                             Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
@@ -562,7 +562,7 @@ class _ProceedToBuyState extends State<ProceedToBuy> {
                                 ),
                               ],
                             ),
-                          if(widget.igst == 1)
+                          if(widget.igst == 0)
                             Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
