@@ -13,22 +13,26 @@ class GetPersonalInfo {
     this.status,
     this.profileData,
     this.imageData,
+    this.verified,
   });
 
   String status;
   ProfileData profileData;
   String imageData;
+  bool verified;
 
   factory GetPersonalInfo.fromJson(Map<String, dynamic> json) => GetPersonalInfo(
     status: json["status"],
     profileData: ProfileData.fromJson(json["profile_data"]),
     imageData: json["image_data"],
+    verified: json["is_varified"],
   );
 
   Map<String, dynamic> toJson() => {
     "status": status,
     "profile_data": profileData.toJson(),
     "image_data": imageData,
+    "is_varified": verified,
   };
 }
 

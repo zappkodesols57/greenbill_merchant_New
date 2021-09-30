@@ -15,7 +15,6 @@ import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../constants.dart';
-import 'Edit/personalInfoEdit.dart';
 import 'package:http/http.dart' as http;
 import 'package:path/path.dart' as path;
 
@@ -35,6 +34,10 @@ class _MyPersonalInfoState extends State<PersonalInfo> {
   String number, token;
   int id;
   final String pic;
+
+  bool _verified = false;
+  bool _PHverified = false;
+
   _MyPersonalInfoState(this.pic);
 
   @override
@@ -51,7 +54,7 @@ class _MyPersonalInfoState extends State<PersonalInfo> {
     number = prefs.getString("mobile");
     id = prefs.getInt("userID");
     token = prefs.getString("token");
-    print('$number $id  $token');
+    print('$number $id $token');
 
     final param = {
       "mobile_no": number,
@@ -83,6 +86,8 @@ class _MyPersonalInfoState extends State<PersonalInfo> {
         degiController.text = info.profileData.mDesignation;
         aadharController.text = info.profileData.mAdhaarNumber;
         panController.text = info.profileData.mPanNumber;
+        _verified = info.verified;
+        _PHverified = true;
 
         setData(id, token);
         Navigator.of(context, rootNavigator: true).pop();
@@ -415,6 +420,12 @@ class _MyPersonalInfoState extends State<PersonalInfo> {
                     fontSize: 17.0,
                     color: Colors.black54),
                 decoration: InputDecoration(
+                  suffixIcon: IconButton(
+                    onPressed: (){
+                     },
+                   icon:(_PHverified)?Icon(Icons.verified,color:kPrimaryColorBlue):Icon(Icons.verified,color:Colors.grey),
+                    tooltip:("Verified"),
+                     ),
                   border: InputBorder.none,
                   counterStyle: TextStyle(height: double.minPositive,),
                   counterText: "",
@@ -448,47 +459,62 @@ class _MyPersonalInfoState extends State<PersonalInfo> {
               padding: EdgeInsets.only(
                   top: 0.0, bottom: 10.0, left: 0.0, right: 0.0),
               child: TextField(
-                inputFormatters: [FilteringTextInputFormatter.deny(RegExp("[ ]"))],
-                focusNode: myFocusNodeEmail,
-                controller: emailController,
-                onChanged: (value) {
-                  setState(() {
-                    _isButtonDisabledColor = false;
-                    _isButtonDisabled = false;
-                  });
-                },
-                style: TextStyle(
-                  //fontFamily: "PoppinsBold",
-                    fontSize: 17.0,
-                    color: Colors.black87),
-                decoration: InputDecoration(
-                  border: InputBorder.none,
-                  counterStyle: TextStyle(height: double.minPositive,),
-                  counterText: "",
-                  contentPadding: const EdgeInsets.symmetric(vertical: 0.0),
-                  enabledBorder: OutlineInputBorder(
-                    borderSide: BorderSide(
+                    enableInteractiveSelection: false,
+                    inputFormatters: [FilteringTextInputFormatter.deny(RegExp("[ ]"))],
+                    focusNode: new AlwaysDisabledFocusNode(),
+                    controller: emailController,
+                    onChanged: (value) {
+                      setState(() {
+                        _isButtonDisabledColor = false;
+                        _isButtonDisabled = false;
+                      });
+                    },
+                    onTap: () {
+                      showInSnackBar("Unauthorized action! Permission Denied", 2);
+                    },
+                    style: TextStyle(
+                      //fontFamily: "PoppinsBold",
+                        fontSize: 17.0,
+                        color: Colors.black54),
+                    decoration: InputDecoration(
+                      suffixIcon: IconButton(
+                        onPressed: (){
+                          // if(_verified == false) {
+                          //   _verified = true;
+                          // }else{
+                          //   _verified = false;
+                          // }
+                        },
+                        icon: (_verified)?Icon(Icons.verified,color:kPrimaryColorBlue):Icon(Icons.verified,color:Colors.grey),
+                        tooltip: (_verified)?("Verified"):("Not Verified"),
+                      ),
+                      border: InputBorder.none,
+                      counterStyle: TextStyle(height: double.minPositive,),
+                      counterText: "",
+                      contentPadding: const EdgeInsets.symmetric(vertical: 0.0),
+                      enabledBorder: OutlineInputBorder(
+                        borderSide: BorderSide(
+                            color: kPrimaryColorBlue,
+                            width: 0.5
+                        ),
+                        borderRadius: const BorderRadius.all(Radius.circular(35.0)),
+                      ),
+                      focusedBorder: new OutlineInputBorder(
+                        borderSide: BorderSide(
+                            color: kPrimaryColorBlue,
+                            width: 0.5),
+                        borderRadius: const BorderRadius.all(Radius.circular(35.0)),
+                      ),
+                      prefixIcon: Icon(
+                        FontAwesomeIcons.envelope,
                         color: kPrimaryColorBlue,
-                        width: 0.5
+                        size: 20.0,
+                      ),
+                      labelText: "Email *",
+                      labelStyle: TextStyle(
+                          fontFamily: "PoppinsLight", fontSize: 13.0, color: kPrimaryColorBlue),
                     ),
-                    borderRadius: const BorderRadius.all(Radius.circular(35.0)),
                   ),
-                  focusedBorder: new OutlineInputBorder(
-                    borderSide: BorderSide(
-                        color: kPrimaryColorBlue,
-                        width: 0.5),
-                    borderRadius: const BorderRadius.all(Radius.circular(35.0)),
-                  ),
-                  prefixIcon: Icon(
-                    FontAwesomeIcons.envelope,
-                    color: kPrimaryColorBlue,
-                    size: 20.0,
-                  ),
-                  labelText: "Email *",
-                  labelStyle: TextStyle(
-                      fontFamily: "PoppinsLight", fontSize: 13.0, color: kPrimaryColorBlue),
-                ),
-              ),
             ),
             Container(
               width: size.width * 0.95,
