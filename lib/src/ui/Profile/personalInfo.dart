@@ -421,9 +421,8 @@ class _MyPersonalInfoState extends State<PersonalInfo> {
                     color: Colors.black54),
                 decoration: InputDecoration(
                   suffixIcon: IconButton(
-                    onPressed: (){
-                     },
-                   icon:(_PHverified)?Icon(Icons.verified,color:kPrimaryColorBlue):Icon(Icons.verified,color:Colors.grey),
+                    onPressed: (){},
+                    icon:(_PHverified)?Icon(Icons.verified,color:kPrimaryColorBlue):Icon(Icons.verified,color:Colors.grey),
                     tooltip:("Verified"),
                      ),
                   border: InputBorder.none,
@@ -478,13 +477,7 @@ class _MyPersonalInfoState extends State<PersonalInfo> {
                         color: Colors.black54),
                     decoration: InputDecoration(
                       suffixIcon: IconButton(
-                        onPressed: (){
-                          // if(_verified == false) {
-                          //   _verified = true;
-                          // }else{
-                          //   _verified = false;
-                          // }
-                        },
+                        onPressed: (){},
                         icon: (_verified)?Icon(Icons.verified,color:kPrimaryColorBlue):Icon(Icons.verified,color:Colors.grey),
                         tooltip: (_verified)?("Verified"):("Not Verified"),
                       ),

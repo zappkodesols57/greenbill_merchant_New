@@ -6,6 +6,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:greenbill_merchant/src/constants.dart';
 import 'package:greenbill_merchant/src/models/model_subscriptionHistory.dart';
+import 'package:greenbill_merchant/src/ui/values/values.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -364,17 +365,28 @@ class subHistoryState extends State<subHistory> {
                                                       fontFamily: "PoppinsBold"),
                                                 ),
                                               ),
+
                                             ],
                                           ),
                                         ),
-
+                                        SizedBox(height: 5.0,),
+                                        RaisedButton(
+                                            shape: RoundedRectangleBorder(
+                                            borderRadius: BorderRadius.all(Radius.circular(30.0)),
+                                            ),
+                                            child: Text("View Invoice",style: TextStyle(color: Colors.white,fontSize: 12.0, fontFamily: "PoppinsBold"),),
+                                            color: kPrimaryColorBlue,
+                                            onPressed: (){
+                                              launch(snapshot.data[index].url);
+                                            }),
+                                        SizedBox(height: 5.0,),
                                       ],
                                     ),
                                   ),
                                 ),
-                                onTap: (){
-                                  launch(snapshot.data[index].url);
-                                },
+                                // onTap: (){
+                                //   launch(snapshot.data[index].url);
+                                // },
                               ),
                             );
                           }
