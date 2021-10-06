@@ -816,6 +816,11 @@ class _CreateReceiptsState extends State<CreateReceipts> {
     //   return null;
     // }
 
+    if(radioItem1 == null){
+      showInSnackBar("Please Select Payment Method");
+      return null;
+    }
+
     if (radioItem1.contains("cash")) {
       setState(() {
         val1 = 'cash';
@@ -829,7 +834,6 @@ class _CreateReceiptsState extends State<CreateReceipts> {
         val3 = 'Cheque';
       });
     }
-
 
     print(val1);
     print(val2);

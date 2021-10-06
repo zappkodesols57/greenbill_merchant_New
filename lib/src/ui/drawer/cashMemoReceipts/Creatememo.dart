@@ -578,7 +578,6 @@ class _CreateReceiptsState extends State<CreateMemo> {
                       top: 0.0, bottom: 0.0, left: 0.0, right: 10.0),
                   alignment: Alignment.bottomRight,
 
-
                   child: ElevatedButton(
 
                     child: Text(
@@ -606,6 +605,9 @@ class _CreateReceiptsState extends State<CreateMemo> {
                         removeButton1 = false;
                         showButton = false;
                         addItem1 = false;
+                        newDisc.clear();
+                        newRate.clear();
+                        newQuantity.clear();
                       });
                     },
 
@@ -863,6 +865,9 @@ class _CreateReceiptsState extends State<CreateMemo> {
                                 removeButton2 = false;
                                 showButton2 = false;
                                 addItem2 = false;
+                                newDisc2.clear();
+                                newRate2.clear();
+                                newQuantity2.clear();
                               });
                             },
 
@@ -1123,6 +1128,9 @@ class _CreateReceiptsState extends State<CreateMemo> {
                                 removeButton3 = false;
                                 showButton3 = false;
                                 addItem3 = false;
+                                newDisc3.clear();
+                                newRate3.clear();
+                                newQuantity3.clear();
                               });
                             },
 
@@ -1675,15 +1683,6 @@ class _CreateReceiptsState extends State<CreateMemo> {
     if (newRate3.text.isNotEmpty) {
       rateAll.add(newRate3.text.toString());
     }
-
-    // if(double.parse(newRate3.text) > 50000.00){
-    //   showInSnackBar("Rate Must be less than 50000");
-    //   return null;
-    // }
-    // if(double.parse(newRate3.text) == 0.00){
-    //   showInSnackBar("Rate should not be 0");
-    //   return null;
-    // }
 
 
     if (quantityController.text.isNotEmpty) {

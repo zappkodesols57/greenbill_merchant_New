@@ -146,10 +146,10 @@ class _PayLinksState extends State<PayLinks> {
           Container(
             padding: EdgeInsets.only(left: size.width * 0.25, right: size.width * 0.25),
             height: 50.0,
-            width: size.width * 0.47,
+            width: size.width * 0.67,
             child: ElevatedButton(
               child: Text(
-                "Create",
+                "Create  and  Send",
                 style: TextStyle(
                     fontFamily: "PoppinsMedium",
                     fontWeight: FontWeight.bold,

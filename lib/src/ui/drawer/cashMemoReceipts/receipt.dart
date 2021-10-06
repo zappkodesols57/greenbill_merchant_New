@@ -72,6 +72,7 @@ class _ReceiptState extends State<Receipt>{
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       key: _scaffoldKey,
       floatingActionButton: FloatingActionButton(
           backgroundColor: kPrimaryColorBlue,
@@ -150,7 +151,7 @@ class _ReceiptState extends State<Receipt>{
               TextStyle(color: Colors.white, fontFamily: "PoppinsBold"),
             ),
             trailing: Wrap(
-              spacing: 14, // space between two icons
+              spacing: 12, // space between two icons
               crossAxisAlignment: WrapCrossAlignment.center,
               children: <Widget>[
                 Container(
@@ -235,7 +236,7 @@ class _ReceiptState extends State<Receipt>{
                                           color: Colors.grey)),
                                   isThreeLine: false,
                                   trailing: Wrap(
-                                    spacing: 11, // space between two icons
+                                    spacing: 13, // space between two icons
                                     alignment: WrapAlignment.end,
                                     crossAxisAlignment: WrapCrossAlignment.center,
                                     children: <Widget>[
@@ -250,8 +251,9 @@ class _ReceiptState extends State<Receipt>{
                                       ),
                                       Container(
                                           width: 70.0,
+                                          alignment: Alignment.center,
                                           child: Text(
-                                              "   ₹ ${snapshot.data[index].total.toStringAsFixed(2)}",
+                                              "₹ ${snapshot.data[index].total.toStringAsFixed(2)}",
                                               style: TextStyle(fontWeight: FontWeight.bold))),
                                       IconButton(
                                         icon: Icon(

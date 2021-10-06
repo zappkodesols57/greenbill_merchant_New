@@ -115,6 +115,7 @@ class ReviewsState extends State<Reviews> {
                     onChanged: (value) {
                       setState(() {
                           search = value;
+                          query.clear();
                       });
                     },
                   ),
@@ -135,6 +136,7 @@ class ReviewsState extends State<Reviews> {
               ),
               child: TextField(
                 controller: query,
+                keyboardType:(search == true)?TextInputType.number:TextInputType.text,
                 onChanged: (value) {
                   getBillInfoList();
                   setState(() {});
