@@ -75,9 +75,9 @@ class BillIncomingState extends State<BillIncoming> {
       print(incomingBillsFromJson(res.body).data.length);
       return incomingBillsFromJson(res.body).data
           .where((element) =>
-      element.businessName.toString().toLowerCase().toUpperCase().contains(query.text) ||
-          element.invoiceNo.toString().toUpperCase().toLowerCase().contains(query.text) ||
-          element.billId.toString().toLowerCase().contains(query.text)|| element.billAmount.toString().contains(query.text))
+      element.businessName.toString().contains(query.text) || element.businessName.toString().toLowerCase().contains(query.text) || element.businessName.toString().toUpperCase().contains(query.text) ||
+          element.invoiceNo.toString().contains(query.text) ||
+          element.billId.toString().contains(query.text)|| element.billAmount.toString().contains(query.text))
           .toList();
 
     } else {
@@ -439,9 +439,8 @@ class BillIncomingState extends State<BillIncoming> {
 
                                         Container(
                                             width: 70.0,
-                                            child: Text(" ₹ ${double.parse(snapshot.data[index].billAmount).toStringAsFixed(2)}",
+                                            child: Text("₹ ${double.parse(snapshot.data[index].billAmount).toStringAsFixed(2)}",
                                                 style: TextStyle(
-                                                  fontSize: 12.0,
                                                     fontWeight:
                                                     FontWeight.bold))),
                                       ],

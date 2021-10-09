@@ -135,7 +135,7 @@ class SettingsState extends State<Settings> {
           SizedBox(
             height: 15.0,
           ),
-          _buildListItem("General Settings", CupertinoIcons.settings, () {
+          _buildListItem("Business Settings", CupertinoIcons.settings, () {
             Navigator.push(context,
                 MaterialPageRoute(builder: (context) => GeneralSetting()));
           }),

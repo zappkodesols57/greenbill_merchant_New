@@ -245,13 +245,12 @@ class HistoryState extends State<History> {
                                   elevation: 2.0,
                                   child: Center(
                                     child: ListTile(
-
                                       dense: true,
                                       title: Text(
                                           snapshot.data[index].business,
                                           style: TextStyle(fontSize: 15.0, fontFamily: "PoppinsMedium", fontWeight: FontWeight.bold)
                                       ),
-                                      subtitle: Text('Purchase Date : ${snapshot.data[index].purchaseDate }\nTransaction Id : ${snapshot.data[index].transactionId == null ? "----" : snapshot.data[index].transactionId}',
+                                      subtitle: Text('Purchase Date : ${snapshot.data[index].purchaseDate }\nTransaction Id : ${snapshot.data[index].transactionId == null ? "----" : snapshot.data[index].transactionId}\nPayment Mode : ${snapshot.data[index].mode}',
                                           style: TextStyle(fontSize: 10.0)) ,
                                       isThreeLine: false,
                                       trailing: Wrap(

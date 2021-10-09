@@ -155,32 +155,32 @@ class BillInfoState extends State<BillInfo> {
                 TextStyle(color: Colors.white, fontFamily: "PoppinsBold"),
               ),
               trailing: Wrap(
-                spacing: 12, // space between two icons
+                spacing: 13, // space between two icons
                 crossAxisAlignment: WrapCrossAlignment.center,
                 children: <Widget>[
                   Container(
-                    width: 50.0,
+                    width: 45.0,
                     child: Text(
                       "Send",
-                      textAlign: TextAlign.center,
+                      textAlign: TextAlign.start,
                       style: TextStyle(
                           color: Colors.white, fontFamily: "PoppinsBold"),
                     ),
                   ),
                   Container(
-                    width: 50.0,
+                    width: 40.0,
                     child: Text(
-                      "Bill",
-                      textAlign: TextAlign.center,
+                      " Bill",
+                      textAlign: TextAlign.start,
                       style: TextStyle(
                           color: Colors.white, fontFamily: "PoppinsBold"),
                     ),
                   ),
                   Container(
-                    width: 72.0,
+                    width: 80.0,
                     child: Text(
-                      "Amount",
-                      textAlign: TextAlign.center,
+                      " Amount",
+                      textAlign: TextAlign.start,
                       style: TextStyle(
                           color: Colors.white, fontFamily: "PoppinsBold"),
                     ),
@@ -242,47 +242,54 @@ class BillInfoState extends State<BillInfo> {
                                     //   child: Icon(Icons.receipt_long, color: Colors.white,),
                                     // ),
                                     trailing: Wrap(
-                                      spacing: 12, // space between two icons
+                                      spacing: 15, // space between two icons
                                       crossAxisAlignment:
                                           WrapCrossAlignment.center,
                                       children: <Widget>[
-                                        IconButton(
-                                          icon: Icon(
-                                            Icons.sms_outlined,
-                                            color: Colors.black,
+                                        Container(
+                                          width: 40.0,
+                                          child: IconButton(
+                                            icon: Icon(
+                                              Icons.sms_outlined,
+                                              color: Colors.black,
+                                            ),
+                                            onPressed: () {
+                                              if (snapshot
+                                                  .data[index].billFile.isEmpty) {
+                                                showInSnackBar("No Bill Found!");
+                                                return null;
+                                              }
+                                              sendSms(
+                                                  snapshot.data[index].billId,
+                                                  snapshot.data[index].dbTable,
+                                                  snapshot.data[index].mobileNo);
+                                            },
                                           ),
-                                          onPressed: () {
-                                            if (snapshot
-                                                .data[index].billFile.isEmpty) {
-                                              showInSnackBar("No Bill Found!");
-                                              return null;
-                                            }
-                                            sendSms(
-                                                snapshot.data[index].billId,
-                                                snapshot.data[index].dbTable,
-                                                snapshot.data[index].mobileNo);
-                                          },
-                                        ),
-                                        IconButton(
-                                          icon: Icon(
-                                            Icons.file_present,
-                                            color: Colors.black,
-                                          ),
-                                          onPressed: () {
-                                            if (snapshot
-                                                .data[index].billFile.isEmpty) {
-                                              showInSnackBar("No Bill Found!");
-                                              return null;
-                                            }
-                                            openBill(
-                                                snapshot.data[index].billFile,
-                                                snapshot.data[index].billFile
-                                                    .split("/")
-                                                    .last);
-                                          },
                                         ),
                                         Container(
-                                            width: 70.0,
+                                          width: 30.0,
+                                          child: IconButton(
+                                            icon: Icon(
+                                              Icons.file_present,
+                                              color: Colors.black,
+                                            ),
+                                            onPressed: () {
+                                              if (snapshot
+                                                  .data[index].billFile.isEmpty) {
+                                                showInSnackBar("No Bill Found!");
+                                                return null;
+                                              }
+                                              openBill(
+                                                  snapshot.data[index].billFile,
+                                                  snapshot.data[index].billFile
+                                                      .split("/")
+                                                      .last);
+                                            },
+                                          ),
+                                        ),
+                                        Container(
+                                          alignment: Alignment.center,
+                                            width: 90.0,
                                             child: Text("₹ ${double.parse(snapshot.data[index].amount).toStringAsFixed(2)}",
                                                 style: TextStyle(
                                                     fontWeight: FontWeight.bold))),

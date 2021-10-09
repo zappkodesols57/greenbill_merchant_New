@@ -130,8 +130,8 @@ class _CouponsListState extends State<CouponsList> {
                                     snapshot.data[index].couponName,
                                     style: TextStyle(fontSize: 15.0, fontFamily: "PoppinsMedium", fontWeight: FontWeight.bold)
                                 ),
-                                subtitle: Text('Coupon Code : ${snapshot.data[index].couponCode}\nValid Till : ${snapshot.data[index].validThrough}',
-                                    style: TextStyle(fontSize: 10.0)) ,
+                                subtitle: Text('Coupon Code : ${snapshot.data[index].couponCode}\nValid Till : ${snapshot.data[index].validThrough}\nTotal Users : ${snapshot.data[index].totalUser}\nTotal Amount : ${snapshot.data[index].totalAmt}',
+                                    style: TextStyle(fontSize: 12.0)) ,
                                 trailing: Wrap(
                                   spacing: 30, // space between two icons
                                   crossAxisAlignment:
@@ -139,7 +139,7 @@ class _CouponsListState extends State<CouponsList> {
                                   children: <Widget>[
 
                                     Text('\nRedeemed : ${snapshot.data[index].couponRedeem}\nClicks : ${snapshot.data[index].cout}',
-                                    style: TextStyle(fontSize: 10.0,color: Colors.black54)),
+                                    style: TextStyle(fontSize: 12.0,color: Colors.black54)),
 
                                     IconButton(
                                       icon: Icon(

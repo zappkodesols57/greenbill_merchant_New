@@ -151,7 +151,7 @@ class _ReceiptState extends State<Receipt>{
               TextStyle(color: Colors.white, fontFamily: "PoppinsBold"),
             ),
             trailing: Wrap(
-              spacing: 12, // space between two icons
+              spacing: 16, // space between two icons
               crossAxisAlignment: WrapCrossAlignment.center,
               children: <Widget>[
                 Container(
@@ -236,33 +236,41 @@ class _ReceiptState extends State<Receipt>{
                                           color: Colors.grey)),
                                   isThreeLine: false,
                                   trailing: Wrap(
-                                    spacing: 13, // space between two icons
+                                    spacing: 17, // space between two icons
                                     alignment: WrapAlignment.end,
                                     crossAxisAlignment: WrapCrossAlignment.center,
                                     children: <Widget>[
-                                      IconButton(
-                                        icon: Icon(
-                                          Icons.sms_outlined,
-                                          color: Colors.black,
+                                      Container(
+                                        width:30.0,
+                                        child: IconButton(
+                                          icon: Icon(
+                                            Icons.sms_outlined,
+                                            color: Colors.black,
+                                          ),
+                                          onPressed: () {
+                                            send(snapshot.data[index].id, snapshot.data[index].mobileNumber);
+                                          },
                                         ),
-                                        onPressed: () {
-                                          send(snapshot.data[index].id, snapshot.data[index].mobileNumber);
-                                        },
                                       ),
                                       Container(
-                                          width: 70.0,
+                                          width: 90.0,
                                           alignment: Alignment.center,
                                           child: Text(
                                               "₹ ${snapshot.data[index].total.toStringAsFixed(2)}",
                                               style: TextStyle(fontWeight: FontWeight.bold))),
-                                      IconButton(
-                                        icon: Icon(
-                                          Icons.delete_outline,
-                                          color: kPrimaryColorRed,
+
+                                      Container(
+                                        width: 40.0,
+                                        alignment: Alignment.centerLeft,
+                                        child: IconButton(
+                                          icon: Icon(
+                                            Icons.delete_outline,
+                                            color: kPrimaryColorRed,
+                                          ),
+                                          onPressed: () {
+                                            delete(snapshot.data[index].id);
+                                          },
                                         ),
-                                        onPressed: () {
-                                          delete(snapshot.data[index].id);
-                                        },
                                       ),
                                     ],
                                   ),

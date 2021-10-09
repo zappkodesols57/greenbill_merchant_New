@@ -7,6 +7,7 @@ import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:greenbill_merchant/src/models/model_analysis.dart';
 import 'package:greenbill_merchant/src/models/model_doughnutChart.dart';
+import 'package:greenbill_merchant/src/models/model_exeDetaills.dart';
 import 'package:greenbill_merchant/src/models/model_normalBusiness.dart';
 import 'package:greenbill_merchant/src/models/model_parkingDashboard.dart';
 import 'package:greenbill_merchant/src/models/model_petrolDashboard.dart';
@@ -29,6 +30,9 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
+  int printed = 0,
+      sentbills = 0,
+      sendandprint = 0;
   String token,
       id,
       bussinessID,
@@ -87,6 +91,7 @@ class _HomePageState extends State<HomePage> {
       loadParkingData();
     if (storeCatID != "11" && storeCatID != "12") loadNormal();
     getAnalysisa();
+    load();
   }
 
   loadParkingData() async {
@@ -141,6 +146,32 @@ class _HomePageState extends State<HomePage> {
       totalSale = normalBusinessFromJson(res.body).data.totalSales;
       avgSale = normalBusinessFromJson(res.body).data.averageSales;
       return normalBusinessFromJson(res.body).data;
+    } else {
+      throw Exception('Failed to load Data');
+    }
+  }
+
+
+  load() async {
+    final param = {
+      "m_business_id": storeID,
+    };
+    final res = await http.post(
+      "http://157.230.228.250/merchant-exe-details-api/",
+      body: param,
+      headers: {HttpHeaders.authorizationHeader: "Token $token"},
+    );
+    print(res.body);
+    print(res.statusCode);
+    if (200 == res.statusCode) {
+      setState(() {
+        _headerBusiness = false;
+      print(exeDetailsFromJson(res.body).printnsent);
+      printed = exeDetailsFromJson(res.body).printed;
+      sentbills = exeDetailsFromJson(res.body).sent;
+      sendandprint = exeDetailsFromJson(res.body).printnsent;
+      });
+      return exeDetailsFromJson(res.body);
     } else {
       throw Exception('Failed to load Data');
     }
@@ -630,7 +661,7 @@ class _HomePageState extends State<HomePage> {
                     Row(
                       children: [
                         Container(
-                          padding: EdgeInsets.fromLTRB(5, 10, 5, 0),
+                          padding: EdgeInsets.fromLTRB(5, 5, 5, 0),
                           width: MediaQuery.of(context).size.width / 2,
                           child: Card(
                             elevation: 10,
@@ -643,7 +674,7 @@ class _HomePageState extends State<HomePage> {
                                 Container(
                                   width: size.width * 0.4,
                                   padding: EdgeInsets.only(
-                                      top: 10.0,
+                                      top: 5.0,
                                       bottom: 0.0,
                                       left: 5.0,
                                       right: 5.0),
@@ -651,7 +682,7 @@ class _HomePageState extends State<HomePage> {
                                     children: <Widget>[
                                       Container(
                                         padding: EdgeInsets.only(
-                                            top: 10.0,
+                                            top: 5.0,
                                             bottom: 0.0,
                                             left: 10.0,
                                             right: 0.0),
@@ -665,8 +696,7 @@ class _HomePageState extends State<HomePage> {
                                               Constants.highlightColor,
                                           child: Icon(
                                             FontAwesomeIcons.list,
-                                            color: kPrimaryColorBlue
-                                                .withOpacity(0.6),
+                                            color: kPrimaryColorBlue,
                                           ),
                                         ),
                                       ),
@@ -691,16 +721,15 @@ class _HomePageState extends State<HomePage> {
                                 Center(
                                   child: Container(
                                     padding: EdgeInsets.only(
-                                        top: 10.0,
-                                        bottom: 10.0,
+                                        top: 5.0,
+                                        bottom: 5.0,
                                         left: 0.0,
                                         right: 0.0),
                                     child: Text(
                                       todayTransaction.toString(),
                                       textAlign: TextAlign.center,
                                       style: TextStyle(
-                                          color: kPrimaryColorBlue
-                                              .withOpacity(0.6),
+                                          color: kPrimaryColorBlue,
                                           fontSize: 15.0,
                                           fontFamily: "PoppinsLight"),
                                     ),
@@ -711,7 +740,7 @@ class _HomePageState extends State<HomePage> {
                           ),
                         ),
                         Container(
-                          padding: EdgeInsets.fromLTRB(5, 10, 5, 0),
+                          padding: EdgeInsets.fromLTRB(5, 5, 5, 0),
                           width: MediaQuery.of(context).size.width / 2,
                           child: Card(
                             elevation: 10,
@@ -724,7 +753,7 @@ class _HomePageState extends State<HomePage> {
                                 Container(
                                   width: size.width * 0.4,
                                   padding: EdgeInsets.only(
-                                      top: 10.0,
+                                      top: 5.0,
                                       bottom: 0.0,
                                       left: 5.0,
                                       right: 5.0),
@@ -732,7 +761,7 @@ class _HomePageState extends State<HomePage> {
                                     children: <Widget>[
                                       Container(
                                         padding: EdgeInsets.only(
-                                            top: 10.0,
+                                            top: 5.0,
                                             bottom: 0.0,
                                             left: 10.0,
                                             right: 0.0),
@@ -740,14 +769,11 @@ class _HomePageState extends State<HomePage> {
                                           innerShadow: false,
                                           outerShadow: true,
                                           backgroundColor: Colors.white,
-                                          shadowColor:
-                                              Constants.softShadowColor,
-                                          highlightColor:
-                                              Constants.highlightColor,
+                                          shadowColor: Constants.softShadowColor,
+                                          highlightColor: Constants.highlightColor,
                                           child: Icon(
                                             FontAwesomeIcons.rupeeSign,
-                                            color: Colors.deepOrange
-                                                .withOpacity(0.6),
+                                            color: Colors.deepOrange,
                                           ),
                                         ),
                                       ),
@@ -772,16 +798,15 @@ class _HomePageState extends State<HomePage> {
                                 Center(
                                   child: Container(
                                     padding: EdgeInsets.only(
-                                        top: 10.0,
-                                        bottom: 10.0,
+                                        top: 5.0,
+                                        bottom: 5.0,
                                         left: 0.0,
                                         right: 0.0),
                                     child: Text(
                                       AvgTransaction.toString(),
                                       textAlign: TextAlign.center,
                                       style: TextStyle(
-                                          color: Colors.deepOrange
-                                              .withOpacity(0.6),
+                                          color: Colors.deepOrange,
                                           fontSize: 15.0,
                                           fontFamily: "PoppinsLight"),
                                     ),
@@ -796,7 +821,7 @@ class _HomePageState extends State<HomePage> {
                     Row(
                       children: [
                         Container(
-                          padding: EdgeInsets.fromLTRB(5, 10, 5, 0),
+                          padding: EdgeInsets.fromLTRB(5, 5, 5, 0),
                           width: MediaQuery.of(context).size.width / 2,
                           child: Card(
                             elevation: 10,
@@ -809,7 +834,7 @@ class _HomePageState extends State<HomePage> {
                                 Container(
                                   width: size.width * 0.4,
                                   padding: EdgeInsets.only(
-                                      top: 10.0,
+                                      top: 5.0,
                                       bottom: 0.0,
                                       left: 5.0,
                                       right: 5.0),
@@ -817,7 +842,7 @@ class _HomePageState extends State<HomePage> {
                                     children: <Widget>[
                                       Container(
                                         padding: EdgeInsets.only(
-                                            top: 10.0,
+                                            top: 5.0,
                                             bottom: 0.0,
                                             left: 10.0,
                                             right: 0.0),
@@ -830,9 +855,9 @@ class _HomePageState extends State<HomePage> {
                                           highlightColor:
                                               Constants.highlightColor,
                                           child: Icon(
-                                            Icons.add_circle_outline,
+                                            FontAwesomeIcons.chartLine,
                                             color:
-                                                Colors.green.withOpacity(0.6),
+                                                Colors.green,
                                           ),
                                         ),
                                       ),
@@ -840,7 +865,7 @@ class _HomePageState extends State<HomePage> {
                                         padding: EdgeInsets.only(
                                             top: 0.0,
                                             bottom: 0.0,
-                                            left: 25.0,
+                                            left: 30.0,
                                             right: 0.0),
                                         child: Text(
                                           "Total\nSales",
@@ -857,15 +882,15 @@ class _HomePageState extends State<HomePage> {
                                 Center(
                                   child: Container(
                                     padding: EdgeInsets.only(
-                                        top: 10.0,
-                                        bottom: 10.0,
+                                        top: 5.0,
+                                        bottom: 5.0,
                                         left: 0.0,
                                         right: 0.0),
                                     child: Text(
                                       totalSale.toString(),
                                       textAlign: TextAlign.center,
                                       style: TextStyle(
-                                          color: Colors.green.withOpacity(0.6),
+                                          color: Colors.green,
                                           fontSize: 15.0,
                                           fontFamily: "PoppinsLight"),
                                     ),
@@ -876,7 +901,7 @@ class _HomePageState extends State<HomePage> {
                           ),
                         ),
                         Container(
-                          padding: EdgeInsets.fromLTRB(5, 10, 5, 0),
+                          padding: EdgeInsets.fromLTRB(5, 5, 5, 0),
                           width: MediaQuery.of(context).size.width / 2,
                           child: Card(
                             elevation: 10,
@@ -889,7 +914,7 @@ class _HomePageState extends State<HomePage> {
                                 Container(
                                   width: size.width * 0.4,
                                   padding: EdgeInsets.only(
-                                      top: 10.0,
+                                      top: 5.0,
                                       bottom: 0.0,
                                       left: 5.0,
                                       right: 5.0),
@@ -897,7 +922,7 @@ class _HomePageState extends State<HomePage> {
                                     children: <Widget>[
                                       Container(
                                         padding: EdgeInsets.only(
-                                            top: 10.0,
+                                            top: 5.0,
                                             bottom: 0.0,
                                             left: 10.0,
                                             right: 0.0),
@@ -911,7 +936,7 @@ class _HomePageState extends State<HomePage> {
                                               Constants.highlightColor,
                                           child: Icon(
                                             FontAwesomeIcons.percentage,
-                                            color: Colors.pink.withOpacity(0.6),
+                                            color: Colors.pink,
                                           ),
                                         ),
                                       ),
@@ -936,15 +961,178 @@ class _HomePageState extends State<HomePage> {
                                 Center(
                                   child: Container(
                                     padding: EdgeInsets.only(
-                                        top: 10.0,
-                                        bottom: 10.0,
+                                        top: 5.0,
+                                        bottom: 5.0,
                                         left: 0.0,
                                         right: 0.0),
                                     child: Text(
                                       avgSale.toString(),
                                       textAlign: TextAlign.start,
                                       style: TextStyle(
-                                          color: Colors.pink.withOpacity(0.6),
+                                          color: Colors.pink,
+                                          fontSize: 15.0,
+                                          fontFamily: "PoppinsLight"),
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                    Row(
+                      children: [
+                        Container(
+                          padding: EdgeInsets.fromLTRB(5, 5, 5, 0),
+                          width: MediaQuery.of(context).size.width / 2,
+                          child: Card(
+                            elevation: 10,
+                            color: Colors.white,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10.0),
+                            ),
+                            child: Column(
+                              children: <Widget>[
+                                Container(
+                                  width: size.width * 0.4,
+                                  padding: EdgeInsets.only(
+                                      top: 5.0,
+                                      bottom: 0.0,
+                                      left: 5.0,
+                                      right: 5.0),
+                                  child: Row(
+                                    children: <Widget>[
+                                      Container(
+                                        padding: EdgeInsets.only(
+                                            top: 5.0,
+                                            bottom: 0.0,
+                                            left: 5.0,
+                                            right: 0.0),
+                                        child: NeuomorphicCircle(
+                                          innerShadow: false,
+                                          outerShadow: true,
+                                          backgroundColor: Colors.white,
+                                          shadowColor:
+                                              Constants.softShadowColor,
+                                          highlightColor:
+                                              Constants.highlightColor,
+                                          child: Icon(
+                                            FontAwesomeIcons.print,
+                                            color:
+                                            kPrimaryColorBlue,
+                                          ),
+                                        ),
+                                      ),
+                                      Container(
+                                        padding: EdgeInsets.only(
+                                            top: 0.0,
+                                            bottom: 0.0,
+                                            left: 30.0,
+                                            right: 0.0),
+                                        child: Text(
+                                          "Bills\nPrinted",
+                                          textAlign: TextAlign.center,
+                                          style: TextStyle(
+                                              color: Colors.black,
+                                              fontSize: 12.0,
+                                              fontFamily: "PoppinsLight"),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                Center(
+                                  child: Container(
+                                    padding: EdgeInsets.only(
+                                        top: 5.0,
+                                        bottom: 5.0,
+                                        left: 0.0,
+                                        right: 0.0),
+                                    child: Text(
+                                      printed.toString(),
+                                      textAlign: TextAlign.center,
+                                      style: TextStyle(
+                                          color: kPrimaryColorBlue,
+                                          fontSize: 15.0,
+                                          fontFamily: "PoppinsLight"),
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                        Container(
+                          padding: EdgeInsets.fromLTRB(5, 5, 5, 0),
+                          width: MediaQuery.of(context).size.width / 2,
+                          child: Card(
+                            elevation: 10,
+                            color: Colors.white,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10.0),
+                            ),
+                            child: Column(
+                              children: <Widget>[
+                                Container(
+                                  width: size.width * 0.4,
+                                  padding: EdgeInsets.only(
+                                      top: 5.0,
+                                      bottom: 0.0,
+                                      left: 5.0,
+                                      right: 5.0),
+                                  child: Row(
+                                    children: <Widget>[
+                                      Container(
+                                        padding: EdgeInsets.only(
+                                            top: 5.0,
+                                            bottom: 0.0,
+                                            left: 10.0,
+                                            right: 0.0),
+                                        child: NeuomorphicCircle(
+                                          innerShadow: false,
+                                          outerShadow: true,
+                                          backgroundColor: Colors.white,
+                                          shadowColor:
+                                              Constants.softShadowColor,
+                                          highlightColor:
+                                              Constants.highlightColor,
+                                          child: Icon(
+                                            FontAwesomeIcons.paperPlane,
+                                            color: kPrimaryColorBlue,
+                                          ),
+                                        ),
+                                      ),
+                                      Container(
+                                        padding: EdgeInsets.only(
+                                            top: 0.0,
+                                            bottom: 0.0,
+                                            left: 15.0,
+                                            right: 0.0),
+                                        child: Text(
+                                          "Bills\nSent Digitally",
+                                          textAlign: TextAlign.center,
+                                          style: TextStyle(
+                                              color: Colors.black,
+                                              fontSize: 12.0,
+                                              fontFamily: "PoppinsLight"),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                Center(
+                                  child: Container(
+                                    padding: EdgeInsets.only(
+                                        top: 5.0,
+                                        bottom: 5.0,
+                                        left: 0.0,
+                                        right: 0.0),
+                                    child: Text(
+                                      sentbills.toString(),
+                                      textAlign: TextAlign.start,
+                                      style: TextStyle(
+                                          color: kPrimaryColorBlue,
                                           fontSize: 15.0,
                                           fontFamily: "PoppinsLight"),
                                     ),
@@ -957,7 +1145,119 @@ class _HomePageState extends State<HomePage> {
                       ],
                     ),
 
-                    SizedBox(height: 15.0,),
+
+                    Row(
+                      children: [
+                        Container(
+                          padding: EdgeInsets.fromLTRB(5, 5, 5, 0),
+                          width: MediaQuery.of(context).size.width,
+                          child: Card(
+                            elevation: 10,
+                            color: Colors.white,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10.0),
+                            ),
+                            child: Column(
+                              children: <Widget>[
+                                Container(
+                                  width: size.width * 0.9,
+                                  padding: EdgeInsets.only(
+                                      top: 10.0,
+                                      bottom: 10.0,
+                                      left: 0.0,
+                                      right: 5.0),
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                    children: <Widget>[
+                                      Row(
+                                        children: [
+                                          Container(
+                                            padding: EdgeInsets.only(
+                                                top: 5.0,
+                                                bottom: 5.0,
+                                                left: 0.0,
+                                                right: 0.0),
+                                            child: NeuomorphicCircle(
+                                              innerShadow: false,
+                                              outerShadow: true,
+                                              backgroundColor: Colors.white,
+                                              shadowColor:
+                                                  Constants.softShadowColor,
+                                              highlightColor:
+                                                  Constants.highlightColor,
+                                              child: Icon(
+                                                FontAwesomeIcons.print,
+                                                color:
+                                                kPrimaryColorBlue,
+                                              ),
+                                            ),
+                                          ),
+                                          Container(
+                                            padding: EdgeInsets.only(
+                                                top: 5.0,
+                                                bottom: 5.0,
+                                                left: 5.0,
+                                                right: 0.0),
+                                            child: NeuomorphicCircle(
+                                              innerShadow: false,
+                                              outerShadow: true,
+                                              backgroundColor: Colors.white,
+                                              shadowColor:
+                                                  Constants.softShadowColor,
+                                              highlightColor:
+                                                  Constants.highlightColor,
+                                              child: Icon(
+                                                FontAwesomeIcons.paperPlane,
+                                                color:
+                                                    kPrimaryColorBlue,
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                      Container(
+                                        padding: EdgeInsets.only(
+                                            top: 0.0,
+                                            bottom: 0.0,
+                                            left: 10.0,
+                                            right: 0.0),
+                                        child: Text(
+                                          "Bills Printed & Sent",
+                                          textAlign: TextAlign.center,
+                                          style: TextStyle(
+                                              color: Colors.black,
+                                              fontSize: 12.0,
+                                              fontFamily: "PoppinsLight"),
+                                        ),
+                                      ),
+
+                                      Container(
+                                        alignment: Alignment.center,
+                                        padding: EdgeInsets.only(
+                                            top: 5.0,
+                                            bottom: 5.0,
+                                            left: 0.0,
+                                            right: 0.0),
+                                        child: Text(
+                                          sendandprint.toString(),
+                                          textAlign: TextAlign.center,
+                                          style: TextStyle(
+                                              color: kPrimaryColorBlue,
+                                              fontSize: 15.0,
+                                              fontFamily: "PoppinsLight"),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+
+                    SizedBox(height: 10.0,),
 
                     Card(
                       elevation: 10,

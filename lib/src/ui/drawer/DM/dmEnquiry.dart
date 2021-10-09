@@ -555,6 +555,7 @@ class DmEnquiryState extends State<DmEnquiry> {
         _chosenValue = null;
         dropdownInt = "Select Interest";
         cmtController.clear();
+        Navigator.pop(context);
       } else {
         print(data.status);
         showInSnackBar(data.message);

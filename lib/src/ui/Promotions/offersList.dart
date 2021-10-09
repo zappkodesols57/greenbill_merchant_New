@@ -151,7 +151,7 @@ class _OffersListState extends State<OffersList> {
                 else if (snapshot.hasError) {
                   print(snapshot.error);
                   return Center(
-                    child: Text("No Offers Found"),
+                    child: Text("No Current Offer Available"),
                   );
                 } else {
                   if (snapshot.hasData && snapshot.data.isNotEmpty) {
@@ -198,7 +198,7 @@ class _OffersListState extends State<OffersList> {
                     );
                   } else //`snapShot.hasData` can be false if the `snapshot.data` is null
                     return Center(
-                      child: Text("No Data Found"),
+                      child: Text("No Current Offer Available"),
                     );
                 }
               },

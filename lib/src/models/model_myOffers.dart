@@ -48,14 +48,11 @@ class Datum {
     this.customerCity,
     this.customerState,
     this.customerArea,
-    this.merchantState,
-    this.merchantDistrict,
-    this.merchantCity,
-    this.merchantArea,
     this.offerAmount,
     this.cout,
-    this.merchantUser,
-    this.merchantBusinessId,
+    this.totalUser,
+    this.totalAmt,
+    this.activeStatus,
   });
 
   int id;
@@ -76,14 +73,11 @@ class Datum {
   dynamic customerCity;
   dynamic customerState;
   dynamic customerArea;
-  dynamic merchantState;
-  dynamic merchantDistrict;
-  dynamic merchantCity;
-  dynamic merchantArea;
   String offerAmount;
   int cout;
-  int merchantUser;
-  int merchantBusinessId;
+  int totalUser;
+  int totalAmt;
+  bool activeStatus;
 
   factory Datum.fromJson(Map<String, dynamic> json) => Datum(
     id: json["id"],
@@ -104,14 +98,11 @@ class Datum {
     customerCity: json["customer_city"],
     customerState: json["customer_state"],
     customerArea: json["customer_area"],
-    merchantState: json["merchant_state"],
-    merchantDistrict: json["merchant_district"],
-    merchantCity: json["merchant_city"],
-    merchantArea: json["merchant_area"],
     offerAmount: json["offer_amount"],
     cout: json["cout"],
-    merchantUser: json["merchant_user"] == null ? null : json["merchant_user"],
-    merchantBusinessId: json["merchant_business_id"],
+    activeStatus: json["active_status"],
+    totalUser: json["total_users"],
+    totalAmt: json["total_amount"],
   );
 
   Map<String, dynamic> toJson() => {
@@ -133,13 +124,11 @@ class Datum {
     "customer_city": customerCity,
     "customer_state": customerState,
     "customer_area": customerArea,
-    "merchant_state": merchantState,
-    "merchant_district": merchantDistrict,
-    "merchant_city": merchantCity,
-    "merchant_area": merchantArea,
     "offer_amount": offerAmount,
     "cout": cout,
-    "merchant_user": merchantUser == null ? null : merchantUser,
-    "merchant_business_id": merchantBusinessId,
+    "active_status": activeStatus,
+    "total_users": totalUser,
+    "total_amount": totalAmt,
+
   };
 }

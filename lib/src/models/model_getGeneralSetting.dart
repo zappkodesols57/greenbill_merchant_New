@@ -55,6 +55,17 @@ class Data {
     this.mBusinessLogo,
     this.mBusinessStamp,
     this.mDigitalSignature,
+    this.webSiteUrl,
+    this.busNameBilling,
+    this.billingAdd,
+    this.billingEmail,
+    this.billingPhone,
+    this.vatNo,
+    this.aadharNo,
+    this.entityAccount,
+    this.entityBankAc,
+    this.firstName,
+    this.lastName,
   });
 
   String mBusinessName;
@@ -83,6 +94,18 @@ class Data {
   String mBusinessStamp;
   String mDigitalSignature;
 
+  String webSiteUrl;
+  String busNameBilling;
+  String billingAdd;
+  String billingEmail;
+  String billingPhone;
+  String vatNo;
+  String aadharNo;
+  String entityAccount;
+  String entityBankAc;
+  String firstName;
+  String lastName;
+
   factory Data.fromJson(Map<String, dynamic> json) => Data(
     mBusinessName: json["m_business_name"],
     mBusinessCategoryId: json["m_business_category_id"],
@@ -109,6 +132,17 @@ class Data {
     mBusinessLogo: json["m_business_logo"],
     mBusinessStamp: json["m_business_stamp"],
     mDigitalSignature: json["m_digital_signature"],
+    webSiteUrl: json["m_website_url"],
+    busNameBilling: json["m_business_name_for_billing"],
+    billingAdd: json["m_billing_address"],
+    billingEmail: json["m_billing_email"],
+    billingPhone: json["m_billing_phone"],
+    vatNo: json["m_vat_tin_number"],
+    aadharNo: json["m_aadhaar_number"],
+    entityAccount: json["Entity_Account_m"],
+    entityBankAc: json["Entity_Bank_Account_m"],
+    firstName: json["first_name"],
+    lastName: json["last_name"],
   );
 
   Map<String, dynamic> toJson() => {
@@ -137,5 +171,16 @@ class Data {
     "m_business_logo": mBusinessLogo,
     "m_business_stamp": mBusinessStamp,
     "m_digital_signature": mDigitalSignature,
+    "m_website_url": webSiteUrl,
+    "m_business_name_for_billing": busNameBilling,
+    "m_billing_address": billingAdd,
+    "m_billing_email": billingEmail,
+    "m_billing_phone": billingPhone,
+    "m_vat_tin_number": vatNo,
+    "m_aadhaar_number": aadharNo,
+    "Entity_Account_m": entityAccount,
+    "Entity_Bank_Account_m": entityBankAc,
+    "first_name": firstName,
+    "last_name": lastName,
   };
 }

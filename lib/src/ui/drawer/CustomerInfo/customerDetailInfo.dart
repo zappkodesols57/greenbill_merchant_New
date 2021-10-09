@@ -389,17 +389,18 @@ class CustomerDetailInfoState extends State<CustomerDetailInfo> {
                           ListTile(
                             tileColor: kPrimaryColorBlue,
                             title: Text(
-                              "Bill Date",
+                              " Bill Date",
                               textAlign: TextAlign.start,
                               style: TextStyle(
                                   color: Colors.white,
                                   fontFamily: "PoppinsBold"),
                             ),
                             trailing: Wrap(
-                              spacing: 12, // space between two icons
+                              spacing: 19, // space between two icons
                               crossAxisAlignment: WrapCrossAlignment.center,
                               children: <Widget>[
                                 Container(
+                                  alignment: Alignment.centerRight,
                                   width: 50.0,
                                   child: Text(
                                     "Send",
@@ -420,7 +421,7 @@ class CustomerDetailInfoState extends State<CustomerDetailInfo> {
                                   ),
                                 ),
                                 Container(
-                                  width: 80.0,
+                                  width: 90.0,
                                   child: Text(
                                     "Amount",
                                     textAlign: TextAlign.center,
@@ -447,7 +448,7 @@ class CustomerDetailInfoState extends State<CustomerDetailInfo> {
                                               .data.allBills[index].billDate,
                                           style: TextStyle(fontSize: 15.0)),
                                       trailing: Wrap(
-                                        spacing: 12,
+                                        spacing: 15,
                                         // space between two icons
                                         crossAxisAlignment:
                                             WrapCrossAlignment.center,
@@ -495,9 +496,10 @@ class CustomerDetailInfoState extends State<CustomerDetailInfo> {
                                             },
                                           ),
                                           Container(
-                                            width: 80.0,
+                                            alignment: Alignment.center,
+                                            width: 90.0,
                                             child: Text(
-                                                "    ₹ ${double.parse(snapshot.data.allBills[index].amount).toStringAsFixed(2)}",
+                                                "₹ ${double.parse(snapshot.data.allBills[index].amount).toStringAsFixed(2)}",
                                                 style: TextStyle(
                                                     fontWeight:
                                                         FontWeight.bold)),
@@ -554,20 +556,20 @@ class CustomerDetailInfoState extends State<CustomerDetailInfo> {
                             child: ListTile(
                               tileColor: kPrimaryColorBlue,
                               title: Text(
-                                "     Date",
-                                textAlign: TextAlign.start,
+                                "Date",
+                                textAlign: TextAlign.center,
                                 style: TextStyle(
                                     color: Colors.white,
                                     fontFamily: "PoppinsBold"),
                               ),
                               trailing: Wrap(
-                                spacing: 15, // space between two icons
+                                spacing: 18, // space between two icons
                                 crossAxisAlignment: WrapCrossAlignment.center,
                                 children: <Widget>[
                                   Container(
-                                    width: 50.0,
+                                    width: 80.0,
                                     child: Text(
-                                      "Memo",
+                                      "Memo No.",
                                       textAlign: TextAlign.center,
                                       style: TextStyle(
                                           color: Colors.white,
@@ -615,9 +617,10 @@ class CustomerDetailInfoState extends State<CustomerDetailInfo> {
                                             WrapCrossAlignment.center,
                                         children: <Widget>[
                                           Container(
-                                            width: 40.0,
+                                            alignment: Alignment.center,
+                                            width: 80.0,
                                             child: Text(
-                                                "${snapshot.data.datad[index].memoNo}",
+                                                "${snapshot.data.datad[index].memoNo} ",
                                                 style: TextStyle(
                                                     fontWeight:
                                                         FontWeight.bold)),
@@ -632,9 +635,10 @@ class CustomerDetailInfoState extends State<CustomerDetailInfo> {
                                             },
                                           ),
                                           Container(
+                                            alignment: Alignment.center,
                                             width: 80.0,
                                             child: Text(
-                                                "   ₹ ${double.parse(snapshot.data.datad[index].amount).toStringAsFixed(2)}",
+                                                "₹ ${double.parse(snapshot.data.datad[index].amount).toStringAsFixed(2)}",
                                                 style: TextStyle(
                                                     fontWeight:
                                                         FontWeight.bold)),

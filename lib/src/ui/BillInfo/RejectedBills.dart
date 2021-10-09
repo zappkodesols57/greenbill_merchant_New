@@ -157,7 +157,7 @@ class BillRejectedState extends State<BillRejected> {
               ),
               trailing:
               Container(
-                width: 100.0,
+                width: 90.0,
                 child: Text(
                   "Amount",
                   textAlign: TextAlign.center,
@@ -213,14 +213,14 @@ class BillRejectedState extends State<BillRejected> {
                                     isThreeLine: false,
 
                                     trailing: Wrap(
-                                      spacing: 12, // space between two icons
+                                      spacing: 18, // space between two icons
                                       crossAxisAlignment:
                                       WrapCrossAlignment.center,
                                       children: <Widget>[
 
-
                                         Container(
-                                            width: 70.0,
+                                          alignment: Alignment.center,
+                                            width: 80.0,
                                             child: Text("₹ ${double.parse(snapshot.data[index].amount).toStringAsFixed(2)}",
                                                 style: TextStyle(
                                                     fontWeight:

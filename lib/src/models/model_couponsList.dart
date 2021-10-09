@@ -46,6 +46,8 @@ class Datum {
     this.amountIn,
     this.cout,
     this.merchantId,
+    this.totalUser,
+    this.totalAmt,
   });
 
   int id;
@@ -64,6 +66,8 @@ class Datum {
   int cout;
   String amountIn;
   int merchantId;
+  String totalUser;
+  int totalAmt;
 
   factory Datum.fromJson(Map<String, dynamic> json) => Datum(
     id: json["id"],
@@ -82,6 +86,8 @@ class Datum {
     couponValidForUser: json["coupon_valid_for_user"],
     amountIn: json["amount_in"],
     merchantId: json["merchant_id"],
+    totalUser: json["total_customers"],
+    totalAmt: json["total_amount"],
   );
 
   Map<String, dynamic> toJson() => {
@@ -101,5 +107,7 @@ class Datum {
     "coupon_valid_for_user": couponValidForUser,
     "amount_in": amountIn,
     "merchant_id": merchantId,
+    "total_customers": totalUser,
+    "total_amount": totalAmt,
   };
 }

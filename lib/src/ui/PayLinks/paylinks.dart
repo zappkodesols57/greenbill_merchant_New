@@ -119,7 +119,7 @@ class _PayLinksState extends State<PayLinks> {
               LengthLimitingTextInputFormatter(50)],
             inputType: TextInputType.emailAddress,
             prefixIcon: CupertinoIcons.mail,
-            hintText: "Email",
+            hintText: "Email *",
             padding: EdgeInsets.only(top: 0.0, right: 15.0, left: 15.0, bottom: 10.0),
           ),
           CustomTextField(
@@ -299,6 +299,11 @@ class _PayLinksState extends State<PayLinks> {
       showInSnackBar("Please enter Name");
       return null;
     }
+    if(emailController.text.isEmpty){
+      showInSnackBar("Please enter Email");
+      return null;
+    }
+
     if (emailController.text.isNotEmpty) {
       if (emailController.text.contains('com') ||
           emailController.text.contains('net') ||

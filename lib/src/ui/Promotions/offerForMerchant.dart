@@ -135,28 +135,23 @@ class _MyOfferListState extends State<MyOfferList> {
                                     "Audience : "+snapshot.data[index].offerType.toString(),
                                     style: TextStyle(fontSize: 13.0, fontFamily: "PoppinsMedium", fontWeight: FontWeight.bold)
                                 ),
-                                subtitle: Text((snapshot.data[index].status=="0")?'Status : Waiting For Approval \nValid Till : ${snapshot.data[index].validThrough}': (snapshot.data[index].status == "2") ?'Status : Disapproved \nValid Till : ${snapshot.data[index].validThrough}' :'Status : Approved \nValid Till : ${snapshot.data[index].validThrough}',
-                                    style: TextStyle(fontSize: 10.0)),
+                                subtitle: Text((snapshot.data[index].status=="0")?'Status : Waiting For Approval \nValid Till : ${snapshot.data[index].validThrough}\nTotal Users : ${snapshot.data[index].totalUser}\nTotal Amount : ${snapshot.data[index].totalAmt}': (snapshot.data[index].status == "2") ?'Status : Disapproved \nValid Till : ${snapshot.data[index].validThrough}\nTotal Users : ${snapshot.data[index].totalUser}\nTotal Amount : ${snapshot.data[index].totalAmt}' :'Status : Approved \nValid Till : ${snapshot.data[index].validThrough}\nTotal Users : ${snapshot.data[index].totalUser}\nTotal Amount : ${snapshot.data[index].totalAmt}',
+                                    style: TextStyle(fontSize: 12.0)),
                                 trailing: Wrap(
                                   spacing: 30, // space between two icons
                                   crossAxisAlignment:
                                   WrapCrossAlignment.center,
                                   children: <Widget>[
 
+                                    (snapshot.data[index].status == "0") ?
                                     Text(
                                         'Clicks : ${snapshot.data[index].cout}',
-                                        style: TextStyle(fontSize: 10.0,color: Colors.black54)),
-                                    // IconButton(
-                                    //   icon: Icon(
-                                    //     CupertinoIcons.pencil_circle,
-                                    //     color: Colors.black,
-                                    //   ),
-                                    //   onPressed: () async {
-                                    //     _showLoaderDialog(context);
-                                    //     Navigator.of(context, rootNavigator: true).pop();
-                                    //     Navigator.push(context, MaterialPageRoute(builder: (context) => Offers(snapshot.data[index].offerName,snapshot.data[index].offerCaption,snapshot.data[index].offerImage,snapshot.data[index].validFrom,snapshot.data[index].validThrough,snapshot.data[index].offerType,snapshot.data[index].offerBusinessCategory,snapshot.data[index].id.toString())));
-                                    //   },
-                                    // ),
+                                        style: TextStyle(fontSize: 12.0,color: Colors.black54))
+
+                                    : Text(
+                                        'Clicks : ${snapshot.data[index].cout}\n${(snapshot.data[index].activeStatus)?"  Active" : " Expired"}',
+                                        style: TextStyle(fontSize: 12.0,color: Colors.black54)),
+
                                     IconButton(
                                       icon: Icon(
                                         CupertinoIcons.delete,
