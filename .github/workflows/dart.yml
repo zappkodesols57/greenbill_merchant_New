@@ -3,7 +3,7 @@
 # separate terms of service, privacy policy, and support
 # documentation.
 
-on: push
+on: [pull_request]
 name: Test, Build and Release apk
 jobs:
   build:
