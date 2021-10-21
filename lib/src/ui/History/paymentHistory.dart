@@ -5,9 +5,11 @@ import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:greenbill_merchant/src/Services/historyServices.dart';
 import 'package:greenbill_merchant/src/constants.dart';
 import 'package:greenbill_merchant/src/ui/BillInfo/ViewBill.dart';
+import 'package:intl/intl.dart';
 import 'package:sticky_headers/sticky_headers.dart';
 import 'package:greenbill_merchant/src/models/model_History.dart';
 import 'package:http/http.dart' as http;
@@ -27,6 +29,10 @@ class HistoryState extends State<History> {
   String amount="0";
   int totalTran=0;
   int subTotal;
+  TextEditingController fromDateController = new TextEditingController();
+  TextEditingController toDateController = new TextEditingController();
+  String fDate = "";
+  String eDate = "";
   String total="0";
   final ScrollController _controller = ScrollController();
   File media;
@@ -61,6 +67,9 @@ class HistoryState extends State<History> {
    getInfo() async {
     final param = {
       "merchant_business_id": storeID,
+      "from_date": fDate,
+      "to_date": eDate,
+
     };
     final res = await http.post("http://157.230.228.250/merchant-get-payment-history-api/",
         body: param, headers: {HttpHeaders.authorizationHeader: "Token $token"});
@@ -73,9 +82,11 @@ class HistoryState extends State<History> {
         totalTran=paymentHistoryFromJson(res.body).totalTransactionCount;
       });
       print(paymentHistoryFromJson(res.body).data.length);
-
       print("Vinay"+total.toString());
       print(totalTran);
+
+      return paymentHistoryFromJson(res.body).data.where((element) => element.business.contains(query.text) ||
+                      element.purchaseDate.contains(query.text) || element.cost.toString().contains(query.text));
 
     } else {
       throw Exception('Failed to load List');
@@ -86,20 +97,49 @@ class HistoryState extends State<History> {
   Future<List<Datum>> getBillInfoList() async {
     final param = {
       "merchant_business_id": storeID,
+      "from_date": fDate,
+      "to_date": eDate,
     };
 
     final res = await http.post("http://157.230.228.250/merchant-get-payment-history-api/",
         body: param, headers: {HttpHeaders.authorizationHeader: "Token $token"});
 
-
     if (200 == res.statusCode) {
       print(paymentHistoryFromJson(res.body).data.length);
       total=paymentHistoryFromJson(res.body).totalAmountSpent;
       totalTran=paymentHistoryFromJson(res.body).totalTransactionCount;
-      return paymentHistoryFromJson(res.body).data;
+
+      return paymentHistoryFromJson(res.body).data.where((element) => element.business.contains(query.text) ||
+          element.purchaseDate.contains(query.text) || element.cost.toString().contains(query.text)).toList();
     } else {
       throw Exception('Failed to load List');
     }
+  }
+
+  _selectDateStart(BuildContext context) async {
+    DateTime e = await showDatePicker(
+      context: context,
+      initialDate: DateTime.now(), // Refer step 1
+      firstDate: DateTime(2000),
+      lastDate: DateTime.now(),
+    );
+    fDate = '${e.year.toString()}-${e.month.toString()}-${e.day.toString()}';
+    fromDateController.text = DateFormat("dd-MM-yyyy").format(e);
+    // changeState();
+    return fDate;
+  }
+
+  _selectDateEnd(BuildContext context) async {
+    DateTime e = await showDatePicker(
+        context: context,
+        initialDate: DateTime.now(),
+        firstDate: DateTime(2000),
+        lastDate: DateTime.now());
+    eDate = '${e.year.toString()}-${e.month.toString()}-${e.day.toString()}';
+    toDateController.text = DateFormat("dd-MM-yyyy").format(e);
+    getInfo();
+    setState(() {});
+    return eDate;
   }
 
   @override
@@ -111,7 +151,170 @@ class HistoryState extends State<History> {
         body: Column(
           children: [
             Container(
-              padding: EdgeInsets.fromLTRB(10.00, 10.00, 10.00, 0),
+              width: size.width * 0.95,
+              padding: EdgeInsets.only(
+                  top: 10.0, bottom: 10.0, left: 0.0, right: 0.0),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(32),
+              ),
+              child: TextField(
+                // keyboardType: TextInputType.number,
+                controller: query,
+                // keyboardType: TextInputType.phone,
+                // maxLength: 10,
+                textCapitalization: TextCapitalization.characters,
+                onChanged: (value) {
+                  getBillInfoList();
+                  setState(() {});
+                },
+                // inputFormatters: <TextInputFormatter>[
+                //   FilteringTextInputFormatter.digitsOnly
+                // ],
+                style: TextStyle(
+                    fontFamily: "PoppinsMedium",
+                    fontSize: 15.0,
+                    color: kPrimaryColorBlue),
+                decoration: InputDecoration(
+                  border: InputBorder.none,
+                  counterStyle: TextStyle(
+                    height: double.minPositive,
+                  ),
+                  counterText: "",
+                  contentPadding: const EdgeInsets.symmetric(
+                      vertical: 13.0, horizontal: 20.0),
+                  enabledBorder: OutlineInputBorder(
+                    borderSide:
+                    BorderSide(color: kPrimaryColorBlue, width: 1.0),
+                    borderRadius: const BorderRadius.all(Radius.circular(35.0)),
+                  ),
+                  focusedBorder: new OutlineInputBorder(
+                    borderSide:
+                    BorderSide(color: kPrimaryColorBlue, width: 1.0),
+                    borderRadius: const BorderRadius.all(Radius.circular(35.0)),
+                  ),
+
+                  suffixIcon: GestureDetector(
+                    onTap: () {
+                      setState(() {});
+                    },
+                    child: Icon(
+                      CupertinoIcons.search,
+                      color: kPrimaryColorBlue,
+                      size: 25.0,
+                    ),
+                  ),
+                  hintText: "Search Payment History",
+                  hintStyle: TextStyle(
+                      fontFamily: "PoppinsMedium",
+                      fontSize: 15.0,
+                      color: kPrimaryColorBlue),
+                ),
+              ),
+            ),
+            Container(
+              width: size.width * 0.95,
+              height: 60.0,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  Container(
+                    width: size.width * 0.4,
+                    height: 50.0,
+                    padding: EdgeInsets.only(top: 5.0,bottom: 5.0),
+                    child: TextField(
+                      enableInteractiveSelection:
+                      false, // will disable paste operation
+                      focusNode: new AlwaysDisabledFocusNode(),
+                      controller: fromDateController,
+                      onTap: () {
+                        _selectDateStart(context);
+                      },
+                      style: TextStyle(
+                          fontFamily: "PoppinsBold",
+                          fontSize: 12.0,
+                          color: kPrimaryColorBlue),
+                      decoration: InputDecoration(
+                        border: InputBorder.none,
+                        contentPadding:
+                        const EdgeInsets.symmetric(vertical: 10.0),
+                        enabledBorder: OutlineInputBorder(
+                          borderSide: BorderSide(
+                              color: kPrimaryColorBlue, width: 1),
+                          borderRadius:
+                          const BorderRadius.all(Radius.circular(35.0)),
+                        ),
+                        focusedBorder: new OutlineInputBorder(
+                          borderSide: BorderSide(
+                              color: kPrimaryColorBlue, width: 1),
+                          borderRadius:
+                          const BorderRadius.all(Radius.circular(35.0)),
+                        ),
+                        prefixIcon: Icon(
+                          FontAwesomeIcons.calendar,
+                          color: kPrimaryColorBlue,
+                          size: 20.0,
+                        ),
+                        hintText: "From",
+
+                        hintStyle: TextStyle(
+                            fontFamily: "PoppinsBold",
+                            fontSize: 12.0,
+                            color: kPrimaryColorBlue),
+                      ),
+                    ),
+                  ),
+                  Container(
+                    width: size.width * 0.4,
+                    height: 50.0,
+                    padding: EdgeInsets.only(top: 5.0,bottom: 5.0),
+                    child: TextField(
+                      enableInteractiveSelection:
+                      false, // will disable paste operation
+                      focusNode: new AlwaysDisabledFocusNode(),
+                      controller: toDateController,
+                      onTap: () {
+                        _selectDateEnd(context);
+                      },
+                      style: TextStyle(
+                          fontFamily: "PoppinsBold",
+                          fontSize: 12.0,
+                          color: kPrimaryColorBlue),
+                      decoration: InputDecoration(
+                        border: InputBorder.none,
+                        contentPadding:
+                        const EdgeInsets.symmetric(vertical: 10.0),
+                        enabledBorder: OutlineInputBorder(
+                          borderSide: BorderSide(
+                              color: kPrimaryColorBlue, width: 1),
+                          borderRadius:
+                          const BorderRadius.all(Radius.circular(35.0)),
+                        ),
+                        focusedBorder: new OutlineInputBorder(
+                          borderSide: BorderSide(
+                              color: kPrimaryColorBlue, width: 1),
+                          borderRadius:
+                          const BorderRadius.all(Radius.circular(35.0)),
+                        ),
+                        prefixIcon: Icon(
+                          FontAwesomeIcons.calendar,
+                          color: kPrimaryColorBlue,
+                          size: 20.0,
+                        ),
+                        hintText: "To",
+
+                        hintStyle: TextStyle(
+                            fontFamily: "PoppinsBold",
+                            fontSize: 12.0,
+                            color: kPrimaryColorBlue),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            SizedBox(height: 5.0,),
+            Container(
+              padding: EdgeInsets.fromLTRB(10.00, 0.00, 10.00, 0),
               width: double.maxFinite,
               child: Container(
                 width: size.width * 0.9,

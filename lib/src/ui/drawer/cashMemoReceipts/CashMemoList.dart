@@ -6,13 +6,16 @@ import 'dart:math';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:greenbill_merchant/src/constants.dart';
 import 'package:greenbill_merchant/src/models/model_Common.dart';
 import 'package:greenbill_merchant/src/models/model_cashMemo.dart';
 import 'package:greenbill_merchant/src/ui/drawer/Settings/webView.dart';
 import 'package:greenbill_merchant/src/ui/drawer/cashMemoReceipts/Creatememo.dart';
 import 'package:http/http.dart' as http;
+import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import 'addcashmemo.dart';
 
@@ -24,6 +27,10 @@ class CashMemoList extends StatefulWidget {
 class CashMemoListState extends State<CashMemoList> {
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
   String token, busId,mobile;
+  TextEditingController fromDateController = new TextEditingController();
+  TextEditingController toDateController = new TextEditingController();
+  String fDate = "";
+  String eDate = "";
   final ScrollController _controller = ScrollController();
   TextEditingController query = new TextEditingController();
 
@@ -48,9 +55,37 @@ class CashMemoListState extends State<CashMemoList> {
     });
     print('$token\n$busId');
   }
+
+  _selectDateStart(BuildContext context) async {
+    DateTime e = await showDatePicker(
+      context: context,
+      initialDate: DateTime.now(), // Refer step 1
+      firstDate: DateTime(2000),
+      lastDate: DateTime.now(),
+    );
+    fDate = '${e.year.toString()}-${e.month.toString()}-${e.day.toString()}';
+    fromDateController.text = DateFormat("dd-MM-yyyy").format(e);
+    // changeState();
+    return fDate;
+  }
+
+  _selectDateEnd(BuildContext context) async {
+    DateTime e = await showDatePicker(
+        context: context,
+        initialDate: DateTime.now(),
+        firstDate: DateTime(2000),
+        lastDate: DateTime.now());
+    eDate = '${e.year.toString()}-${e.month.toString()}-${e.day.toString()}';
+    toDateController.text = DateFormat("dd-MM-yyyy").format(e);
+    setState(() {});
+    return eDate;
+  }
+
   Future<List<Datum>> getPassLists() async {
     final param = {
       "m_business_id": busId,
+      "from_date": fDate,
+      "to_date": eDate,
     };
     final res = await http.post("http://157.230.228.250/merchant-cash-memo-list-api/",
         body: param, headers: {HttpHeaders.authorizationHeader: "Token $token"});
@@ -81,7 +116,6 @@ class CashMemoListState extends State<CashMemoList> {
         child: const Icon(Icons.add),
         backgroundColor: kPrimaryColorBlue,
       ),
-
 
       body: Column(
         children: [
@@ -138,6 +172,108 @@ class CashMemoListState extends State<CashMemoList> {
               ),
             ),
           ),
+          Container(
+            width: size.width * 0.95,
+            height: 60.0,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                Container(
+                  width: size.width * 0.4,
+                  height: 50.0,
+                  padding: EdgeInsets.only(top: 5.0,bottom: 5.0),
+                  child: TextField(
+                    enableInteractiveSelection:
+                    false, // will disable paste operation
+                    focusNode: new AlwaysDisabledFocusNode(),
+                    controller: fromDateController,
+                    onTap: () {
+                      _selectDateStart(context);
+                    },
+                    style: TextStyle(
+                        fontFamily: "PoppinsBold",
+                        fontSize: 12.0,
+                        color: kPrimaryColorBlue),
+                    decoration: InputDecoration(
+                      border: InputBorder.none,
+                      contentPadding:
+                      const EdgeInsets.symmetric(vertical: 10.0),
+                      enabledBorder: OutlineInputBorder(
+                        borderSide: BorderSide(
+                            color: kPrimaryColorBlue, width: 1),
+                        borderRadius:
+                        const BorderRadius.all(Radius.circular(35.0)),
+                      ),
+                      focusedBorder: new OutlineInputBorder(
+                        borderSide: BorderSide(
+                            color: kPrimaryColorBlue, width: 1),
+                        borderRadius:
+                        const BorderRadius.all(Radius.circular(35.0)),
+                      ),
+                      prefixIcon: Icon(
+                        FontAwesomeIcons.calendar,
+                        color: kPrimaryColorBlue,
+                        size: 20.0,
+                      ),
+                      hintText: "From",
+
+                      hintStyle: TextStyle(
+                          fontFamily: "PoppinsBold",
+                          fontSize: 12.0,
+                          color: kPrimaryColorBlue),
+                    ),
+                  ),
+                ),
+                Container(
+                  width: size.width * 0.4,
+                  height: 50.0,
+                  padding: EdgeInsets.only(top: 5.0,bottom: 5.0),
+                  child: TextField(
+                    enableInteractiveSelection:
+                    false, // will disable paste operation
+                    focusNode: new AlwaysDisabledFocusNode(),
+                    controller: toDateController,
+                    onTap: () {
+                      _selectDateEnd(context);
+                    },
+                    style: TextStyle(
+                        fontFamily: "PoppinsBold",
+                        fontSize: 12.0,
+                        color: kPrimaryColorBlue),
+                    decoration: InputDecoration(
+                      border: InputBorder.none,
+                      contentPadding:
+                      const EdgeInsets.symmetric(vertical: 10.0),
+                      enabledBorder: OutlineInputBorder(
+                        borderSide: BorderSide(
+                            color: kPrimaryColorBlue, width: 1),
+                        borderRadius:
+                        const BorderRadius.all(Radius.circular(35.0)),
+                      ),
+                      focusedBorder: new OutlineInputBorder(
+                        borderSide: BorderSide(
+                            color: kPrimaryColorBlue, width: 1),
+                        borderRadius:
+                        const BorderRadius.all(Radius.circular(35.0)),
+                      ),
+                      prefixIcon: Icon(
+                        FontAwesomeIcons.calendar,
+                        color: kPrimaryColorBlue,
+                        size: 20.0,
+                      ),
+                      hintText: "To",
+
+                      hintStyle: TextStyle(
+                          fontFamily: "PoppinsBold",
+                          fontSize: 12.0,
+                          color: kPrimaryColorBlue),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          SizedBox(height: 5.0,),
           ListTile(
             tileColor: kPrimaryColorBlue,
             title: Text(
@@ -147,20 +283,11 @@ class CashMemoListState extends State<CashMemoList> {
               TextStyle(color: Colors.white, fontFamily: "PoppinsBold"),
             ),
             trailing: Wrap(
-              spacing: 16, // space between two icons
+              spacing: 17, // space between two icons
               crossAxisAlignment: WrapCrossAlignment.center,
               children: <Widget>[
                 Container(
-                  width: 50.0,
-                  child: Text(
-                    "Send",
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                        color: Colors.white, fontFamily: "PoppinsBold"),
-                  ),
-                ),
-                Container(
-                  width: 72.0,
+                  width: 75.0,
                   child: Text(
                     "Amount",
                     textAlign: TextAlign.center,
@@ -169,9 +296,9 @@ class CashMemoListState extends State<CashMemoList> {
                   ),
                 ),
                 Container(
-                  width: 50.0,
+                  width: 73.0,
                   child: Text(
-                    "Delete",
+                    "Action",
                     textAlign: TextAlign.center,
                     style: TextStyle(
                         color: Colors.white, fontFamily: "PoppinsBold"),
@@ -229,41 +356,41 @@ class CashMemoListState extends State<CashMemoList> {
                                     style: TextStyle(fontSize: 15.0)),
                                 subtitle: Text('Date : ${snapshot.data[index].date}\nMemo No. : ${snapshot.data[index].memoNo}'),
 
-                                // leading: Container(
-                                //   width: 35.0,
-                                //   height: 35.0,
-                                //   decoration: new BoxDecoration(
-                                //     color: Colors.primaries[Random()
-                                //         .nextInt(
-                                //         Colors.primaries.length)]
-                                //         .withOpacity(0.6),
-                                //     borderRadius:
-                                //     new BorderRadius.circular(25.0),
-                                //   ),
-                                //   alignment: Alignment.center,
-                                //   child: new Text(
-                                //     snapshot.data[index].name
-                                //         .substring(0, 1)
-                                //         .toUpperCase(),
-                                //     style: TextStyle(
-                                //       fontSize: 23.0,
-                                //       color: Colors.white,
-                                //       fontWeight: FontWeight.normal,
-                                //       fontFamily: "PoppinsLight",
-                                //     ),
-                                //   ),
-                                // ),
                                 trailing: Wrap(
-                                  spacing: 17, // space between two icons
+                                  spacing: 1, // space between two icons
                                   crossAxisAlignment:
                                   WrapCrossAlignment.center,
                                   children: <Widget>[
                                     Container(
-                                      width: 30.0,
+                                        width: 110.0,
+                                        alignment: Alignment.center,
+                                        child: Text(
+                                            "₹ ${snapshot.data[index].total.toStringAsFixed(2)}",
+                                            style: TextStyle(
+                                                fontWeight:
+                                                FontWeight.bold))
+                                    ),
+
+                                    Container(
+                                      width: 35.0,
                                       child: IconButton(
                                         icon: Icon(
-                                          Icons.sms_outlined,
-                                          color: Colors.black,
+                                          FontAwesomeIcons.eye,
+                                          size: 15.0,
+                                          color: kPrimaryColorBlue,
+                                        ),
+                                        onPressed: () {
+                                          launch(snapshot.data[index].memoUrl);
+                                        },
+                                      ),
+                                    ),
+                                    Container(
+                                      width: 35.0,
+                                      child: IconButton(
+                                        icon: Icon(
+                                          FontAwesomeIcons.paperPlane,
+                                          size: 15.0,
+                                          color: kPrimaryColorBlue,
                                         ),
                                         onPressed: () {
                                           sendSms(
@@ -272,35 +399,14 @@ class CashMemoListState extends State<CashMemoList> {
                                         },
                                       ),
                                     ),
-                                    Container(
-                                        width: 90.0,
-                                        alignment: Alignment.center,
-                                        child: Text(
-                                            "₹ ${snapshot.data[index].total.toStringAsFixed(2)}",
-                                            style: TextStyle(
-                                                fontWeight:
-                                                FontWeight.bold))),
-                                    Container(
-                                      width: 40.0,
-                                      alignment: Alignment.centerLeft,
-                                      child: IconButton(
-                                        icon: Icon(
-                                          Icons.delete_outline,
-                                          color: kPrimaryColorRed,
-                                        ),
-                                        onPressed: () {
-                                          delete(snapshot.data[index].id);
-                                        },
-                                      ),
-                                    ),
                                   ],
                                 ),
                                 onTap: () {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) => WebViewScreen("View Memo", snapshot.data[index].memoUrl)),
-                                  );
+                                  // Navigator.push(
+                                  //   context,
+                                  //   MaterialPageRoute(
+                                  //       builder: (context) => WebViewScreen("View Memo", snapshot.data[index].memoUrl)),
+                                  // );
 
                                 },
                               ),

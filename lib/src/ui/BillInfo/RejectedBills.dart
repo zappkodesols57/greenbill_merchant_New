@@ -5,10 +5,12 @@ import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:greenbill_merchant/src/constants.dart';
 import 'package:greenbill_merchant/src/models/model_Common.dart';
 import 'package:greenbill_merchant/src/models/model_rejectedBills.dart';
 import 'package:http/http.dart' as http;
+import 'package:intl/intl.dart';
 import 'package:open_file/open_file.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -25,6 +27,10 @@ class BillRejectedState extends State<BillRejected> {
   String token, id, storeID;
   final ScrollController _controller = ScrollController();
   File media;
+  TextEditingController fromDateController = new TextEditingController();
+  TextEditingController toDateController = new TextEditingController();
+  String fDate = "";
+  String eDate = "";
   Dio dio = new Dio();
   TextEditingController query = new TextEditingController();
 
@@ -54,7 +60,12 @@ class BillRejectedState extends State<BillRejected> {
   Future<List<Datum>> getBillInfoList() async {
     final param = {
       "merchant_business_id":storeID,
+      "from_date":fDate,
+      "to_date":eDate,
     };
+
+    print("parammm $param");
+
     final res = await http.post("http://157.230.228.250/merchant-get-rejected-bill-api/",
         body: param, headers: {HttpHeaders.authorizationHeader: "Token $token"});
 
@@ -71,6 +82,62 @@ class BillRejectedState extends State<BillRejected> {
 
     } else {
       throw Exception('Failed to load List');
+    }
+  }
+
+  _selectDateStart(BuildContext context) async {
+    DateTime e = await showDatePicker(
+      context: context,
+      initialDate: DateTime.now(), // Refer step 1
+      firstDate: DateTime(2000),
+      lastDate: DateTime.now(),
+    );
+    fDate = '${e.year.toString()}-${e.month.toString()}-${e.day.toString()}';
+    fromDateController.text = DateFormat("dd-MM-yyyy").format(e);
+    // changeState();
+    return fDate;
+  }
+
+  _selectDateEnd(BuildContext context) async {
+    DateTime e = await showDatePicker(
+        context: context,
+        initialDate: DateTime.now(),
+        firstDate: DateTime(2000),
+        lastDate: DateTime.now());
+    eDate = '${e.year.toString()}-${e.month.toString()}-${e.day.toString()}';
+    toDateController.text = DateFormat("dd-MM-yyyy").format(e);
+    setState(() {});
+    return eDate;
+  }
+
+  Future<void> deleteBill(id,table) async {
+    final param = {
+      "bill_id":id,
+      "db_table":table,
+    };
+
+    final response = await http.post("http://157.230.228.250/merchant-delete-bill-api/",
+      body: param, headers: {HttpHeaders.authorizationHeader: "Token $token"},);
+
+    print(response.statusCode);
+    CommonData data;
+    var responseJson = json.decode(response.body);
+    data = new CommonData.fromJson(jsonDecode(response.body));
+    print(response.body);
+   // Navigator.of(context, rootNavigator: true).pop();
+
+    if (response.statusCode == 200) {
+      print(responseJson);
+      print("Delete Successful");
+      print(data.status);
+      if(data.status == "success"){
+        showInSnackBar("Bill Deleted Successfully");
+
+      } else showInSnackBar(data.message);
+    } else {
+      print(data.status);
+      showInSnackBar(data.status);
+      return null;
     }
   }
 
@@ -144,6 +211,108 @@ class BillRejectedState extends State<BillRejected> {
                 ),
               ),
             ),
+            Container(
+              width: size.width * 0.95,
+              height: 60.0,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  Container(
+                    width: size.width * 0.4,
+                    height: 50.0,
+                    padding: EdgeInsets.only(top: 5.0,bottom: 5.0),
+                    child: TextField(
+                      enableInteractiveSelection:
+                      false, // will disable paste operation
+                      focusNode: new AlwaysDisabledFocusNode(),
+                      controller: fromDateController,
+                      onTap: () {
+                        _selectDateStart(context);
+                      },
+                      style: TextStyle(
+                          fontFamily: "PoppinsBold",
+                          fontSize: 12.0,
+                          color: kPrimaryColorBlue),
+                      decoration: InputDecoration(
+                        border: InputBorder.none,
+                        contentPadding:
+                        const EdgeInsets.symmetric(vertical: 10.0),
+                        enabledBorder: OutlineInputBorder(
+                          borderSide: BorderSide(
+                              color: kPrimaryColorBlue, width: 1),
+                          borderRadius:
+                          const BorderRadius.all(Radius.circular(35.0)),
+                        ),
+                        focusedBorder: new OutlineInputBorder(
+                          borderSide: BorderSide(
+                              color: kPrimaryColorBlue, width: 1),
+                          borderRadius:
+                          const BorderRadius.all(Radius.circular(35.0)),
+                        ),
+                        prefixIcon: Icon(
+                          FontAwesomeIcons.calendar,
+                          color: kPrimaryColorBlue,
+                          size: 20.0,
+                        ),
+                        hintText: "From",
+
+                        hintStyle: TextStyle(
+                            fontFamily: "PoppinsBold",
+                            fontSize: 12.0,
+                            color: kPrimaryColorBlue),
+                      ),
+                    ),
+                  ),
+                  Container(
+                    width: size.width * 0.4,
+                    height: 50.0,
+                    padding: EdgeInsets.only(top: 5.0,bottom: 5.0),
+                    child: TextField(
+                      enableInteractiveSelection:
+                      false, // will disable paste operation
+                      focusNode: new AlwaysDisabledFocusNode(),
+                      controller: toDateController,
+                      onTap: () {
+                        _selectDateEnd(context);
+                      },
+                      style: TextStyle(
+                          fontFamily: "PoppinsBold",
+                          fontSize: 12.0,
+                          color: kPrimaryColorBlue),
+                      decoration: InputDecoration(
+                        border: InputBorder.none,
+                        contentPadding:
+                        const EdgeInsets.symmetric(vertical: 10.0),
+                        enabledBorder: OutlineInputBorder(
+                          borderSide: BorderSide(
+                              color: kPrimaryColorBlue, width: 1),
+                          borderRadius:
+                          const BorderRadius.all(Radius.circular(35.0)),
+                        ),
+                        focusedBorder: new OutlineInputBorder(
+                          borderSide: BorderSide(
+                              color: kPrimaryColorBlue, width: 1),
+                          borderRadius:
+                          const BorderRadius.all(Radius.circular(35.0)),
+                        ),
+                        prefixIcon: Icon(
+                          FontAwesomeIcons.calendar,
+                          color: kPrimaryColorBlue,
+                          size: 20.0,
+                        ),
+                        hintText: "To",
+
+                        hintStyle: TextStyle(
+                            fontFamily: "PoppinsBold",
+                            fontSize: 12.0,
+                            color: kPrimaryColorBlue),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            SizedBox(height: 5.0,),
             ListTile(
               tileColor: kPrimaryColorBlue,
               title: Container(
@@ -155,9 +324,11 @@ class BillRejectedState extends State<BillRejected> {
                       color: Colors.white, fontFamily: "PoppinsBold"),
                 ),
               ),
-              trailing:
+              trailing:Wrap(
+                crossAxisAlignment: WrapCrossAlignment.center,
+              children: [
               Container(
-                width: 90.0,
+                width: 80.0,
                 child: Text(
                   "Amount",
                   textAlign: TextAlign.center,
@@ -165,7 +336,17 @@ class BillRejectedState extends State<BillRejected> {
                       color: Colors.white, fontFamily: "PoppinsBold"),
                 ),
               ),
-
+              Container(
+                width: 70.0,
+                child: Text(
+                  "Action",
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                      color: Colors.white, fontFamily: "PoppinsBold"),
+                ),
+              ),
+              ],
+              ),
               onTap: () {
                 // Navigator.push(context, MaterialPageRoute(builder:  (context)=>MerchantBillList(snapshot.data[index].mBusinessName)));
               },
@@ -213,18 +394,31 @@ class BillRejectedState extends State<BillRejected> {
                                     isThreeLine: false,
 
                                     trailing: Wrap(
-                                      spacing: 18, // space between two icons
+                                      spacing: 1, // space between two icons
                                       crossAxisAlignment:
                                       WrapCrossAlignment.center,
                                       children: <Widget>[
 
                                         Container(
                                           alignment: Alignment.center,
-                                            width: 80.0,
+                                            width: 90.0,
                                             child: Text("₹ ${double.parse(snapshot.data[index].amount).toStringAsFixed(2)}",
                                                 style: TextStyle(
                                                     fontWeight:
-                                                    FontWeight.bold))),
+                                                    FontWeight.bold))
+                                        ),
+                                        Container(
+                                          width: 60.0,
+                                          child: IconButton(
+                                            icon: Icon(Icons.delete_outlined, color: kPrimaryColorRed,),
+                                            onPressed: () {
+
+                                              deleteBill(snapshot.data[index].billId.toString(), snapshot.data[index].dbTable);
+
+
+                                            },
+                                          ),
+                                        ),
                                       ],
                                     ),
                                     onTap: () {

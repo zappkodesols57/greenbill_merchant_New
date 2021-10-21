@@ -26,6 +26,7 @@ class ReviewsState extends State<Reviews> {
   String amount="0";
   int totalTran=1;
   int subTotal;
+  String count = "";
   bool search = false;
   String total;
   final ScrollController _controller = ScrollController();
@@ -45,8 +46,8 @@ class ReviewsState extends State<Reviews> {
     super.dispose();
     _controller.dispose();
     query.dispose();
-
   }
+
   getCredentials() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     setState(() {
@@ -55,12 +56,38 @@ class ReviewsState extends State<Reviews> {
       storeID = prefs.getString("businessID");
     });
     print('$token\n$id\n$storeID');
+    getBillInfo();
   }
 
+  Future<List<Datum>> getBillInfo() async {
+    final param = {
+      "merchant_business_id": storeID,
+      "merchant_rating": "",
+    };
+    final res = await http.post("http://157.230.228.250/merchant-get-bill-rating-api/",
+        body: param, headers: {HttpHeaders.authorizationHeader: "Token $token"});
+
+    print(res.body);
+    print(res.statusCode);
+    print(query.text.toString());
+    if (200 == res.statusCode) {
+
+      setState(() {
+        count = ratingFromJson(res.body).count.toString();
+      });
+
+        print(ratingFromJson(res.body).data.length);
+        return ratingFromJson(res.body).data;
+      }
+    else {
+      throw Exception('Failed to load List');
+    }
+  }
 
   Future<List<Datum>> getBillInfoList() async {
     final param = {
       "merchant_business_id": storeID,
+      "merchant_rating": query.text.isEmpty ? "" : query.text,
     };
     final res = await http.post("http://157.230.228.250/merchant-get-bill-rating-api/",
         body: param, headers: {HttpHeaders.authorizationHeader: "Token $token"});
@@ -70,12 +97,14 @@ class ReviewsState extends State<Reviews> {
     print(query.text.toString());
     if (200 == res.statusCode) {
       if (search == true) {
+        count = ratingFromJson(res.body).count.toString();
         print(ratingFromJson(res.body).data.length);
         return ratingFromJson(res.body).data.where((element) =>
         element.ratingId.contains(query.text.toString()))
             .toList();
       }
       else{
+        count = ratingFromJson(res.body).count.toString();
         print(ratingFromJson(res.body).data.length);
         return ratingFromJson(res.body).data.where((element) =>
         element.mobileNo.contains(query.text.toString())||
@@ -179,6 +208,59 @@ class ReviewsState extends State<Reviews> {
                       fontFamily: "PoppinsMedium",
                       fontSize: 15.0,
                       color: kPrimaryColorBlue),
+                ),
+              ),
+            ),
+            Container(
+              padding: EdgeInsets.fromLTRB(10.00, 0.00, 10.00, 0),
+              width: double.maxFinite,
+              child: Container(
+                alignment: Alignment.center,
+                width: size.width * 0.9,
+                child: Row(
+                  children: [
+                    Container(
+                      child:Card(
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10.0),
+                        ),
+                        elevation:10,
+                        child:Container(
+                          alignment: Alignment.center,
+                          height: 60,
+                          width: size.width * 0.9,
+                          padding: EdgeInsets.only(
+                              top: 10.0, bottom: 5.0, left: 5.0, right: 10.0),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: <Widget>[
+                              Container(
+                                alignment: Alignment.center,
+                                width: size.width * 0.4,
+                                child: Text(
+                                  "Total Count",
+                                  style: TextStyle(
+                                      color: Colors.black,
+                                      fontSize: 11.0,
+                                      fontFamily: "PoppinsBold"),
+                                ),
+                              ),
+                              Container(
+                                alignment: Alignment.center,
+                                width: size.width * 0.4,
+                                child: Text("$count",
+                                  style: TextStyle(
+                                      color: Colors.black,
+                                      fontSize: 14.0,
+                                      fontFamily: "PoppinsBold"),
+                                ),
+                              ),
+                            ],),
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
               ),
             ),

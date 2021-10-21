@@ -1,13 +1,16 @@
 import 'dart:convert';
 import 'dart:io';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:greenbill_merchant/src/models/model_Common.dart';
 import 'package:greenbill_merchant/src/models/model_receiptList.dart';
 import 'package:greenbill_merchant/src/ui/drawer/Settings/webView.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:url_launcher/url_launcher.dart';
 import '../../../constants.dart';
 import 'createReceipts.dart';
 
@@ -21,6 +24,10 @@ class _ReceiptState extends State<Receipt>{
 
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
   String token, id, mob, storeID;
+  TextEditingController fromDateController = new TextEditingController();
+  TextEditingController toDateController = new TextEditingController();
+  String fDate = "";
+  String eDate = "";
   final ScrollController _controller = ScrollController();
   TextEditingController query = new TextEditingController();
 
@@ -46,12 +53,39 @@ class _ReceiptState extends State<Receipt>{
     });
   }
 
+  _selectDateStart(BuildContext context) async {
+    DateTime e = await showDatePicker(
+      context: context,
+      initialDate: DateTime.now(), // Refer step 1
+      firstDate: DateTime(2000),
+      lastDate: DateTime.now(),
+    );
+    fDate = '${e.year.toString()}-${e.month.toString()}-${e.day.toString()}';
+    fromDateController.text = DateFormat("dd-MM-yyyy").format(e);
+    // changeState();
+    return fDate;
+  }
+
+  _selectDateEnd(BuildContext context) async {
+    DateTime e = await showDatePicker(
+        context: context,
+        initialDate: DateTime.now(),
+        firstDate: DateTime(2000),
+        lastDate: DateTime.now());
+    eDate = '${e.year.toString()}-${e.month.toString()}-${e.day.toString()}';
+    toDateController.text = DateFormat("dd-MM-yyyy").format(e);
+    setState(() {});
+    return eDate;
+  }
+
   Future<List<Datum>> getLists() async {
 
     final param = {
       "m_business_id": storeID,
+      "from_date": fDate,
+      "to_date": eDate,
     };
-      print(">>>>>>>>>>$storeID");
+      print(">>>>>>>>>>$param");
 
     final res = await http.post("http://157.230.228.250/merchant-receipt-list-api/", body: param,
       headers: {HttpHeaders.authorizationHeader: "Token $token"},
@@ -71,6 +105,7 @@ class _ReceiptState extends State<Receipt>{
 
   @override
   Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
     return Scaffold(
       backgroundColor: Colors.white,
       key: _scaffoldKey,
@@ -141,6 +176,108 @@ class _ReceiptState extends State<Receipt>{
             ),
 
           ),
+          Container(
+            width: size.width * 0.95,
+            height: 60.0,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                Container(
+                  width: size.width * 0.4,
+                  height: 50.0,
+                  padding: EdgeInsets.only(top: 5.0,bottom: 5.0),
+                  child: TextField(
+                    enableInteractiveSelection:
+                    false, // will disable paste operation
+                    focusNode: new AlwaysDisabledFocusNode(),
+                    controller: fromDateController,
+                    onTap: () {
+                      _selectDateStart(context);
+                    },
+                    style: TextStyle(
+                        fontFamily: "PoppinsBold",
+                        fontSize: 12.0,
+                        color: kPrimaryColorBlue),
+                    decoration: InputDecoration(
+                      border: InputBorder.none,
+                      contentPadding:
+                      const EdgeInsets.symmetric(vertical: 10.0),
+                      enabledBorder: OutlineInputBorder(
+                        borderSide: BorderSide(
+                            color: kPrimaryColorBlue, width: 1),
+                        borderRadius:
+                        const BorderRadius.all(Radius.circular(35.0)),
+                      ),
+                      focusedBorder: new OutlineInputBorder(
+                        borderSide: BorderSide(
+                            color: kPrimaryColorBlue, width: 1),
+                        borderRadius:
+                        const BorderRadius.all(Radius.circular(35.0)),
+                      ),
+                      prefixIcon: Icon(
+                        FontAwesomeIcons.calendar,
+                        color: kPrimaryColorBlue,
+                        size: 20.0,
+                      ),
+                      hintText: "From",
+
+                      hintStyle: TextStyle(
+                          fontFamily: "PoppinsBold",
+                          fontSize: 12.0,
+                          color: kPrimaryColorBlue),
+                    ),
+                  ),
+                ),
+                Container(
+                  width: size.width * 0.4,
+                  height: 50.0,
+                  padding: EdgeInsets.only(top: 5.0,bottom: 5.0),
+                  child: TextField(
+                    enableInteractiveSelection:
+                    false, // will disable paste operation
+                    focusNode: new AlwaysDisabledFocusNode(),
+                    controller: toDateController,
+                    onTap: () {
+                      _selectDateEnd(context);
+                    },
+                    style: TextStyle(
+                        fontFamily: "PoppinsBold",
+                        fontSize: 12.0,
+                        color: kPrimaryColorBlue),
+                    decoration: InputDecoration(
+                      border: InputBorder.none,
+                      contentPadding:
+                      const EdgeInsets.symmetric(vertical: 10.0),
+                      enabledBorder: OutlineInputBorder(
+                        borderSide: BorderSide(
+                            color: kPrimaryColorBlue, width: 1),
+                        borderRadius:
+                        const BorderRadius.all(Radius.circular(35.0)),
+                      ),
+                      focusedBorder: new OutlineInputBorder(
+                        borderSide: BorderSide(
+                            color: kPrimaryColorBlue, width: 1),
+                        borderRadius:
+                        const BorderRadius.all(Radius.circular(35.0)),
+                      ),
+                      prefixIcon: Icon(
+                        FontAwesomeIcons.calendar,
+                        color: kPrimaryColorBlue,
+                        size: 20.0,
+                      ),
+                      hintText: "To",
+
+                      hintStyle: TextStyle(
+                          fontFamily: "PoppinsBold",
+                          fontSize: 12.0,
+                          color: kPrimaryColorBlue),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          SizedBox(height: 5.0,),
           ListTile(
 
             tileColor: kPrimaryColorBlue,
@@ -155,16 +292,7 @@ class _ReceiptState extends State<Receipt>{
               crossAxisAlignment: WrapCrossAlignment.center,
               children: <Widget>[
                 Container(
-                  width: 50.0,
-                  child: Text(
-                    "Send",
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                        color: Colors.white, fontFamily: "PoppinsBold"),
-                  ),
-                ),
-                Container(
-                  width: 72.0,
+                  width: 75.0,
                   child: Text(
                     "Amount",
                     textAlign: TextAlign.center,
@@ -173,9 +301,9 @@ class _ReceiptState extends State<Receipt>{
                   ),
                 ),
                 Container(
-                  width: 50.0,
+                  width: 73.0,
                   child: Text(
-                    "Delete",
+                    "Action",
                     textAlign: TextAlign.center,
                     style: TextStyle(
                         color: Colors.white, fontFamily: "PoppinsBold"),
@@ -236,50 +364,50 @@ class _ReceiptState extends State<Receipt>{
                                           color: Colors.grey)),
                                   isThreeLine: false,
                                   trailing: Wrap(
-                                    spacing: 17, // space between two icons
-                                    alignment: WrapAlignment.end,
+                                    spacing: 1, // space between two icons
                                     crossAxisAlignment: WrapCrossAlignment.center,
                                     children: <Widget>[
                                       Container(
-                                        width:30.0,
+                                          width: 110.0,
+                                          alignment: Alignment.center,
+                                          child: Text(
+                                              "₹ ${snapshot.data[index].total.toStringAsFixed(2)}",
+                                              style: TextStyle(fontWeight: FontWeight.bold))
+                                      ),
+                                      Container(
+                                        width: 35.0,
                                         child: IconButton(
                                           icon: Icon(
-                                            Icons.sms_outlined,
-                                            color: Colors.black,
+                                            FontAwesomeIcons.eye,
+                                            size: 15.0,
+                                            color: kPrimaryColorBlue,
+                                          ),
+                                          onPressed: () {
+                                            launch(snapshot.data[index].receiptUrl);
+                                          },
+                                        ),
+                                      ),
+                                      Container(
+                                        width:35.0,
+                                        child: IconButton(
+                                          icon: Icon(
+                                            FontAwesomeIcons.paperPlane,
+                                            size: 15.0,
+                                            color: kPrimaryColorBlue,
                                           ),
                                           onPressed: () {
                                             send(snapshot.data[index].id, snapshot.data[index].mobileNumber);
                                           },
                                         ),
                                       ),
-                                      Container(
-                                          width: 90.0,
-                                          alignment: Alignment.center,
-                                          child: Text(
-                                              "₹ ${snapshot.data[index].total.toStringAsFixed(2)}",
-                                              style: TextStyle(fontWeight: FontWeight.bold))),
-
-                                      Container(
-                                        width: 40.0,
-                                        alignment: Alignment.centerLeft,
-                                        child: IconButton(
-                                          icon: Icon(
-                                            Icons.delete_outline,
-                                            color: kPrimaryColorRed,
-                                          ),
-                                          onPressed: () {
-                                            delete(snapshot.data[index].id);
-                                          },
-                                        ),
-                                      ),
                                     ],
                                   ),
                                   onTap: (){
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) => WebViewScreen("View Receipts", snapshot.data[index].receiptUrl)),
-                                    );
+                                    // Navigator.push(
+                                    //   context,
+                                    //   MaterialPageRoute(
+                                    //       builder: (context) => WebViewScreen("View Receipts", snapshot.data[index].receiptUrl)),
+                                    // );
                                   },
                                 ),
                               ),

@@ -4,15 +4,19 @@ import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:greenbill_merchant/src/constants.dart';
 import 'package:greenbill_merchant/src/models/model_Common.dart';
 import 'package:greenbill_merchant/src/models/model_customerBills.dart';
 import 'package:greenbill_merchant/src/models/model_infoCashmemo.dart';
 import 'package:greenbill_merchant/src/models/model_infoReceipts.dart';
 import 'package:http/http.dart' as http;
+import 'package:image_downloader/image_downloader.dart';
 import 'package:open_file/open_file.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class CustomerDetailInfo extends StatefulWidget {
@@ -396,34 +400,23 @@ class CustomerDetailInfoState extends State<CustomerDetailInfo> {
                                   fontFamily: "PoppinsBold"),
                             ),
                             trailing: Wrap(
-                              spacing: 19, // space between two icons
+                              spacing: 25, // space between two icons
                               crossAxisAlignment: WrapCrossAlignment.center,
                               children: <Widget>[
                                 Container(
-                                  alignment: Alignment.centerRight,
-                                  width: 50.0,
-                                  child: Text(
-                                    "Send",
-                                    textAlign: TextAlign.center,
-                                    style: TextStyle(
-                                        color: Colors.white,
-                                        fontFamily: "PoppinsBold"),
-                                  ),
-                                ),
-                                Container(
-                                  width: 50.0,
-                                  child: Text(
-                                    "Bill",
-                                    textAlign: TextAlign.center,
-                                    style: TextStyle(
-                                        color: Colors.white,
-                                        fontFamily: "PoppinsBold"),
-                                  ),
-                                ),
-                                Container(
-                                  width: 90.0,
+                                  width: 80.0,
                                   child: Text(
                                     "Amount",
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                        color: Colors.white,
+                                        fontFamily: "PoppinsBold"),
+                                  ),
+                                ),
+                                Container(
+                                  width: 100.0,
+                                  child: Text(
+                                    "Action",
                                     textAlign: TextAlign.center,
                                     style: TextStyle(
                                         color: Colors.white,
@@ -448,15 +441,27 @@ class CustomerDetailInfoState extends State<CustomerDetailInfo> {
                                               .data.allBills[index].billDate,
                                           style: TextStyle(fontSize: 15.0)),
                                       trailing: Wrap(
-                                        spacing: 15,
+                                        spacing: 1,
                                         // space between two icons
                                         crossAxisAlignment:
                                             WrapCrossAlignment.center,
                                         children: <Widget>[
+
+                                          Container(
+                                            alignment: Alignment.centerLeft,
+                                            width: 100.0,
+                                            child: Text(
+                                                "₹ ${double.parse(snapshot.data.allBills[index].amount).toStringAsFixed(2)}",
+                                                style: TextStyle(
+                                                    fontWeight:
+                                                    FontWeight.bold)),
+                                          ),
+
                                           IconButton(
                                             icon: Icon(
-                                              Icons.sms_outlined,
-                                              color: Colors.black,
+                                              FontAwesomeIcons.paperPlane,
+                                              size: 15.0,
+                                              color: kPrimaryColorBlue,
                                             ),
                                             onPressed: () {
                                               if (snapshot.data.allBills[index]
@@ -476,33 +481,34 @@ class CustomerDetailInfoState extends State<CustomerDetailInfo> {
                                           ),
                                           IconButton(
                                             icon: Icon(
-                                              Icons.file_present,
-                                              color: Colors.black,
+                                              FontAwesomeIcons.download,
+                                              size: 15.0,
+                                              color: kPrimaryColorBlue,
                                             ),
-                                            onPressed: () {
-                                              if (snapshot.data.allBills[index]
-                                                  .billFile.isEmpty) {
-                                                showInSnackBar(
-                                                    "No Bill Found!");
-                                                return null;
+                                            onPressed: () async {
+                                              try {
+                                                await ImageDownloader.downloadImage(snapshot.data.allBills[index].billFile).then((context) => showInSnackBar("Download Complete"));
                                               }
-                                              openBill(
-                                                  snapshot.data.allBills[index]
-                                                      .billFile,
-                                                  snapshot.data.allBills[index]
-                                                      .billFile
-                                                      .split("/")
-                                                      .last);
+                                              on PlatformException catch (error) {
+                                                print(error);
+                                              }
                                             },
-                                          ),
-                                          Container(
-                                            alignment: Alignment.center,
-                                            width: 90.0,
-                                            child: Text(
-                                                "₹ ${double.parse(snapshot.data.allBills[index].amount).toStringAsFixed(2)}",
-                                                style: TextStyle(
-                                                    fontWeight:
-                                                        FontWeight.bold)),
+                                            // onPressed: ()
+                                            // {
+                                            //   if (snapshot.data.allBills[index]
+                                            //       .billFile.isEmpty) {
+                                            //     showInSnackBar(
+                                            //         "No Bill Found!");
+                                            //     return null;
+                                            //   }
+                                            //   openBill(
+                                            //       snapshot.data.allBills[index]
+                                            //           .billFile,
+                                            //       snapshot.data.allBills[index]
+                                            //           .billFile
+                                            //           .split("/")
+                                            //           .last);
+                                            // },
                                           ),
                                         ],
                                       ),

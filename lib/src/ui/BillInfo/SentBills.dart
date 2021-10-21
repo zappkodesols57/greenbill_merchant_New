@@ -4,11 +4,16 @@ import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:greenbill_merchant/src/constants.dart';
 import 'package:greenbill_merchant/src/models/model_Common.dart';
 import 'package:greenbill_merchant/src/models/model_billInfoList.dart';
+import 'package:greenbill_merchant/src/ui/BillInfo/ViewBill.dart';
 import 'package:http/http.dart' as http;
+import 'package:image_downloader/image_downloader.dart';
+import 'package:intl/intl.dart';
 import 'package:open_file/open_file.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -23,6 +28,10 @@ class BillInfoState extends State<BillInfo> {
   String token, id, storeID;
   final ScrollController _controller = ScrollController();
   File media;
+  TextEditingController fromDateController = new TextEditingController();
+  TextEditingController toDateController = new TextEditingController();
+  String fDate = "";
+  String eDate = "";
   Dio dio = new Dio();
   TextEditingController query = new TextEditingController();
 
@@ -52,7 +61,11 @@ class BillInfoState extends State<BillInfo> {
   Future<List<AllBill>> getBillInfoList() async {
     final param = {
       "merchant_business_id": storeID,
+      "from_date": fDate,
+      "to_date": eDate,
+
     };
+    print("param $param");
 
     final res = await http.post(
       "http://157.230.228.250/get-bill-info-list-api/",
@@ -75,6 +88,31 @@ class BillInfoState extends State<BillInfo> {
     }
   }
 
+  _selectDateStart(BuildContext context) async {
+    DateTime e = await showDatePicker(
+      context: context,
+      initialDate: DateTime.now(), // Refer step 1
+      firstDate: DateTime(2000),
+      lastDate: DateTime.now(),
+    );
+    fDate = '${e.year.toString()}-${e.month.toString()}-${e.day.toString()}';
+    fromDateController.text = DateFormat("dd-MM-yyyy").format(e);
+    // changeState();
+    return fDate;
+  }
+
+  _selectDateEnd(BuildContext context) async {
+    DateTime e = await showDatePicker(
+        context: context,
+        initialDate: DateTime.now(),
+        firstDate: DateTime(2000),
+        lastDate: DateTime.now());
+    eDate = '${e.year.toString()}-${e.month.toString()}-${e.day.toString()}';
+    toDateController.text = DateFormat("dd-MM-yyyy").format(e);
+    setState(() {});
+    return eDate;
+  }
+
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -87,7 +125,7 @@ class BillInfoState extends State<BillInfo> {
             Container(
               width: size.width * 0.99,
               padding: EdgeInsets.only(
-                  top: 10.0, bottom: 10.0, left: 0.0, right: 0.0),
+                  top: 10.0, bottom: 5.0, left: 0.0, right: 0.0),
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(32),
               ),
@@ -146,6 +184,109 @@ class BillInfoState extends State<BillInfo> {
                 ),
               ),
             ),
+            Container(
+              width: size.width * 0.95,
+              height: 60.0,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  Container(
+                    width: size.width * 0.4,
+                    height: 50.0,
+                    padding: EdgeInsets.only(top: 5.0,bottom: 5.0),
+                    child: TextField(
+                      enableInteractiveSelection:
+                      false, // will disable paste operation
+                      focusNode: new AlwaysDisabledFocusNode(),
+                      controller: fromDateController,
+                      onTap: () {
+                        _selectDateStart(context);
+                      },
+                      style: TextStyle(
+                          fontFamily: "PoppinsBold",
+                          fontSize: 12.0,
+                          color: kPrimaryColorBlue),
+                      decoration: InputDecoration(
+                        border: InputBorder.none,
+                        contentPadding:
+                        const EdgeInsets.symmetric(vertical: 10.0),
+                        enabledBorder: OutlineInputBorder(
+                          borderSide: BorderSide(
+                              color: kPrimaryColorBlue, width: 1),
+                          borderRadius:
+                          const BorderRadius.all(Radius.circular(35.0)),
+                        ),
+                        focusedBorder: new OutlineInputBorder(
+                          borderSide: BorderSide(
+                              color: kPrimaryColorBlue, width: 1),
+                          borderRadius:
+                          const BorderRadius.all(Radius.circular(35.0)),
+                        ),
+                        prefixIcon: Icon(
+                          FontAwesomeIcons.calendar,
+                          color: kPrimaryColorBlue,
+                          size: 20.0,
+                        ),
+                        hintText: "From",
+
+                        hintStyle: TextStyle(
+                            fontFamily: "PoppinsBold",
+                            fontSize: 12.0,
+                            color: kPrimaryColorBlue),
+                      ),
+                    ),
+                  ),
+                  Container(
+                    width: size.width * 0.4,
+                    height: 50.0,
+                    padding: EdgeInsets.only(top: 5.0,bottom: 5.0),
+                    child: TextField(
+                      enableInteractiveSelection:
+                      false, // will disable paste operation
+                      focusNode: new AlwaysDisabledFocusNode(),
+                      controller: toDateController,
+                      onTap: () {
+                        _selectDateEnd(context);
+                      },
+                      style: TextStyle(
+                          fontFamily: "PoppinsBold",
+                          fontSize: 12.0,
+                          color: kPrimaryColorBlue),
+                      decoration: InputDecoration(
+                        border: InputBorder.none,
+                        contentPadding:
+                        const EdgeInsets.symmetric(vertical: 10.0),
+                        enabledBorder: OutlineInputBorder(
+                          borderSide: BorderSide(
+                              color: kPrimaryColorBlue, width: 1),
+                          borderRadius:
+                          const BorderRadius.all(Radius.circular(35.0)),
+                        ),
+                        focusedBorder: new OutlineInputBorder(
+                          borderSide: BorderSide(
+                              color: kPrimaryColorBlue, width: 1),
+                          borderRadius:
+                          const BorderRadius.all(Radius.circular(35.0)),
+                        ),
+                        prefixIcon: Icon(
+                          FontAwesomeIcons.calendar,
+                          color: kPrimaryColorBlue,
+                          size: 20.0,
+                        ),
+                        hintText: "To",
+
+                        hintStyle: TextStyle(
+                            fontFamily: "PoppinsBold",
+                            fontSize: 12.0,
+                            color: kPrimaryColorBlue),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            SizedBox(height: 5.0,),
+
             ListTile(
               tileColor: kPrimaryColorBlue,
               title: Text(
@@ -155,23 +296,14 @@ class BillInfoState extends State<BillInfo> {
                 TextStyle(color: Colors.white, fontFamily: "PoppinsBold"),
               ),
               trailing: Wrap(
-                spacing: 13, // space between two icons
+                spacing: 27, // space between two icons
                 crossAxisAlignment: WrapCrossAlignment.center,
                 children: <Widget>[
                   Container(
-                    width: 45.0,
+                    width: 80.0,
                     child: Text(
-                      "Send",
-                      textAlign: TextAlign.start,
-                      style: TextStyle(
-                          color: Colors.white, fontFamily: "PoppinsBold"),
-                    ),
-                  ),
-                  Container(
-                    width: 40.0,
-                    child: Text(
-                      " Bill",
-                      textAlign: TextAlign.start,
+                      "Amount",
+                      textAlign: TextAlign.center,
                       style: TextStyle(
                           color: Colors.white, fontFamily: "PoppinsBold"),
                     ),
@@ -179,12 +311,12 @@ class BillInfoState extends State<BillInfo> {
                   Container(
                     width: 80.0,
                     child: Text(
-                      " Amount",
+                      "Action",
                       textAlign: TextAlign.start,
                       style: TextStyle(
                           color: Colors.white, fontFamily: "PoppinsBold"),
                     ),
-                  )
+                  ),
                 ],
               ),
               onTap: () {
@@ -242,57 +374,62 @@ class BillInfoState extends State<BillInfo> {
                                     //   child: Icon(Icons.receipt_long, color: Colors.white,),
                                     // ),
                                     trailing: Wrap(
-                                      spacing: 15, // space between two icons
+                                      spacing: 1, // space between two icons
                                       crossAxisAlignment:
                                           WrapCrossAlignment.center,
                                       children: <Widget>[
+
                                         Container(
-                                          width: 40.0,
-                                          child: IconButton(
-                                            icon: Icon(
-                                              Icons.sms_outlined,
-                                              color: Colors.black,
-                                            ),
-                                            onPressed: () {
-                                              if (snapshot
-                                                  .data[index].billFile.isEmpty) {
-                                                showInSnackBar("No Bill Found!");
-                                                return null;
-                                              }
-                                              sendSms(
-                                                  snapshot.data[index].billId,
-                                                  snapshot.data[index].dbTable,
-                                                  snapshot.data[index].mobileNo);
-                                            },
-                                          ),
-                                        ),
-                                        Container(
-                                          width: 30.0,
-                                          child: IconButton(
-                                            icon: Icon(
-                                              Icons.file_present,
-                                              color: Colors.black,
-                                            ),
-                                            onPressed: () {
-                                              if (snapshot
-                                                  .data[index].billFile.isEmpty) {
-                                                showInSnackBar("No Bill Found!");
-                                                return null;
-                                              }
-                                              openBill(
-                                                  snapshot.data[index].billFile,
-                                                  snapshot.data[index].billFile
-                                                      .split("/")
-                                                      .last);
-                                            },
-                                          ),
-                                        ),
-                                        Container(
-                                          alignment: Alignment.center,
-                                            width: 90.0,
+                                            alignment: Alignment.center,
+                                            width: 100.0,
                                             child: Text("₹ ${double.parse(snapshot.data[index].amount).toStringAsFixed(2)}",
                                                 style: TextStyle(
-                                                    fontWeight: FontWeight.bold))),
+                                                    fontWeight: FontWeight.bold))
+                                        ),
+                                        IconButton(
+                                          icon: Icon(
+                                            FontAwesomeIcons.download,
+                                            size: 15.0,
+                                            color: kPrimaryColorBlue,
+                                          ),
+                                          onPressed: () async {
+                                            try {
+                                              await ImageDownloader.downloadImage(snapshot.data[index].billFile).then((context) => showInSnackBar("Download Complete"));
+                                            }
+                                            on PlatformException catch (error) {
+                                              print(error);
+                                            }
+                                          },
+                                          // {
+                                          //   if (snapshot.data[index].billFile.isEmpty) {
+                                          //     showInSnackBar("No Bill Found!");
+                                          //     return null;
+                                          //   }
+                                          //   openBill(
+                                          //       snapshot.data[index].billFile,
+                                          //       snapshot.data[index].billFile
+                                          //           .split("/")
+                                          //           .last);
+                                          // },
+                                        ),
+                                        IconButton(
+                                          icon: Icon(
+                                            FontAwesomeIcons.paperPlane,
+                                            size: 15.0,
+                                            color: kPrimaryColorBlue,
+                                          ),
+                                          onPressed: () {
+                                            if (snapshot
+                                                .data[index].billFile.isEmpty) {
+                                              showInSnackBar("No Bill Found!");
+                                              return null;
+                                            }
+                                            sendSms(
+                                                snapshot.data[index].billId,
+                                                snapshot.data[index].dbTable,
+                                                snapshot.data[index].mobileNo);
+                                          },
+                                        ),
                                       ],
                                     ),
                                   ),
@@ -386,44 +523,44 @@ class BillInfoState extends State<BillInfo> {
     }
   }
 
-  Future<void> openBill(String billFile, String fileName) async {
-    _showLoaderDialog(context);
-    var tempDir = await getTemporaryDirectory();
-    String fullPath = tempDir.path + "/$fileName";
-    File file = new File(fullPath);
-    print('full path ${fullPath}');
-    download2(dio, billFile, fullPath);
-    setState(() {
-      media = file;
-    });
-  }
-
-  Future download2(Dio dio, String url, String savePath) async {
-    try {
-      Response response = await dio.get(
-        url,
-        onReceiveProgress: showDownloadProgress,
-        options: Options(
-            responseType: ResponseType.bytes,
-            followRedirects: false,
-            validateStatus: (status) {
-              return status < 500;
-            }),
-      );
-      print(response.headers);
-      File file = File(savePath);
-      var raf = file.openSync(mode: FileMode.write);
-      raf.writeFromSync(response.data);
-      await raf.close();
-      print(file.path);
-      Navigator.of(context, rootNavigator: true).pop();
-      final result = await OpenFile.open(file.path);
-      print(
-          "==========================================================> ${result.message} ${result.type.index}");
-    } catch (e) {
-      print(e);
-    }
-  }
+  // Future<void> openBill(String billFile, String fileName) async {
+  //   _showLoaderDialog(context);
+  //   var tempDir = await getTemporaryDirectory();
+  //   String fullPath = tempDir.path + "/$fileName";
+  //   File file = new File(fullPath);
+  //   print('full path ${fullPath}');
+  //   download2(dio, billFile, fullPath);
+  //   setState(() {
+  //     media = file;
+  //   });
+  // }
+  //
+  // Future download2(Dio dio, String url, String savePath) async {
+  //   try {
+  //     Response response = await dio.get(
+  //       url,
+  //       onReceiveProgress: showDownloadProgress,
+  //       options: Options(
+  //           responseType: ResponseType.bytes,
+  //           followRedirects: false,
+  //           validateStatus: (status) {
+  //             return status < 500;
+  //           }),
+  //     );
+  //     print(response.headers);
+  //     File file = File(savePath);
+  //     var raf = file.openSync(mode: FileMode.write);
+  //     raf.writeFromSync(response.data);
+  //     await raf.close();
+  //     print(file.path);
+  //     Navigator.of(context, rootNavigator: true).pop();
+  //     final result = await OpenFile.open(file.path);
+  //     print(
+  //         "==========================================================> ${result.message} ${result.type.index}");
+  //   } catch (e) {
+  //     print(e);
+  //   }
+  // }
 
   void showDownloadProgress(received, total) {
     if (total != -1) {

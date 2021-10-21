@@ -7,12 +7,14 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:greenbill_merchant/src/constants.dart';
 import 'package:greenbill_merchant/src/models/model_Common.dart';
 import 'package:greenbill_merchant/src/models/model_IncomingBills.dart';
 import 'package:greenbill_merchant/src/models/model_billSend.dart';
 import 'package:greenbill_merchant/src/models/model_getStore.dart';
 import 'package:http/http.dart' as http;
+import 'package:intl/intl.dart';
 import 'package:open_file/open_file.dart';
 import 'package:image_downloader/image_downloader.dart';
 import 'package:path_provider/path_provider.dart';
@@ -34,6 +36,10 @@ class BillIncomingState extends State<BillIncoming> {
   File media;
   int billID;
   int storeId;
+  TextEditingController fromDateController = new TextEditingController();
+  TextEditingController toDateController = new TextEditingController();
+  String fDate = "";
+  String eDate = "";
   final path = '/storage/emulated/0/Download';
   Dio dio = new Dio();
   TextEditingController query = new TextEditingController();
@@ -64,7 +70,10 @@ class BillIncomingState extends State<BillIncoming> {
   Future<List<Datum>> getBillInfoList() async {
     final param = {
       "m_business_id": storeID,
+      "from_date": fDate,
+      "to_date": eDate,
     };
+    print("Param $param");
 
     final res = await http.post("http://157.230.228.250/merchant-get-received-bill-api/",
         body: param, headers: {HttpHeaders.authorizationHeader: "Token $token"});
@@ -122,6 +131,31 @@ class BillIncomingState extends State<BillIncoming> {
     } else {
       throw Exception('Failed to load Stores List');
     }
+  }
+
+  _selectDateStart(BuildContext context) async {
+    DateTime e = await showDatePicker(
+      context: context,
+      initialDate: DateTime.now(), // Refer step 1
+      firstDate: DateTime(2000),
+      lastDate: DateTime.now(),
+    );
+    fDate = '${e.year.toString()}-${e.month.toString()}-${e.day.toString()}';
+    fromDateController.text = DateFormat("dd-MM-yyyy").format(e);
+    // changeState();
+    return fDate;
+  }
+
+  _selectDateEnd(BuildContext context) async {
+    DateTime e = await showDatePicker(
+        context: context,
+        initialDate: DateTime.now(),
+        firstDate: DateTime(2000),
+        lastDate: DateTime.now());
+    eDate = '${e.year.toString()}-${e.month.toString()}-${e.day.toString()}';
+    toDateController.text = DateFormat("dd-MM-yyyy").format(e);
+    setState(() {});
+    return eDate;
   }
 
 
@@ -294,6 +328,110 @@ class BillIncomingState extends State<BillIncoming> {
                 ),
               ),
             ),
+
+            Container(
+              width: size.width * 0.95,
+              height: 60.0,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  Container(
+                    width: size.width * 0.4,
+                    height: 50.0,
+                    padding: EdgeInsets.only(top: 5.0,bottom: 5.0),
+                    child: TextField(
+                      enableInteractiveSelection:
+                      false, // will disable paste operation
+                      focusNode: new AlwaysDisabledFocusNode(),
+                      controller: fromDateController,
+                      onTap: () {
+                        _selectDateStart(context);
+                      },
+                      style: TextStyle(
+                          fontFamily: "PoppinsBold",
+                          fontSize: 12.0,
+                          color: kPrimaryColorBlue),
+                      decoration: InputDecoration(
+                        border: InputBorder.none,
+                        contentPadding:
+                        const EdgeInsets.symmetric(vertical: 10.0),
+                        enabledBorder: OutlineInputBorder(
+                          borderSide: BorderSide(
+                              color: kPrimaryColorBlue, width: 1),
+                          borderRadius:
+                          const BorderRadius.all(Radius.circular(35.0)),
+                        ),
+                        focusedBorder: new OutlineInputBorder(
+                          borderSide: BorderSide(
+                              color: kPrimaryColorBlue, width: 1),
+                          borderRadius:
+                          const BorderRadius.all(Radius.circular(35.0)),
+                        ),
+                        prefixIcon: Icon(
+                          FontAwesomeIcons.calendar,
+                          color: kPrimaryColorBlue,
+                          size: 20.0,
+                        ),
+                        hintText: "From",
+
+                        hintStyle: TextStyle(
+                            fontFamily: "PoppinsBold",
+                            fontSize: 12.0,
+                            color: kPrimaryColorBlue),
+                      ),
+                    ),
+                  ),
+                  Container(
+                    width: size.width * 0.4,
+                    height: 50.0,
+                    padding: EdgeInsets.only(top: 5.0,bottom: 5.0),
+                    child: TextField(
+                      enableInteractiveSelection:
+                      false, // will disable paste operation
+                      focusNode: new AlwaysDisabledFocusNode(),
+                      controller: toDateController,
+                      onTap: () {
+                        _selectDateEnd(context);
+                      },
+                      style: TextStyle(
+                          fontFamily: "PoppinsBold",
+                          fontSize: 12.0,
+                          color: kPrimaryColorBlue),
+                      decoration: InputDecoration(
+                        border: InputBorder.none,
+                        contentPadding:
+                        const EdgeInsets.symmetric(vertical: 10.0),
+                        enabledBorder: OutlineInputBorder(
+                          borderSide: BorderSide(
+                              color: kPrimaryColorBlue, width: 1),
+                          borderRadius:
+                          const BorderRadius.all(Radius.circular(35.0)),
+                        ),
+                        focusedBorder: new OutlineInputBorder(
+                          borderSide: BorderSide(
+                              color: kPrimaryColorBlue, width: 1),
+                          borderRadius:
+                          const BorderRadius.all(Radius.circular(35.0)),
+                        ),
+                        prefixIcon: Icon(
+                          FontAwesomeIcons.calendar,
+                          color: kPrimaryColorBlue,
+                          size: 20.0,
+                        ),
+                        hintText: "To",
+
+                        hintStyle: TextStyle(
+                            fontFamily: "PoppinsBold",
+                            fontSize: 12.0,
+                            color: kPrimaryColorBlue),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            SizedBox(height: 5.0,),
+
             ListTile(
               tileColor: kPrimaryColorBlue,
               title: Container(
@@ -310,33 +448,23 @@ class BillIncomingState extends State<BillIncoming> {
                 crossAxisAlignment: WrapCrossAlignment.center,
                 children: <Widget>[
                   Container(
-                    width: 50.0,
-                    child: Text(
-                      "Bill ",
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                          color: Colors.white, fontFamily: "PoppinsBold"),
-                    ),
-                  ),
-                  Container(
-                    width: 50.0,
-                    child: Text(
-                      "Shift ",
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                          color: Colors.white, fontFamily: "PoppinsBold"),
-                    ),
-                  ),
-
-                  Container(
-                    width: 78.0,
+                    width: 80.0,
                     child: Text(
                       "Amount",
                       textAlign: TextAlign.center,
                       style: TextStyle(
                           color: Colors.white, fontFamily: "PoppinsBold"),
                     ),
-                  )
+                  ),
+                  Container(
+                    width: 100.0,
+                    child: Text(
+                      "Action",
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                          color: Colors.white, fontFamily: "PoppinsBold"),
+                    ),
+                  ),
                 ],
               ),
 
@@ -398,55 +526,92 @@ class BillIncomingState extends State<BillIncoming> {
                                     isThreeLine: false,
 
                                     trailing: Wrap(
-                                      spacing: 7, // space between two icons
+                                      spacing: 1, // space between two icons
                                       crossAxisAlignment:
                                       WrapCrossAlignment.center,
                                       children: <Widget>[
 
-                                        if(snapshot.data[index].billImage != "")
-                                        IconButton(
-                                          icon: Icon(
-                                            Icons.download_outlined,
-                                            color: Colors.black,
-                                          ),
-                                          onPressed: () async {
-
-                                            if (await Permission.storage.request().isGranted) {
-                                              await ImageDownloader.downloadImage("http://157.230.228.250/"+snapshot.data[index].billImage).then((context) => showInSnackBar("Download Complete"));
-
-                                            } else{
-                                              showInSnackBar("Permission Denied");
-                                            }
-                                          },
-                                        ),
-                                        if(snapshot.data[index].billImage != "")
-                                        IconButton(
-                                          icon: Icon(
-                                            Icons.switch_account,
-                                            color: Colors.black,
-                                          ),
-                                          onPressed: () {
-                                            setState(() {
-                                              billID = snapshot.data[index].billId;
-                                              //storeId= snapshot.data[index].id;
-                                            });
-                                            showStoreDialog(context);
-
-                                          },
-                                        ),
-
-                                        SizedBox(width: 3.0,),
-
                                         Container(
-                                            width: 70.0,
+                                          alignment: Alignment.center,
+                                            width: 90.0,
                                             child: Text("₹ ${double.parse(snapshot.data[index].billAmount).toStringAsFixed(2)}",
                                                 style: TextStyle(
                                                     fontWeight:
-                                                    FontWeight.bold))),
+                                                    FontWeight.bold))
+                                        ),
+
+                                        if(snapshot.data[index].billImage == "")
+                                          Container(
+                                            width: 100.0,
+                                            child: IconButton(
+                                              icon: Icon(
+                                                FontAwesomeIcons.eye,
+                                                size: 15.0,
+                                                color: kPrimaryColorBlue,
+                                              ),
+                                              onPressed: () {
+                                                launch(snapshot.data[index].billUrl);
+                                              },
+                                            ),
+                                          ),
+
+                                        if(snapshot.data[index].billImage != "")
+                                          Container(
+                                            width: 32.0,
+                                            child: IconButton(
+                                              icon: Icon(
+                                                FontAwesomeIcons.eye,
+                                                size: 15.0,
+                                                color: kPrimaryColorBlue,
+                                              ),
+                                              onPressed: () {
+                                                launch(snapshot.data[index].billUrl);
+                                              },
+                                            ),
+                                          ),
+
+                                        if(snapshot.data[index].billImage != "")
+                                        Container(
+                                          width: 32.0,
+                                          child: IconButton(
+                                            icon: Icon(
+                                              FontAwesomeIcons.download,
+                                              size: 15.0,
+                                              color: kPrimaryColorBlue,
+                                            ),
+                                            onPressed: () async {
+
+                                              if (await Permission.storage.request().isGranted) {
+                                                await ImageDownloader.downloadImage("http://157.230.228.250/"+snapshot.data[index].billImage).then((context) => showInSnackBar("Download Complete"));
+
+                                              } else{
+                                                showInSnackBar("Permission Denied");
+                                              }
+                                            },
+                                          ),
+                                        ),
+                                        if(snapshot.data[index].billImage != "")
+                                        Container(
+                                          width: 32.0,
+                                          child: IconButton(
+                                            icon: Icon(
+                                              FontAwesomeIcons.plus,
+                                              size: 15.0,
+                                              color: kPrimaryColorBlue,
+                                            ),
+                                            onPressed: () {
+                                              setState(() {
+                                                billID = snapshot.data[index].billId;
+                                                //storeId= snapshot.data[index].id;
+                                              });
+                                              showStoreDialog(context);
+
+                                            },
+                                          ),
+                                        ),
                                       ],
                                     ),
                                     onTap: () {
-                                      launch(snapshot.data[index].billUrl);
 
                                     },
                                   ),

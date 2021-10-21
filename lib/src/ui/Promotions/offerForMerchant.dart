@@ -138,7 +138,7 @@ class _MyOfferListState extends State<MyOfferList> {
                                 subtitle: Text((snapshot.data[index].status=="0")?'Status : Waiting For Approval \nValid Till : ${snapshot.data[index].validThrough}\nTotal Users : ${snapshot.data[index].totalUser}\nTotal Amount : ${snapshot.data[index].totalAmt}': (snapshot.data[index].status == "2") ?'Status : Disapproved \nValid Till : ${snapshot.data[index].validThrough}\nTotal Users : ${snapshot.data[index].totalUser}\nTotal Amount : ${snapshot.data[index].totalAmt}' :'Status : Approved \nValid Till : ${snapshot.data[index].validThrough}\nTotal Users : ${snapshot.data[index].totalUser}\nTotal Amount : ${snapshot.data[index].totalAmt}',
                                     style: TextStyle(fontSize: 12.0)),
                                 trailing: Wrap(
-                                  spacing: 30, // space between two icons
+                                  spacing: 20, // space between two icons
                                   crossAxisAlignment:
                                   WrapCrossAlignment.center,
                                   children: <Widget>[
@@ -151,7 +151,26 @@ class _MyOfferListState extends State<MyOfferList> {
                                     : Text(
                                         'Clicks : ${snapshot.data[index].cout}\n${(snapshot.data[index].activeStatus)?"  Active" : " Expired"}',
                                         style: TextStyle(fontSize: 12.0,color: Colors.black54)),
-
+                                    IconButton(
+                                      icon: Icon(
+                                        CupertinoIcons.eye,
+                                        color: kPrimaryColorBlue,
+                                        size: 22.0,
+                                      ),
+                                      onPressed: () {
+                                        Navigator.of(context).push(
+                                          PageRouteBuilder(
+                                            opaque: false,
+                                            pageBuilder: (_, animation, __) {
+                                              return FadeTransition(
+                                                opacity: animation,
+                                                child: MyOffersDetails(snapshot.data[index]),//CouponsDetails(snapshot.data[index]),
+                                              );
+                                            },
+                                          ),
+                                        );
+                                      },
+                                    ),
                                     IconButton(
                                       icon: Icon(
                                         CupertinoIcons.delete,
@@ -164,17 +183,17 @@ class _MyOfferListState extends State<MyOfferList> {
                                   ],
                                 ),
                                 onTap: () {
-                                  Navigator.of(context).push(
-                                    PageRouteBuilder(
-                                      opaque: false,
-                                      pageBuilder: (_, animation, __) {
-                                        return FadeTransition(
-                                          opacity: animation,
-                                          child: MyOffersDetails(snapshot.data[index]),//CouponsDetails(snapshot.data[index]),
-                                        );
-                                      },
-                                    ),
-                                  );
+                                  // Navigator.of(context).push(
+                                  //   PageRouteBuilder(
+                                  //     opaque: false,
+                                  //     pageBuilder: (_, animation, __) {
+                                  //       return FadeTransition(
+                                  //         opacity: animation,
+                                  //         child: MyOffersDetails(snapshot.data[index]),//CouponsDetails(snapshot.data[index]),
+                                  //       );
+                                  //     },
+                                  //   ),
+                                  // );
                                 },
                               ),
                             ),

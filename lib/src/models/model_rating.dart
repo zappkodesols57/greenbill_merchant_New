@@ -12,19 +12,23 @@ class Rating {
   Rating({
     this.status,
     this.data,
+    this.count,
   });
 
   String status;
   List<Datum> data;
+  int count;
 
   factory Rating.fromJson(Map<String, dynamic> json) => Rating(
     status: json["status"],
     data: List<Datum>.from(json["data"].map((x) => Datum.fromJson(x))),
+    count: json["merchant_rating_count"],
   );
 
   Map<String, dynamic> toJson() => {
     "status": status,
     "data": List<dynamic>.from(data.map((x) => x.toJson())),
+    "merchant_rating_count": count,
   };
 }
 

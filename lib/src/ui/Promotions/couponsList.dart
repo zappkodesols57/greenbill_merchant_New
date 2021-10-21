@@ -140,7 +140,26 @@ class _CouponsListState extends State<CouponsList> {
 
                                     Text('\nRedeemed : ${snapshot.data[index].couponRedeem}\nClicks : ${snapshot.data[index].cout}',
                                     style: TextStyle(fontSize: 12.0,color: Colors.black54)),
-
+                                    IconButton(
+                                      icon: Icon(
+                                        CupertinoIcons.eye,
+                                        color: kPrimaryColorBlue,
+                                        size: 22.0,
+                                      ),
+                                      onPressed: () {
+                                        Navigator.of(context).push(
+                                          PageRouteBuilder(
+                                            opaque: false,
+                                            pageBuilder: (_, animation, __) {
+                                              return FadeTransition(
+                                                opacity: animation,
+                                                child: CouponsDetails(snapshot.data[index]),
+                                              );
+                                            },
+                                          ),
+                                        );
+                                      },
+                                    ),
                                     IconButton(
                                       icon: Icon(
                                         CupertinoIcons.delete,
@@ -153,17 +172,17 @@ class _CouponsListState extends State<CouponsList> {
                                   ],
                                 ),
                                 onTap: () {
-                                  Navigator.of(context).push(
-                                    PageRouteBuilder(
-                                      opaque: false,
-                                      pageBuilder: (_, animation, __) {
-                                        return FadeTransition(
-                                          opacity: animation,
-                                          child: CouponsDetails(snapshot.data[index]),
-                                        );
-                                      },
-                                    ),
-                                  );
+                                  // Navigator.of(context).push(
+                                  //   PageRouteBuilder(
+                                  //     opaque: false,
+                                  //     pageBuilder: (_, animation, __) {
+                                  //       return FadeTransition(
+                                  //         opacity: animation,
+                                  //         child: CouponsDetails(snapshot.data[index]),
+                                  //       );
+                                  //     },
+                                  //   ),
+                                  // );
                                 },
                               ),
                             ),
