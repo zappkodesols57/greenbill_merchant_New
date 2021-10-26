@@ -2007,7 +2007,7 @@ class _HomePageState extends State<HomePage> {
                                 categoryTwo: (storeCatID == "11")
                                     ? "Flagged - ${data.todaysBill.flagged}"
                                     : "Flagged - ${parkingData.todaysBill.flagged}",
-                                iconData: FontAwesomeIcons.receipt,
+                                iconData: FontAwesomeIcons.listOl,
                               ),
                       ],
                     ),

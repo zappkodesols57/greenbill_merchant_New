@@ -385,7 +385,7 @@ class BillRejectedState extends State<BillRejected> {
                                   child: ListTile(
                                     dense: true,
                                     title: Text(snapshot.data[index].mobileNo,
-                                        style: TextStyle(fontSize: 15.0)),
+                                        style: TextStyle(fontSize: 14.0,fontWeight: FontWeight.bold)),
                                     subtitle: Text(
                                         "Date : ${snapshot.data[index].billDate}\nInvoice Number : ${snapshot.data[index].invoiceNo}",
                                         style: TextStyle(

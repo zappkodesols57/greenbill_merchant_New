@@ -44,7 +44,7 @@ class AddSpaceState extends State<AddSpace> {
       id = prefs.getInt("userID").toString();
       storeID = prefs.getString("businessID");
       countController.text = widget.spaceCount;
-      _chosenName = widget.vehicleType;
+      _chosenName = (widget.status == "true")?widget.vehicleType : null;
     });
     print('$token\n$id');
     this.getVehicles(storeID);
@@ -181,7 +181,7 @@ class AddSpaceState extends State<AddSpace> {
                   _chosenName = value;
                 });
               },
-              value:( _chosenName.isEmpty || _chosenName == null) ? "2 - Wheeler" : _chosenName,
+              value:_chosenName
             ),
           ),
           Container(

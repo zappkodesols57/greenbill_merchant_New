@@ -73,7 +73,7 @@ class CardItem extends StatelessWidget {
                     child:  Icon(
                       iconData,
                       size: iconSize,
-                      color: Colors.deepOrange.withOpacity(0.6),
+                      color: Colors.deepOrange.withOpacity(0.8),
                     ),
                   ),
                 ),

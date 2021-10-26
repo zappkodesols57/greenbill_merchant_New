@@ -8,7 +8,6 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:greenbill_merchant/src/models/model_Common.dart';
 import 'package:greenbill_merchant/src/models/model_payLink.dart';
 import 'package:greenbill_merchant/src/ui/PayLinks/cardItemsPayLinks.dart';
-import 'package:greenbill_merchant/src/ui/PayU_Biz/payu_webView.dart';
 import 'package:greenbill_merchant/src/ui/widgets/custom_text_field.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../constants.dart';
@@ -161,7 +160,8 @@ class _PayLinksState extends State<PayLinks> {
                   primary: kPrimaryColorBlue,
                   shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(90)))),
               onPressed: () {
-                createLink();
+                showInSnackBar("unauthorized");
+                // createLink();
               },
             ),
           ),
@@ -446,7 +446,7 @@ class _PayLinksState extends State<PayLinks> {
         setState(() {
 
         });
-        showInSnackBar("Receipt Deleted Successfully");
+        showInSnackBar("Payment link Deleted Successfully");
       } else showInSnackBar(data.message);
     } else {
       Navigator.of(context, rootNavigator: true).pop();

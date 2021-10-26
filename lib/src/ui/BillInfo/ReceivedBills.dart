@@ -21,7 +21,6 @@ import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
-
 import 'ViewBill.dart';
 
 class BillIncoming extends StatefulWidget {
@@ -444,7 +443,7 @@ class BillIncomingState extends State<BillIncoming> {
                 ),
               ),
               trailing:Wrap(
-                spacing: 10, // space between two icons
+                spacing: 8, // space between two icons
                 crossAxisAlignment: WrapCrossAlignment.center,
                 children: <Widget>[
                   Container(
@@ -518,22 +517,22 @@ class BillIncomingState extends State<BillIncoming> {
                                   child: ListTile(
                                     dense: true,
                                     title: Text(snapshot.data[index].businessName,
-                                        style: TextStyle(fontSize: 15.0)),
-                                    subtitle: Text("Date : ${snapshot.data[index].billDate}\nInvoice : ${snapshot.data[index].invoiceNo}",
+                                        style: TextStyle(fontSize: 14.0,fontWeight: FontWeight.bold)),
+                                    subtitle: Text("${snapshot.data[index].billDate}\nInvoice : ${snapshot.data[index].invoiceNo}",
                                         style: TextStyle(
                                             fontSize: 11.0,
                                             color: Colors.grey)),
                                     isThreeLine: false,
 
                                     trailing: Wrap(
-                                      spacing: 1, // space between two icons
+                                      spacing: 2, // space between two icons
                                       crossAxisAlignment:
                                       WrapCrossAlignment.center,
                                       children: <Widget>[
 
                                         Container(
                                           alignment: Alignment.center,
-                                            width: 90.0,
+                                            width: 85.0,
                                             child: Text("₹ ${double.parse(snapshot.data[index].billAmount).toStringAsFixed(2)}",
                                                 style: TextStyle(
                                                     fontWeight:
@@ -557,7 +556,7 @@ class BillIncomingState extends State<BillIncoming> {
 
                                         if(snapshot.data[index].billImage != "")
                                           Container(
-                                            width: 32.0,
+                                            width: 31.0,
                                             child: IconButton(
                                               icon: Icon(
                                                 FontAwesomeIcons.eye,
@@ -572,7 +571,7 @@ class BillIncomingState extends State<BillIncoming> {
 
                                         if(snapshot.data[index].billImage != "")
                                         Container(
-                                          width: 32.0,
+                                          width: 31.0,
                                           child: IconButton(
                                             icon: Icon(
                                               FontAwesomeIcons.download,
@@ -592,7 +591,7 @@ class BillIncomingState extends State<BillIncoming> {
                                         ),
                                         if(snapshot.data[index].billImage != "")
                                         Container(
-                                          width: 32.0,
+                                          width: 31.0,
                                           child: IconButton(
                                             icon: Icon(
                                               FontAwesomeIcons.plus,

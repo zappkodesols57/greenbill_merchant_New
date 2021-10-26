@@ -296,7 +296,7 @@ class BillInfoState extends State<BillInfo> {
                 TextStyle(color: Colors.white, fontFamily: "PoppinsBold"),
               ),
               trailing: Wrap(
-                spacing: 27, // space between two icons
+                spacing: 32, // space between two icons
                 crossAxisAlignment: WrapCrossAlignment.center,
                 children: <Widget>[
                   Container(
@@ -309,7 +309,7 @@ class BillInfoState extends State<BillInfo> {
                     ),
                   ),
                   Container(
-                    width: 80.0,
+                    width: 75.0,
                     child: Text(
                       "Action",
                       textAlign: TextAlign.start,
@@ -356,9 +356,9 @@ class BillInfoState extends State<BillInfo> {
                                   child: ListTile(
                                     dense: true,
                                     title: Text(snapshot.data[index].mobileNo,
-                                        style: TextStyle(fontSize: 15.0)),
+                                        style: TextStyle(fontSize: 15.0,fontWeight: FontWeight.bold)),
                                     subtitle: Text(
-                                        "Date : ${snapshot.data[index].billDate}\nInvoice : ${snapshot.data[index].invoiceNo} ",
+                                        "${snapshot.data[index].billDate}\nInvoice : ${snapshot.data[index].invoiceNo} ",
                                         style: TextStyle(
                                             fontSize: 11.0,
                                             color: Colors.grey)),
@@ -374,7 +374,7 @@ class BillInfoState extends State<BillInfo> {
                                     //   child: Icon(Icons.receipt_long, color: Colors.white,),
                                     // ),
                                     trailing: Wrap(
-                                      spacing: 1, // space between two icons
+                                      spacing: 0, // space between two icons
                                       crossAxisAlignment:
                                           WrapCrossAlignment.center,
                                       children: <Widget>[

@@ -28,6 +28,7 @@ class RemainingSpace {
   };
 }
 
+Datum datumFromJson(String str) => Datum.fromJson(json.decode(str));
 class Datum {
   Datum({
     this.id,

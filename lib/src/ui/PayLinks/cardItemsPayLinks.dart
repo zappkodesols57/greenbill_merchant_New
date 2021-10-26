@@ -184,87 +184,97 @@ class PayLinksCardState extends State<PayLinksCard> {
                   ),
                 ),
               ) : Expanded(
-                child:
-                        Padding(
-                          padding: const EdgeInsets.all(3.0),
-                          child: Center(
-                            child: Container(
-                              height: 35.0,
-                              width:  widget.size.width * 0.4,
-                              child: ElevatedButton(
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Icon(
-                                      CupertinoIcons.bubble_left,
-                                      size: widget.size.height / 40,
-                                      color: Colors.black87,
-                                    ),
-                                    SizedBox(
-                                      width:  widget.size.width / 40,
-                                    ),
-                                    Text(
-                                      "Send",
-                                      style: TextStyle(
-                                        color: Colors.black87,
-                                        fontSize: widget.size.width * 0.03,
+                child: Container(
+                  alignment: Alignment.center,
+                  width: widget.size.width * 0.9,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.all(3.0),
+                                child: Center(
+                                  child: Container(
+                                    height: 35.0,
+                                    width:  widget.size.width * 0.3,
+                                    child: ElevatedButton(
+                                      child: Row(
+                                        mainAxisAlignment: MainAxisAlignment.center,
+                                        children: [
+                                          Icon(
+                                            CupertinoIcons.bubble_left,
+                                            size: widget.size.height / 40,
+                                            color: Colors.black87,
+                                          ),
+                                          SizedBox(
+                                            width:  widget.size.width / 40,
+                                          ),
+                                          Text(
+                                            "Send",
+                                            style: TextStyle(
+                                              color: Colors.black87,
+                                              fontSize: widget.size.width * 0.03,
+                                            ),
+                                          )
+                                        ],
                                       ),
-                                    )
-                                  ],
+                                      style: ElevatedButton.styleFrom(
+                                          primary: Colors.grey[300],
+                                          elevation: 0.0,
+                                          shape: RoundedRectangleBorder(
+                                              borderRadius:
+                                              BorderRadius.all(Radius.circular(90)))),
+                                      onPressed: () {
+                                        widget.action();
+                                      },
+                                    ),
+                                  ),
                                 ),
-                                style: ElevatedButton.styleFrom(
-                                    primary: Colors.grey[300],
-                                    elevation: 0.0,
-                                    shape: RoundedRectangleBorder(
-                                        borderRadius:
-                                        BorderRadius.all(Radius.circular(90)))),
-                                onPressed: () {
-                                  widget.action();
-                                },
+                              ),
+
+                          Padding(
+                            padding: const EdgeInsets.all(3.0),
+                            child: Center(
+                              child: Container(
+                                height: 35.0,
+                                width:  widget.size.width * 0.3,
+                                child: ElevatedButton(
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Icon(
+                                        CupertinoIcons.delete,
+                                        size: widget.size.height / 40,
+                                        color: Colors.black87,
+                                      ),
+                                      SizedBox(
+                                        width: widget.size.width / 40,
+                                      ),
+                                      Text(
+                                        "Delete",
+                                        style: TextStyle(
+                                          color: Colors.black87,
+                                          fontSize:  widget.size.width * 0.03,
+                                        ),
+                                      )
+                                    ],
+                                  ),
+                                  style: ElevatedButton.styleFrom(
+                                      primary: Colors.grey[300],
+                                      elevation: 0.0,
+                                      shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                          BorderRadius.all(Radius.circular(90)))),
+                                  onPressed: () {
+                                    widget.actionTwo();
+                                  },
+                                ),
                               ),
                             ),
                           ),
-                        ),
-                        // Padding(
-                        //   padding: const EdgeInsets.all(3.0),
-                        //   child: Center(
-                        //     child: Container(
-                        //       height: 35.0,
-                        //       width:  widget.size.width * 0.3,
-                        //       child: ElevatedButton(
-                        //         child: Row(
-                        //           mainAxisAlignment: MainAxisAlignment.center,
-                        //           children: [
-                        //             Icon(
-                        //               CupertinoIcons.delete,
-                        //               size: widget.size.height / 40,
-                        //               color: Colors.black87,
-                        //             ),
-                        //             SizedBox(
-                        //               width: widget.size.width / 40,
-                        //             ),
-                        //             Text(
-                        //               "Delete",
-                        //               style: TextStyle(
-                        //                 color: Colors.black87,
-                        //                 fontSize:  widget.size.width * 0.03,
-                        //               ),
-                        //             )
-                        //           ],
-                        //         ),
-                        //         style: ElevatedButton.styleFrom(
-                        //             primary: Colors.grey[300],
-                        //             elevation: 0.0,
-                        //             shape: RoundedRectangleBorder(
-                        //                 borderRadius:
-                        //                 BorderRadius.all(Radius.circular(90)))),
-                        //         onPressed: () {
-                        //           widget.actionTwo();
-                        //         },
-                        //       ),
-                        //     ),
-                        //   ),
-                        // ),
+                            ],
+                          ),
+                ),
                 ),
 
             ],

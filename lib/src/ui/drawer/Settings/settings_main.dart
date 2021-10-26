@@ -1,21 +1,18 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:greenbill_merchant/src/constants.dart';
 import 'package:greenbill_merchant/src/ui/MySubcription/newSubFile.dart';
 import 'package:greenbill_merchant/src/ui/Profile/generalSetting.dart';
 import 'package:greenbill_merchant/src/ui/drawer/Settings/feedback.dart';
-import 'package:greenbill_merchant/src/ui/drawer/Settings/paymentSetting.dart';
 import 'package:greenbill_merchant/src/ui/drawer/Settings/suggestBrand.dart';
 import 'package:greenbill_merchant/src/ui/drawer/Settings/updatePass.dart';
-import 'package:greenbill_merchant/src/ui/drawer/Settings/webView.dart';
 import 'package:greenbill_merchant/src/ui/login/login_Page_Merchant.dart';
 import 'package:package_info/package_info.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import 'Help&Support/helpAndSupport.dart';
-import 'cancelledCheck.dart';
+
 
 class Settings extends StatefulWidget {
   @override
@@ -142,13 +139,13 @@ class SettingsState extends State<Settings> {
           Divider(
             thickness: 1.0,
           ),
-          _buildListItem("Payment Settings", FontAwesomeIcons.rupeeSign, () {
-            Navigator.push(context,
-                MaterialPageRoute(builder: (context) => PaymentSetting()));
-          }),
-          Divider(
-            thickness: 1.0,
-          ),
+          // _buildListItem("Payment Settings", FontAwesomeIcons.rupeeSign, () {
+          //   Navigator.push(context,
+          //       MaterialPageRoute(builder: (context) => PaymentSetting()));
+          // }),
+          // Divider(
+          //   thickness: 1.0,
+          // ),
           _buildListItem("My Subscription", CupertinoIcons.purchased, () {
             Navigator.push(context, MaterialPageRoute(builder: (context) => subUpdated()));
           }),

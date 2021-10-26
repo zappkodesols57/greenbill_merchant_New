@@ -71,14 +71,15 @@ class ReviewsState extends State<Reviews> {
     print(res.statusCode);
     print(query.text.toString());
     if (200 == res.statusCode) {
+      count = ratingFromJson(res.body).count.toString();
 
-      setState(() {
-        count = ratingFromJson(res.body).count.toString();
-      });
+      // setState(() {
+      //   count = ratingFromJson(res.body).count.toString();
+      // });
 
-        print(ratingFromJson(res.body).data.length);
-        return ratingFromJson(res.body).data;
-      }
+      print(ratingFromJson(res.body).data.length);
+      return ratingFromJson(res.body).data;
+    }
     else {
       throw Exception('Failed to load List');
     }
@@ -100,7 +101,7 @@ class ReviewsState extends State<Reviews> {
         count = ratingFromJson(res.body).count.toString();
         print(ratingFromJson(res.body).data.length);
         return ratingFromJson(res.body).data.where((element) =>
-        element.ratingId.contains(query.text.toString()))
+            element.ratingId.contains(query.text.toString()))
             .toList();
       }
       else{
@@ -108,8 +109,8 @@ class ReviewsState extends State<Reviews> {
         print(ratingFromJson(res.body).data.length);
         return ratingFromJson(res.body).data.where((element) =>
         element.mobileNo.contains(query.text.toString())||
-        element.invoiceNo.contains(query.text.toString())||
-        element.merchantReplay.contains(query.text.toString())
+            element.invoiceNo.contains(query.text.toString())||
+            element.merchantReplay.contains(query.text.toString())
         ).toList();
       }
     }
@@ -143,23 +144,23 @@ class ReviewsState extends State<Reviews> {
                     value: search,
                     onChanged: (value) {
                       setState(() {
-                          search = value;
-                          query.clear();
+                        search = value;
+                        query.clear();
                       });
                     },
                   ),
                 ),
-              Text("Search By Ratings ( 1 to 5 )",style: TextStyle(
-                  fontFamily: "PoppinsMedium",
-                  fontSize: 15.0,
-                  color: kPrimaryColorBlue),
-                   ),
-                ],
+                Text("Search By Ratings ( 1 to 5 )",style: TextStyle(
+                    fontFamily: "PoppinsMedium",
+                    fontSize: 15.0,
+                    color: kPrimaryColorBlue),
+                ),
+              ],
             ),
             Container(
               width: size.width * 0.95,
               padding: EdgeInsets.only(
-                  top: 0.0, bottom: 10.0, left: 0.0, right: 0.0),
+                  top: 0.0, bottom: 0.0, left: 0.0, right: 0.0),
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(32),
               ),
@@ -211,61 +212,135 @@ class ReviewsState extends State<Reviews> {
                 ),
               ),
             ),
-            Container(
-              padding: EdgeInsets.fromLTRB(10.00, 0.00, 10.00, 0),
-              width: double.maxFinite,
+
+            Padding(
+              padding: const EdgeInsets.all(15.0),
               child: Container(
-                alignment: Alignment.center,
-                width: size.width * 0.9,
-                child: Row(
-                  children: [
-                    Container(
-                      child:Card(
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10.0),
-                        ),
-                        elevation:10,
-                        child:Container(
-                          alignment: Alignment.center,
-                          height: 60,
-                          width: size.width * 0.9,
-                          padding: EdgeInsets.only(
-                              top: 10.0, bottom: 5.0, left: 5.0, right: 10.0),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: <Widget>[
-                              Container(
-                                alignment: Alignment.center,
-                                width: size.width * 0.4,
-                                child: Text(
-                                  "Total Count",
-                                  style: TextStyle(
-                                      color: Colors.black,
-                                      fontSize: 11.0,
-                                      fontFamily: "PoppinsBold"),
-                                ),
-                              ),
-                              Container(
-                                alignment: Alignment.center,
-                                width: size.width * 0.4,
-                                child: Text("$count",
-                                  style: TextStyle(
-                                      color: Colors.black,
-                                      fontSize: 14.0,
-                                      fontFamily: "PoppinsBold"),
-                                ),
-                              ),
-                            ],),
-                        ),
-                      ),
-                    ),
-                  ],
+                child: Flexible(
+                  child: FutureBuilder<List<Datum>>(
+                      future: getBillInfoList(),
+                      builder: (ctx, snapshot) {
+                        if (snapshot.connectionState == ConnectionState.waiting)
+                          return Center(
+                            child: Center(
+                                child:  Row(
+                                  children: [
+                                    Container(
+                                      width: size.width * 0.9,
+                                      alignment: Alignment.center,
+                                      child:Card(
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius: BorderRadius.circular(10.0),
+                                        ),
+                                        elevation:8,
+                                        child:Container(
+                                          alignment: Alignment.center,
+                                          width: size.width * 0.7,
+                                          padding: EdgeInsets.only(
+                                              top: 10.0, bottom: 10.0, left: 10.0, right: 5.0),
+                                          child: Column(
+                                            crossAxisAlignment: CrossAxisAlignment.center,
+                                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                            children: <Widget>[
+                                              Container(
+                                                alignment: Alignment.center,
+                                                width: size.width * 0.4,
+                                                child: Text(
+                                                  "Total Count",
+                                                  style: TextStyle(
+                                                      color: Colors.black,
+                                                      fontSize: 11.0,
+                                                      fontFamily: "PoppinsBold"),
+                                                ),
+                                              ),
+                                              Container(
+                                                alignment: Alignment.center,
+                                                width: size.width * 0.4,
+                                                child: Text("$count",
+                                                  style: TextStyle(
+                                                      color: kPrimaryColorBlue,
+                                                      fontSize: 14.0,
+                                                      fontFamily: "PoppinsBold"),
+                                                ),
+                                              ),
+                                            ],),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                )),
+                          );
+                        else {
+
+                          return Scrollbar(
+                            //  controller: _controller,
+                            thickness: 3.0,
+                            child: ListView.builder(
+                              shrinkWrap: true,
+                              reverse: false,
+                              //controller: _controller,
+                              itemBuilder: (bui, index) {
+                                return new Row(
+                                  children: [
+                                    Container(
+                                      width: size.width * 0.9,
+                                      alignment : Alignment.center,
+                                      child:Card(
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius: BorderRadius.circular(10.0),
+                                        ),
+                                        elevation:8,
+                                        child:Container(
+                                          alignment: Alignment.center,
+                                          width: size.width * 0.7,
+                                          padding: EdgeInsets.only(
+                                              top: 10.0, bottom: 10.0, left: 10.0, right: 5.0),
+                                          child: Column(
+                                            crossAxisAlignment: CrossAxisAlignment.center,
+                                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                            children: <Widget>[
+                                              Container(
+                                                alignment: Alignment.center,
+                                                width: size.width * 0.4,
+                                                child: Text(
+                                                  "Total Count",
+                                                  style: TextStyle(
+                                                      color: Colors.black,
+                                                      fontSize: 11.0,
+                                                      fontFamily: "PoppinsBold"),
+                                                ),
+                                              ),
+                                              Container(
+                                                alignment: Alignment.center,
+                                                width: size.width * 0.4,
+                                                child: Text("$count",
+                                                  style: TextStyle(
+                                                      color: kPrimaryColorBlue,
+                                                      fontSize: 14.0,
+                                                      fontFamily: "PoppinsBold"),
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                );
+                              },
+                              itemCount: 1,
+                            ),
+                          );
+                        }
+                      }
+
+                  ),
                 ),
               ),
             ),
 
-            Flexible(
+
+            Expanded(
               child: FutureBuilder<List<Datum>>(
                 future: getBillInfoList(),
                 builder: (ctx, snapshot) {
@@ -303,17 +378,17 @@ class ReviewsState extends State<Reviews> {
                               child: ListTile(
                                 dense: false,
                                 title: Text('Invoice No : ${snapshot.data[index].invoiceNo}',
-                                    style: TextStyle(fontSize: 12.0,fontFamily: "PoppinsBold")),
+                                    style: TextStyle(fontSize: 14.0,fontFamily: "PoppinsBold")),
                                 isThreeLine: false,
                                 subtitle:
                                 snapshot.data[index].mobileNo.isNotEmpty?
                                 Text('Mobile No. : ${snapshot.data[index].mobileNo}\nDate : ${snapshot.data[index].billDate
                                     .toString()} \nStore Feedback : ${snapshot
                                     .data[index].storeFeedback.toString()}\nMerchant Reply : ${snapshot.data[index].merchantReplay}',
-                                    style: TextStyle(fontSize: 12.0,fontFamily: "PoppinsLight",color: Colors.black))
+                                    style: TextStyle(fontSize: 11.0,fontFamily: "PoppinsLight",color: Colors.black))
                                     :Text('Date : ${snapshot.data[index].billDate
                                     .toString()}',
-                                    style: TextStyle(fontSize: 12.0,fontFamily: "PoppinsLight",color: Colors.black))
+                                    style: TextStyle(fontSize: 11.0,fontFamily: "PoppinsLight",color: Colors.black))
                                 ,
 
                                 trailing: Wrap(
@@ -329,8 +404,7 @@ class ReviewsState extends State<Reviews> {
                                               fontWeight: FontWeight.bold,
                                               fontSize: 17.0)
                                       ),
-
-                                  ],
+                                   ],
                                 ),
                                 onTap: () {
 
@@ -353,7 +427,8 @@ class ReviewsState extends State<Reviews> {
               ),
             ),
           ],
-        ));
+        ),
+    );
   }
 
   _showLoaderDialog(BuildContext context) {

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:greenbill_merchant/src/ui/Promotions/offersList.dart';
 import '../../constants.dart';
 import 'couponsList.dart';
 import 'offerForMerchant.dart';

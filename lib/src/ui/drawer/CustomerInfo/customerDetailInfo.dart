@@ -16,8 +16,6 @@ import 'package:http/http.dart' as http;
 import 'package:image_downloader/image_downloader.dart';
 import 'package:open_file/open_file.dart';
 import 'package:path_provider/path_provider.dart';
-import 'package:permission_handler/permission_handler.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class CustomerDetailInfo extends StatefulWidget {
   final String token, id, storeID, mobileNo, email, name, state, city;
@@ -400,11 +398,11 @@ class CustomerDetailInfoState extends State<CustomerDetailInfo> {
                                   fontFamily: "PoppinsBold"),
                             ),
                             trailing: Wrap(
-                              spacing: 25, // space between two icons
+                              spacing: 20, // space between two icons
                               crossAxisAlignment: WrapCrossAlignment.center,
                               children: <Widget>[
                                 Container(
-                                  width: 80.0,
+                                  width: 65.0,
                                   child: Text(
                                     "Amount",
                                     textAlign: TextAlign.center,
@@ -416,13 +414,13 @@ class CustomerDetailInfoState extends State<CustomerDetailInfo> {
                                 Container(
                                   width: 100.0,
                                   child: Text(
-                                    "Action",
+                                    "Action ",
                                     textAlign: TextAlign.center,
                                     style: TextStyle(
                                         color: Colors.white,
                                         fontFamily: "PoppinsBold"),
                                   ),
-                                )
+                                ),
                               ],
                             ),
                             onTap: () {
@@ -437,8 +435,7 @@ class CustomerDetailInfoState extends State<CustomerDetailInfo> {
                                   return Card(
                                     child: ListTile(
                                       title: Text(
-                                          snapshot
-                                              .data.allBills[index].billDate,
+                                          snapshot.data.allBills[index].billDate,
                                           style: TextStyle(fontSize: 15.0)),
                                       trailing: Wrap(
                                         spacing: 1,
@@ -448,7 +445,7 @@ class CustomerDetailInfoState extends State<CustomerDetailInfo> {
                                         children: <Widget>[
 
                                           Container(
-                                            alignment: Alignment.centerLeft,
+                                            alignment: Alignment.center,
                                             width: 100.0,
                                             child: Text(
                                                 "₹ ${double.parse(snapshot.data.allBills[index].amount).toStringAsFixed(2)}",
@@ -569,7 +566,7 @@ class CustomerDetailInfoState extends State<CustomerDetailInfo> {
                                     fontFamily: "PoppinsBold"),
                               ),
                               trailing: Wrap(
-                                spacing: 18, // space between two icons
+                                spacing: 10, // space between two icons
                                 crossAxisAlignment: WrapCrossAlignment.center,
                                 children: <Widget>[
                                   Container(
@@ -583,17 +580,7 @@ class CustomerDetailInfoState extends State<CustomerDetailInfo> {
                                     ),
                                   ),
                                   Container(
-                                    width: 40.0,
-                                    child: Text(
-                                      "Send",
-                                      textAlign: TextAlign.center,
-                                      style: TextStyle(
-                                          color: Colors.white,
-                                          fontFamily: "PoppinsBold"),
-                                    ),
-                                  ),
-                                  Container(
-                                    width: 80.0,
+                                    width: 70.0,
                                     child: Text(
                                       "Amount",
                                       textAlign: TextAlign.center,
@@ -601,7 +588,18 @@ class CustomerDetailInfoState extends State<CustomerDetailInfo> {
                                           color: Colors.white,
                                           fontFamily: "PoppinsBold"),
                                     ),
-                                  )
+                                  ),
+                                  Container(
+                                    width: 60.0,
+                                    child: Text(
+                                      "Action",
+                                      textAlign: TextAlign.center,
+                                      style: TextStyle(
+                                          color: Colors.white,
+                                          fontFamily: "PoppinsBold"),
+                                    ),
+                                  ),
+
                                 ],
                               ),
                             ),
@@ -624,21 +622,12 @@ class CustomerDetailInfoState extends State<CustomerDetailInfo> {
                                         children: <Widget>[
                                           Container(
                                             alignment: Alignment.center,
-                                            width: 80.0,
+                                            width: 60.0,
                                             child: Text(
                                                 "${snapshot.data.datad[index].memoNo} ",
                                                 style: TextStyle(
                                                     fontWeight:
                                                         FontWeight.bold)),
-                                          ),
-                                          IconButton(
-                                            icon: Icon(
-                                              Icons.sms_outlined,
-                                              color: Colors.black,
-                                            ),
-                                            onPressed: () {
-                                              sendMemoSms(snapshot.data.datad[index].Id, widget.mobileNo);
-                                            },
                                           ),
                                           Container(
                                             alignment: Alignment.center,
@@ -648,6 +637,16 @@ class CustomerDetailInfoState extends State<CustomerDetailInfo> {
                                                 style: TextStyle(
                                                     fontWeight:
                                                         FontWeight.bold)),
+                                          ),
+                                          IconButton(
+                                            icon: Icon(
+                                              FontAwesomeIcons.paperPlane,
+                                              size: 15.0,
+                                              color: kPrimaryColorBlue,
+                                            ),
+                                            onPressed: () {
+                                              sendMemoSms(snapshot.data.datad[index].Id, widget.mobileNo);
+                                            },
                                           ),
                                         ],
                                       ),
@@ -720,16 +719,6 @@ class CustomerDetailInfoState extends State<CustomerDetailInfo> {
                                     ),
                                   ),
                                   Container(
-                                    width: 40.0,
-                                    child: Text(
-                                      "Send",
-                                      textAlign: TextAlign.center,
-                                      style: TextStyle(
-                                          color: Colors.white,
-                                          fontFamily: "PoppinsBold"),
-                                    ),
-                                  ),
-                                  Container(
                                     width: 80.0,
                                     child: Text(
                                       "Amount",
@@ -738,7 +727,17 @@ class CustomerDetailInfoState extends State<CustomerDetailInfo> {
                                           color: Colors.white,
                                           fontFamily: "PoppinsBold"),
                                     ),
-                                  )
+                                  ),
+                                  Container(
+                                    width: 60.0,
+                                    child: Text(
+                                      "Action",
+                                      textAlign: TextAlign.center,
+                                      style: TextStyle(
+                                          color: Colors.white,
+                                          fontFamily: "PoppinsBold"),
+                                    ),
+                                  ),
                                 ],
                               ),
                             ),
@@ -761,28 +760,30 @@ class CustomerDetailInfoState extends State<CustomerDetailInfo> {
                                         children: <Widget>[
                                           Container(
                                             width: 40.0,
+                                            alignment: Alignment.centerLeft,
                                             child: Text(
                                                 "${snapshot.data.datar[index].receptNo}",
                                                 style: TextStyle(
                                                     fontWeight:
                                                         FontWeight.bold)),
                                           ),
+                                          Container(
+                                            width: 90.0,
+                                            child: Text(
+                                                "₹ ${double.parse(snapshot.data.datar[index].amount).toStringAsFixed(2)}",
+                                                style: TextStyle(
+                                                    fontWeight:
+                                                        FontWeight.bold)),
+                                          ),
                                           IconButton(
                                             icon: Icon(
-                                              Icons.sms_outlined,
-                                              color: Colors.black,
+                                              FontAwesomeIcons.paperPlane,
+                                              size: 15.0,
+                                              color: kPrimaryColorBlue,
                                             ),
                                             onPressed: () {
                                               sendReceiptSms(snapshot.data.datar[index].Id, widget.mobileNo);
                                             },
-                                          ),
-                                          Container(
-                                            width: 80.0,
-                                            child: Text(
-                                                "   ₹ ${double.parse(snapshot.data.datar[index].amount).toStringAsFixed(2)}",
-                                                style: TextStyle(
-                                                    fontWeight:
-                                                        FontWeight.bold)),
                                           ),
                                         ],
                                       ),

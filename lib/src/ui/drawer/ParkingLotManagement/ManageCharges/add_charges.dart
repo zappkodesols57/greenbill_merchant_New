@@ -46,7 +46,7 @@ class AddChargesState extends State<AddCharges> {
       token = prefs.getString("token");
       storeID = prefs.getString("businessID");
       userID = prefs.getInt("userID");
-      vehicleType = widget.vehicleType;
+      vehicleType = (widget.status == "true") ? widget.vehicleType : null;
       forHours = widget.forHours;
       addHours = widget.forAdditionalHours;
       chargesController.text = widget.charges;
@@ -144,7 +144,7 @@ class AddChargesState extends State<AddCharges> {
                         vehicleType = value;
                       });
                     },
-                    value:( vehicleType.isEmpty || vehicleType == null) ? "2 - Wheeler" : vehicleType,
+                    value:vehicleType == "" ? null : vehicleType,
                   ),
                 ),
                 Container(
@@ -476,6 +476,7 @@ class AddChargesState extends State<AddCharges> {
       } else showInSnackBar(data.message);
     } else {
       Navigator.of(context, rootNavigator: true).pop();
+      showInSnackBar("Oops, Something Went Wrong");
       return null;
     }
   }

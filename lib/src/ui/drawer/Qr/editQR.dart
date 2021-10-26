@@ -91,24 +91,6 @@ class EditQRState extends State<EditQR> {
           icon: Icon(Icons.arrow_back_ios),
           onPressed: () {Navigator.pop(context, false);},
         ),
-        actions: <Widget>[
-          FlatButton(
-            textColor: Colors.white,
-            onPressed: () {
-              capture();
-            },
-            child: Icon(Icons.share),
-            shape: CircleBorder(side: BorderSide(color: Colors.transparent)),
-          ),
-          FlatButton(
-            textColor: _isButtonDisabledColor ? Colors.grey : Colors.white,
-            onPressed: () {
-              _isButtonDisabled ? null : validate();
-            },
-            child: Text("SAVE"),
-            shape: CircleBorder(side: BorderSide(color: Colors.transparent)),
-          ),
-        ],
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -730,7 +712,20 @@ class EditQRState extends State<EditQR> {
             //     ),
             //   ),
             // ),
-            // SizedBox(height: 30.0,),
+            SizedBox(height: 10.0,),
+            if(_isButtonDisabled == false)
+              Container(
+                width: 150.0,
+                child: RaisedButton(
+                  textColor:Colors.white,
+                  onPressed: () {
+                    validate();
+                  },
+                  child: Text("SAVE",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20.0),),
+                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(30.0))),
+                  color: kPrimaryColorBlue,
+                ),
+              ),
           ],
         ),
       ),

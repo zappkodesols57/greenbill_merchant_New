@@ -7,7 +7,6 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:greenbill_merchant/src/Services/postalApi_services.dart';
 import 'package:greenbill_merchant/src/models/postApi_model.dart';
-import 'package:greenbill_merchant/src/ui/drawer/Settings/cancelledCheck.dart';
 import 'package:greenbill_merchant/src/ui/values/values.dart';
 import 'package:http/http.dart' as http;
 

@@ -1,10 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:greenbill_merchant/src/models/model_myOffers.dart';
-import 'package:greenbill_merchant/src/ui/HomeScreen/widgets/data_viz/circle/neuomorphic_circle.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../constants.dart';
-import "dart:math" show pi;
 
 class CardItemMyOffer extends StatefulWidget {
 

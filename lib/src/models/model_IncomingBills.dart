@@ -37,6 +37,7 @@ class Datum {
     this.businessName,
     this.billUrl,
     this.billImage,
+    this.time,
   });
 
   int billId;
@@ -46,6 +47,7 @@ class Datum {
   String businessName;
   String billUrl;
   String billImage;
+  String time;
 
   factory Datum.fromJson(Map<String, dynamic> json) => Datum(
     billId: json["bill_id"],
@@ -55,6 +57,7 @@ class Datum {
     businessName: json["business_name"],
     billUrl: json["bill_url"],
     billImage: json["bill_image"],
+    time: json["created_at"],
   );
 
   Map<String, dynamic> toJson() => {
@@ -65,5 +68,6 @@ class Datum {
     "business_name": businessName,
     "bill_url": billUrl,
     "bill_image": billImage,
+    "created_at": time,
   };
 }

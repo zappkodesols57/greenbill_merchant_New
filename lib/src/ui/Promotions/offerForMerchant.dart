@@ -3,17 +3,13 @@ import 'dart:io';
 import 'dart:math';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'package:greenbill_merchant/src/animations/hero_dialog_route.dart';
 import 'package:greenbill_merchant/src/models/model_Common.dart';
 import 'package:greenbill_merchant/src/models/model_myOffers.dart';
-import 'package:greenbill_merchant/src/ui/Promotions/coupons.dart';
-import 'package:greenbill_merchant/src/ui/Promotions/couponsDetails.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../constants.dart';
-import 'Offers.dart';
 import 'myofferDatails.dart';
 
 class MyOfferList extends StatefulWidget {
