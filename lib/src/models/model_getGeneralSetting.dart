@@ -66,6 +66,13 @@ class Data {
     this.entityBankAc,
     this.firstName,
     this.lastName,
+    this.cancelCheque,
+    this.udyogAAdhar,
+    this.addressProof,
+    this.attestedPAN,
+    this.signatureProof,
+    this.compRegCertificate,
+    this.scedulePdf,
   });
 
   String mBusinessName;
@@ -106,6 +113,14 @@ class Data {
   String firstName;
   String lastName;
 
+  String cancelCheque;
+  String udyogAAdhar;
+  String addressProof;
+  String attestedPAN;
+  String signatureProof;
+  String compRegCertificate;
+  String scedulePdf;
+
   factory Data.fromJson(Map<String, dynamic> json) => Data(
     mBusinessName: json["m_business_name"],
     mBusinessCategoryId: json["m_business_category_id"],
@@ -143,6 +158,13 @@ class Data {
     entityBankAc: json["Entity_Bank_Account_m"],
     firstName: json["first_name"],
     lastName: json["last_name"],
+    cancelCheque: json["m_cancel_bank_cheque_photo"],
+    udyogAAdhar: json["udyog_adhaar_certificate"],
+    addressProof: json["address_proof"],
+    attestedPAN: json["attested_pan_card_legal_entity"],
+    signatureProof: json["signature_proof_of_autorize_sign"],
+    compRegCertificate: json["company_registration_certificate"],
+    scedulePdf: json["schedule_pdf_upload"],
   );
 
   Map<String, dynamic> toJson() => {
@@ -182,5 +204,12 @@ class Data {
     "Entity_Bank_Account_m": entityBankAc,
     "first_name": firstName,
     "last_name": lastName,
+    "m_cancel_bank_cheque_photo": cancelCheque,
+    "udyog_adhaar_certificate": udyogAAdhar,
+    "address_proof": addressProof,
+    "attested_pan_card_legal_entity": attestedPAN,
+    "signature_proof_of_autorize_sign": signatureProof,
+    "company_registration_certificate": compRegCertificate,
+    "schedule_pdf_upload": scedulePdf,
   };
 }

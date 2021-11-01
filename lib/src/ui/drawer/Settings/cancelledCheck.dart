@@ -7,6 +7,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:greenbill_merchant/src/constants.dart';
 import 'package:greenbill_merchant/src/models/model_Common.dart';
 import 'package:greenbill_merchant/src/models/model_suggestStoreList.dart';
+import 'package:greenbill_merchant/src/ui/Profile/generalSetting.dart';
 import 'package:greenbill_merchant/src/ui/widgets/background.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:path/path.dart' as path;
@@ -16,8 +17,8 @@ import 'package:http/http.dart' as http;
 
 class CancelledCheck extends StatefulWidget {
 
-  final String name;
-  CancelledCheck(this.name);
+  final String name,url;
+  CancelledCheck(this.name,this.url);
 
   @override
   _CancelledCheckState createState() => _CancelledCheckState();
@@ -59,7 +60,7 @@ class _CancelledCheckState extends State<CancelledCheck> {
         leading: IconButton(
           icon: Icon(Icons.arrow_back_ios),
           onPressed: () {
-            Navigator.pop(context);
+            Navigator.pop(context,false);
           },
         ),
       ),
@@ -93,6 +94,28 @@ class _CancelledCheckState extends State<CancelledCheck> {
                     ),
                   ]),
             ),
+          ),
+          SizedBox(
+            height: 10.0,
+          ),
+          Container(
+            height: 210,
+            child: Image.network(widget.url,height: 200,
+              loadingBuilder:(BuildContext context, Widget child,ImageChunkEvent loadingProgress) {
+                if (loadingProgress == null) return child;
+                return Center(
+                  child: CircularProgressIndicator(
+                    valueColor: AlwaysStoppedAnimation<Color>(kPrimaryColorBlue),
+                    // value: loadingProgress.expectedTotalBytes != null ?
+                    // loadingProgress.cumulativeBytesLoaded / loadingProgress.expectedTotalBytes
+                    //     : null,
+                  ),
+                );
+              },
+            ),
+          ),
+          SizedBox(
+            height: 15.0,
           ),
           Card(
             color: Colors.white,
@@ -373,7 +396,7 @@ class _CancelledCheckState extends State<CancelledCheck> {
   }
 
   void showInSnackBar(String value) {
-    FocusScope.of(context).requestFocus(new FocusNode());
+    // FocusScope.of(context).requestFocus(new FocusNode());
     _scaffoldKey.currentState?.removeCurrentSnackBar();
     _scaffoldKey.currentState.showSnackBar(new SnackBar(
       content: new Text(
@@ -384,8 +407,9 @@ class _CancelledCheckState extends State<CancelledCheck> {
             fontSize: 16.0,
             fontFamily: "PoppinsMedium"),
       ),
-      backgroundColor: kPrimaryColorBlue,
+      // backgroundColor: kPrimaryColorBlue,
       duration: Duration(seconds: 2),
+      behavior: SnackBarBehavior.floating,
     ));
   }
 
@@ -395,7 +419,7 @@ class _CancelledCheckState extends State<CancelledCheck> {
     String tokenn = prefs.getString("token");
 
     if (_imageFile == null) {
-      showInSnackBar("Please select Cancelled Cheque");
+      showInSnackBar("Please select Image");
       return null;
     }
     _showLoaderDialog(context);
@@ -432,6 +456,12 @@ class _CancelledCheckState extends State<CancelledCheck> {
     http.MultipartFile multipartFile9 = await http.MultipartFile.fromPath(
         'm_schedule_pdf_upload', _imageFile.path,
         filename: path.basename(_imageFile.path));
+    http.MultipartFile multipartFile10 = await http.MultipartFile.fromPath(
+        'm_digital_signature', _imageFile.path,
+        filename: path.basename(_imageFile.path));
+    http.MultipartFile multipartFile11 = await http.MultipartFile.fromPath(
+        'm_business_logo', _imageFile.path,
+        filename: path.basename(_imageFile.path));
     // add file to multipart
     if(widget.name == "Cancelled Cheque") {
       request.files.add(multipartFile);
@@ -460,6 +490,12 @@ class _CancelledCheckState extends State<CancelledCheck> {
     if(widget.name == "PayU Schedule Upload") {
       request.files.add(multipartFile9);
     }
+    if(widget.name == "Authorised Signature") {
+      request.files.add(multipartFile10);
+    }
+    if(widget.name == "Business Logo") {
+      request.files.add(multipartFile11);
+    }
     request.fields['m_business_id'] =storeID;
     request.headers.addAll(headers);
 
@@ -475,7 +511,8 @@ class _CancelledCheckState extends State<CancelledCheck> {
       _isFileAvailable = false;
       _isFilePdf = false;
       showInSnackBar("Image Uploaded Successfully");
-      // Navigator.pop(context);
+      // Navigator.pop(context,true);
+      Navigator.of(context).push(MaterialPageRoute(builder: (_) => GeneralSetting()));
     } else {
       showInSnackBar("Something went wrong!");
     }

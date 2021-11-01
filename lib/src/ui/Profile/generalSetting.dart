@@ -17,6 +17,7 @@ import 'Edit/generalSettingEdit.dart';
 class GeneralSetting extends StatefulWidget {
   GeneralSetting({Key key}) : super(key: key);
 
+
   @override
   _MyGeneralSettingState createState() => _MyGeneralSettingState();
 }
@@ -26,6 +27,18 @@ class _MyGeneralSettingState extends State<GeneralSetting> {
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
 
   bool value = false;
+  String cancelCheque;
+  String udyogAAdhar;
+  String addressProof;
+  String attestedPAN;
+  String signatureProof;
+  String compRegCertificate;
+  String scedulePdf;
+  String mGstinCertificate;
+  String mCinCertificate;
+  String mBusinessLogo;
+  String mBusinessStamp;
+  String mDigitalSignature;
 
   @override
   void initState() {
@@ -97,6 +110,21 @@ class _MyGeneralSettingState extends State<GeneralSetting> {
         adharController.text = setting.data.aadharNo;
         nleController.text = setting.data.entityAccount;
         aleController.text = setting.data.entityBankAc;
+
+        cancelCheque = setting.data.cancelCheque;
+        udyogAAdhar = setting.data.udyogAAdhar;
+        addressProof = setting.data.addressProof;
+        attestedPAN = setting.data.attestedPAN;
+        signatureProof = setting.data.signatureProof;
+        compRegCertificate = setting.data.compRegCertificate;
+        scedulePdf = setting.data.scedulePdf;
+        mGstinCertificate = setting.data.mGstinCertificate;
+        mCinCertificate = setting.data.mCinCertificate;
+        mBusinessLogo = setting.data.mBusinessLogo;
+        mBusinessStamp = setting.data.mBusinessStamp;
+        mDigitalSignature = setting.data.mDigitalSignature;
+
+
         setState(() {});
         Navigator.of(context, rootNavigator: true).pop();
       } else
@@ -1615,80 +1643,80 @@ class _MyGeneralSettingState extends State<GeneralSetting> {
                 Card(
                     child: Column(
                         children: [
-                          // Container(
-                          //   width: size.width * 0.95,
-                          //   child: new CheckboxListTile(
-                          //       title: Text("Required Payment Integration",style: TextStyle(fontWeight: FontWeight.bold),),
-                          //       controlAffinity: ListTileControlAffinity.leading,
-                          //       value: value,
-                          //       onChanged: (bool valu){
-                          //         setState(() {
-                          //           value = valu;
-                          //         });
-                          //       }
-                          //   ),
-                          // ),
                           Container(
-                            padding: EdgeInsets.all(10.0),
                             width: size.width * 0.95,
-                            child: Column(
-                              children: [
-                                Row(
-                                  children: [
-                                    Icon(
-                                      FontAwesomeIcons.image,
-                                      color: kPrimaryColorBlue,
-                                      size: 23.0,
-                                    ),
-                                    Container(
-                                      padding: EdgeInsets.only(left: 10.0),
-                                        child: Text("Cancelled Cheque",style: TextStyle(
-                                            fontFamily: "PoppinsLight",
-                                            fontSize: 13.0,
-                                            color: kPrimaryColorBlue),)
-                                    ),
-                                  ],
-                                ),
-                              SizedBox(height: 5.0,),
-                              Padding(
-                                padding: const EdgeInsets.only(top: 5.0,bottom: 5.0),
-                                child: Image.asset("assets/empty.jpg",height: 110.0,),
-                              ),
-                                // Image.network(),
-                                MaterialButton(
-                                    color: kPrimaryColorBlue,
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: const BorderRadius.all(Radius.circular(12.0)),
-                                      side: BorderSide(color: kPrimaryColorBlue,),
-                                    ),
-                                    child: Padding(
-                                      padding: const EdgeInsets.all(4.0),
-                                      child: Text(
-                                        "Upload Image",
-                                        style: TextStyle(
-                                            color: Colors.white,
-                                            fontSize: 11.0,
-                                            fontWeight: FontWeight.w500),
-                                      ),
-                                    ),
-                                    onPressed: () {
-                                      {
-                                        Navigator.push(context,
-                                            MaterialPageRoute(
-                                                builder: (context) => CancelledCheck("Cancelled Cheque")));
-                                      }
-                                    }
-                                ),
-                              ],
-                            ),
-                            decoration: BoxDecoration(
-                              border: Border.all(
-                                width: 0.5,
-                                color: kPrimaryColorBlue
-                              ),
-                              borderRadius: BorderRadius.all(Radius.circular(15.0))
+                            child: new CheckboxListTile(
+                                title: Text("Required Payment Integration",style: TextStyle(fontWeight: FontWeight.bold),),
+                                controlAffinity: ListTileControlAffinity.leading,
+                                value: value,
+                                onChanged: (bool valu){
+                                  setState(() {
+                                    value = valu;
+                                  });
+                                }
                             ),
                           ),
+                          // Container(
+                          //   padding: EdgeInsets.all(10.0),
+                          //   width: size.width * 0.95,
+                          //   child: Column(
+                          //     children: [
+                          //       Row(
+                          //         children: [
+                          //           Icon(
+                          //             FontAwesomeIcons.image,
+                          //             color: kPrimaryColorBlue,
+                          //             size: 23.0,
+                          //           ),
+                          //           Container(
+                          //             padding: EdgeInsets.only(left: 10.0),
+                          //               child: Text("Cancelled Cheque",style: TextStyle(
+                          //                   fontFamily: "PoppinsLight",
+                          //                   fontSize: 13.0,
+                          //                   color: kPrimaryColorBlue),)
+                          //           ),
+                          //         ],
+                          //       ),
+                          //     SizedBox(height: 5.0,),
+                          //     Padding(
+                          //       padding: const EdgeInsets.only(top: 5.0,bottom: 5.0),
+                          //       child: Image.asset("assets/empty.jpg",height: 110.0,),
+                          //     ),
+                          //       // Image.network(),
+                          //       MaterialButton(
+                          //           color: kPrimaryColorBlue,
+                          //           shape: RoundedRectangleBorder(
+                          //             borderRadius: const BorderRadius.all(Radius.circular(12.0)),
+                          //             side: BorderSide(color: kPrimaryColorBlue,),
+                          //           ),
+                          //           child: Padding(
+                          //             padding: const EdgeInsets.all(4.0),
+                          //             child: Text(
+                          //               "Upload Image",
+                          //               style: TextStyle(
+                          //                   color: Colors.white,
+                          //                   fontSize: 11.0,
+                          //                   fontWeight: FontWeight.w500),
+                          //             ),
+                          //           ),
+                          //           onPressed: () {
+                          //             {
+                          //               Navigator.push(context,
+                          //                   MaterialPageRoute(
+                          //                       builder: (context) => CancelledCheck("Cancelled Cheque")));
+                          //             }
+                          //           }
+                          //       ),
+                          //     ],
+                          //   ),
+                          //   decoration: BoxDecoration(
+                          //     border: Border.all(
+                          //       width: 0.5,
+                          //       color: kPrimaryColorBlue
+                          //     ),
+                          //     borderRadius: BorderRadius.all(Radius.circular(15.0))
+                          //   ),
+                          // ),
                           SizedBox(height: 10.0,),
                           Container(
                             width: size.width * 0.95,
@@ -1745,11 +1773,10 @@ class _MyGeneralSettingState extends State<GeneralSetting> {
                                         ),
                                       ),
                                       onPressed: () {
-                                        {
-                                          Navigator.push(context,
-                                              MaterialPageRoute(
-                                                  builder: (context) => CancelledCheck("Cancelled Cheque")));
-                                        }
+                                          Navigator.of(context)
+                                              .push(MaterialPageRoute(
+                                                  builder: (_) => CancelledCheck("Cancelled Cheque",cancelCheque))).then((value) => (value??false) ? showInSnackBar("Image Uploaded Successfully") : setState(() {}));
+
                                       }
                                       ),
                                 ),
@@ -1815,7 +1842,7 @@ class _MyGeneralSettingState extends State<GeneralSetting> {
                                         {
                                           Navigator.push(context,
                                               MaterialPageRoute(
-                                                  builder: (context) => CancelledCheck("GSTIN Certificate")));
+                                                  builder: (context) => CancelledCheck("GSTIN Certificate",mGstinCertificate)));
                                         }
                                       }
                                   ),
@@ -1882,7 +1909,7 @@ class _MyGeneralSettingState extends State<GeneralSetting> {
                                         {
                                           Navigator.push(context,
                                               MaterialPageRoute(
-                                                  builder: (context) => CancelledCheck("CIN Certificate")));
+                                                  builder: (context) => CancelledCheck("CIN Certificate",mCinCertificate)));
                                         }
                                       }
                                   ),
@@ -1949,7 +1976,7 @@ class _MyGeneralSettingState extends State<GeneralSetting> {
                                         {
                                           Navigator.push(context,
                                               MaterialPageRoute(
-                                                  builder: (context) => CancelledCheck("Udyog Aadhaar Certificate")));
+                                                  builder: (context) => CancelledCheck("Udyog Aadhaar Certificate",udyogAAdhar)));
                                         }
                                       }
                                   ),
@@ -2016,7 +2043,7 @@ class _MyGeneralSettingState extends State<GeneralSetting> {
                                         {
                                           Navigator.push(context,
                                               MaterialPageRoute(
-                                                  builder: (context) => CancelledCheck("Address Proof")));
+                                                  builder: (context) => CancelledCheck("Address Proof",addressProof)));
                                         }
                                       }
                                   ),
@@ -2083,7 +2110,7 @@ class _MyGeneralSettingState extends State<GeneralSetting> {
                                         {
                                           Navigator.push(context,
                                               MaterialPageRoute(
-                                                  builder: (context) => CancelledCheck("Attested copy of Pan Card of Legal Entity")));
+                                                  builder: (context) => CancelledCheck("Attested copy of Pan Card of Legal Entity",attestedPAN)));
                                         }
                                       }
                                   ),
@@ -2150,7 +2177,7 @@ class _MyGeneralSettingState extends State<GeneralSetting> {
                                         {
                                           Navigator.push(context,
                                               MaterialPageRoute(
-                                                  builder: (context) => CancelledCheck("Signature proof of Authorized Signatory")));
+                                                  builder: (context) => CancelledCheck("Signature proof of Authorized Signatory",signatureProof)));
                                         }
                                       }
                                   ),
@@ -2217,7 +2244,7 @@ class _MyGeneralSettingState extends State<GeneralSetting> {
                                         {
                                           Navigator.push(context,
                                               MaterialPageRoute(
-                                                  builder: (context) => CancelledCheck("Company Registration Certificate")));
+                                                  builder: (context) => CancelledCheck("Company Registration Certificate",compRegCertificate)));
                                         }
                                       }
                                   ),
@@ -2286,7 +2313,164 @@ class _MyGeneralSettingState extends State<GeneralSetting> {
                                         {
                                           Navigator.push(context,
                                               MaterialPageRoute(
-                                                  builder: (context) => CancelledCheck("PayU Schedule Upload")));
+                                                  builder: (context) => CancelledCheck("PayU Schedule Upload",scedulePdf)));
+                                        }
+                                      }
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                          SizedBox(height: 20.0,),
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Container(
+                              width: MediaQuery.of(context).size.width,
+                              height: 45,
+
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(25.0),
+                                color: AppColors.kPrimaryColorBlue,
+                              ),
+                              child: Padding(
+                                padding: const EdgeInsets.only(top: 7.0),
+                                child: Text("Uploads",textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                    fontSize: 20,
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                          SizedBox(height: 10.0,),
+                          Container(
+                            width: size.width * 0.95,
+                            child: new TextField(
+                              enableInteractiveSelection: false, // will disable paste operation
+                              focusNode: new AlwaysDisabledFocusNode(),
+                              style: TextStyle(
+                                //fontFamily: "PoppinsBold",
+                                  fontSize: 17.0,
+                                  color: Colors.black87),
+                              decoration: InputDecoration(
+                                border: InputBorder.none,
+                                counterStyle: TextStyle(height: double.minPositive,),
+                                counterText: "",
+                                contentPadding: const EdgeInsets.symmetric(vertical: 0.0),
+                                enabledBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                      color: kPrimaryColorBlue,
+                                      width: 0.5
+                                  ),
+                                  borderRadius: const BorderRadius.all(Radius.circular(35.0)),
+                                ),
+                                focusedBorder: new OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                      color: kPrimaryColorBlue,
+                                      width: 0.5),
+                                  borderRadius: const BorderRadius.all(Radius.circular(35.0)),
+                                ),
+                                prefixIcon: Icon(
+                                  FontAwesomeIcons.image,
+                                  color: kPrimaryColorBlue,
+                                  size: 23.0,
+                                ),
+                                labelText: "Business Logo",
+                                labelStyle: TextStyle(
+                                    fontFamily: "PoppinsLight", fontSize: 13.0, color: kPrimaryColorBlue),
+
+                                suffixIcon: Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: MaterialButton(
+                                      color: kPrimaryColorBlue,
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: const BorderRadius.all(Radius.circular(12.0)),
+                                        side: BorderSide(color: kPrimaryColorBlue,),
+                                      ),
+                                      child: Padding(
+                                        padding: const EdgeInsets.all(5.0),
+                                        child: Text(
+                                          "Upload Image",
+                                          style: TextStyle(
+                                              color: Colors.white,
+                                              fontSize: 11.0,
+                                              fontWeight: FontWeight.w500),
+                                        ),
+                                      ),
+                                      onPressed: () {
+                                        {
+                                          Navigator.push(context,
+                                              MaterialPageRoute(
+                                                  builder: (context) => CancelledCheck("Business Logo",mBusinessLogo)));
+                                        }
+                                      }
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                          SizedBox(height: 10.0,),
+                          Container(
+                            width: size.width * 0.95,
+                            child: new TextField(
+                              enableInteractiveSelection: false, // will disable paste operation
+                              focusNode: new AlwaysDisabledFocusNode(),
+                              style: TextStyle(
+                                //fontFamily: "PoppinsBold",
+                                  fontSize: 17.0,
+                                  color: Colors.black87),
+                              decoration: InputDecoration(
+                                border: InputBorder.none,
+                                counterStyle: TextStyle(height: double.minPositive,),
+                                counterText: "",
+                                contentPadding: const EdgeInsets.symmetric(vertical: 0.0),
+                                enabledBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                      color: kPrimaryColorBlue,
+                                      width: 0.5
+                                  ),
+                                  borderRadius: const BorderRadius.all(Radius.circular(35.0)),
+                                ),
+                                focusedBorder: new OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                      color: kPrimaryColorBlue,
+                                      width: 0.5),
+                                  borderRadius: const BorderRadius.all(Radius.circular(35.0)),
+                                ),
+                                prefixIcon: Icon(
+                                  FontAwesomeIcons.image,
+                                  color: kPrimaryColorBlue,
+                                  size: 23.0,
+                                ),
+                                labelText: "Authorised Signature",
+                                labelStyle: TextStyle(
+                                    fontFamily: "PoppinsLight", fontSize: 13.0, color: kPrimaryColorBlue),
+
+                                suffixIcon: Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: MaterialButton(
+                                      color: kPrimaryColorBlue,
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: const BorderRadius.all(Radius.circular(12.0)),
+                                        side: BorderSide(color: kPrimaryColorBlue,),
+                                      ),
+                                      child: Padding(
+                                        padding: const EdgeInsets.all(5.0),
+                                        child: Text(
+                                          "Upload Image",
+                                          style: TextStyle(
+                                              color: Colors.white,
+                                              fontSize: 11.0,
+                                              fontWeight: FontWeight.w500),
+                                        ),
+                                      ),
+                                      onPressed: () {
+                                        {
+                                          Navigator.push(context,
+                                              MaterialPageRoute(
+                                                  builder: (context) => CancelledCheck("Authorised Signature",mDigitalSignature)));
                                         }
                                       }
                                   ),

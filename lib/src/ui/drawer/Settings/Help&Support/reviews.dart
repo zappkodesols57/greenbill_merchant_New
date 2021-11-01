@@ -406,8 +406,7 @@ class ReviewsState extends State<Reviews> {
                     return Center(
                       child: Center(
                           child: CircularProgressIndicator(
-                            valueColor:
-                            AlwaysStoppedAnimation<Color>(kPrimaryColorBlue),
+                            valueColor: AlwaysStoppedAnimation<Color>(kPrimaryColorBlue),
                           )),
                     );
                   else {
