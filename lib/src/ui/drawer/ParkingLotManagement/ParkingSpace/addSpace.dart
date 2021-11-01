@@ -170,7 +170,7 @@ class AddSpaceState extends State<AddSpace> {
                 );
               }).toList(),
               hint: Text(
-                "Select Role",
+                "Select Vehicle",
                 style: TextStyle(
                     fontFamily: "PoppinsLight",
                     fontSize: 13.0,

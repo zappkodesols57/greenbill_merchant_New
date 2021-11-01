@@ -14,7 +14,6 @@ import 'package:open_file/open_file.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-
 class History extends StatefulWidget {
   @override
   HistoryState createState() => HistoryState();
@@ -89,7 +88,6 @@ class HistoryState extends State<History> {
       throw Exception('Failed to load List');
     }
   }
-
 
   Future<List<Datum>> getBillInfoList() async {
     final param = {
@@ -483,7 +481,6 @@ class HistoryState extends State<History> {
                               );
                             }
                         ),
-
                       );
                     } else {
                       return Center(

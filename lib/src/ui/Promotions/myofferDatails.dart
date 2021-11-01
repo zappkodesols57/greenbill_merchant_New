@@ -174,7 +174,7 @@ class _MyOffersDetailsState extends State<MyOffersDetails> {
                           backgroundColor: Colors.white,
                           shadowColor: softShadowColor,
                           highlightColor: highlightColor,
-                          child: Image.network(profileImage, height: size.width * 0.08, width: size.width * 0.08,),
+                          child: Image.network("http://157.230.228.250"+data.offerLogo, height: size.width * 0.08, width: size.width * 0.08,),
                         ),
                       ),
                       Text(

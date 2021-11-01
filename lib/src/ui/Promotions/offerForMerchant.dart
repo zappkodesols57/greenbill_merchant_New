@@ -129,29 +129,36 @@ class _MyOfferListState extends State<MyOfferList> {
                                 dense: true,
                                 title: Text(
                                     "Audience : "+snapshot.data[index].offerType.toString(),
-                                    style: TextStyle(fontSize: 13.0, fontFamily: "PoppinsMedium", fontWeight: FontWeight.bold)
+                                    style: TextStyle(fontSize: 11.0, fontFamily: "PoppinsMedium", fontWeight: FontWeight.bold)
                                 ),
                                 subtitle: Text((snapshot.data[index].status=="0")?'Status : Waiting For Approval \nValid Till : ${snapshot.data[index].validThrough}\nTotal Users : ${snapshot.data[index].totalUser}\nTotal Amount : ${snapshot.data[index].totalAmt}': (snapshot.data[index].status == "2") ?'Status : Disapproved \nValid Till : ${snapshot.data[index].validThrough}\nTotal Users : ${snapshot.data[index].totalUser}\nTotal Amount : ${snapshot.data[index].totalAmt}' :'Status : Approved \nValid Till : ${snapshot.data[index].validThrough}\nTotal Users : ${snapshot.data[index].totalUser}\nTotal Amount : ${snapshot.data[index].totalAmt}',
-                                    style: TextStyle(fontSize: 12.0)),
+                                    style: TextStyle(fontSize: 11.0)),
                                 trailing: Wrap(
-                                  spacing: 20, // space between two icons
+                                  spacing: 2, // space between two icons
                                   crossAxisAlignment:
                                   WrapCrossAlignment.center,
                                   children: <Widget>[
 
                                     (snapshot.data[index].status == "0") ?
-                                    Text(
-                                        'Clicks : ${snapshot.data[index].cout}',
-                                        style: TextStyle(fontSize: 12.0,color: Colors.black54))
-
-                                    : Text(
-                                        'Clicks : ${snapshot.data[index].cout}\n${(snapshot.data[index].activeStatus)?"  Active" : " Expired"}',
-                                        style: TextStyle(fontSize: 12.0,color: Colors.black54)),
+                                    Container(
+                                      alignment: Alignment.center,
+                                      width: 70.0,
+                                      child: Text(
+                                          'Clicks : ${snapshot.data[index].cout}',
+                                          style: TextStyle(fontSize: 12.0,color: Colors.black54)),
+                                    )
+                                    : Container(
+                                      alignment: Alignment.center,
+                                      width: 70.0,
+                                      child: Text(
+                                          'Clicks : ${snapshot.data[index].cout}\n${(snapshot.data[index].activeStatus)?"  Active" : " Expired"}',
+                                          style: TextStyle(fontSize: 12.0,color: Colors.black54)),
+                                    ),
                                     IconButton(
                                       icon: Icon(
                                         CupertinoIcons.eye,
                                         color: kPrimaryColorBlue,
-                                        size: 22.0,
+                                        size: 20.0,
                                       ),
                                       onPressed: () {
                                         Navigator.of(context).push(
@@ -167,14 +174,18 @@ class _MyOfferListState extends State<MyOfferList> {
                                         );
                                       },
                                     ),
-                                    IconButton(
-                                      icon: Icon(
-                                        CupertinoIcons.delete,
-                                        color: kPrimaryColorRed,
+                                    Container(
+                                      width: 30.0,
+                                      child: IconButton(
+                                        icon: Icon(
+                                          CupertinoIcons.delete,
+                                          size: 20.0,
+                                          color: kPrimaryColorRed,
+                                        ),
+                                        onPressed: () {
+                                          deleteOffer(snapshot.data[index].id);
+                                        },
                                       ),
-                                      onPressed: () {
-                                        deleteOffer(snapshot.data[index].id);
-                                      },
                                     ),
                                   ],
                                 ),

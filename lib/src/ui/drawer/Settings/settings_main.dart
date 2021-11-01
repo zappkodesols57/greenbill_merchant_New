@@ -45,18 +45,9 @@ class SettingsState extends State<Settings> {
 
   showAlertDialog(BuildContext context) {
     // set up the buttons
-    Widget cancelButton = FlatButton(
-      child: Text(
-        "Cancel",
-        style: TextStyle(color: kPrimaryColorBlue),
-      ),
-      onPressed: () {
-        Navigator.of(context, rootNavigator: true).pop('dialog');
-      },
-    );
     Widget continueButton = FlatButton(
       child: Text(
-        "Continue",
+        "Yes, Logout!",
         style: TextStyle(color: kPrimaryColorBlue),
       ),
       onPressed: () async {
@@ -71,8 +62,17 @@ class SettingsState extends State<Settings> {
         Navigator.pushAndRemoveUntil(
           context,
           MaterialPageRoute(builder: (context) => Login_Merchant()),
-          (Route<dynamic> route) => false,
+              (Route<dynamic> route) => false,
         );
+      },
+    );
+    Widget cancelButton = FlatButton(
+      child: Text(
+        "Cancel",
+        style: TextStyle(color: kPrimaryColorBlue),
+      ),
+      onPressed: () {
+        Navigator.of(context, rootNavigator: true).pop('dialog');
       },
     );
     // set up the AlertDialog

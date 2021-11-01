@@ -5,9 +5,12 @@ import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:greenbill_merchant/src/Services/historyServices.dart';
+import 'package:greenbill_merchant/src/animations/hero_dialog_route.dart';
 import 'package:greenbill_merchant/src/constants.dart';
 import 'package:greenbill_merchant/src/models/model_rating.dart';
+import 'package:greenbill_merchant/src/ui/drawer/Settings/Help&Support/bar_chart.dart';
 import 'package:sticky_headers/sticky_headers.dart';
 import 'package:http/http.dart' as http;
 import 'package:open_file/open_file.dart';
@@ -33,6 +36,31 @@ class ReviewsState extends State<Reviews> {
   File media;
   Dio dio = new Dio();
   TextEditingController query = new TextEditingController();
+
+  List<Color> palette = [
+    Color.fromRGBO(0, 173, 239, 1.0),
+    Color.fromRGBO(204, 18, 46, 1.0),
+    Color.fromRGBO(246, 142, 31, 1.0),
+    Color.fromRGBO(7, 187, 193, 1.0),
+    Color.fromRGBO(0, 110, 182, 1.0),
+    Color.fromRGBO(223, 202, 0, 1.0),
+    Color.fromRGBO(174, 68, 68, 1.0),
+    Color.fromRGBO(136, 197, 61, 1.0),
+    Color.fromRGBO(64, 224, 208, 1.0),
+    Color.fromRGBO(7, 111, 187, 1.0),
+    Color.fromRGBO(197, 47, 88, 1.0),
+    Color.fromRGBO(26, 192, 124, 1.0),
+    Color.fromRGBO(229, 135, 49, 1.0),
+    Color.fromRGBO(87, 136, 76, 1.0),
+    Color.fromRGBO(72, 75, 136, 1.0),
+    Color.fromRGBO(99, 99, 96, 1.0),
+    Color.fromRGBO(141, 95, 142, 1.0),
+    Color.fromRGBO(97, 146, 150, 1.0),
+    Color.fromRGBO(96, 87, 131, 1.0),
+    Color.fromRGBO(99, 255, 162, 1.0),
+    Color.fromRGBO(255, 187, 88, 1.0),
+    Color.fromRGBO(142, 106, 61, 1.0)
+  ];
 
 
   @override
@@ -124,6 +152,36 @@ class ReviewsState extends State<Reviews> {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
         key: _scaffoldKey,
+        floatingActionButton: new Padding(
+          padding: const EdgeInsets.only(left: 30.0),
+          child: AnimatedContainer(
+              duration: Duration(milliseconds: 400),
+              curve: Curves.easeInOut,
+              child: RawMaterialButton(
+                  elevation: 5.0,
+                  shape:  RoundedRectangleBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(25.0))),
+
+                  onPressed: () async{
+                    showDialog(
+                      context: context,
+                      builder: (BuildContext context) => showAlertDialog(),
+                    );
+                  },
+
+                  fillColor: kPrimaryColorBlue,
+                  child: Padding(
+                      padding: const EdgeInsets.all(12.0),
+                      child: Text(
+                            "Analysis",
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontFamily: "PoppinsMedium",
+                                fontWeight: FontWeight.bold
+                            ),
+                          )
+                      )
+                  ))),
         appBar: AppBar(
           title: Text('Ratings'),
           elevation: 0,
@@ -369,6 +427,7 @@ class ReviewsState extends State<Reviews> {
                         controller: _controller,
                         thickness: 3.0,
                         child: ListView.builder(
+                          padding: const EdgeInsets.only(bottom: kFloatingActionButtonMargin + 52),
                           shrinkWrap: true,
                           reverse: false,
                           controller: _controller,
@@ -428,6 +487,46 @@ class ReviewsState extends State<Reviews> {
             ),
           ],
         ),
+    );
+  }
+
+  Widget showAlertDialog(){
+    return new AlertDialog(
+      insetPadding: EdgeInsets.all(10),
+      title: Text("Rating Analysis Graph"),
+      content: new Container(
+        width: MediaQuery.of(context).size.width,
+        height: 200,
+        child: FutureBuilder<List<BarData>>(
+          future: fetchDataVisuals(),
+          builder: (BuildContext context,
+              AsyncSnapshot<List<BarData>> snapshot) {
+            if (snapshot.hasData && snapshot.data == null) {
+              return Container();
+            } else if (snapshot.connectionState ==
+                ConnectionState.done &&
+                snapshot.hasData) {
+              return Container(
+                child: BarChartCategory(snapshot.data),
+                padding: EdgeInsets.only(
+                  left: 0,
+                  right: 0,
+                ),
+                height: MediaQuery.of(context).size.height * 0.3,
+                width: MediaQuery.of(context).size.width * 1,
+              );
+            } else {
+              return Center(
+                child: Text(''),
+                //     child: CircularProgressIndicator(
+                //   valueColor: AlwaysStoppedAnimation<Color>(
+                //       kPrimaryColorBlue),
+                // ),
+              );
+            }
+          },
+        ),
+      ),
     );
   }
 
@@ -510,5 +609,36 @@ class ReviewsState extends State<Reviews> {
     }
   }
 
+  Future<List<BarData>> fetchDataVisuals() async {
+    final param = {
+      "m_business_id": storeID,
+    };
 
+    final response = await http.post(
+      Uri.parse("http://157.230.228.250/view-merchant-analysis-rating-graph-api/"),
+      body: param,
+      headers: {HttpHeaders.authorizationHeader: "Token $token"},
+    );
+    print(response.body);
+    print(response.statusCode);
+    if (response.statusCode == 400) {
+      return null;
+    }
+    List<BarData> data = [];
+    final body = json.decode(response.body);
+    for (int i = 0; i < body["data"].length; i++) {
+      data.add(
+          BarData(body["labels"][i], body["data"][i], palette[i]));
+    }
+    return data;
+  }
+
+
+}
+
+class BarData {
+  final String x;
+  final int y;
+  final Color color;
+  BarData(this.x, this.y, this.color);
 }

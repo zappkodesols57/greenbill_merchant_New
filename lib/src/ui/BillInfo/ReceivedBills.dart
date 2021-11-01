@@ -189,29 +189,8 @@ class BillIncomingState extends State<BillIncoming> {
                               : Text('Address not available',
                               style: TextStyle(fontSize: 10.0)),
 
-
-                          leading:
-                          (snapshot.data[index].mBusinessLogo != null)
-                              ? CircleAvatar(
-                            backgroundColor: kPrimaryColorBlue,
-                            backgroundImage: NetworkImage(snapshot.data[index].mBusinessLogo),
-                          )
-                              : CircleAvatar(
-                            backgroundColor: kPrimaryColorBlue,
-                            child: Text(
-                              storeID.substring(0, 1).toUpperCase(),
-                              style: TextStyle(
-                                fontSize: 20.0,
-                                color: Colors.white,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                          ),
                           onTap: () async {
-                            setState(() {
-                              storeId=snapshot.data[index].id;
-                            });
-                            sendBill();
+                            sendBill(snapshot.data[index].id.toString());
                           },
                       ) : Container();
                     }));
@@ -243,9 +222,18 @@ class BillIncomingState extends State<BillIncoming> {
             ),
             content: setupAlertDialoagContainerBill(),
             actions: <Widget>[
-              TextButton(
+              RaisedButton(
+                color: kPrimaryColorBlue,
                 child:
-                Text('Cancel', style: TextStyle(color: kPrimaryColorBlue)),
+                Text('Transfer To Customer', style: TextStyle(color: Colors.white)),
+                onPressed: () {
+                  sendBill("Customer");
+                },
+              ),
+              RaisedButton(
+                color: kPrimaryColorRed,
+                child:
+                Text('Cancel', style: TextStyle(color: Colors.white)),
                 onPressed: () {
                   Navigator.of(context).pop();
                 },
@@ -738,12 +726,12 @@ class BillIncomingState extends State<BillIncoming> {
     }
   }
 
-  void sendBill() async{
+  void sendBill(String id) async{
     final param ={
-      "business_id":storeId.toString(),
+      "business_id":id,
       "bill_id":billID.toString(),
     };
-    print("............$storeId..............$billID");
+    print("............$id..............$billID");
     final response = await http.post("http://157.230.228.250/merchant-send-received-bill-api/",
         body: param, headers: {HttpHeaders.authorizationHeader:"Token $token"}
     );

@@ -129,20 +129,23 @@ class _CouponsListState extends State<CouponsList> {
                                     style: TextStyle(fontSize: 15.0, fontFamily: "PoppinsMedium", fontWeight: FontWeight.bold)
                                 ),
                                 subtitle: Text('Coupon Code : ${snapshot.data[index].couponCode}\nValid Till : ${snapshot.data[index].validThrough}\nTotal Users : ${snapshot.data[index].totalUser}\nTotal Amount : ${snapshot.data[index].totalAmt}',
-                                    style: TextStyle(fontSize: 12.0)) ,
+                                    style: TextStyle(fontSize: 11.0)) ,
                                 trailing: Wrap(
-                                  spacing: 30, // space between two icons
+                                  spacing: 1, // space between two icons
                                   crossAxisAlignment:
-                                  WrapCrossAlignment.start,
+                                  WrapCrossAlignment.center,
                                   children: <Widget>[
 
-                                    Text('\nRedeemed : ${snapshot.data[index].couponRedeem}\nClicks : ${snapshot.data[index].cout}',
-                                    style: TextStyle(fontSize: 12.0,color: Colors.black54)),
+                                    Container(
+                                      width: 80.0,
+                                      child: Text('Redeemed : ${snapshot.data[index].couponRedeem}\nClicks : ${snapshot.data[index].cout}',
+                                      style: TextStyle(fontSize: 11.0,color: Colors.black54)),
+                                    ),
                                     IconButton(
                                       icon: Icon(
                                         CupertinoIcons.eye,
                                         color: kPrimaryColorBlue,
-                                        size: 22.0,
+                                        size: 20.0,
                                       ),
                                       onPressed: () {
                                         Navigator.of(context).push(
@@ -158,30 +161,22 @@ class _CouponsListState extends State<CouponsList> {
                                         );
                                       },
                                     ),
-                                    IconButton(
-                                      icon: Icon(
-                                        CupertinoIcons.delete,
-                                        color: kPrimaryColorRed,
+                                    Container(
+                                      width: 40.0,
+                                      child: IconButton(
+                                        icon: Icon(
+                                          CupertinoIcons.delete,
+                                          size: 20.0,
+                                          color: kPrimaryColorRed,
+                                        ),
+                                        onPressed: () {
+                                          deleteCoupon(snapshot.data[index].id);
+                                        },
                                       ),
-                                      onPressed: () {
-                                        deleteCoupon(snapshot.data[index].id);
-                                      },
                                     ),
                                   ],
                                 ),
-                                onTap: () {
-                                  // Navigator.of(context).push(
-                                  //   PageRouteBuilder(
-                                  //     opaque: false,
-                                  //     pageBuilder: (_, animation, __) {
-                                  //       return FadeTransition(
-                                  //         opacity: animation,
-                                  //         child: CouponsDetails(snapshot.data[index]),
-                                  //       );
-                                  //     },
-                                  //   ),
-                                  // );
-                                },
+                                onTap: () {},
                               ),
                             ),
                           ),

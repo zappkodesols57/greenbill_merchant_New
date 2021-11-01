@@ -42,6 +42,7 @@ class Datum {
     this.offerBusinessCategory,
     this.createdDate,
     this.offerPanel,
+    this.offerLogo,
     this.oBusinessName,
     this.merchantBusinessName,
     this.checkBusinessCategory,
@@ -67,6 +68,7 @@ class Datum {
   dynamic offerBusinessCategory;
   DateTime createdDate;
   String offerPanel;
+  String offerLogo;
   dynamic oBusinessName;
   dynamic merchantBusinessName;
   dynamic checkBusinessCategory;
@@ -92,6 +94,7 @@ class Datum {
     offerBusinessCategory: json["offer_business_category"],
     createdDate: DateTime.parse(json["created_date"]),
     offerPanel: json["offer_panel"],
+    offerLogo: json["offer_logo"],
     oBusinessName: json["o_business_name"],
     merchantBusinessName: json["merchant_business_name"],
     checkBusinessCategory: json["check_business_category"],
@@ -118,6 +121,7 @@ class Datum {
     "offer_business_category": offerBusinessCategory,
     "created_date": createdDate.toIso8601String(),
     "offer_panel": offerPanel,
+    "offer_logo": offerLogo,
     "o_business_name": oBusinessName,
     "merchant_business_name": merchantBusinessName,
     "check_business_category": checkBusinessCategory,

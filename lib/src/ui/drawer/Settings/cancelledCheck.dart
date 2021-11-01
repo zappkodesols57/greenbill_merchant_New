@@ -15,6 +15,10 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 
 class CancelledCheck extends StatefulWidget {
+
+  final String name;
+  CancelledCheck(this.name);
+
   @override
   _CancelledCheckState createState() => _CancelledCheckState();
 }
@@ -26,10 +30,6 @@ class _CancelledCheckState extends State<CancelledCheck> {
   bool _isFileAvailable, _isFilePdf;
   final ScrollController _controller = ScrollController();
 
-
-
-
-
   @override
   void initState() {
     getCredentials();
@@ -37,7 +37,6 @@ class _CancelledCheckState extends State<CancelledCheck> {
     _isFilePdf = false;
     super.initState();
   }
-
 
   getCredentials() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -50,15 +49,13 @@ class _CancelledCheckState extends State<CancelledCheck> {
     print('$token\n$id');
   }
 
-
-
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
       key: _scaffoldKey,
       appBar: AppBar(
-        title: Text('Cancelled Cheque'),
+        title: Text("Upload Image"),
         leading: IconButton(
           icon: Icon(Icons.arrow_back_ios),
           onPressed: () {
@@ -78,7 +75,7 @@ class _CancelledCheckState extends State<CancelledCheck> {
             padding: EdgeInsets.only(left: 20.0),
             child: RichText(
               text: TextSpan(
-                  text: 'Cancelled Cheque',
+                  text: widget.name,
                   style: TextStyle(
                     fontFamily: "PoppinsLight",
                     fontSize: 13.0,
@@ -101,7 +98,7 @@ class _CancelledCheckState extends State<CancelledCheck> {
             color: Colors.white,
             elevation: 5,
             child: Container(
-              height: size.height * 0.26,
+              height: size.height * 0.30,
               width: MediaQuery.of(context).size.width,
               child: Stack(
                 children: [
@@ -286,7 +283,7 @@ class _CancelledCheckState extends State<CancelledCheck> {
                     ),
                   ),
                   onPressed: () {
-                    submit();
+                    submit(widget.name);
                   }),
             ),
           ),
@@ -392,7 +389,7 @@ class _CancelledCheckState extends State<CancelledCheck> {
     ));
   }
 
-  Future<void> submit() async {
+  Future<void> submit(String value) async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     int userID = prefs.getInt("userID");
     String tokenn = prefs.getString("token");
@@ -411,8 +408,58 @@ class _CancelledCheckState extends State<CancelledCheck> {
     http.MultipartFile multipartFile = await http.MultipartFile.fromPath(
         'cancel_bank_cheque_photo', _imageFile.path,
         filename: path.basename(_imageFile.path));
+    http.MultipartFile multipartFile2 = await http.MultipartFile.fromPath(
+        'm_gstin_certificate', _imageFile.path,
+        filename: path.basename(_imageFile.path));
+    http.MultipartFile multipartFile3 = await http.MultipartFile.fromPath(
+        'm_CIN_certificate', _imageFile.path,
+        filename: path.basename(_imageFile.path));
+    http.MultipartFile multipartFile4 = await http.MultipartFile.fromPath(
+        'udyog_adhaar_certificate', _imageFile.path,
+        filename: path.basename(_imageFile.path));
+    http.MultipartFile multipartFile5 = await http.MultipartFile.fromPath(
+        'address_proof', _imageFile.path,
+        filename: path.basename(_imageFile.path));
+    http.MultipartFile multipartFile6 = await http.MultipartFile.fromPath(
+        'pan_card_legal_entity', _imageFile.path,
+        filename: path.basename(_imageFile.path));
+    http.MultipartFile multipartFile7 = await http.MultipartFile.fromPath(
+        'proof_of_authourize_signature', _imageFile.path,
+        filename: path.basename(_imageFile.path));
+    http.MultipartFile multipartFile8 = await http.MultipartFile.fromPath(
+        'm_company_registration_certificate', _imageFile.path,
+        filename: path.basename(_imageFile.path));
+    http.MultipartFile multipartFile9 = await http.MultipartFile.fromPath(
+        'm_schedule_pdf_upload', _imageFile.path,
+        filename: path.basename(_imageFile.path));
     // add file to multipart
-    request.files.add(multipartFile);
+    if(widget.name == "Cancelled Cheque") {
+      request.files.add(multipartFile);
+    }
+    if(widget.name == "GSTIN Certificate") {
+      request.files.add(multipartFile2);
+    }
+    if(widget.name == "CIN Certificate") {
+      request.files.add(multipartFile3);
+    }
+    if(widget.name == "Udyog Aadhaar Certificate") {
+      request.files.add(multipartFile4);
+    }
+    if(widget.name == "Address Proof") {
+      request.files.add(multipartFile5);
+    }
+    if(widget.name == "Attested copy of Pan Card of Legal Entity") {
+      request.files.add(multipartFile6);
+    }
+    if(widget.name == "Signature proof of Authorized Signatory") {
+      request.files.add(multipartFile7);
+    }
+    if(widget.name == "Company Registration Certificate") {
+      request.files.add(multipartFile8);
+    }
+    if(widget.name == "PayU Schedule Upload") {
+      request.files.add(multipartFile9);
+    }
     request.fields['m_business_id'] =storeID;
     request.headers.addAll(headers);
 
@@ -423,7 +470,12 @@ class _CancelledCheckState extends State<CancelledCheck> {
     Navigator.of(context, rootNavigator: true).pop();
     if (response.statusCode == 200) {
       print("***********************************************     Submit     *******************************************************");
-      showInSnackBar("Cancelled Check Uploaded Successfully");
+      _imageFile.delete();
+      _imageFile = null;
+      _isFileAvailable = false;
+      _isFilePdf = false;
+      showInSnackBar("Image Uploaded Successfully");
+      // Navigator.pop(context);
     } else {
       showInSnackBar("Something went wrong!");
     }
