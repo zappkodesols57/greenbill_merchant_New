@@ -48,321 +48,329 @@ class FullPassState extends State<FullPass> {
         body: SingleChildScrollView(
           child: Column(
             children: [
-              Container(
-                width: size.width * 0.99,
-                padding: EdgeInsets.only(
-                    top: 20.0, bottom: 0.0, left: 20.0, right: 25.0),
-                child: Text(
-                  "Show this QR Code to Cashier",
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontStyle: FontStyle.italic,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 20.0,
-                    fontFamily: "PoppinsMedium",
+              SizedBox(height:10.0),
+              Center(
+                child: Container(
+                  padding: EdgeInsets.all(10.0),
+                  width: size.width * 0.95,
+                  height: 580.0,
+                  decoration: BoxDecoration(
+                      border: Border.all(
+                          width: 15.0,
+                          color: kPrimaryColorBlue
+                      ),
+                      borderRadius: BorderRadius.all(
+                          Radius.circular(25.0)
+                      )
                   ),
-                  textAlign: TextAlign.center,
-                ),
-              ),
-              SizedBox(height: 10.0,),
-              Card(
-                elevation: 5.0,
-                shadowColor: kPrimaryColor,
-                child: QrImage(
-                  data: "GreenBill~Parking Pass~${widget.data.id}~${widget.data.businessName}~${widget.data.businessLogo}~${widget.data.mobileNo}~${widget.data.amount}~${widget.data.vehicalNo}~${widget.data.validFrom}~${widget.data.validTo}~${widget.data.comments}~${widget.data.createdAt}~${widget.data.passType}~${widget.data.companyId}~${widget.data.companyName}",
-                  version: QrVersions.auto,
-                  size: 300.0,
-                  foregroundColor: kPrimaryColorBlue,
-                  embeddedImage: AssetImage('assets/logo/logo.png'),
-                  embeddedImageStyle: QrEmbeddedImageStyle(
-                    size: Size(40, 40),
-                  ),
-                ),
-              ),
-              Container(
-                width: size.width * 0.99,
-                padding: EdgeInsets.only(
-                    top: 10.0, bottom: 10.0, left: 20.0, right: 20.0),
-                child: Center(
-                  child: Text(
-                    "Parking Pass Details",
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontStyle: FontStyle.normal,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 15.0,
-                      decoration: TextDecoration.underline,
-                    ),
-                    textAlign: TextAlign.center,
-                  ),
-                ),
-              ),
-              Container(
-                padding: EdgeInsets.only(
-                    top: 10.0, bottom: 10.0, left: 0.0, right: 0.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    Container(
-                      width: size.width * 0.45,
-                      padding: EdgeInsets.only(
-                          top: 0.0, bottom: 0.0, left: 0.0, right: 0.0),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(5),
-                      ),
-                      child: new TextField(
-                        controller: idController,
-                        enableInteractiveSelection: false, // will disable paste operation
-                        focusNode: new AlwaysDisabledFocusNode(),
-                        style: TextStyle(
-                          color: Colors.black,
-                          fontSize: size.height * 0.019,
-                          fontStyle: FontStyle.normal,
-                          fontWeight: FontWeight.w400,
+
+                  child: Column(
+                    children: [
+                      Container(
+                        decoration: BoxDecoration(
+                            border: Border.all(
+                                width: 0.5,
+                                color: kPrimaryColorBlue
+                            ),
+                            borderRadius: BorderRadius.all(
+                                Radius.circular(10.0)
+                            )
                         ),
-                        decoration: InputDecoration(
-                          prefixIcon: Icon(
-                            Icons.credit_card_rounded,
-                            color: Color(0xFF00569D),
-                          ),
-                          labelText: "Pass ID",
-                          labelStyle: TextStyle(
-                              fontFamily: "PoppinsLight",
-                              fontSize: 18.0,
-                              color: Color(0xFF00569D)),
-                          border: InputBorder.none,
-                          counterStyle: TextStyle(
-                            height: double.minPositive,
-                          ),
-                          counterText: "",
-                          contentPadding: const EdgeInsets.symmetric(
-                              vertical: 13.0, horizontal: 5),
-                          enabledBorder: OutlineInputBorder(
-                            borderSide: BorderSide(
-                                color: kPrimaryColorBlue,
-                                width: 0.5),
-                            borderRadius:
-                            const BorderRadius.all(Radius.circular(35.0)),
-                          ),
-                          focusedBorder: new OutlineInputBorder(
-                            borderSide: BorderSide(
-                                color: kPrimaryColorBlue,
-                                width: 0.5),
-                            borderRadius:
-                            const BorderRadius.all(Radius.circular(35.0)),
-                          ),
+                        child: Column(
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Center(
+                                child: Text("PARKING PASS",
+                                  style: TextStyle(
+                                      fontSize: 20.0,
+                                      fontWeight: FontWeight.bold,
+                                      fontFamily: "PoppinsMedium",
+                                      color: kPrimaryColorBlue
+                                  ),
+                                ),
+                              ),
+                            ),
+                            Center(
+                              child: Text(widget.data.businessName,
+                                style: TextStyle(
+                                  // fontWeight: FontWeight.bold,
+                                    fontFamily: "PoppinsMedium",
+                                    color: kPrimaryColorBlue
+                                ),
+                              ),
+                            ),
+                            SizedBox(height: 10.0,),
+                          ],
                         ),
                       ),
-                    ),
-                    Container(
-                      width: size.width * 0.45,
-                      padding: EdgeInsets.only(
-                          top: 0.0, bottom: 0.0, left: 0.0, right: 0.0),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(5),
-                      ),
-                      child: new TextField(
-                        controller: vehNoController,
-                        enableInteractiveSelection:
-                        false, // will disable paste operation
-                        focusNode: new AlwaysDisabledFocusNode(),
-                        style: TextStyle(
-                          color: Colors.black,
-                          fontSize: size.height * 0.019,
-                          fontStyle: FontStyle.normal,
-                          fontWeight: FontWeight.w400,
+                      SizedBox(height: 20.0,),
+                      Container(
+                        height: 430.0,
+                        decoration: BoxDecoration(
+                            color: kPrimaryColorBlue,
+                            border: Border.all(
+                                width: 0.5,
+                                color: kPrimaryColorBlue
+                            ),
+                            borderRadius: BorderRadius.all(
+                                Radius.circular(10.0)
+                            )
                         ),
-                        decoration: InputDecoration(
-                          prefixIcon: Icon(
-                            Icons.pedal_bike_rounded,
-                            color: Color(0xFF00569D),
-                          ),
-                          labelText: "Vehicle No.",
-                          labelStyle: TextStyle(
-                              fontFamily: "PoppinsLight",
-                              fontSize: 18.0,
-                              color: Color(0xFF00569D)),
-                          border: InputBorder.none,
-                          counterStyle: TextStyle(
-                            height: double.minPositive,
-                          ),
-                          counterText: "",
-                          contentPadding: const EdgeInsets.symmetric(
-                              vertical: 13.0, horizontal: 5),
-                          enabledBorder: OutlineInputBorder(
-                            borderSide: BorderSide(
-                                color: kPrimaryColorBlue,
-                                width: 0.5),
-                            borderRadius:
-                            const BorderRadius.all(Radius.circular(35.0)),
-                          ),
-                          focusedBorder: new OutlineInputBorder(
-                            borderSide: BorderSide(
-                                color: kPrimaryColorBlue,
-                                width: 0.5),
-                            borderRadius:
-                            const BorderRadius.all(Radius.circular(35.0)),
-                          ),
+                        child: Column(
+                          children: [
+                            Container(
+                              margin: EdgeInsets.only(left: 5.0,right: 5.0,top: 15.0,bottom: 0.0),
+                              width: size.width * 0.90,
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                children: [
+                                  Container(
+                                    alignment: Alignment.center,
+                                    width: size.width * 0.30,
+                                    child: Text("Pass ID",
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          fontFamily: "PoppinsMedium",
+                                          color: Colors.white
+                                      ),
+                                    ),
+                                  ),
+                                  Center(
+                                    child: Container(
+                                      padding: EdgeInsets.all(5.0),
+                                      alignment: Alignment.center,
+                                      width: size.width * 0.40,
+                                      decoration: BoxDecoration(
+                                          borderRadius: BorderRadius.all(
+                                              Radius.circular(5.0)
+                                          ),
+                                          color: Colors.white
+                                      ),
+                                      child: Text(widget.data.id.toString(),
+                                        style: TextStyle(
+                                          // fontWeight: FontWeight.bold,
+                                          fontFamily: "PoppinsMedium",
+                                          color: Colors.black,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            SizedBox(height: 10.0,),
+                            Container(
+                              margin: EdgeInsets.only(left: 5.0,right: 5.0,top: 10.0,bottom: 0.0),
+                              width: size.width * 0.90,
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                children: [
+                                  Container(
+                                    alignment: Alignment.center,
+                                    width: size.width * 0.30,
+                                    child: Text("Vehicle No.",
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          fontFamily: "PoppinsMedium",
+                                          color: Colors.white
+                                      ),
+                                    ),
+                                  ),
+                                  Center(
+                                    child: Container(
+                                      padding: EdgeInsets.all(5.0),
+                                      alignment: Alignment.center,
+                                      width: size.width * 0.40,
+                                      decoration: BoxDecoration(
+                                          borderRadius: BorderRadius.all(
+                                              Radius.circular(5.0)
+                                          ),
+                                          color: Colors.white
+                                      ),
+                                      child: Text(widget.data.vehicalNo.toString(),
+                                        style: TextStyle(
+                                          // fontWeight: FontWeight.bold,
+                                          fontFamily: "PoppinsMedium",
+                                          color: Colors.black,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ), SizedBox(height: 10.0,),
+                            Container(
+                              margin: EdgeInsets.only(left: 5.0,right: 5.0,top: 10.0,bottom: 0.0),
+                              width: size.width * 0.90,
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                children: [
+                                  Container(
+                                    alignment: Alignment.center,
+                                    width: size.width * 0.30,
+                                    child: Text("Valid Till",
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          fontFamily: "PoppinsMedium",
+                                          color: Colors.white
+                                      ),
+                                    ),
+                                  ),
+                                  Center(
+                                    child: Container(
+                                      padding: EdgeInsets.all(5.0),
+                                      alignment: Alignment.center,
+                                      width: size.width * 0.40,
+                                      decoration: BoxDecoration(
+                                          borderRadius: BorderRadius.all(
+                                              Radius.circular(5.0)
+                                          ),
+                                          color: Colors.white
+                                      ),
+                                      child: Text(widget.data.validTo.toString(),
+                                        style: TextStyle(
+                                          // fontWeight: FontWeight.bold,
+                                          fontFamily: "PoppinsMedium",
+                                          color: Colors.black,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            SizedBox(height: 10.0,),
+                            Container(
+                              margin: EdgeInsets.only(left: 5.0,right: 5.0,top: 10.0,bottom: 0.0),
+                              width: size.width * 0.90,
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                children: [
+                                  Container(
+                                    alignment: Alignment.center,
+                                    width: size.width * 0.30,
+                                    child: Text("Company",
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          fontFamily: "PoppinsMedium",
+                                          color: Colors.white
+                                      ),
+                                    ),
+                                  ),
+                                  Center(
+                                    child: Container(
+                                      padding: EdgeInsets.all(5.0),
+                                      alignment: Alignment.center,
+                                      width: size.width * 0.40,
+                                      decoration: BoxDecoration(
+                                          borderRadius: BorderRadius.all(
+                                              Radius.circular(5.0)
+                                          ),
+                                          color: Colors.white
+                                      ),
+                                      child: Text(widget.data.companyName.toString(),
+                                        style: TextStyle(
+                                          // fontWeight: FontWeight.bold,
+                                          fontFamily: "PoppinsMedium",
+                                          color: Colors.black,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            SizedBox(height: 10.0,),
+                            Container(
+                              margin: EdgeInsets.only(left: 5.0,right: 5.0,top: 10.0,bottom: 0.0),
+                              width: size.width * 0.90,
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                children: [
+                                  Container(
+                                    alignment: Alignment.center,
+                                    width: size.width * 0.30,
+                                    child: Text("QR Code",
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          fontFamily: "PoppinsMedium",
+                                          color: Colors.white
+                                      ),
+                                    ),
+                                  ),
+                                  Center(
+                                    child: Container(
+                                      padding: EdgeInsets.all(5.0),
+                                      alignment: Alignment.center,
+                                      width: size.width * 0.40,
+                                      decoration: BoxDecoration(
+                                          borderRadius: BorderRadius.all(
+                                              Radius.circular(5.0)
+                                          ),
+                                          color: Colors.white
+                                      ),
+                                      child: QrImage(
+                                        data: "GreenBill~Parking Pass~${widget.data.id}~${widget.data.businessName}~${widget.data.businessLogo}~${widget.data.mobileNo}~${widget.data.amount}~${widget.data.vehicalNo}~${widget.data.validFrom}~${widget.data.validTo}~${widget.data.comments}~${widget.data.createdAt}~${widget.data.passType}~${widget.data.companyId}~${widget.data.companyName}",
+                                        version: QrVersions.auto,
+                                        size: 130.0,
+                                        // foregroundColor: kPrimaryColorBlue,
+                                        // embeddedImage: AssetImage('assets/logo/logo.png'),
+                                        // embeddedImageStyle: QrEmbeddedImageStyle(
+                                        //   size: Size(40, 40),
+                                        // ),
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            SizedBox(height: 10.0,),
+                            Container(
+                              margin: EdgeInsets.only(left: 5.0,right: 5.0,top: 10.0,bottom: 0.0),
+                              width: size.width * 0.90,
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                children: [
+                                  Container(
+                                    alignment: Alignment.center,
+                                    width: size.width * 0.30,
+                                    child: Text("Cost",
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          fontFamily: "PoppinsMedium",
+                                          color: Colors.white
+                                      ),
+                                    ),
+                                  ),
+                                  Center(
+                                    child: Container(
+                                      padding: EdgeInsets.all(5.0),
+                                      alignment: Alignment.center,
+                                      width: size.width * 0.40,
+                                      decoration: BoxDecoration(
+                                          borderRadius: BorderRadius.all(
+                                              Radius.circular(5.0)
+                                          ),
+                                          color: Colors.white
+                                      ),
+                                      child: Text(widget.data.amount.toString(),
+                                        style: TextStyle(
+                                          // fontWeight: FontWeight.bold,
+                                          fontFamily: "PoppinsMedium",
+                                          color: Colors.black,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            SizedBox(height: 10.0,),
+                          ],
                         ),
                       ),
-                    ),
-                  ],
-                ),
-              ),
-              Container(
-                padding: EdgeInsets.only(
-                    top: 0.0, bottom: 10.0, left: 0.0, right: 0.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    Container(
-                      width: size.width * 0.45,
-                      padding: EdgeInsets.only(
-                          top: 0.0, bottom: 0.0, left: 0.0, right: 0.0),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(5),
-                      ),
-                      child: new TextField(
-                        controller: amtController,
-                        enableInteractiveSelection:
-                        false, // will disable paste operation
-                        focusNode: new AlwaysDisabledFocusNode(),
-                        style: TextStyle(
-                          color: Colors.black,
-                          fontSize: size.height * 0.019,
-                          fontStyle: FontStyle.normal,
-                          fontWeight: FontWeight.w400,
-                        ),
-                        decoration: InputDecoration(
-                          prefixIcon: Icon(
-                            FontAwesomeIcons.rupeeSign,
-                            color: Color(0xFF00569D),
-                          ),
-                          labelText: "Amount",
-                          labelStyle: TextStyle(
-                              fontFamily: "PoppinsLight",
-                              fontSize: 18.0,
-                              color: Color(0xFF00569D)),
-                          border: InputBorder.none,
-                          counterStyle: TextStyle(
-                            height: double.minPositive,
-                          ),
-                          counterText: "",
-                          contentPadding: const EdgeInsets.symmetric(
-                              vertical: 13.0, horizontal: 5),
-                          enabledBorder: OutlineInputBorder(
-                            borderSide: BorderSide(
-                                color: kPrimaryColorBlue,
-                                width: 0.5),
-                            borderRadius:
-                            const BorderRadius.all(Radius.circular(35.0)),
-                          ),
-                          focusedBorder: new OutlineInputBorder(
-                            borderSide: BorderSide(
-                                color: kPrimaryColorBlue,
-                                width: 0.5),
-                            borderRadius:
-                            const BorderRadius.all(Radius.circular(35.0)),
-                          ),
-                        ),
-                      ),
-                    ),
-                    Container(
-                      width: size.width * 0.45,
-                      padding: EdgeInsets.only(
-                          top: 0.0, bottom: 0.0, left: 0.0, right: 0.0),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(5),
-                      ),
-                      child: new TextField(
-                        controller: expController,
-                        enableInteractiveSelection:
-                        false, // will disable paste operation
-                        focusNode: new AlwaysDisabledFocusNode(),
-                        style: TextStyle(
-                          color: Colors.black,
-                          fontSize: size.height * 0.019,
-                          fontStyle: FontStyle.normal,
-                          fontWeight: FontWeight.w400,
-                        ),
-                        decoration: InputDecoration(
-                          prefixIcon: Icon(
-                            Icons.calendar_today,
-                            color: Color(0xFF00569D),
-                          ),
-                          labelText: "Valid Till",
-                          labelStyle: TextStyle(
-                              fontFamily: "PoppinsLight",
-                              fontSize: 18.0,
-                              color: Color(0xFF00569D)),
-                          border: InputBorder.none,
-                          counterStyle: TextStyle(
-                            height: double.minPositive,
-                          ),
-                          counterText: "",
-                          contentPadding: const EdgeInsets.symmetric(
-                              vertical: 13.0, horizontal: 5),
-                          enabledBorder: OutlineInputBorder(
-                            borderSide: BorderSide(
-                                color: kPrimaryColorBlue,
-                                width: 0.5),
-                            borderRadius:
-                            const BorderRadius.all(Radius.circular(35.0)),
-                          ),
-                          focusedBorder: new OutlineInputBorder(
-                            borderSide: BorderSide(
-                                color: kPrimaryColorBlue,
-                                width: 0.5),
-                            borderRadius:
-                            const BorderRadius.all(Radius.circular(35.0)),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              Container(
-                width: size.width * 0.95,
-                padding: EdgeInsets.only(
-                    top: 0.0, bottom: 10.0, left: 0.0, right: 0.0),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(5),
-                ),
-                child: new TextField(
-                  controller: compController,
-                  enableInteractiveSelection:
-                  false, // will disable paste operation
-                  focusNode: new AlwaysDisabledFocusNode(),
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontSize: size.height * 0.019,
-                    fontStyle: FontStyle.normal,
-                    fontWeight: FontWeight.w400,
-                  ),
-                  decoration: InputDecoration(
-                    prefixIcon: Icon(
-                      Icons.location_city,
-                      color: Color(0xFF00569D),
-                    ),
-                    labelText: "Company",
-                    labelStyle: TextStyle(
-                        fontFamily: "PoppinsLight",
-                        fontSize: 18.0,
-                        color: Color(0xFF00569D)),
-                    border: InputBorder.none,
-                    counterStyle: TextStyle(
-                      height: double.minPositive,
-                    ),
-                    counterText: "",
-                    contentPadding: const EdgeInsets.symmetric(vertical: 13.0, horizontal: 5),
-                    enabledBorder: OutlineInputBorder(borderSide: BorderSide(color: kPrimaryColorBlue, width: 0.5),
-                      borderRadius: const BorderRadius.all(Radius.circular(35.0)),
-                    ),
-                    focusedBorder: new OutlineInputBorder(
-                      borderSide: BorderSide(color: kPrimaryColorBlue, width: 0.5),
-                      borderRadius: const BorderRadius.all(Radius.circular(35.0)),
-                    ),
+                    ],
                   ),
                 ),
               ),

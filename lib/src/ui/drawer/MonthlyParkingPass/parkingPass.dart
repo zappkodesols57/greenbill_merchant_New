@@ -221,7 +221,7 @@ class ParkingPassState extends State<ParkingPass> {
                                                   .businessLogo),
                                           radius: 20.0,
                                           backgroundColor:
-                                          kPrimaryColorBlue,
+                                          Colors.white,
                                         ),
                                         trailing: Text(
                                             "₹ ${double.parse(snapshot.data[index].amount).toStringAsFixed(2)}",

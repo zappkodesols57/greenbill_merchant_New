@@ -25,7 +25,7 @@ class _BarChartCategoryState extends State<BarChartCategory> {
           labelPlacement: LabelPlacement.betweenTicks,
         tickPosition: TickPosition.outside,
         labelStyle: TextStyle(
-          fontSize: 10.0,
+          fontSize: 12.0,
         ),
 
       ),
