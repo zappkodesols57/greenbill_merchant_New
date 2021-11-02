@@ -20,10 +20,13 @@ class _BarChartCategoryState extends State<BarChartCategory> {
       tooltipBehavior: TooltipBehavior(enable: true),
       primaryXAxis: CategoryAxis(
         // edgeLabelPlacement: EdgeLabelPlacement.shift,
-        labelRotation: 60,
+        // labelRotation: 60,
           maximumLabels: 200,
           labelPlacement: LabelPlacement.betweenTicks,
         tickPosition: TickPosition.outside,
+        labelStyle: TextStyle(
+          fontSize: 10.0,
+        ),
 
       ),
       series: <CartesianSeries>[

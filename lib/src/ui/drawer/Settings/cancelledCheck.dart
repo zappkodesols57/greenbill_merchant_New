@@ -106,9 +106,6 @@ class _CancelledCheckState extends State<CancelledCheck> {
                 return Center(
                   child: CircularProgressIndicator(
                     valueColor: AlwaysStoppedAnimation<Color>(kPrimaryColorBlue),
-                    // value: loadingProgress.expectedTotalBytes != null ?
-                    // loadingProgress.cumulativeBytesLoaded / loadingProgress.expectedTotalBytes
-                    //     : null,
                   ),
                 );
               },
@@ -125,15 +122,6 @@ class _CancelledCheckState extends State<CancelledCheck> {
               width: MediaQuery.of(context).size.width,
               child: Stack(
                 children: [
-                  // Positioned(
-                  //   child: Visibility(
-                  //     child: Container(
-                  //       height: 100,
-                  //       width: 300,
-                  //       color: Colors.green,
-                  //     ),
-                  //   ),
-                  // ),
                   Positioned(
                       left: MediaQuery.of(context).size.width / 1.2,
                       child: Visibility(
