@@ -48,6 +48,7 @@ class Datum {
     this.merchantId,
     this.totalUser,
     this.totalAmt,
+    this.expired,
   });
 
   int id;
@@ -68,6 +69,7 @@ class Datum {
   int merchantId;
   String totalUser;
   int totalAmt;
+  bool expired;
 
   factory Datum.fromJson(Map<String, dynamic> json) => Datum(
     id: json["id"],
@@ -88,6 +90,7 @@ class Datum {
     merchantId: json["merchant_id"],
     totalUser: json["total_customers"],
     totalAmt: json["total_amount"],
+    expired: json["expired"],
   );
 
   Map<String, dynamic> toJson() => {
@@ -109,5 +112,6 @@ class Datum {
     "merchant_id": merchantId,
     "total_customers": totalUser,
     "total_amount": totalAmt,
+    "expired": expired,
   };
 }

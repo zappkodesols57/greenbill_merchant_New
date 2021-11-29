@@ -129,12 +129,14 @@ class _MyOfferListState extends State<MyOfferList> {
                                 dense: true,
                                 title: Text(
                                     "Audience : "+snapshot.data[index].offerType.toString(),
-                                    style: TextStyle(fontSize: 11.0, fontFamily: "PoppinsMedium", fontWeight: FontWeight.bold)
+                                    style: TextStyle(fontSize: 12.0, fontFamily: "PoppinsMedium", fontWeight: FontWeight.bold)
                                 ),
-                                subtitle: Text((snapshot.data[index].status=="0")?'Status : Waiting For Approval \nValid Till : ${snapshot.data[index].validThrough}\nTotal Users : ${snapshot.data[index].totalUser}\nTotal Amount : ${snapshot.data[index].totalAmt}': (snapshot.data[index].status == "2") ?'Status : Disapproved \nValid Till : ${snapshot.data[index].validThrough}\nTotal Users : ${snapshot.data[index].totalUser}\nTotal Amount : ${snapshot.data[index].totalAmt}' :'Status : Approved \nValid Till : ${snapshot.data[index].validThrough}\nTotal Users : ${snapshot.data[index].totalUser}\nTotal Amount : ${snapshot.data[index].totalAmt}',
+                                subtitle: Text((snapshot.data[index].status=="0")?'Status : Waiting For Approval \nValid Till : ${snapshot.data[index].validThrough}\nTotal Users : ${snapshot.data[index].totalUser}\nTotal Amount : ${snapshot.data[index].totalAmt}'
+                                          : (snapshot.data[index].status == "2") ?'Status : Disapproved \nValid Till : ${snapshot.data[index].validThrough}\nTotal Users : ${snapshot.data[index].totalUser}\nTotal Amount : ${snapshot.data[index].totalAmt}'
+                                          :'Status : Approved \nValid Till : ${snapshot.data[index].validThrough}\nTotal Users : ${snapshot.data[index].totalUser}\nTotal Amount : ${snapshot.data[index].totalAmt}',
                                     style: TextStyle(fontSize: 11.0)),
                                 trailing: Wrap(
-                                  spacing: 2, // space between two icons
+                                  spacing: 10, // space between two icons
                                   crossAxisAlignment:
                                   WrapCrossAlignment.center,
                                   children: <Widget>[
@@ -154,28 +156,8 @@ class _MyOfferListState extends State<MyOfferList> {
                                           'Clicks : ${snapshot.data[index].cout}\n${(snapshot.data[index].activeStatus)?"  Active" : " Expired"}',
                                           style: TextStyle(fontSize: 12.0,color: Colors.black54)),
                                     ),
-                                    IconButton(
-                                      icon: Icon(
-                                        CupertinoIcons.eye,
-                                        color: kPrimaryColorBlue,
-                                        size: 20.0,
-                                      ),
-                                      onPressed: () {
-                                        Navigator.of(context).push(
-                                          PageRouteBuilder(
-                                            opaque: false,
-                                            pageBuilder: (_, animation, __) {
-                                              return FadeTransition(
-                                                opacity: animation,
-                                                child: MyOffersDetails(snapshot.data[index]),//CouponsDetails(snapshot.data[index]),
-                                              );
-                                            },
-                                          ),
-                                        );
-                                      },
-                                    ),
                                     Container(
-                                      width: 30.0,
+                                      width: 60.0,
                                       child: IconButton(
                                         icon: Icon(
                                           CupertinoIcons.delete,
@@ -190,17 +172,18 @@ class _MyOfferListState extends State<MyOfferList> {
                                   ],
                                 ),
                                 onTap: () {
-                                  // Navigator.of(context).push(
-                                  //   PageRouteBuilder(
-                                  //     opaque: false,
-                                  //     pageBuilder: (_, animation, __) {
-                                  //       return FadeTransition(
-                                  //         opacity: animation,
-                                  //         child: MyOffersDetails(snapshot.data[index]),//CouponsDetails(snapshot.data[index]),
-                                  //       );
-                                  //     },
-                                  //   ),
-                                  // );
+                                  clickCoupon(snapshot.data[index].id);
+                                  Navigator.of(context).push(
+                                    PageRouteBuilder(
+                                      opaque: false,
+                                      pageBuilder: (_, animation, __) {
+                                        return FadeTransition(
+                                          opacity: animation,
+                                          child: MyOffersDetails(snapshot.data[index]),//CouponsDetails(snapshot.data[index]),
+                                        );
+                                      },
+                                    ),
+                                  );
                                 },
                               ),
                             ),
@@ -260,6 +243,40 @@ class _MyOfferListState extends State<MyOfferList> {
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(10))),
       duration: Duration(seconds: 2),
     ));
+  }
+
+  Future<void> clickCoupon(int id) async {
+
+    final param = {
+      "offer_id": id.toString(),
+    };
+
+    final response = await http.post(
+      "http://157.230.228.250/get-merchant-clicks-of-offers-api/",
+      body: param, headers: {HttpHeaders.authorizationHeader: "Token $token"},
+    );
+
+    print(response.statusCode);
+    CommonData data;
+    var responseJson = json.decode(response.body);
+    print(response.body);
+    data = new CommonData.fromJson(jsonDecode(response.body));
+    print(responseJson);
+
+    if (response.statusCode == 200) {
+      print("Click Submit Successful");
+      print(data.status);
+      //   if(data.status == "success"){
+      //     Navigator.of(context, rootNavigator: true).pop();
+      //     // showInSnackBar("Coupon Deleted Successfully");
+      //   } else showInSnackBar(data.status);
+      // } else {
+      //   Navigator.of(context, rootNavigator: true).pop();
+      //   print(data.status);
+      //   showInSnackBar(data.status);
+      //   return null;
+      // }
+    }
   }
 
   Future<void> deleteOffer(int id) async {

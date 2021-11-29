@@ -203,7 +203,6 @@ print("$busId");
                         SharedPreferences prefs = await SharedPreferences.getInstance();
                         Navigator.push(context,
                             HeroDialogRoute(builder: (context) => subHistory()));
-
                       },
                       fillColor: kPrimaryColorBlue,
                       child: Padding(
@@ -225,10 +224,12 @@ print("$busId");
                                     fontFamily: "PoppinsMedium",
                                     fontWeight: FontWeight.bold
                                 ),
-                              )
+                              ),
                             ],
-                          )
-                      ))),
+                          ),
+                      ),
+                  ),
+              ),
             ),
           ),
         ],
@@ -249,7 +250,7 @@ print("$busId");
             height: 5,
           ),
           Container(
-            width: size.width ,
+            width: size.width,
             height: 30,
             decoration: BoxDecoration(
                 borderRadius: BorderRadius.all(Radius.circular(40))),
@@ -274,13 +275,10 @@ print("$busId");
                       _onTapBox2=false;
                       _onTapBox3=false;
                       _onTapBox1=true;
-
                     });
-                  } ,
-
+                  },
                 ),
                 InkWell(
-
                   child:Container(
                     decoration: BoxDecoration(
                         color: _onTapBox2?kPrimaryColorBlue:_colorMerchantContainer,
@@ -299,10 +297,9 @@ print("$busId");
                       _onTapBox1=false;
                       _onTapBox2=true;
                     });
-                  } ,
+                  },
                 ),
                 InkWell(
-
                   child:Container(
                     decoration: BoxDecoration(
                         color: _onTapBox3?kPrimaryColorBlue:_colorMerchantContainer,
@@ -311,7 +308,7 @@ print("$busId");
                     width: size.width * 0.30,
                     child: Center(
                         child: Text(
-                          'Transactional ',
+                          'Transactional',
                           style: TextStyle(color: _onTapBox3?Colors.white :_colorMerchantText),
                         )),
                   ),
@@ -320,11 +317,9 @@ print("$busId");
                       _onTapBox1=false;
                       _onTapBox2=false;
                       _onTapBox3=true;
-
                     });
                   } ,
                 ),
-
               ],
             ),
           ),
@@ -340,12 +335,12 @@ print("$busId");
                   return Center(child: CircularProgressIndicator(valueColor:AlwaysStoppedAnimation<Color>(kPrimaryColorBlue),));
                 else if (snapshot.hasError) {
                   return Center(
-                    child: Text("You don’t have any Active Subscription"),
+                    child: Text("You don’t have any Active Subscription Recharge"),
                   );
                 }
                 else if (snapshot.data.isEmpty) {
                   return Center(
-                    child: Text("You don’t have any Active Green Bill Subscription"),
+                    child: Text("You don’t have any Active Subscription Recharge"),
                   );
                 } else {
                   if (snapshot.connectionState == ConnectionState.done &&
@@ -397,21 +392,18 @@ print("$busId");
                                           crossAxisAlignment: CrossAxisAlignment.center,
                                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                           children: <Widget>[
-
                                             Container(
                                               padding: EdgeInsets.only(
                                                   top: 0.0, bottom: 5.0, left: 5.0, right: 5.0),
                                               width: size.width * 0.4,
                                               child: Text(
                                                 "Purchase Date",
-
                                                 style: TextStyle(
                                                     color: Colors.black,
                                                     fontSize: 12.0,
                                                     fontFamily: "PoppinsBold"),
                                               ),
                                             ),
-
                                             Container(
                                               padding: EdgeInsets.only(
                                                   top: 0.0, bottom: 5.0, left: 5.0, right: 5.0),
@@ -443,14 +435,12 @@ print("$busId");
                                               width: size.width * 0.4,
                                               child: Text(
                                                 "Per Bill Cost",
-
                                                 style: TextStyle(
                                                     color: Colors.black,
                                                     fontSize: 12.0,
                                                     fontFamily: "PoppinsBold"),
                                               ),
                                             ),
-
                                             Container(
                                               padding: EdgeInsets.only(
                                                   top: 0.0, bottom: 5.0, left: 5.0, right: 5.0),
@@ -475,21 +465,18 @@ print("$busId");
                                           crossAxisAlignment: CrossAxisAlignment.center,
                                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                           children: <Widget>[
-
                                             Container(
                                               padding: EdgeInsets.only(
                                                   top: 0.0, bottom: 5.0, left: 5.0, right: 5.0),
                                               width: size.width * 0.4,
                                               child: Text(
                                                 "Per digital Bill Cost",
-
                                                 style: TextStyle(
                                                     color: Colors.black,
                                                     fontSize: 12.0,
                                                     fontFamily: "PoppinsBold"),
                                               ),
                                             ),
-
                                             Container(
                                               padding: EdgeInsets.only(
                                                   top: 0.0, bottom: 5.0, left: 5.0, right: 5.0),
@@ -688,12 +675,12 @@ print("$busId");
                     return Center(child: CircularProgressIndicator(valueColor:AlwaysStoppedAnimation<Color>(kPrimaryColorBlue),));
                   else if (snapshot.hasError) {
                     return Center(
-                      child: Text("You don’t have any Active Promotional SMS Subscription"),
+                      child: Text("You don’t have any Active Subscription Recharge"),
                     );
                   }
                   else if (snapshot.data.isEmpty) {
                     return Center(
-                      child: Text("You don’t have any Active Promotional SMS Subscription"),
+                      child: Text("You don’t have any Active Subscription Recharge"),
                     );
                   } else {
                     if (snapshot.connectionState == ConnectionState.done &&
@@ -999,12 +986,12 @@ print("$busId");
                     return Center(child: CircularProgressIndicator(valueColor:AlwaysStoppedAnimation<Color>(kPrimaryColorBlue),));
                   else if (snapshot.hasError) {
                     return Center(
-                      child: Text("You don’t have any Active Subscription"),
+                      child: Text("You don’t have any Active Subscription Recharge"),
                     );
                   }
                   else if (snapshot.data.isEmpty) {
                     return Center(
-                      child: Text("You don’t have any Active Transactional SMS Subscription"),
+                      child: Text("You don’t have any Active Subscription Recharge"),
                     );
                   } else {
                     if (snapshot.connectionState == ConnectionState.done &&

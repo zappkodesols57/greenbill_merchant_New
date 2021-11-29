@@ -410,7 +410,7 @@ class RechargeState extends State<Recharge> {
                     return Center(child: CircularProgressIndicator(valueColor:AlwaysStoppedAnimation<Color>(kPrimaryColorBlue),));
                   else if (snapshot.hasError) {
                     return Center(
-                      child: Text("You don’t have any Active Subscription"),
+                      child: Text("You don’t have any Recharge Plan"),
                     );
                   } else {
                     if (snapshot.connectionState == ConnectionState.done &&
@@ -631,7 +631,7 @@ class RechargeState extends State<Recharge> {
                     return Center(child: CircularProgressIndicator(valueColor:AlwaysStoppedAnimation<Color>(kPrimaryColorBlue),));
                   else if (snapshot.hasError) {
                     return Center(
-                      child: Text("You don’t have any Active Subscription"),
+                      child: Text("You don’t have any Recharge Plan"),
                     );
                   } else {
                     if (snapshot.connectionState == ConnectionState.done &&
@@ -891,7 +891,7 @@ class RechargeState extends State<Recharge> {
                     return Center(child: CircularProgressIndicator(valueColor:AlwaysStoppedAnimation<Color>(kPrimaryColorBlue),));
                   else if (snapshot.hasError) {
                     return Center(
-                      child: Text("You don’t have any Active Subscription"),
+                      child: Text("You don’t have any Recharge Plan"),
                     );
                   } else {
                     if (snapshot.connectionState == ConnectionState.done &&
@@ -1177,7 +1177,7 @@ class RechargeState extends State<Recharge> {
                     return Center(child: CircularProgressIndicator(valueColor:AlwaysStoppedAnimation<Color>(kPrimaryColorBlue),));
                   else if (snapshot.hasError) {
                     return Center(
-                      child: Text("You don’t have any Active Subscription"),
+                      child: Text("You don’t have any Recharge Plan"),
                     );
                   } else {
                     if (snapshot.connectionState == ConnectionState.done &&
@@ -1442,7 +1442,6 @@ class RechargeState extends State<Recharge> {
               color: kPrimaryColorBlue,
             ),
           ),
-
 
           // Container(
             //width: MediaQuery.of(context).size.width,

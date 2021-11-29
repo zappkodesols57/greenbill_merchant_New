@@ -124,7 +124,7 @@ class CustomerDetailInfoState extends State<CustomerDetailInfo> {
       backgroundColor: Colors.white,
       key: _scaffoldKey,
       appBar: AppBar(
-        title: Text("All Bills"),
+        title: Text("Customer Details"),
         elevation: 0,
         leading: IconButton(
           icon: Icon(Icons.arrow_back_ios),
@@ -137,21 +137,21 @@ class CustomerDetailInfoState extends State<CustomerDetailInfo> {
         Container(
             child: Column(
           children: [
-            Container(
-              color: kPrimaryColorBlue.withOpacity(0.3),
-              child: Text(
-                "Customer Personal Details",
-                textAlign: TextAlign.left,
-                style: TextStyle(
-                    fontSize: 20.0,
-                    color: Colors.white,
-                    fontFamily: "PoppinsMedium",
-                    fontWeight: FontWeight.bold),
-              ),
-              padding: EdgeInsets.only(left: 20.0, top: 3.0),
-              height: 40.0,
-              width: size.width,
-            ),
+            // Container(
+            //   color: kPrimaryColorBlue.withOpacity(0.3),
+            //   child: Text(
+            //     "Customer Personal Details",
+            //     textAlign: TextAlign.left,
+            //     style: TextStyle(
+            //         fontSize: 20.0,
+            //         color: Colors.white,
+            //         fontFamily: "PoppinsMedium",
+            //         fontWeight: FontWeight.bold),
+            //   ),
+            //   padding: EdgeInsets.only(left: 20.0, top: 3.0),
+            //   height: 40.0,
+            //   width: size.width,
+            // ),
             Container(
               width: size.width,
               padding: EdgeInsets.only(left: 20.0, top: 10.0, bottom: 10.0),
@@ -580,7 +580,7 @@ class CustomerDetailInfoState extends State<CustomerDetailInfo> {
                                     ),
                                   ),
                                   Container(
-                                    width: 70.0,
+                                    width: 90.0,
                                     child: Text(
                                       "Amount",
                                       textAlign: TextAlign.center,
@@ -622,9 +622,9 @@ class CustomerDetailInfoState extends State<CustomerDetailInfo> {
                                         children: <Widget>[
                                           Container(
                                             alignment: Alignment.center,
-                                            width: 60.0,
+                                            width: 80.0,
                                             child: Text(
-                                                "${snapshot.data.datad[index].memoNo} ",
+                                                "${snapshot.data.datad[index].memoNo}",
                                                 style: TextStyle(
                                                     fontWeight:
                                                         FontWeight.bold)),
@@ -638,15 +638,19 @@ class CustomerDetailInfoState extends State<CustomerDetailInfo> {
                                                     fontWeight:
                                                         FontWeight.bold)),
                                           ),
-                                          IconButton(
-                                            icon: Icon(
-                                              FontAwesomeIcons.paperPlane,
-                                              size: 15.0,
-                                              color: kPrimaryColorBlue,
+                                          Container(
+                                            width: 60.0,
+                                            alignment: Alignment.center,
+                                            child: IconButton(
+                                              icon: Icon(
+                                                FontAwesomeIcons.paperPlane,
+                                                size: 15.0,
+                                                color: kPrimaryColorBlue,
+                                              ),
+                                              onPressed: () {
+                                                sendMemoSms(snapshot.data.datad[index].Id, widget.mobileNo);
+                                              },
                                             ),
-                                            onPressed: () {
-                                              sendMemoSms(snapshot.data.datad[index].Id, widget.mobileNo);
-                                            },
                                           ),
                                         ],
                                       ),
@@ -698,8 +702,8 @@ class CustomerDetailInfoState extends State<CustomerDetailInfo> {
                             child: ListTile(
                               tileColor: kPrimaryColorBlue,
                               title: Text(
-                                "     Date",
-                                textAlign: TextAlign.start,
+                                "Date",
+                                textAlign: TextAlign.center,
                                 style: TextStyle(
                                     color: Colors.white,
                                     fontFamily: "PoppinsBold"),
@@ -709,7 +713,7 @@ class CustomerDetailInfoState extends State<CustomerDetailInfo> {
                                 crossAxisAlignment: WrapCrossAlignment.center,
                                 children: <Widget>[
                                   Container(
-                                    width: 60.0,
+                                    width: 62.0,
                                     child: Text(
                                       "Receipt",
                                       textAlign: TextAlign.center,
@@ -759,8 +763,8 @@ class CustomerDetailInfoState extends State<CustomerDetailInfo> {
                                             WrapCrossAlignment.center,
                                         children: <Widget>[
                                           Container(
-                                            width: 40.0,
-                                            alignment: Alignment.centerLeft,
+                                            width: 80.0,
+                                            alignment: Alignment.center,
                                             child: Text(
                                                 "${snapshot.data.datar[index].receptNo}",
                                                 style: TextStyle(
@@ -768,22 +772,27 @@ class CustomerDetailInfoState extends State<CustomerDetailInfo> {
                                                         FontWeight.bold)),
                                           ),
                                           Container(
-                                            width: 90.0,
+                                            width: 80.0,
+                                            alignment: Alignment.center,
                                             child: Text(
                                                 "₹ ${double.parse(snapshot.data.datar[index].amount).toStringAsFixed(2)}",
                                                 style: TextStyle(
                                                     fontWeight:
                                                         FontWeight.bold)),
                                           ),
-                                          IconButton(
-                                            icon: Icon(
-                                              FontAwesomeIcons.paperPlane,
-                                              size: 15.0,
-                                              color: kPrimaryColorBlue,
+                                          Container(
+                                            width: 60.0,
+                                            alignment: Alignment.center,
+                                            child: IconButton(
+                                              icon: Icon(
+                                                FontAwesomeIcons.paperPlane,
+                                                size: 15.0,
+                                                color: kPrimaryColorBlue,
+                                              ),
+                                              onPressed: () {
+                                                sendReceiptSms(snapshot.data.datar[index].Id, widget.mobileNo);
+                                              },
                                             ),
-                                            onPressed: () {
-                                              sendReceiptSms(snapshot.data.datar[index].Id, widget.mobileNo);
-                                            },
                                           ),
                                         ],
                                       ),

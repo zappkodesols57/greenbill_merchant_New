@@ -8,6 +8,7 @@ import 'package:greenbill_merchant/src/constants.dart';
 import 'package:greenbill_merchant/src/models/model_Common.dart';
 import 'package:greenbill_merchant/src/models/model_suggestStoreList.dart';
 import 'package:greenbill_merchant/src/ui/Profile/generalSetting.dart';
+import 'package:greenbill_merchant/src/ui/values/values.dart';
 import 'package:greenbill_merchant/src/ui/widgets/background.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:path/path.dart' as path;
@@ -28,14 +29,17 @@ class _CancelledCheckState extends State<CancelledCheck> {
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
   String token, id, storeID, storeCatID;
   File _imageFile;
-  bool _isFileAvailable, _isFilePdf;
+  bool _isFileAvailable, _isFilePdf,removeIMG;
   final ScrollController _controller = ScrollController();
+
+  String imageUrl;
 
   @override
   void initState() {
     getCredentials();
     _isFileAvailable = false;
     _isFilePdf = false;
+    removeIMG = false;
     super.initState();
   }
 
@@ -85,7 +89,7 @@ class _CancelledCheckState extends State<CancelledCheck> {
                   ),
                   children: <TextSpan>[
                     TextSpan(
-                      text: '*',
+                      text: '',
                       style: TextStyle(
                         color: kPrimaryColorBlue,
                         fontStyle: FontStyle.normal,
@@ -98,6 +102,7 @@ class _CancelledCheckState extends State<CancelledCheck> {
           SizedBox(
             height: 10.0,
           ),
+          if(removeIMG == false && widget.url != "")
           Container(
             height: 210,
             child: Image.network(widget.url,height: 200,
@@ -111,6 +116,18 @@ class _CancelledCheckState extends State<CancelledCheck> {
               },
             ),
           ),
+          if(removeIMG == false && widget.url != "")
+          SizedBox(
+            height: 15.0,
+          ),
+          if(removeIMG == true && widget.url == "")
+          Container(
+            height: 210,
+            child: Image.asset("assets/empty.jpg",height: 200,
+            ),
+          ),
+          if(removeIMG == true && widget.url == "")
+
           SizedBox(
             height: 15.0,
           ),
@@ -259,9 +276,9 @@ class _CancelledCheckState extends State<CancelledCheck> {
             ),
           ),
           Padding(
-            padding: const EdgeInsets.all(20.0),
+            padding: const EdgeInsets.only(top: 15.0),
             child: Container(
-              width: size.width,
+              width: 300,
               decoration: new BoxDecoration(
                   borderRadius: BorderRadius.all(Radius.circular(35.0)),
                   boxShadow: <BoxShadow>[
@@ -288,13 +305,95 @@ class _CancelledCheckState extends State<CancelledCheck> {
                       "Submit",
                       style: TextStyle(
                           color: Colors.white,
-                          fontSize: 20.0,
+                          fontSize: 17.0,
                           fontWeight: FontWeight.w500,
                           fontFamily: "PoppinsMedium"),
                     ),
                   ),
                   onPressed: () {
                     submit(widget.name);
+                  }),
+            ),
+          ),
+          if(widget.name == "Authorised Signature" && widget.url != "" && removeIMG == true)
+            Padding(
+              padding: const EdgeInsets.only(top: 15.0),
+            child: Container(
+              width: 300,
+              decoration: new BoxDecoration(
+                  borderRadius: BorderRadius.all(Radius.circular(35.0)),
+                  boxShadow: <BoxShadow>[
+                    BoxShadow(
+                      color: Colors.white,
+                      offset: Offset(1.0, 6.0),
+                      blurRadius: 20.0,
+                    ),
+                    BoxShadow(
+                      color: Colors.white,
+                      offset: Offset(1.0, 6.0),
+                      blurRadius: 20.0,
+                    ),
+                  ],
+                  color: AppColors.kPrimaryColorRed
+              ),
+              child: MaterialButton(
+                  highlightColor: Colors.transparent,
+                  splashColor: Colors.white,
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(
+                        vertical: 10.0, horizontal: 42.0),
+                    child: Text(
+                      "Remove",
+                      style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 17.0,
+                          fontWeight: FontWeight.w500,
+                          fontFamily: "PoppinsMedium"),
+                    ),
+                  ),
+                  onPressed: () {
+                    removeSign();
+                  }),
+            ),
+          ),
+          if(widget.name == "Business Logo" && widget.url != "")
+            Padding(
+            padding: const EdgeInsets.only(top: 15.0),
+            child: Container(
+              width: 300,
+              decoration: new BoxDecoration(
+                  borderRadius: BorderRadius.all(Radius.circular(35.0)),
+                  boxShadow: <BoxShadow>[
+                    BoxShadow(
+                      color: Colors.white,
+                      offset: Offset(1.0, 6.0),
+                      blurRadius: 20.0,
+                    ),
+                    BoxShadow(
+                      color: Colors.white,
+                      offset: Offset(1.0, 6.0),
+                      blurRadius: 20.0,
+                    ),
+                  ],
+                  color: AppColors.kPrimaryColorRed
+              ),
+              child: MaterialButton(
+                  highlightColor: Colors.transparent,
+                  splashColor: Colors.white,
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(
+                        vertical: 10.0, horizontal: 42.0),
+                    child: Text(
+                      "Remove",
+                      style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 17.0,
+                          fontWeight: FontWeight.w500,
+                          fontFamily: "PoppinsMedium"),
+                    ),
+                  ),
+                  onPressed: () {
+                    removeLogo();
                   }),
             ),
           ),
@@ -499,8 +598,8 @@ class _CancelledCheckState extends State<CancelledCheck> {
       _isFileAvailable = false;
       _isFilePdf = false;
       showInSnackBar("Image Uploaded Successfully");
-      // Navigator.pop(context,true);
-      Navigator.of(context).push(MaterialPageRoute(builder: (_) => GeneralSetting()));
+      Navigator.pop(context,true);
+      // Navigator.of(context).push(MaterialPageRoute(builder: (_) => GeneralSetting()));
     } else {
       showInSnackBar("Something went wrong!");
     }
@@ -511,4 +610,65 @@ class _CancelledCheckState extends State<CancelledCheck> {
 
   }
 
+  Future<void> removeSign() async {
+    String url;
+     url = "http://157.230.228.250/remove-digital-signature-api/";
+    final param = {
+      "m_business_id": storeID,
+    };
+
+    final response = await http.post(url, body: param, headers: {HttpHeaders.authorizationHeader: "Token $token"},);
+
+    print(response.statusCode);
+    CommonData data;
+    var responseJson = json.decode(response.body);
+    data = new CommonData.fromJson(jsonDecode(response.body));
+    print(response.body);
+    // Navigator.of(context, rootNavigator: true).pop();
+
+    if (response.statusCode == 200) {
+      print(responseJson);
+      print("Delete Successful");
+      print(data.status);
+      if(data.status == "success"){
+        showInSnackBar(data.message);
+        Navigator.pop(context,true);
+      } else showInSnackBar(data.status);
+    } else {
+      print(data.status);
+      showInSnackBar(data.status);
+      return null;
+    }
+  }
+
+  Future<void> removeLogo() async {
+    String url;
+     url = "http://157.230.228.250/remove-business-logo-api/";
+    final param = {
+      "m_business_id": storeID,
+    };
+
+    final response = await http.post(url, body: param, headers: {HttpHeaders.authorizationHeader: "Token $token"},);
+
+    print(response.statusCode);
+    CommonData data;
+    var responseJson = json.decode(response.body);
+    data = new CommonData.fromJson(jsonDecode(response.body));
+    print(response.body);
+    // Navigator.of(context, rootNavigator: true).pop();
+
+    if (response.statusCode == 200) {
+      print(responseJson);
+      print("Delete Successful");
+      print(data.status);
+      if(data.status == "success"){
+        showInSnackBar(data.message);
+        Navigator.pop(context,true);
+      } else showInSnackBar(data.status);
+    } else {
+      print(data.status);
+      showInSnackBar(data.status);
+      return null;
+    }
+  }
 }

@@ -1,0 +1,82 @@
+{
+  "project_info": {
+    "project_number": "340585813371",
+    "project_id": "greenbill-a9928",
+    "storage_bucket": "greenbill-a9928.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:340585813371:android:0f3f6ac1c50638b641d9de",
+        "android_client_info": {
+          "package_name": "com.greenBill.green_bill"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "340585813371-kj8a5tr6s2pabh2862rh42cb41d9ij1d.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyALU5o8TPyAnb7jzby0WIOMuVcqADI-JKU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "340585813371-kj8a5tr6s2pabh2862rh42cb41d9ij1d.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "340585813371-274fs439o2igsgua19cdg1p9kj4meos5.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.greenBill.customer"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:340585813371:android:353b2ff9805a29e041d9de",
+        "android_client_info": {
+          "package_name": "com.tej.greenbill_merchant"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "340585813371-kj8a5tr6s2pabh2862rh42cb41d9ij1d.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyALU5o8TPyAnb7jzby0WIOMuVcqADI-JKU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "340585813371-kj8a5tr6s2pabh2862rh42cb41d9ij1d.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "340585813371-274fs439o2igsgua19cdg1p9kj4meos5.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.greenBill.customer"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

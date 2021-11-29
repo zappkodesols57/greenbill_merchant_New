@@ -145,7 +145,7 @@ class _CreateReceiptsState extends State<CreateMemo> {
         actions: <Widget>[
           TextButton(
             onPressed: () {
-              if(templateID == "") {
+              if(templateID == "" ||templateID == "0") {
                 saveTemplate();
               }else{}
               createTemplate();
@@ -162,54 +162,6 @@ class _CreateReceiptsState extends State<CreateMemo> {
                 width: size.width * 0.95,
                 padding: EdgeInsets.only(
                     top: 20.0, bottom: 10.0, left: 0.0, right: 0.0),
-                child: TextField(
-                  controller: mobController,
-                  keyboardType: TextInputType.phone,
-                  inputFormatters: <TextInputFormatter>[
-                    FilteringTextInputFormatter.digitsOnly
-                  ],
-                  maxLength: 10,
-                  style: TextStyle(
-                      fontFamily: "PoppinsLight",
-                      fontSize: 17.0,
-                      color: Colors.black87),
-                  decoration: InputDecoration(
-                    border: InputBorder.none,
-                    counterStyle: TextStyle(height: double.minPositive,),
-                    counterText: "",
-                    contentPadding: const EdgeInsets.symmetric(vertical: 0.0),
-                    enabledBorder: OutlineInputBorder(
-                      borderSide: BorderSide(
-                          color: kPrimaryColorBlue,
-                          width: 0.5
-                      ),
-                      borderRadius: const BorderRadius.all(
-                          Radius.circular(35.0)),
-                    ),
-                    focusedBorder: new OutlineInputBorder(
-                      borderSide: BorderSide(
-                          color: kPrimaryColorBlue,
-                          width: 0.5),
-                      borderRadius: const BorderRadius.all(
-                          Radius.circular(35.0)),
-                    ),
-                    prefixIcon: Icon(
-                      CupertinoIcons.phone,
-                      color: kPrimaryColorBlue,
-                      size: 23.0,
-                    ),
-                    labelText: "Mobile No. *",
-                    labelStyle: TextStyle(
-                        fontFamily: "PoppinsLight",
-                        fontSize: 13.0,
-                        color: kPrimaryColorBlue),
-                  ),
-                ),
-              ),
-              Container(
-                width: size.width * 0.95,
-                padding: EdgeInsets.only(
-                    top: 0.0, bottom: 10.0, left: 0.0, right: 0.0),
                 child: TextField(
                   controller: crfController,
                   inputFormatters: [
@@ -245,7 +197,7 @@ class _CreateReceiptsState extends State<CreateMemo> {
                       color: kPrimaryColorBlue,
                       size: 23.0,
                     ),
-                    labelText: "Cash Received From *",
+                    labelText: "Name *",
                     labelStyle: TextStyle(
                         fontFamily: "PoppinsLight",
                         fontSize: 13.0,
@@ -292,6 +244,54 @@ class _CreateReceiptsState extends State<CreateMemo> {
                       size: 23.0,
                     ),
                     labelText: "Address *",
+                    labelStyle: TextStyle(
+                        fontFamily: "PoppinsLight",
+                        fontSize: 13.0,
+                        color: kPrimaryColorBlue),
+                  ),
+                ),
+              ),
+              Container(
+                width: size.width * 0.95,
+                padding: EdgeInsets.only(
+                    top: 0.0, bottom: 10.0, left: 0.0, right: 0.0),
+                child: TextField(
+                  controller: mobController,
+                  keyboardType: TextInputType.phone,
+                  inputFormatters: <TextInputFormatter>[
+                    FilteringTextInputFormatter.digitsOnly
+                  ],
+                  maxLength: 10,
+                  style: TextStyle(
+                      fontFamily: "PoppinsLight",
+                      fontSize: 17.0,
+                      color: Colors.black87),
+                  decoration: InputDecoration(
+                    border: InputBorder.none,
+                    counterStyle: TextStyle(height: double.minPositive,),
+                    counterText: "",
+                    contentPadding: const EdgeInsets.symmetric(vertical: 0.0),
+                    enabledBorder: OutlineInputBorder(
+                      borderSide: BorderSide(
+                          color: kPrimaryColorBlue,
+                          width: 0.5
+                      ),
+                      borderRadius: const BorderRadius.all(
+                          Radius.circular(35.0)),
+                    ),
+                    focusedBorder: new OutlineInputBorder(
+                      borderSide: BorderSide(
+                          color: kPrimaryColorBlue,
+                          width: 0.5),
+                      borderRadius: const BorderRadius.all(
+                          Radius.circular(35.0)),
+                    ),
+                    prefixIcon: Icon(
+                      CupertinoIcons.phone,
+                      color: kPrimaryColorBlue,
+                      size: 23.0,
+                    ),
+                    labelText: "Mobile No. *",
                     labelStyle: TextStyle(
                         fontFamily: "PoppinsLight",
                         fontSize: 13.0,
@@ -1320,7 +1320,7 @@ class _CreateReceiptsState extends State<CreateMemo> {
                   ),
                 ),
 
-              if(templateID =="")
+              if(templateID == "" || templateID == "0")
                 Container(
                   width: size.width * 0.95,
                   padding: EdgeInsets.only(
@@ -1622,7 +1622,7 @@ class _CreateReceiptsState extends State<CreateMemo> {
       return null;
     }
     if (crfController.text.isEmpty) {
-      showInSnackBar("Please enter Cash Received From");
+      showInSnackBar("Please enter Name");
       return null;
     }
     if (addressController.text.isEmpty) {

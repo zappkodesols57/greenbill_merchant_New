@@ -107,7 +107,7 @@ class _CreateReceiptsState extends State<CreateReceipts> {
         actions: <Widget>[
           TextButton(
             onPressed: () {
-              if(templateID =="") {
+              if(templateID =="" || templateID =="0") {
                 saveReceiptTemplate();
               }else{}
               createTemplate();
@@ -255,7 +255,7 @@ class _CreateReceiptsState extends State<CreateReceipts> {
                       color: kPrimaryColorBlue,
                       size: 23.0,
                     ),
-                    labelText: "Amount For *",
+                    labelText: "For *",
                     labelStyle: TextStyle(
                         fontFamily: "PoppinsLight",
                         fontSize: 13.0,
@@ -303,7 +303,7 @@ class _CreateReceiptsState extends State<CreateReceipts> {
                       color: kPrimaryColorBlue,
                       size: 23.0,
                     ),
-                    labelText: "Total *",
+                    labelText: "Amount *",
                     labelStyle: TextStyle(
                         fontFamily: "PoppinsLight",
                         fontSize: 13.0,
@@ -452,7 +452,7 @@ class _CreateReceiptsState extends State<CreateReceipts> {
                 ),
               ),
 
-              if(templateID == "")
+              if(templateID == "" || templateID =="0")
               Container(
                 width: size.width * 0.95,
                 padding: EdgeInsets.only(
@@ -791,7 +791,7 @@ class _CreateReceiptsState extends State<CreateReceipts> {
     }
 
     if (amtForController.text.isEmpty) {
-      showInSnackBar("Please enter Amount For");
+      showInSnackBar("Please enter For");
       return null;
     }
     if (totalController.text.isEmpty) {

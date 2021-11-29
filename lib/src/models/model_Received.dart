@@ -45,6 +45,7 @@ class Datum {
     this.transactionId,
     this.createdAt,
     this.paymentDate,
+    this.description,
   });
 
   String mobile;
@@ -52,6 +53,7 @@ class Datum {
   String paymentDate;
   String transactionId;
   String createdAt;
+  String description;
 
   factory Datum.fromJson(Map<String, dynamic> json) => Datum(
     mobile: json["mobile_no"],
@@ -59,6 +61,7 @@ class Datum {
     createdAt: json["created_at"],
     paymentDate: json["payment_date_new"],
     amount: json["amount"] == null ? null : json["amount"],
+    description: json["description"],
   );
 
   Map<String, dynamic> toJson() => {
@@ -67,5 +70,6 @@ class Datum {
     "payment_date_new": paymentDate,
     "transaction_id": transactionId,
     "created_at": createdAt,
+    "description": description,
   };
 }

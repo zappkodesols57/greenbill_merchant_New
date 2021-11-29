@@ -131,38 +131,19 @@ class _CouponsListState extends State<CouponsList> {
                                 subtitle: Text('Coupon Code : ${snapshot.data[index].couponCode}\nValid Till : ${snapshot.data[index].validThrough}\nTotal Users : ${snapshot.data[index].totalUser}\nTotal Amount : ${snapshot.data[index].totalAmt}',
                                     style: TextStyle(fontSize: 11.0)) ,
                                 trailing: Wrap(
-                                  spacing: 1, // space between two icons
+                                  spacing: 10, // space between two icons
                                   crossAxisAlignment:
                                   WrapCrossAlignment.center,
                                   children: <Widget>[
 
                                     Container(
                                       width: 80.0,
-                                      child: Text('Redeemed : ${snapshot.data[index].couponRedeem}\nClicks : ${snapshot.data[index].cout}',
-                                      style: TextStyle(fontSize: 11.0,color: Colors.black54)),
-                                    ),
-                                    IconButton(
-                                      icon: Icon(
-                                        CupertinoIcons.eye,
-                                        color: kPrimaryColorBlue,
-                                        size: 20.0,
-                                      ),
-                                      onPressed: () {
-                                        Navigator.of(context).push(
-                                          PageRouteBuilder(
-                                            opaque: false,
-                                            pageBuilder: (_, animation, __) {
-                                              return FadeTransition(
-                                                opacity: animation,
-                                                child: CouponsDetails(snapshot.data[index]),
-                                              );
-                                            },
-                                          ),
-                                        );
-                                      },
+                                      child: Text('Redeemed : ${snapshot.data[index].couponRedeem}\nClicks : ${snapshot.data[index].cout}\n${(snapshot.data[index].expired == true)? "Expired" : "Active"}',
+                                      style: TextStyle(fontSize: 11.0,color: Colors.black54),
+                                          textAlign: TextAlign.center),
                                     ),
                                     Container(
-                                      width: 40.0,
+                                      width: 70.0,
                                       child: IconButton(
                                         icon: Icon(
                                           CupertinoIcons.delete,
@@ -176,7 +157,20 @@ class _CouponsListState extends State<CouponsList> {
                                     ),
                                   ],
                                 ),
-                                onTap: () {},
+                                onTap: () {
+                                  clickCoupon(snapshot.data[index].id);
+                                  Navigator.of(context).push(
+                                    PageRouteBuilder(
+                                      opaque: false,
+                                      pageBuilder: (_, animation, __) {
+                                        return FadeTransition(
+                                          opacity: animation,
+                                          child: CouponsDetails(snapshot.data[index]),
+                                        );
+                                      },
+                                    ),
+                                  );
+                                },
                               ),
                             ),
                           ),
@@ -271,27 +265,60 @@ class _CouponsListState extends State<CouponsList> {
     }
   }
 
-  Future<File> downloadPicture(String url) async {
-    // generate random number.
-    var rng = new Random();
-    // get temporary directory of device.
-    Directory tempDir = await getTemporaryDirectory();
-    // get temporary path from temporary directory.
-    String tempPath = tempDir.path;
-    // create a new file in temporary path with random file name.
-    File file = new File('$tempPath'+ (rng.nextInt(100)).toString() +'.png');
-    // call http.get method and pass imageUrl into it to get response.
-    http.Response response = await http.get("http://157.230.228.250");
-    // write bodyBytes received in response to file.
-    await file.writeAsBytes(response.bodyBytes);
-    // now return the file which is created with random name in
-    // temporary directory and image bytes from response is written to // that file.
-    return file;
-  }
+  Future<void> clickCoupon(int id) async {
 
-  couponCreated() {
-    setState((){});
-    showInSnackBar("Coupon Created Successfully");
-  }
+    final param = {
+      "coupon_id": id.toString(),
+    };
 
+    final response = await http.post(
+      "http://157.230.228.250/get-merchant-clicks-of-coupon-api/",
+      body: param, headers: {HttpHeaders.authorizationHeader: "Token $token"},
+    );
+
+    print(response.statusCode);
+    CommonData data;
+    var responseJson = json.decode(response.body);
+    print(response.body);
+    data = new CommonData.fromJson(jsonDecode(response.body));
+    print(responseJson);
+
+    if (response.statusCode == 200) {
+      print("Click Submit Successful");
+      print(data.status);
+      //   if(data.status == "success"){
+      //     Navigator.of(context, rootNavigator: true).pop();
+      //     // showInSnackBar("Coupon Deleted Successfully");
+      //   } else showInSnackBar(data.status);
+      // } else {
+      //   Navigator.of(context, rootNavigator: true).pop();
+      //   print(data.status);
+      //   showInSnackBar(data.status);
+      //   return null;
+      // }
+    }
+  }
+    Future<File> downloadPicture(String url) async {
+      // generate random number.
+      var rng = new Random();
+      // get temporary directory of device.
+      Directory tempDir = await getTemporaryDirectory();
+      // get temporary path from temporary directory.
+      String tempPath = tempDir.path;
+      // create a new file in temporary path with random file name.
+      File file = new File(
+          '$tempPath' + (rng.nextInt(100)).toString() + '.png');
+      // call http.get method and pass imageUrl into it to get response.
+      http.Response response = await http.get("http://157.230.228.250");
+      // write bodyBytes received in response to file.
+      await file.writeAsBytes(response.bodyBytes);
+      // now return the file which is created with random name in
+      // temporary directory and image bytes from response is written to // that file.
+      return file;
+    }
+
+    couponCreated() {
+      setState(() {});
+      showInSnackBar("Coupon Created Successfully");
+    }
 }

@@ -431,7 +431,7 @@ class BillIncomingState extends State<BillIncoming> {
                 ),
               ),
               trailing:Wrap(
-                spacing: 8, // space between two icons
+                spacing: 18, // space between two icons
                 crossAxisAlignment: WrapCrossAlignment.center,
                 children: <Widget>[
                   Container(
@@ -444,7 +444,7 @@ class BillIncomingState extends State<BillIncoming> {
                     ),
                   ),
                   Container(
-                    width: 100.0,
+                    width: 70.0,
                     child: Text(
                       "Action",
                       textAlign: TextAlign.center,
@@ -520,7 +520,7 @@ class BillIncomingState extends State<BillIncoming> {
 
                                         Container(
                                           alignment: Alignment.center,
-                                            width: 85.0,
+                                            width: 120.0,
                                             child: Text("₹ ${double.parse(snapshot.data[index].billAmount).toStringAsFixed(2)}",
                                                 style: TextStyle(
                                                     fontWeight:
@@ -529,33 +529,23 @@ class BillIncomingState extends State<BillIncoming> {
 
                                         if(snapshot.data[index].billImage == "")
                                           Container(
-                                            width: 100.0,
-                                            child: IconButton(
-                                              icon: Icon(
-                                                FontAwesomeIcons.eye,
-                                                size: 15.0,
-                                                color: kPrimaryColorBlue,
-                                              ),
-                                              onPressed: () {
-                                                launch(snapshot.data[index].billUrl);
-                                              },
-                                            ),
+                                            width: 65.0,
                                           ),
 
-                                        if(snapshot.data[index].billImage != "")
-                                          Container(
-                                            width: 31.0,
-                                            child: IconButton(
-                                              icon: Icon(
-                                                FontAwesomeIcons.eye,
-                                                size: 15.0,
-                                                color: kPrimaryColorBlue,
-                                              ),
-                                              onPressed: () {
-                                                launch(snapshot.data[index].billUrl);
-                                              },
-                                            ),
-                                          ),
+                                        // if(snapshot.data[index].billImage != "")
+                                        //   Container(
+                                        //     width: 31.0,
+                                        //     child: IconButton(
+                                        //       icon: Icon(
+                                        //         FontAwesomeIcons.eye,
+                                        //         size: 15.0,
+                                        //         color: kPrimaryColorBlue,
+                                        //       ),
+                                        //       onPressed: () {
+                                        //         launch(snapshot.data[index].billUrl);
+                                        //       },
+                                        //     ),
+                                        //   ),
 
                                         if(snapshot.data[index].billImage != "")
                                         Container(
@@ -599,7 +589,7 @@ class BillIncomingState extends State<BillIncoming> {
                                       ],
                                     ),
                                     onTap: () {
-
+                                      launch(snapshot.data[index].billUrl);
                                     },
                                   ),
                                 ),

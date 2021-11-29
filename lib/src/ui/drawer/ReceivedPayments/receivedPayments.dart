@@ -39,7 +39,6 @@ class ReceivedPaymentsState extends State<ReceivedPayments> {
   Dio dio = new Dio();
   TextEditingController query = new TextEditingController();
 
-
   @override
   void initState() {
     getCredentials();
@@ -447,19 +446,19 @@ class ReceivedPaymentsState extends State<ReceivedPayments> {
                                     child: ListTile(
 
                                       dense: true,
-                                      title: Text(
-                                          snapshot.data[index].mobile,
+                                      title: Text("${snapshot.data[index].mobile == "" ? "Green Bill" :snapshot.data[index].mobile}",
                                           style: TextStyle(fontSize: 15.0, fontFamily: "PoppinsMedium", fontWeight: FontWeight.bold)
                                       ),
-                                      subtitle: Text('Transaction Id : ${snapshot.data[index].transactionId }\nPayment Date : ${snapshot.data[index].paymentDate}',
-                                          style: TextStyle(fontSize: 10.0)) ,
+                                      subtitle: (snapshot.data[index].description == "") ? Text('Transaction Id : ${snapshot.data[index].transactionId }\nPayment Date : ${snapshot.data[index].paymentDate}',
+                                          style: TextStyle(fontSize: 10.0))
+                                      :Text('Description : ${snapshot.data[index].description}\nTransaction Id : ${snapshot.data[index].transactionId}\nPayment Date : ${snapshot.data[index].paymentDate}',
+                                          style: TextStyle(fontSize: 10.0)),
                                       isThreeLine: false,
                                       trailing: Wrap(
                                         spacing: 10, // space between two icons
                                         crossAxisAlignment:
                                         WrapCrossAlignment.center,
                                         children: <Widget>[
-
                                           Text(
                                               "₹ ${double.parse(snapshot.data[index].amount).toStringAsFixed(2)}",
                                               style: TextStyle(fontSize: 15.0, fontFamily: "PoppinsMedium", fontWeight: FontWeight.bold)
@@ -484,7 +483,6 @@ class ReceivedPaymentsState extends State<ReceivedPayments> {
                               );
                             }
                         ),
-
                       );
                     } else {
                       return Center(

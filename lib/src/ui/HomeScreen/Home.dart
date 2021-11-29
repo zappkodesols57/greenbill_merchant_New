@@ -2,10 +2,12 @@ import 'dart:convert';
 import 'dart:io';
 import 'dart:ui';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:greenbill_merchant/fcm/push_nofitications.dart';
 import 'package:greenbill_merchant/src/models/model_Common.dart';
 import 'package:greenbill_merchant/src/models/model_getProfileImage.dart';
 import 'package:greenbill_merchant/src/models/model_getStore.dart';
@@ -80,6 +82,22 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
   @override
   void initState() {
     setData();
+    initToken();
+
+    final GlobalKey<NavigatorState> navigatorKey =
+    GlobalKey(debugLabel: "Main Navigator");
+
+    FirebaseMessaging.onMessage.listen((msg) {
+      print(">>>${msg.notification.body}>>>${msg.notification.title}");
+      fcmMessageHandler(msg.notification.title, navigatorKey, context);
+    });
+
+    FirebaseMessaging.onMessageOpenedApp.listen((msg) {
+      print(">>>${msg.notification.body}>>>${msg.notification.title}");
+      fcmMessageHandler(msg.notification.title, navigatorKey, context);
+    });
+
+
     super.initState();
     _pageController = PageController();
     animationController =
@@ -161,6 +179,59 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
       });
     }
   }
+
+  Future<void> initToken() async {
+
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    if (preferences.getString("isTokenSend") != "yes")
+      print("notification................");
+    PushNotificationsManager().init();
+  }
+
+  void fcmMessageHandler(msg, navigatorKey, context) {
+    print(msg);
+
+    if (msg.toString().contains("Receiving New Bill")) {
+      Navigator.push(
+          context, MaterialPageRoute(builder: (context) => BillsTab(storeCatID,length,0)));
+    }else
+    if(msg.toString().contains("New Offer uploaded by Merchant")){
+      Navigator.push(
+          context, MaterialPageRoute(builder: (context) => OffersList()));
+    }
+    else
+    if(msg.toString().contains("Approved Offers") || msg.toString().contains("Rejected Offer")){
+      Navigator.push(
+          context, MaterialPageRoute(builder: (context) => TabBarPromotions(1)));
+    }
+    else
+    if(msg.toString().contains("New Parking Pass")){
+      Navigator.push(
+          context, MaterialPageRoute(builder: (context) => ParkingPass()));
+    }
+    else
+    if(msg.toString().contains("Rejected Bill")){
+      Navigator.push(
+          context, MaterialPageRoute(builder: (context) => BillsTab(storeCatID, length, 2)));
+    }
+    // else
+    // if(msg.toString().contains("Flagged Bill")){
+    //   Navigator.push(
+    //       context, MaterialPageRoute(builder: (context) => BillsTab(storeCatID, length, 3)));
+    // }
+    else
+    if(msg.toString().contains("Received Payments")){
+      Navigator.push(
+          context, MaterialPageRoute(builder: (context) => HistoryTab(1)));
+    }
+    else{
+      Navigator.push(
+          context, MaterialPageRoute(builder: (context) => MyHomePage()));
+    }
+  }
+
+
+
 
   // j2pStatus() async {
   //   SharedPreferences preferences = await SharedPreferences.getInstance();
@@ -744,7 +815,7 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
                     onTap: () {
                       Navigator.of(context).pop();
                       Navigator.push(context,
-                          MaterialPageRoute(builder: (context) => TabBarPromotions()));
+                          MaterialPageRoute(builder: (context) => TabBarPromotions(0)));
                     }
                 ),
                 if(storeCatID == "12")
@@ -771,7 +842,7 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
                   ),
                 if(storeCatID == "12")
                   ExpansionTile(
-                    title: Text("ParkingLot Management"),
+                    title: Text("Parking Lot Management"),
                     expandedAlignment: Alignment.centerRight,
                     leading: Container(
                       width: 35.0,
@@ -782,7 +853,7 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
                         borderRadius: new BorderRadius.circular(25.0),
                       ),
                       alignment: Alignment.center,
-                      child: new Icon(CupertinoIcons.car_detailed,
+                      child: new Icon(FontAwesomeIcons.tasks,
                           color: kPrimaryColorBlue, size: 25.0),
                     ),
                     maintainState: true,
@@ -829,7 +900,7 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
                           borderRadius: new BorderRadius.circular(25.0),
                         ),
                         alignment: Alignment.center,
-                        child: new Icon(CupertinoIcons.bolt_circle,
+                        child: new Icon(FontAwesomeIcons.gasPump,
                             color: kPrimaryColorBlue, size: 25.0),
                       ),
                       onTap: () {
@@ -841,7 +912,7 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
                 if(storeCatID == "11")
                   ListTile(
                       dense: false,
-                      title: Text("Addon Products"),
+                      title: Text("Manage Ad-Ons"),
                       leading: Container(
                         width: 35.0,
                         height: 35.0,
@@ -851,7 +922,7 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
                           borderRadius: new BorderRadius.circular(25.0),
                         ),
                         alignment: Alignment.center,
-                        child: new Icon(CupertinoIcons.cube_box,
+                        child: new Icon(FontAwesomeIcons.oilCan,
                             color: kPrimaryColorBlue, size: 25.0),
                       ),
                       onTap: () {
@@ -1037,10 +1108,10 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
         },
         children: <Widget>[
           HomePage(),
-          BillsTab(storeCatID,length),
+          BillsTab(storeCatID,length,0),
           PayLinks(),
           OffersList(),
-          HistoryTab(),
+          HistoryTab(0),
 
         ],
       ),

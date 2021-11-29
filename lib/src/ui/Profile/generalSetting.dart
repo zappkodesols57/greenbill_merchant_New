@@ -389,88 +389,88 @@ class _MyGeneralSettingState extends State<GeneralSetting> {
                           ),
                         ),
                       ),
-                      Container(
-                        width: size.width * 0.95,
-                        padding: EdgeInsets.only(top: 0.0, bottom: 10.0, left: 0.0, right: 0.0),
-                        child: new TextField(
-                          inputFormatters: [FilteringTextInputFormatter.deny(RegExp("[ ]")),
-                            LengthLimitingTextInputFormatter(40)],
-                          enableInteractiveSelection: false, // will disable paste operation
-                          focusNode: new AlwaysDisabledFocusNode(),
-                          controller: cinController,
-                          style: TextStyle(
-                            //fontFamily: "PoppinsBold",
-                              fontSize: 17.0,
-                              color: Colors.black87),
-                          decoration: InputDecoration(
-                            border: InputBorder.none,
-                            counterStyle: TextStyle(height: double.minPositive,),
-                            counterText: "",
-                            contentPadding: const EdgeInsets.symmetric(vertical: 0.0),
-                            enabledBorder: OutlineInputBorder(
-                              borderSide: BorderSide(
-                                  color: kPrimaryColorBlue,
-                                  width: 0.5
-                              ),
-                              borderRadius: const BorderRadius.all(Radius.circular(35.0)),
-                            ),
-                            focusedBorder: new OutlineInputBorder(
-                              borderSide: BorderSide(
-                                  color: kPrimaryColorBlue,
-                                  width: 0.5),
-                              borderRadius: const BorderRadius.all(Radius.circular(35.0)),
-                            ),
-                            prefixIcon: Icon(
-                              FontAwesomeIcons.creditCard,
-                              color: kPrimaryColorBlue,
-                              size: 23.0,
-                            ),
-                            labelText: "CIN",
-                            labelStyle: TextStyle(
-                                fontFamily: "PoppinsLight", fontSize: 13.0, color: kPrimaryColorBlue),
-                          ),
-                        ),
-                      ),
-                      Container(
-                        width: size.width * 0.95,
-                        padding: EdgeInsets.only(top: 0.0, bottom: 10.0, left: 0.0, right: 0.0),
-                        child: new TextField(
-                          enableInteractiveSelection: false, // will disable paste operation
-                          focusNode: new AlwaysDisabledFocusNode(),
-                          controller: tinController,
-                          style: TextStyle(
-                            //fontFamily: "PoppinsBold",
-                              fontSize: 17.0,
-                              color: Colors.black87),
-                          decoration: InputDecoration(
-                            border: InputBorder.none,
-                            counterStyle: TextStyle(height: double.minPositive,),
-                            counterText: "",
-                            contentPadding: const EdgeInsets.symmetric(vertical: 0.0),
-                            enabledBorder: OutlineInputBorder(
-                              borderSide: BorderSide(
-                                  color: kPrimaryColorBlue,
-                                  width: 0.5
-                              ),
-                              borderRadius: const BorderRadius.all(Radius.circular(35.0)),
-                            ),
-                            focusedBorder: new OutlineInputBorder(
-                              borderSide: BorderSide(
-                                  color: kPrimaryColorBlue,
-                                  width: 0.5),
-                              borderRadius: const BorderRadius.all(Radius.circular(35.0)),
-                            ),
-                            prefixIcon: Icon(
-                              FontAwesomeIcons.creditCard,
-                              color: kPrimaryColorBlue,
-                              size: 23.0,
-                            ),
-                            labelText: "TIN/VAT Number",
-                            labelStyle: TextStyle(
-                                fontFamily: "PoppinsLight", fontSize: 13.0, color: kPrimaryColorBlue),
-                          ),
-                        ),
-                      ),
+                      // Container(
+                      //   width: size.width * 0.95,
+                      //   padding: EdgeInsets.only(top: 0.0, bottom: 10.0, left: 0.0, right: 0.0),
+                      //   child: new TextField(
+                      //     inputFormatters: [FilteringTextInputFormatter.deny(RegExp("[ ]")),
+                      //       LengthLimitingTextInputFormatter(40)],
+                      //     enableInteractiveSelection: false, // will disable paste operation
+                      //     focusNode: new AlwaysDisabledFocusNode(),
+                      //     controller: cinController,
+                      //     style: TextStyle(
+                      //       //fontFamily: "PoppinsBold",
+                      //         fontSize: 17.0,
+                      //         color: Colors.black87),
+                      //     decoration: InputDecoration(
+                      //       border: InputBorder.none,
+                      //       counterStyle: TextStyle(height: double.minPositive,),
+                      //       counterText: "",
+                      //       contentPadding: const EdgeInsets.symmetric(vertical: 0.0),
+                      //       enabledBorder: OutlineInputBorder(
+                      //         borderSide: BorderSide(
+                      //             color: kPrimaryColorBlue,
+                      //             width: 0.5
+                      //         ),
+                      //         borderRadius: const BorderRadius.all(Radius.circular(35.0)),
+                      //       ),
+                      //       focusedBorder: new OutlineInputBorder(
+                      //         borderSide: BorderSide(
+                      //             color: kPrimaryColorBlue,
+                      //             width: 0.5),
+                      //         borderRadius: const BorderRadius.all(Radius.circular(35.0)),
+                      //       ),
+                      //       prefixIcon: Icon(
+                      //         FontAwesomeIcons.creditCard,
+                      //         color: kPrimaryColorBlue,
+                      //         size: 23.0,
+                      //       ),
+                      //       labelText: "CIN",
+                      //       labelStyle: TextStyle(
+                      //           fontFamily: "PoppinsLight", fontSize: 13.0, color: kPrimaryColorBlue),
+                      //     ),
+                      //   ),
+                      // ),
+                      // Container(
+                      //   width: size.width * 0.95,
+                      //   padding: EdgeInsets.only(top: 0.0, bottom: 10.0, left: 0.0, right: 0.0),
+                      //   child: new TextField(
+                      //     enableInteractiveSelection: false, // will disable paste operation
+                      //     focusNode: new AlwaysDisabledFocusNode(),
+                      //     controller: tinController,
+                      //     style: TextStyle(
+                      //       //fontFamily: "PoppinsBold",
+                      //         fontSize: 17.0,
+                      //         color: Colors.black87),
+                      //     decoration: InputDecoration(
+                      //       border: InputBorder.none,
+                      //       counterStyle: TextStyle(height: double.minPositive,),
+                      //       counterText: "",
+                      //       contentPadding: const EdgeInsets.symmetric(vertical: 0.0),
+                      //       enabledBorder: OutlineInputBorder(
+                      //         borderSide: BorderSide(
+                      //             color: kPrimaryColorBlue,
+                      //             width: 0.5
+                      //         ),
+                      //         borderRadius: const BorderRadius.all(Radius.circular(35.0)),
+                      //       ),
+                      //       focusedBorder: new OutlineInputBorder(
+                      //         borderSide: BorderSide(
+                      //             color: kPrimaryColorBlue,
+                      //             width: 0.5),
+                      //         borderRadius: const BorderRadius.all(Radius.circular(35.0)),
+                      //       ),
+                      //       prefixIcon: Icon(
+                      //         FontAwesomeIcons.creditCard,
+                      //         color: kPrimaryColorBlue,
+                      //         size: 23.0,
+                      //       ),
+                      //       labelText: "TIN/VAT Number",
+                      //       labelStyle: TextStyle(
+                      //           fontFamily: "PoppinsLight", fontSize: 13.0, color: kPrimaryColorBlue),
+                      //     ),
+                      //   ),
+                      // ),
                       Container(
                         width: size.width * 0.95,
                         padding: EdgeInsets.only(top: 0.0, bottom: 10.0, left: 0.0, right: 0.0),
@@ -945,10 +945,9 @@ class _MyGeneralSettingState extends State<GeneralSetting> {
                             width: size.width * 0.95,
                             padding: EdgeInsets.only(top: 0.0, bottom: 10.0, left: 0.0, right: 0.0),
                             child: new TextField(
-                              inputFormatters: [LengthLimitingTextInputFormatter(60)],
                               enableInteractiveSelection: false, // will disable paste operation
                               focusNode: new AlwaysDisabledFocusNode(),
-                              controller: addressController,
+                              controller: stateController,
                               style: TextStyle(
                                 //fontFamily: "PoppinsBold",
                                   fontSize: 17.0,
@@ -972,11 +971,11 @@ class _MyGeneralSettingState extends State<GeneralSetting> {
                                   borderRadius: const BorderRadius.all(Radius.circular(35.0)),
                                 ),
                                 prefixIcon: Icon(
-                                  FontAwesomeIcons.solidMap,
+                                  FontAwesomeIcons.mapSigns,
                                   color: kPrimaryColorBlue,
                                   size: 23.0,
                                 ),
-                                labelText: "Address *",
+                                labelText: "State *",
                                 labelStyle: TextStyle(
                                     fontFamily: "PoppinsLight", fontSize: 13.0, color: kPrimaryColorBlue),
                               ),
@@ -1017,6 +1016,48 @@ class _MyGeneralSettingState extends State<GeneralSetting> {
                                   size: 23.0,
                                 ),
                                 labelText: "City *",
+                                labelStyle: TextStyle(
+                                    fontFamily: "PoppinsLight", fontSize: 13.0, color: kPrimaryColorBlue),
+                              ),
+                            ),
+                          ),
+
+                          Container(
+                            width: size.width * 0.95,
+                            padding: EdgeInsets.only(top: 0.0, bottom: 10.0, left: 0.0, right: 0.0),
+                            child: new TextField(
+                              inputFormatters: [LengthLimitingTextInputFormatter(60)],
+                              enableInteractiveSelection: false, // will disable paste operation
+                              focusNode: new AlwaysDisabledFocusNode(),
+                              controller: addressController,
+                              style: TextStyle(
+                                //fontFamily: "PoppinsBold",
+                                  fontSize: 17.0,
+                                  color: Colors.black87),
+                              decoration: InputDecoration(
+                                border: InputBorder.none,
+                                counterStyle: TextStyle(height: double.minPositive,),
+                                counterText: "",
+                                contentPadding: const EdgeInsets.symmetric(vertical: 0.0),
+                                enabledBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                      color: kPrimaryColorBlue,
+                                      width: 0.5
+                                  ),
+                                  borderRadius: const BorderRadius.all(Radius.circular(35.0)),
+                                ),
+                                focusedBorder: new OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                      color: kPrimaryColorBlue,
+                                      width: 0.5),
+                                  borderRadius: const BorderRadius.all(Radius.circular(35.0)),
+                                ),
+                                prefixIcon: Icon(
+                                  FontAwesomeIcons.solidMap,
+                                  color: kPrimaryColorBlue,
+                                  size: 23.0,
+                                ),
+                                labelText: "Address *",
                                 labelStyle: TextStyle(
                                     fontFamily: "PoppinsLight", fontSize: 13.0, color: kPrimaryColorBlue),
                               ),
@@ -1099,46 +1140,6 @@ class _MyGeneralSettingState extends State<GeneralSetting> {
                                   size: 23.0,
                                 ),
                                 labelText: "District *",
-                                labelStyle: TextStyle(
-                                    fontFamily: "PoppinsLight", fontSize: 13.0, color: kPrimaryColorBlue),
-                              ),
-                            ),
-                          ),
-                          Container(
-                            width: size.width * 0.95,
-                            padding: EdgeInsets.only(top: 0.0, bottom: 10.0, left: 0.0, right: 0.0),
-                            child: new TextField(
-                              enableInteractiveSelection: false, // will disable paste operation
-                              focusNode: new AlwaysDisabledFocusNode(),
-                              controller: stateController,
-                              style: TextStyle(
-                                //fontFamily: "PoppinsBold",
-                                  fontSize: 17.0,
-                                  color: Colors.black87),
-                              decoration: InputDecoration(
-                                border: InputBorder.none,
-                                counterStyle: TextStyle(height: double.minPositive,),
-                                counterText: "",
-                                contentPadding: const EdgeInsets.symmetric(vertical: 0.0),
-                                enabledBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                      color: kPrimaryColorBlue,
-                                      width: 0.5
-                                  ),
-                                  borderRadius: const BorderRadius.all(Radius.circular(35.0)),
-                                ),
-                                focusedBorder: new OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                      color: kPrimaryColorBlue,
-                                      width: 0.5),
-                                  borderRadius: const BorderRadius.all(Radius.circular(35.0)),
-                                ),
-                                prefixIcon: Icon(
-                                  FontAwesomeIcons.mapSigns,
-                                  color: kPrimaryColorBlue,
-                                  size: 23.0,
-                                ),
-                                labelText: "State *",
                                 labelStyle: TextStyle(
                                     fontFamily: "PoppinsLight", fontSize: 13.0, color: kPrimaryColorBlue),
                               ),
@@ -1772,11 +1773,12 @@ class _MyGeneralSettingState extends State<GeneralSetting> {
                                               fontWeight: FontWeight.w500),
                                         ),
                                       ),
-                                      onPressed: () {
-                                          Navigator.of(context)
-                                              .push(MaterialPageRoute(
-                                                  builder: (_) => CancelledCheck("Cancelled Cheque",cancelCheque))).then((value) => (value??false) ? showInSnackBar("Image Uploaded Successfully") : setState(() {}));
-
+                                      onPressed: ()
+                                      {
+                                        Navigator.of(context).push(
+                                          new MaterialPageRoute(
+                                              builder: (_) => CancelledCheck("Cancelled Cheque",cancelCheque)),)
+                                            .then((value) => { setDetails() });
                                       }
                                       ),
                                 ),
@@ -1840,9 +1842,10 @@ class _MyGeneralSettingState extends State<GeneralSetting> {
                                       ),
                                       onPressed: () {
                                         {
-                                          Navigator.push(context,
-                                              MaterialPageRoute(
-                                                  builder: (context) => CancelledCheck("GSTIN Certificate",mGstinCertificate)));
+                                          Navigator.of(context).push(
+                                            new MaterialPageRoute(
+                                                builder: (_) => CancelledCheck("GSTIN Certificate",mGstinCertificate)),)
+                                              .then((value) => { setDetails() });
                                         }
                                       }
                                   ),
@@ -1907,9 +1910,10 @@ class _MyGeneralSettingState extends State<GeneralSetting> {
                                       ),
                                       onPressed: () {
                                         {
-                                          Navigator.push(context,
-                                              MaterialPageRoute(
-                                                  builder: (context) => CancelledCheck("CIN Certificate",mCinCertificate)));
+                                          Navigator.of(context).push(
+                                            new MaterialPageRoute(
+                                                builder: (_) => CancelledCheck("CIN Certificate",mCinCertificate)),)
+                                              .then((value) => { setDetails() });
                                         }
                                       }
                                   ),
@@ -1974,9 +1978,10 @@ class _MyGeneralSettingState extends State<GeneralSetting> {
                                       ),
                                       onPressed: () {
                                         {
-                                          Navigator.push(context,
-                                              MaterialPageRoute(
-                                                  builder: (context) => CancelledCheck("Udyog Aadhaar Certificate",udyogAAdhar)));
+                                          Navigator.of(context).push(
+                                            new MaterialPageRoute(
+                                                builder: (_) => CancelledCheck("Udyog Aadhaar Certificate",udyogAAdhar)),)
+                                              .then((value) => { setDetails() });
                                         }
                                       }
                                   ),
@@ -2041,9 +2046,10 @@ class _MyGeneralSettingState extends State<GeneralSetting> {
                                       ),
                                       onPressed: () {
                                         {
-                                          Navigator.push(context,
-                                              MaterialPageRoute(
-                                                  builder: (context) => CancelledCheck("Address Proof",addressProof)));
+                                          Navigator.of(context).push(
+                                            new MaterialPageRoute(
+                                                builder: (_) => CancelledCheck("Address Proof",addressProof)),)
+                                              .then((value) => { setDetails() });
                                         }
                                       }
                                   ),
@@ -2108,9 +2114,10 @@ class _MyGeneralSettingState extends State<GeneralSetting> {
                                       ),
                                       onPressed: () {
                                         {
-                                          Navigator.push(context,
-                                              MaterialPageRoute(
-                                                  builder: (context) => CancelledCheck("Attested copy of Pan Card of Legal Entity",attestedPAN)));
+                                          Navigator.of(context).push(
+                                            new MaterialPageRoute(
+                                                builder: (_) => CancelledCheck("Attested copy of Pan Card of Legal Entity",attestedPAN)),)
+                                              .then((value) => { setDetails() });
                                         }
                                       }
                                   ),
@@ -2175,9 +2182,10 @@ class _MyGeneralSettingState extends State<GeneralSetting> {
                                       ),
                                       onPressed: () {
                                         {
-                                          Navigator.push(context,
-                                              MaterialPageRoute(
-                                                  builder: (context) => CancelledCheck("Signature proof of Authorized Signatory",signatureProof)));
+                                          Navigator.of(context).push(
+                                            new MaterialPageRoute(
+                                                builder: (_) => CancelledCheck("Signature proof of Authorized Signatory",signatureProof)),)
+                                              .then((value) => { setDetails() });
                                         }
                                       }
                                   ),
@@ -2242,9 +2250,10 @@ class _MyGeneralSettingState extends State<GeneralSetting> {
                                       ),
                                       onPressed: () {
                                         {
-                                          Navigator.push(context,
-                                              MaterialPageRoute(
-                                                  builder: (context) => CancelledCheck("Company Registration Certificate",compRegCertificate)));
+                                          Navigator.of(context).push(
+                                            new MaterialPageRoute(
+                                                builder: (_) => CancelledCheck("Company Registration Certificate",compRegCertificate)),)
+                                              .then((value) => { setDetails() });
                                         }
                                       }
                                   ),
@@ -2311,9 +2320,10 @@ class _MyGeneralSettingState extends State<GeneralSetting> {
                                       ),
                                       onPressed: () {
                                         {
-                                          Navigator.push(context,
-                                              MaterialPageRoute(
-                                                  builder: (context) => CancelledCheck("PayU Schedule Upload",scedulePdf)));
+                                          Navigator.of(context).push(
+                                            new MaterialPageRoute(
+                                                builder: (_) => CancelledCheck("PayU Schedule Upload",scedulePdf)),)
+                                              .then((value) => { setDetails() });
                                         }
                                       }
                                   ),
@@ -2401,9 +2411,10 @@ class _MyGeneralSettingState extends State<GeneralSetting> {
                                       ),
                                       onPressed: () {
                                         {
-                                          Navigator.push(context,
-                                              MaterialPageRoute(
-                                                  builder: (context) => CancelledCheck("Business Logo",mBusinessLogo)));
+                                          Navigator.of(context).push(
+                                            new MaterialPageRoute(
+                                                  builder: (_) => CancelledCheck("Business Logo",mBusinessLogo)),)
+                                              .then((value) => { setDetails() });
                                         }
                                       }
                                   ),
@@ -2468,9 +2479,10 @@ class _MyGeneralSettingState extends State<GeneralSetting> {
                                       ),
                                       onPressed: () {
                                         {
-                                          Navigator.push(context,
-                                              MaterialPageRoute(
-                                                  builder: (context) => CancelledCheck("Authorised Signature",mDigitalSignature)));
+                                          Navigator.of(context).push(
+                                            new MaterialPageRoute(
+                                                builder: (_) => CancelledCheck("Authorised Signature",mDigitalSignature)),)
+                                              .then((value) => { setDetails() });
                                         }
                                       }
                                   ),

@@ -4,12 +4,14 @@ import 'couponsList.dart';
 import 'offerForMerchant.dart';
 
 class TabBarPromotions extends StatelessWidget {
-  const TabBarPromotions({Key key}) : super(key: key);
+  final int tabSelected;
+  TabBarPromotions(this.tabSelected);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: DefaultTabController(
+        initialIndex: tabSelected,
         length: 2,
         child: Scaffold(
           appBar: AppBar(
@@ -33,11 +35,8 @@ class TabBarPromotions extends StatelessWidget {
           ),
           body: TabBarView(
             children: [
-
               CouponsList(),
               MyOfferList(),
-
-
             ],
           ),
         ),

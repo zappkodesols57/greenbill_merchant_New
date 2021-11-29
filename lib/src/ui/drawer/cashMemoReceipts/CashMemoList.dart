@@ -372,20 +372,7 @@ class CashMemoListState extends State<CashMemoList> {
                                     ),
 
                                     Container(
-                                      width: 35.0,
-                                      child: IconButton(
-                                        icon: Icon(
-                                          FontAwesomeIcons.eye,
-                                          size: 15.0,
-                                          color: kPrimaryColorBlue,
-                                        ),
-                                        onPressed: () {
-                                          launch(snapshot.data[index].memoUrl);
-                                        },
-                                      ),
-                                    ),
-                                    Container(
-                                      width: 35.0,
+                                      width: 70.0,
                                       child: IconButton(
                                         icon: Icon(
                                           FontAwesomeIcons.paperPlane,
@@ -407,7 +394,7 @@ class CashMemoListState extends State<CashMemoList> {
                                   //   MaterialPageRoute(
                                   //       builder: (context) => WebViewScreen("View Memo", snapshot.data[index].memoUrl)),
                                   // );
-
+                                  launch(snapshot.data[index].memoUrl);
                                 },
                               ),
                             );

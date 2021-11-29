@@ -13,7 +13,6 @@ class PayLinksCard extends StatefulWidget {
   final VoidCallback action, actionTwo;
   PayLinksCard(this.size, this.data, this.action, this.actionTwo);
 
-
   @override
   PayLinksCardState createState() => PayLinksCardState();
 }
@@ -52,9 +51,7 @@ class PayLinksCardState extends State<PayLinksCard> {
     }else{
        cardDimenHeight = widget.size.width * 0.45;
     }
-
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -138,7 +135,7 @@ class PayLinksCardState extends State<PayLinksCard> {
                       Padding(
                         padding: EdgeInsets.only(left: 10.0),
                         child: Text(
-                          widget.data.email,
+                          widget.data.email == null ? "" :widget.data.email,
                           style: TextStyle(
                             fontSize: cardDimenWidth * 0.04,
                             fontFamily: "PoppinsMedium",

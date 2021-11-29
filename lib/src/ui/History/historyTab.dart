@@ -3,11 +3,13 @@ import 'package:greenbill_merchant/src/constants.dart';
 import 'package:greenbill_merchant/src/ui/History/paymentHistory.dart';
 import 'package:greenbill_merchant/src/ui/drawer/ReceivedPayments/receivedPayments.dart';
 class HistoryTab extends StatelessWidget {
-  const HistoryTab({Key key}) : super(key: key);
+  int tabSelected;
+  HistoryTab(this.tabSelected);
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: DefaultTabController(
+        initialIndex: tabSelected,
         length: 2,
         child: Scaffold(
           appBar: AppBar(

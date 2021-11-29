@@ -1,8 +1,9 @@
-
+import 'dart:convert';
 import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:greenbill_merchant/src/models/model_Common.dart';
 import 'package:greenbill_merchant/src/models/model_offersList.dart';
 import 'package:greenbill_merchant/src/ui/Promotions/offersDetail.dart';
 import 'package:http/http.dart' as http;
@@ -176,6 +177,7 @@ class _OffersListState extends State<OffersList> {
                               tag: snapshot.data[index].id,
                               child: OffersCard(size, snapshot.data[index],
                                       () {
+                                        clickCoupon(snapshot.data[index].id);
                                     Navigator.of(context).push(
                                       PageRouteBuilder(
                                         opaque: false,
@@ -207,5 +209,39 @@ class _OffersListState extends State<OffersList> {
         ],
       ),
     );
+  }
+
+  Future<void> clickCoupon(int id) async {
+
+    final param = {
+      "offer_id": id.toString(),
+    };
+
+    final response = await http.post(
+      "http://157.230.228.250/get-merchant-clicks-of-offers-api/",
+      body: param, headers: {HttpHeaders.authorizationHeader: "Token $token"},
+    );
+
+    print(response.statusCode);
+    CommonData data;
+    var responseJson = json.decode(response.body);
+    print(response.body);
+    data = new CommonData.fromJson(jsonDecode(response.body));
+    print(responseJson);
+
+    if (response.statusCode == 200) {
+      print("Click Submit Successful");
+      print(data.status);
+      //   if(data.status == "success"){
+      //     Navigator.of(context, rootNavigator: true).pop();
+      //     // showInSnackBar("Coupon Deleted Successfully");
+      //   } else showInSnackBar(data.status);
+      // } else {
+      //   Navigator.of(context, rootNavigator: true).pop();
+      //   print(data.status);
+      //   showInSnackBar(data.status);
+      //   return null;
+      // }
+    }
   }
 }

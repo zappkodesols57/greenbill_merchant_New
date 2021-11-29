@@ -8,8 +8,10 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:greenbill_merchant/src/Services/generateOTP_services.dart';
 import 'package:greenbill_merchant/src/Services/postalApi_services.dart';
 import 'package:greenbill_merchant/src/models/model_Common.dart';
+import 'package:greenbill_merchant/src/models/model_States.dart';
 import 'package:greenbill_merchant/src/models/model_generateOTP.dart';
 import 'package:greenbill_merchant/src/models/postApi_model.dart';
+import 'package:greenbill_merchant/src/ui/BillInfo/ViewBill.dart';
 import 'package:greenbill_merchant/src/ui/drawer/Settings/webView.dart';
 import 'package:greenbill_merchant/src/ui/signup/validateRegister.dart';
 import 'package:greenbill_merchant/src/ui/widgets/background.dart';
@@ -26,8 +28,11 @@ class SignUp_Merchant extends StatefulWidget {
 
 class SignUp_MerchantState extends State<SignUp_Merchant> {
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
+  final ScrollController _controller = ScrollController();
   String signCode = "";
   List<PinCode> pin;
+
+  String state,city;
 
   @override
   void initState() {
@@ -366,19 +371,21 @@ class SignUp_MerchantState extends State<SignUp_Merchant> {
                               Border.all(color: kPrimaryColorBlue, width: 0.5),
                           borderRadius: BorderRadius.circular(40),
                         ),
+                        padding: EdgeInsets.only(
+                            top: 0.0, bottom: 0.0, left: 10.0, right: 10.0),
                         child: Center(
                           child: new DropdownButton(
                             focusNode: myFocusNodeCategory,
                             iconEnabledColor: kPrimaryColorBlue,
                             //elevation: 5,
-                            isExpanded: false,
+                            isExpanded: true,
                             style: TextStyle(
                                 color: kPrimaryColorBlue,
                                 fontFamily: "PoppinsLight",
                                 fontSize: 13.0),
                             underline: Container(
                                 height: 2,
-                                width: 50,
+                                width: 0,
                                 color: Colors.transparent),
                             items: data.map((item) {
                               return DropdownMenuItem(
@@ -413,7 +420,7 @@ class SignUp_MerchantState extends State<SignUp_Merchant> {
                         keyboardType: TextInputType.number,
                         maxLength: 6,
                         onChanged: (value) {
-                          getUserData(signupPinController.text);
+                          // getUserData(signupPinController.text);
                         },
                         style: TextStyle(
                             fontFamily: "PoppinsLight",
@@ -444,7 +451,7 @@ class SignUp_MerchantState extends State<SignUp_Merchant> {
                             color: kPrimaryColorBlue,
                             size: 20.0,
                           ),
-                          labelText: "Pin Code",
+                          labelText: "Pin Code*",
                           labelStyle: TextStyle(
                               fontFamily: "PoppinsLight",
                               fontSize: 13.0,
@@ -466,52 +473,55 @@ class SignUp_MerchantState extends State<SignUp_Merchant> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
-                    Container(
-                      width: size.width * 0.4,
-                      child: TextField(
-                        focusNode: myFocusNodeArea,
-                        controller: signupAreaController,
-                        keyboardType: TextInputType.text,
-                        style: TextStyle(
-                            fontFamily: "PoppinsLight",
-                            fontSize: 13.0,
-                            color: kPrimaryColorBlue),
-                        decoration: InputDecoration(
-                          border: InputBorder.none,
-                          contentPadding:
-                              const EdgeInsets.symmetric(vertical: 13),
-                          enabledBorder: OutlineInputBorder(
-                            borderSide: BorderSide(
-                                color: kPrimaryColorBlue, width: 0.5),
-                            borderRadius:
-                                const BorderRadius.all(Radius.circular(35.0)),
-                          ),
-                          focusedBorder: new OutlineInputBorder(
-                            borderSide: BorderSide(
-                                color: kPrimaryColorBlue, width: 0.5),
-                            borderRadius:
-                                const BorderRadius.all(Radius.circular(35.0)),
-                          ),
-                          prefixIcon: Icon(
-                            FontAwesomeIcons.mapPin,
-                            color: kPrimaryColorBlue,
-                            size: 20.0,
-                          ),
-                          labelText: "Area",
-                          labelStyle: TextStyle(
-                              fontFamily: "PoppinsLight",
-                              fontSize: 13.0,
-                              color: kPrimaryColorBlue),
-                        ),
+                Container(
+                width: size.width * 0.4,
+                  child: TextField(
+                    focusNode: new AlwaysDisabledFocusNode(),
+                    controller: signupStateController,
+                    keyboardType: TextInputType.text,
+                    style: TextStyle(
+                        fontFamily: "PoppinsLight",
+                        fontSize: 13.0,
+                        color: kPrimaryColorBlue),
+                    decoration: InputDecoration(
+                      border: InputBorder.none,
+                      contentPadding:
+                      const EdgeInsets.symmetric(vertical: 13.0),
+                      enabledBorder: OutlineInputBorder(
+                        borderSide: BorderSide(
+                            color: kPrimaryColorBlue, width: 0.5),
+                        borderRadius:
+                        const BorderRadius.all(Radius.circular(35.0)),
                       ),
+                      focusedBorder: new OutlineInputBorder(
+                        borderSide: BorderSide(
+                            color: kPrimaryColorBlue, width: 0.5),
+                        borderRadius:
+                        const BorderRadius.all(Radius.circular(35.0)),
+                      ),
+                      prefixIcon: Icon(
+                        FontAwesomeIcons.map,
+                        color: kPrimaryColorBlue,
+                        size: 20.0,
+                      ),
+                      labelText: "State*",
+                      labelStyle: TextStyle(
+                          fontFamily: "PoppinsLight",
+                          fontSize: 13.0,
+                          color: kPrimaryColorBlue),
                     ),
+                    onTap: (){
+                      stateDialog(context);
+                    },
+                  ),
+                ),
                     SizedBox(
                       width: size.width * 0.1,
                     ),
                     Container(
                       width: size.width * 0.4,
                       child: TextField(
-                        focusNode: myFocusNodeCity,
+                        focusNode: new AlwaysDisabledFocusNode(),
                         controller: signupCityController,
                         keyboardType: TextInputType.text,
                         style: TextStyle(
@@ -521,30 +531,33 @@ class SignUp_MerchantState extends State<SignUp_Merchant> {
                         decoration: InputDecoration(
                           border: InputBorder.none,
                           contentPadding:
-                              const EdgeInsets.symmetric(vertical: 13),
+                          const EdgeInsets.symmetric(vertical: 13.0),
                           enabledBorder: OutlineInputBorder(
                             borderSide: BorderSide(
                                 color: kPrimaryColorBlue, width: 0.5),
                             borderRadius:
-                                const BorderRadius.all(Radius.circular(35.0)),
+                            const BorderRadius.all(Radius.circular(35.0)),
                           ),
                           focusedBorder: new OutlineInputBorder(
                             borderSide: BorderSide(
                                 color: kPrimaryColorBlue, width: 0.5),
                             borderRadius:
-                                const BorderRadius.all(Radius.circular(35.0)),
+                            const BorderRadius.all(Radius.circular(35.0)),
                           ),
                           prefixIcon: Icon(
-                            FontAwesomeIcons.city,
+                            FontAwesomeIcons.building,
                             color: kPrimaryColorBlue,
                             size: 20.0,
                           ),
-                          labelText: "City",
+                          labelText: "City*",
                           labelStyle: TextStyle(
                               fontFamily: "PoppinsLight",
                               fontSize: 13.0,
                               color: kPrimaryColorBlue),
                         ),
+                        onTap: (){
+                          cityDialog(context);
+                        },
                       ),
                     ),
                   ],
@@ -589,7 +602,7 @@ class SignUp_MerchantState extends State<SignUp_Merchant> {
                             color: kPrimaryColorBlue,
                             size: 20.0,
                           ),
-                          labelText: "District",
+                          labelText: "District*",
                           labelStyle: TextStyle(
                               fontFamily: "PoppinsLight",
                               fontSize: 13.0,
@@ -603,8 +616,8 @@ class SignUp_MerchantState extends State<SignUp_Merchant> {
                     Container(
                       width: size.width * 0.4,
                       child: TextField(
-                        focusNode: myFocusNodeState,
-                        controller: signupStateController,
+                        focusNode: myFocusNodeArea,
+                        controller: signupAreaController,
                         keyboardType: TextInputType.text,
                         style: TextStyle(
                             fontFamily: "PoppinsLight",
@@ -613,32 +626,32 @@ class SignUp_MerchantState extends State<SignUp_Merchant> {
                         decoration: InputDecoration(
                           border: InputBorder.none,
                           contentPadding:
-                              const EdgeInsets.symmetric(vertical: 13.0),
+                          const EdgeInsets.symmetric(vertical: 13),
                           enabledBorder: OutlineInputBorder(
                             borderSide: BorderSide(
                                 color: kPrimaryColorBlue, width: 0.5),
                             borderRadius:
-                                const BorderRadius.all(Radius.circular(35.0)),
+                            const BorderRadius.all(Radius.circular(35.0)),
                           ),
                           focusedBorder: new OutlineInputBorder(
                             borderSide: BorderSide(
                                 color: kPrimaryColorBlue, width: 0.5),
                             borderRadius:
-                                const BorderRadius.all(Radius.circular(35.0)),
+                            const BorderRadius.all(Radius.circular(35.0)),
                           ),
                           prefixIcon: Icon(
-                            FontAwesomeIcons.map,
+                            FontAwesomeIcons.mapPin,
                             color: kPrimaryColorBlue,
                             size: 20.0,
                           ),
-                          labelText: "State",
+                          labelText: "Area*",
                           labelStyle: TextStyle(
                               fontFamily: "PoppinsLight",
                               fontSize: 13.0,
                               color: kPrimaryColorBlue),
                         ),
                       ),
-                    ),
+                    )
                   ],
                 ),
               ),
@@ -1029,26 +1042,30 @@ class SignUp_MerchantState extends State<SignUp_Merchant> {
         return null;
       }
     }
-    // if(signupPinController.text.isEmpty){
-    //   showInSnackBar("Please enter Pin Code", 2);
-    //   return null;
-    // }
-    // if(signupPinController.text.length < 6){
-    //   showInSnackBar("Please enter valid Pin Code", 2);
-    //   return null;
-    // }
-    // if(signupStateController.text.isEmpty){
-    //   showInSnackBar("Please enter State", 2);
-    //   return null;
-    // }
-    // if(signupDistrictController.text.isEmpty){
-    //   showInSnackBar("Please enter District", 2);
-    //   return null;
-    // }
-    // if(signupCityController.text.isEmpty){
-    //   showInSnackBar("Please enter City", 2);
-    //   return null;
-    // }
+    if(signupPinController.text.isEmpty){
+      showInSnackBar("Please enter Pin Code", 2);
+      return null;
+    }
+    if(signupPinController.text.length < 6){
+      showInSnackBar("Please enter valid Pin Code", 2);
+      return null;
+    }
+    if(signupStateController.text.isEmpty){
+      showInSnackBar("Please select State", 2);
+      return null;
+    }
+    if(signupCityController.text.isEmpty){
+      showInSnackBar("Please select City", 2);
+      return null;
+    }
+    if(signupDistrictController.text.isEmpty){
+      showInSnackBar("Please enter District", 2);
+      return null;
+    }
+    if(signupAreaController.text.isEmpty){
+      showInSnackBar("Please enter Area", 2);
+      return null;
+    }
     if (signupPasswordController.text.isEmpty) {
       showInSnackBar("Please enter Password", 2);
       return null;
@@ -1113,6 +1130,248 @@ class SignUp_MerchantState extends State<SignUp_Merchant> {
         showInSnackBar(generateOTP.message, 2);
       }
     });
+  }
+
+  stateDialog(BuildContext context){
+    showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text(
+              'Select State',
+              style: TextStyle(
+                  color: Colors.black87,
+                  fontWeight: FontWeight.w800,
+                  fontSize: 15.0,
+                  fontFamily: "PoppinsMedium"
+              ),
+            ),
+            content: stateDialoagContainer(),
+            actions: <Widget>[
+              TextButton(
+                child: Text('Cancel', style: TextStyle(color: kPrimaryColorBlue)),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+              ),
+            ],
+          );
+        });
+  }
+
+  Widget stateDialoagContainer() {
+    return Container(
+      height: 300.0, // Change as per your requirement
+      width: 300.0, // Change as per your requirement
+      child: FutureBuilder<List<Datumii>>(
+        future: statesSelect(),
+        builder: (BuildContext context, AsyncSnapshot<List<Datumii>> snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting)
+            return Center(
+              child: Center(
+                  child: CircularProgressIndicator(
+                    valueColor: AlwaysStoppedAnimation<Color>(kPrimaryColorBlue),
+                  )),
+            );
+          else if (snapshot.hasError) {
+            return Center(
+              child: Text("No State Found"),
+            );
+          } else{
+            if (snapshot.connectionState == ConnectionState.done &&
+                snapshot.hasData) {
+              return Scrollbar(
+                  radius: Radius.circular(5.0),
+                  isAlwaysShown: true,
+                  controller: _controller,
+                  thickness: 3.0,
+                  child: ListView.builder(
+                      controller: _controller,
+                      itemCount: snapshot.data.length,
+                      itemBuilder: (BuildContext context, int index) {
+                        return ListTile(
+                          title: Text(
+                            snapshot.data[index].state,
+                            style: TextStyle(fontSize: 15.0,
+                            ),
+                          ),
+                          leading: CircleAvatar(
+                            foregroundColor: Colors.white,
+                            backgroundColor: kPrimaryColorBlue,
+                            child: Text(
+                              snapshot.data[index].state.substring(0,1).toUpperCase(),
+                              style: TextStyle(fontSize: 18.0,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ),
+                          // trailing: Wrap(
+                          //   spacing: 12, // space between two icons
+                          //   children: <Widget>[
+                          //     Icon(FontAwesomeIcons.rupeeSign, size: 16.0, color: Colors.black,),
+                          //     Text('${snapshot.data.data[index].productCost} /Lit', style: TextStyle(fontWeight: FontWeight.bold)),
+                          //     // Icon(Icons.message),
+                          //   ],
+                          // ),
+                          onTap: () async {
+                            signupStateController.text = snapshot.data[index].state;
+                            setState(() {
+                              state = snapshot.data[index].state;
+                              signupCityController.clear();
+                            });
+                            Navigator.of(context).pop();
+                          },
+                        );
+                      }
+                  )
+              );
+            } else {
+              return Center(child: Text("No state Found"),);
+            }
+          }
+
+        },
+      ),
+    );
+  }
+
+  cityDialog(BuildContext context){
+    showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text(
+              'Select City',
+              style: TextStyle(
+                  color: Colors.black87,
+                  fontWeight: FontWeight.w800,
+                  fontSize: 15.0,
+                  fontFamily: "PoppinsMedium"
+              ),
+            ),
+            content: cityDialoagContainer(),
+            actions: <Widget>[
+              TextButton(
+                child: Text('Cancel', style: TextStyle(color: kPrimaryColorBlue)),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+              ),
+            ],
+          );
+        });
+  }
+
+  Widget cityDialoagContainer() {
+    return Container(
+      height: 300.0, // Change as per your requirement
+      width: 300.0, // Change as per your requirement
+      child: FutureBuilder<List<Datumoo>>(
+        future: citiesSelect(),
+        builder: (BuildContext context, AsyncSnapshot<List<Datumoo>> snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting)
+            return Center(
+              child: Center(
+                  child: CircularProgressIndicator(
+                    valueColor: AlwaysStoppedAnimation<Color>(kPrimaryColorBlue),
+                  )),
+            );
+          else if (snapshot.hasError) {
+            return Center(
+              child: Text("No City Found"),
+            );
+          } else{
+            if (snapshot.connectionState == ConnectionState.done &&
+                snapshot.hasData) {
+              return Scrollbar(
+                  radius: Radius.circular(5.0),
+                  isAlwaysShown: true,
+                  controller: _controller,
+                  thickness: 3.0,
+                  child: ListView.builder(
+                      controller: _controller,
+                      itemCount: snapshot.data.length,
+                      itemBuilder: (BuildContext context, int index) {
+                        return ListTile(
+                          title: Text(
+                            snapshot.data[index].city,
+                            style: TextStyle(fontSize: 15.0,
+                            ),
+                          ),
+                          leading: CircleAvatar(
+                            foregroundColor: Colors.white,
+                            backgroundColor: kPrimaryColorBlue,
+                            child: Text(
+                              snapshot.data[index].city.substring(0,1).toUpperCase(),
+                              style: TextStyle(fontSize: 18.0,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ),
+                          // trailing: Wrap(
+                          //   spacing: 12, // space between two icons
+                          //   children: <Widget>[
+                          //     Icon(FontAwesomeIcons.rupeeSign, size: 16.0, color: Colors.black,),
+                          //     Text('${snapshot.data.data[index].productCost} /Lit', style: TextStyle(fontWeight: FontWeight.bold)),
+                          //     // Icon(Icons.message),
+                          //   ],
+                          // ),
+                          onTap: () async {
+                            signupCityController.text = snapshot.data[index].city;
+                            setState(() {
+                              city = snapshot.data[index].city;
+                            });
+                            Navigator.of(context).pop();
+                          },
+                        );
+                      }
+                  )
+              );
+            } else {
+              return Center(child: Text("No City Found"),);
+            }
+          }
+        },
+      ),
+    );
+  }
+
+  Future<List<Datumii>> statesSelect() async {
+    final param = {
+      "state": "",
+    };
+
+    final res = await http.post(
+      "http://157.230.228.250/get-user-cities-by-states-api/",
+      body: param,
+    );
+
+    print(res.body);
+    if (200 == res.statusCode) {
+      print(statesFromJson(res.body).stateee.length);
+      return statesFromJson(res.body).stateee;
+    } else {
+      throw Exception('Failed to load Stores List');
+    }
+  }
+
+  Future<List<Datumoo>> citiesSelect() async {
+    final param = {
+      "state": state,
+    };
+
+    final res = await http.post(
+      "http://157.230.228.250/get-user-cities-by-states-api/",
+      body: param,
+    );
+
+    print(res.body);
+    if (200 == res.statusCode) {
+      print(statesFromJson(res.body).cityyy.length);
+      return statesFromJson(res.body).cityyy;
+    } else {
+      throw Exception('Failed to load Stores List');
+    }
   }
 
   validateMob(mob) async {

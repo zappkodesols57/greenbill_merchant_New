@@ -174,7 +174,7 @@ class AddChargesState extends State<AddCharges> {
                           child:new DropdownButton<String>(
                             iconEnabledColor: Colors.black,
                             dropdownColor: Colors.white,
-                            value:( forHours.isEmpty || forHours == null) ? "1" : forHours,
+                            value:(forHours == "") ? null : forHours,
                             isExpanded: true,
                             hint: Text("Select Hours",
                               style: TextStyle(
@@ -250,7 +250,7 @@ class AddChargesState extends State<AddCharges> {
                           ),
                         ),
                       ],
-                    )
+                    ),
                 ),
                 Container(
                   width: size.width * 0.95,
@@ -279,7 +279,7 @@ class AddChargesState extends State<AddCharges> {
                           child:new DropdownButton<String>(
                             iconEnabledColor: Colors.black,
                             dropdownColor: Colors.white,
-                            value:( addHours.isEmpty || addHours == null) ? "1" : addHours,
+                            value:(addHours == "") ? null : addHours,
                             isExpanded: true,
                             hint: Text("Additional Hours",
                               style: TextStyle(

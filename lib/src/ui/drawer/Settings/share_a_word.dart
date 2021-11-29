@@ -14,7 +14,7 @@ class _ShareAWordState extends State<ShareAWord> {
   final GlobalKey<ScaffoldState> _scaffoldKe = new GlobalKey<ScaffoldState>();
 
   String profile, mobile, token, name = "";
-  String text = "Hey,\n\nI have found this amazing App where you can send Bills, Cash memo, Receipts digitally and also track your business analytics at lower cost.  Also you can  engage with your customers and earn money with GreenBill.\n\n\nDownload GreenBill Merchant App now :\n\nPlay store :https://play.google.com/store/apps/details?id=com.tej.greenbill_merchant\n\nIos: link\n\nWebsite :https://www.greenbill.in";
+  String text = "Hey,\n\nI have found this amazing App where you can send Bills, Cash memo, Receipts digitally and also track your business analytics at lower cost.  Also you can  engage with your customers and earn money with GreenBill.\n\n\nDownload GreenBill Merchant App now :\n\nPlay store : https://play.google.com/store/apps/details?id=com.tej.greenbill_merchant\n\nIos : https://apps.apple.com/in/app/green-bill-for-business/id1592288786\n\nWebsite :https://www.greenbill.in";
 
   TextEditingController wordController = new TextEditingController();
   String showDate = DateFormat('EEEE, d MMM, yyyy h:mm a').format(DateTime.now()); // prints Tuesday, 10 Dec, 2019

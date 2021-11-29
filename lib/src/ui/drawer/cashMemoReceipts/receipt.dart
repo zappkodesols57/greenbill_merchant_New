@@ -287,7 +287,7 @@ class _ReceiptState extends State<Receipt>{
               TextStyle(color: Colors.white, fontFamily: "PoppinsBold"),
             ),
             trailing: Wrap(
-              spacing: 16, // space between two icons
+              spacing: 18, // space between two icons
               crossAxisAlignment: WrapCrossAlignment.center,
               children: <Widget>[
                 Container(
@@ -373,21 +373,9 @@ class _ReceiptState extends State<Receipt>{
                                               "₹ ${snapshot.data[index].total.toStringAsFixed(2)}",
                                               style: TextStyle(fontWeight: FontWeight.bold))
                                       ),
+
                                       Container(
-                                        width: 35.0,
-                                        child: IconButton(
-                                          icon: Icon(
-                                            FontAwesomeIcons.eye,
-                                            size: 15.0,
-                                            color: kPrimaryColorBlue,
-                                          ),
-                                          onPressed: () {
-                                            launch(snapshot.data[index].receiptUrl);
-                                          },
-                                        ),
-                                      ),
-                                      Container(
-                                        width:35.0,
+                                        width:70.0,
                                         child: IconButton(
                                           icon: Icon(
                                             FontAwesomeIcons.paperPlane,
@@ -407,6 +395,7 @@ class _ReceiptState extends State<Receipt>{
                                     //   MaterialPageRoute(
                                     //       builder: (context) => WebViewScreen("View Receipts", snapshot.data[index].receiptUrl)),
                                     // );
+                                    launch(snapshot.data[index].receiptUrl);
                                   },
                                 ),
                               ),
