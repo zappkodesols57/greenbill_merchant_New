@@ -496,7 +496,7 @@ class ReviewsState extends State<Reviews> {
                     ),
                   ),
                   Text(
-                      "${average.toStringAsFixed(2)}  average based on  $sum  reviews.",
+                      "${average.toStringAsFixed(3)}  average based on  $sum  reviews.",
                       style: TextStyle(fontSize: 13.0),
                       textAlign: TextAlign.start),
                   Container(

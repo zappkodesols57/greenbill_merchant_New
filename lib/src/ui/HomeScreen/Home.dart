@@ -1112,7 +1112,6 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
           PayLinks(),
           OffersList(),
           HistoryTab(0),
-
         ],
       ),
       bottomNavigationBar: CurvedNavigationBar(

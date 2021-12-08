@@ -313,7 +313,7 @@ class subHistoryState extends State<subHistory> {
                                                     top: 0.0, bottom: 5.0, left: 5.0, right: 5.0),
                                                 width: size.width * 0.5,
                                                 child: Text(
-                                                    "₹ "+double.parse(snapshot.data[index].amount).toStringAsFixed(2),
+                                                    "₹ "+double.parse(snapshot.data[index].amount).toStringAsFixed(3),
                                                   textAlign: TextAlign.center,
                                                   style: TextStyle(
                                                       color: kPrimaryColorBlue,

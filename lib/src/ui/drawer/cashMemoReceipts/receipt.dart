@@ -369,11 +369,9 @@ class _ReceiptState extends State<Receipt>{
                                       Container(
                                           width: 110.0,
                                           alignment: Alignment.center,
-                                          child: Text(
-                                              "₹ ${snapshot.data[index].total.toStringAsFixed(2)}",
+                                          child: Text("₹ ${snapshot.data[index].total.toStringAsFixed(2)}",
                                               style: TextStyle(fontWeight: FontWeight.bold))
                                       ),
-
                                       Container(
                                         width:70.0,
                                         child: IconButton(

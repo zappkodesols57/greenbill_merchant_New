@@ -455,6 +455,8 @@ class AddChargesState extends State<AddCharges> {
       "id": (widget.id.isEmpty || widget.id == null) ? "" : widget.id,
     };
 
+    print(param);
+
     final response = await http.post(
       "http://157.230.228.250/parking-manage-charges-api/",
       body: param, headers: {HttpHeaders.authorizationHeader: "Token $token"},

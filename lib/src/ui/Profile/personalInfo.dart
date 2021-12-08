@@ -1004,6 +1004,8 @@ class _MyPersonalInfoState extends State<PersonalInfo> {
       if (data.status == "success") {
         print("Profile update Successful");
         print(data.message);
+        SharedPreferences prefs = await SharedPreferences.getInstance();
+        prefs.setString("fName", fnameController.text);
         Navigator.of(context, rootNavigator: true).pop();
         Navigator.pop(context, true);
       } else {

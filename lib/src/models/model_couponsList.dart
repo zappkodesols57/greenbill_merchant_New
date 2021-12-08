@@ -68,7 +68,7 @@ class Datum {
   String amountIn;
   int merchantId;
   String totalUser;
-  int totalAmt;
+  double totalAmt;
   bool expired;
 
   factory Datum.fromJson(Map<String, dynamic> json) => Datum(

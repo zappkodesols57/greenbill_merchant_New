@@ -559,7 +559,7 @@ class CustomerDetailInfoState extends State<CustomerDetailInfo> {
                             child: ListTile(
                               tileColor: kPrimaryColorBlue,
                               title: Text(
-                                "Date",
+                                "  Date",
                                 textAlign: TextAlign.center,
                                 style: TextStyle(
                                     color: Colors.white,
@@ -613,7 +613,8 @@ class CustomerDetailInfoState extends State<CustomerDetailInfo> {
                                     child: ListTile(
                                       title: Text(
                                           "${snapshot.data.datad[index].date}",
-                                          style: TextStyle(fontSize: 15.0)),
+                                          style: TextStyle(fontSize: 13.0),
+                                      textAlign: TextAlign.center,),
                                       trailing: Wrap(
                                         spacing: 10,
                                         // space between two icons
@@ -709,11 +710,11 @@ class CustomerDetailInfoState extends State<CustomerDetailInfo> {
                                     fontFamily: "PoppinsBold"),
                               ),
                               trailing: Wrap(
-                                spacing: 15, // space between two icons
+                                spacing: 16, // space between two icons
                                 crossAxisAlignment: WrapCrossAlignment.center,
                                 children: <Widget>[
                                   Container(
-                                    width: 62.0,
+                                    width: 61.0,
                                     child: Text(
                                       "Receipt",
                                       textAlign: TextAlign.center,
@@ -755,7 +756,8 @@ class CustomerDetailInfoState extends State<CustomerDetailInfo> {
                                     child: ListTile(
                                       title: Text(
                                           "${snapshot.data.datar[index].date}",
-                                          style: TextStyle(fontSize: 15.0),),
+                                          style: TextStyle(fontSize: 13.0),
+                                          textAlign: TextAlign.center),
                                       trailing: Wrap(
                                         spacing: 10,
                                         // space between two icons

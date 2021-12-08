@@ -78,7 +78,7 @@ class Datum {
   String offerAmount;
   int cout;
   int totalUser;
-  int totalAmt;
+  double totalAmt;
   bool activeStatus;
 
   factory Datum.fromJson(Map<String, dynamic> json) => Datum(

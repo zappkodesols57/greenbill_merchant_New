@@ -858,6 +858,8 @@ class _CreateReceiptsState extends State<CreateReceipts> {
       "total": totalController.text,
     };
 
+    print(param);
+
     final response = await http.post(
       "http://157.230.228.250/merchant-create-receipt-api/",
       body: param, headers: {HttpHeaders.authorizationHeader: "Token $token"},
@@ -895,6 +897,7 @@ class _CreateReceiptsState extends State<CreateReceipts> {
         "http://157.230.228.250/receipt-template-existornot/",
         body: param, headers: {HttpHeaders.authorizationHeader: "Token $token"}
     );
+
     print(response.statusCode);
 
     if (200 == response.statusCode) {

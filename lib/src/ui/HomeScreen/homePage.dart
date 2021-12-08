@@ -38,18 +38,18 @@ class _HomePageState extends State<HomePage> {
       bussinessID,
       storeID,
       storeCatID,
-      AvgTransaction,
-      averageBilling,
+      AvgTransaction = "0.000",
+      averageBilling = "0.000",
       totalCollection,
-      totalSale,
-      avgSale;
+      totalSale = "0.000",
+      avgSale = "0.000";
   String newsCustomerText, returningCustomerText, c, d;
   static String newsCustomerValue = "0";
   static String returningCustomerValue = "0";
   static Map<String, double> dataMap;
   bool _headerEnabled, _headerBusiness;
 
-  int todayTransaction;
+  int todayTransaction = 0;
   TextEditingController fromDateController = new TextEditingController();
   TextEditingController toDateController = new TextEditingController();
   String fDate = "";
@@ -804,7 +804,7 @@ class _HomePageState extends State<HomePage> {
                                         left: 0.0,
                                         right: 0.0),
                                     child: Text(
-                                      AvgTransaction.toString(),
+                                      double.parse(AvgTransaction).toStringAsFixed(2),
                                       textAlign: TextAlign.center,
                                       style: TextStyle(
                                           color: Colors.deepOrange,
@@ -888,7 +888,7 @@ class _HomePageState extends State<HomePage> {
                                         left: 0.0,
                                         right: 0.0),
                                     child: Text(
-                                      totalSale.toString(),
+                                      double.parse(totalSale).toStringAsFixed(2),
                                       textAlign: TextAlign.center,
                                       style: TextStyle(
                                           color: Colors.green,
@@ -967,7 +967,7 @@ class _HomePageState extends State<HomePage> {
                                         left: 0.0,
                                         right: 0.0),
                                     child: Text(
-                                      avgSale.toString(),
+                                      double.parse(avgSale).toStringAsFixed(2),
                                       textAlign: TextAlign.start,
                                       style: TextStyle(
                                           color: Colors.pink,

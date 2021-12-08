@@ -127,7 +127,7 @@ class CardItem extends StatelessWidget {
                   shrinkWrap: true,
                   reverse: false,
                   itemBuilder: (BuildContext context, int index) {
-                    return new Text("${data.todaysSales[index].productName} - ₹ ${data.todaysSales[index].totalAmountColleted}",
+                    return new Text("${data.todaysSales[index].productName} - ₹ ${data.todaysSales[index].totalAmountColleted.toStringAsFixed(2)}",
                         style: TextStyle(
                           color: kPrimaryColorBlue,
                           fontSize: cardSubTitle,
@@ -141,7 +141,7 @@ class CardItem extends StatelessWidget {
                   shrinkWrap: true,
                   reverse: false,
                   itemBuilder: (BuildContext context, int index) {
-                    return new Text("${data.todaysRate[index].productName} - ₹ ${data.todaysRate[index].productCost}/L",
+                    return new Text("${data.todaysRate[index].productName} - ₹ ${data.todaysRate[index].productCost.toStringAsFixed(2)}/L",
                         style: TextStyle(
                           color: kPrimaryColorBlue,
                           fontSize: cardSubTitle,

@@ -611,22 +611,22 @@ class _MyPersonalInfoEditState extends State<PersonalInfoEdit> {
       showInSnackBar("Please enter Email", 2);
       return null;
     }
-    if (emailController.text.isNotEmpty) {
-      if (emailController.text.contains('com') ||
-          emailController.text.contains('net') ||
-          emailController.text.contains('edu') ||
-          emailController.text.contains('org') ||
-          emailController.text.contains('mil') ||
-          emailController.text.contains('gov')) {
-        if (validateEmail(emailController.text) == false) {
-          showInSnackBar("Invalid Email", 2);
-          return null;
-        }
-      } else {
-        showInSnackBar("Invalid Email", 2);
-        return null;
-      }
-    }
+    // if (emailController.text.isNotEmpty) {
+    //   if (emailController.text.contains('com') ||
+    //       emailController.text.contains('net') ||
+    //       emailController.text.contains('edu') ||
+    //       emailController.text.contains('org') ||
+    //       emailController.text.contains('mil') ||
+    //       emailController.text.contains('gov')) {
+    //     if (validateEmail(emailController.text) == false) {
+    //       showInSnackBar("Invalid Email", 2);
+    //       return null;
+    //     }
+    //   } else {
+    //     showInSnackBar("Invalid Email", 2);
+    //     return null;
+    //   }
+    // }
     if (dobController.text.isEmpty) {
       showInSnackBar("Please enter Date of Birth", 2);
       return null;

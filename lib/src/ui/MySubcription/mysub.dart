@@ -551,7 +551,7 @@ class RechargeState extends State<Recharge> {
                                                     top: 0.0, bottom: 5.0, left: 5.0, right: 5.0),
                                                 width: size.width * 0.4,
                                                 child: Text(
-                                                  "₹ "+snapshot.data[index].costPerUser,
+                                                  "₹ "+double.parse(snapshot.data[index].costPerUser).toStringAsFixed(3),
                                                   textAlign: TextAlign.center,
                                                   style: TextStyle(
                                                       color: kPrimaryColorBlue,
@@ -770,7 +770,7 @@ class RechargeState extends State<Recharge> {
                                                   top: 0.0, bottom: 5.0, left: 5.0, right: 5.0),
                                               width: size.width * 0.4,
                                               child: Text(
-                                                "₹ "+snapshot.data[index].perSmsCost,
+                                                "₹ "+double.parse(snapshot.data[index].perSmsCost).toStringAsFixed(3),
                                                 textAlign: TextAlign.center,
                                                 style: TextStyle(
                                                     color: kPrimaryColorBlue,
@@ -810,7 +810,7 @@ class RechargeState extends State<Recharge> {
                                                   top: 0.0, bottom: 5.0, left: 5.0, right: 5.0),
                                               width: size.width * 0.4,
                                               child: Text(
-                                                "₹ "+snapshot.data[index].totalSmsCost.toStringAsFixed(2),
+                                                "₹ "+snapshot.data[index].totalSmsCost.toStringAsFixed(3),
                                                 textAlign: TextAlign.center,
                                                 style: TextStyle(
                                                     color: kPrimaryColorBlue,
@@ -1030,7 +1030,7 @@ class RechargeState extends State<Recharge> {
                                                   top: 0.0, bottom: 5.0, left: 5.0, right: 5.0),
                                               width: size.width * 0.4,
                                               child: Text(
-                                                "₹ "+double.parse(snapshot.data[index].perSmsCost).toStringAsFixed(2),
+                                                "₹ "+double.parse(snapshot.data[index].perSmsCost).toStringAsFixed(3),
                                                 textAlign: TextAlign.center,
                                                 style: TextStyle(
                                                     color: kPrimaryColorBlue,
@@ -1070,7 +1070,7 @@ class RechargeState extends State<Recharge> {
                                                   top: 0.0, bottom: 5.0, left: 5.0, right: 5.0),
                                               width: size.width * 0.4,
                                               child: Text(
-                                                "₹ "+snapshot.data[index].totalSmsCost.toStringAsFixed(2),
+                                                "₹ "+snapshot.data[index].totalSmsCost.toStringAsFixed(3),
                                                 textAlign: TextAlign.center,
                                                 style: TextStyle(
                                                     color: kPrimaryColorBlue,
@@ -1426,7 +1426,7 @@ class RechargeState extends State<Recharge> {
                         crossAxisAlignment: CrossAxisAlignment.center,
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: <Widget>[
-                          Text("₹ "+double.parse(data.rechargeAmount).toStringAsFixed(2),
+                          Text("₹ "+double.parse(data.rechargeAmount).toStringAsFixed(3),
                             textAlign: TextAlign.center,
                             style: TextStyle(
                                 color: Colors.white,
@@ -1550,7 +1550,7 @@ class RechargeState extends State<Recharge> {
                       top: 0.0, bottom: 5.0, left: 5.0, right: 5.0),
                   // width:MediaQuery.of(context).size.width* 0.5,
                   child: Text(
-                    "₹ "+double.parse(data.rechargeAmount).toStringAsFixed(2),
+                    "₹ "+double.parse(data.rechargeAmount).toStringAsFixed(3),
                     textAlign: TextAlign.end,
                     style: TextStyle(
                         color: kPrimaryColorBlue,
@@ -1589,7 +1589,7 @@ class RechargeState extends State<Recharge> {
                       top: 0.0, bottom: 5.0, left: 5.0, right: 5.0),
                   // width:MediaQuery.of(context).size.width* 0.5,
                   child: Text(
-                    "₹ "+double.parse(data.perBillCost).toStringAsFixed(2),
+                    "₹ "+double.parse(data.perBillCost).toStringAsFixed(3),
                     textAlign: TextAlign.end,
                     style: TextStyle(
                         color: kPrimaryColorBlue,
@@ -1629,7 +1629,7 @@ class RechargeState extends State<Recharge> {
                       top: 0.0, bottom: 5.0, left: 5.0, right: 5.0),
                   // width:MediaQuery.of(context).size.width* 0.5,
                   child: Text(
-                    "₹ "+double.parse(data.perDigitalBillCost).toStringAsFixed(2),
+                    "₹ "+double.parse(data.perDigitalBillCost).toStringAsFixed(3),
                     textAlign: TextAlign.end,
                     style: TextStyle(
                         color: kPrimaryColorBlue,
@@ -2170,7 +2170,7 @@ class RechargeState extends State<Recharge> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: <Widget>[
                           Text(
-                            "₹ "+double.parse(data.totalAmt).toStringAsFixed(2),
+                            "₹ "+double.parse(data.totalAmt).toStringAsFixed(3),
                             textAlign: TextAlign.center,
                             style: TextStyle(
                                 color: Colors.white,
@@ -2237,7 +2237,7 @@ class RechargeState extends State<Recharge> {
                       top: 0.0, bottom: 5.0, left: 5.0, right: 5.0),
                   // width:MediaQuery.of(context).size.width* 0.5,
                   child: Text(
-                    "₹ "+double.parse(data.totalAmt).toStringAsFixed(2),
+                    "₹ "+double.parse(data.totalAmt).toStringAsFixed(3),
                     textAlign: TextAlign.center,
                     style: TextStyle(
                         color: kPrimaryColorBlue,
@@ -2315,7 +2315,7 @@ class RechargeState extends State<Recharge> {
                       top: 0.0, bottom: 5.0, left: 5.0, right: 5.0),
                   // width:MediaQuery.of(context).size.width* 0.5,
                   child: Text(
-                    "₹ "+double.parse(data.perSmsCost).toStringAsFixed(2),
+                    "₹ "+double.parse(data.perSmsCost).toStringAsFixed(3),
                     textAlign: TextAlign.center,
                     style: TextStyle(
                         color: kPrimaryColorBlue,
@@ -2466,7 +2466,7 @@ class RechargeState extends State<Recharge> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: <Widget>[
                           Text(
-                            "₹ "+double.parse(data.totalAmt).toStringAsFixed(2),
+                            "₹ "+double.parse(data.totalAmt).toStringAsFixed(3),
                             textAlign: TextAlign.center,
                             style: TextStyle(
                                 color: Colors.white,
@@ -2532,7 +2532,7 @@ class RechargeState extends State<Recharge> {
                       top: 0.0, bottom: 5.0, left: 5.0, right: 5.0),
                   // width:MediaQuery.of(context).size.width* 0.5,
                   child: Text(
-                    "₹ "+double.parse(data.totalAmt).toStringAsFixed(2),
+                    "₹ "+double.parse(data.totalAmt).toStringAsFixed(3),
                     textAlign: TextAlign.center,
                     style: TextStyle(
                         color: kPrimaryColorBlue,
@@ -2610,7 +2610,7 @@ class RechargeState extends State<Recharge> {
                       top: 0.0, bottom: 5.0, left: 5.0, right: 5.0),
                   // width:MediaQuery.of(context).size.width* 0.5,
                   child: Text(
-                    "₹"+double.parse(data.perSmsCost).toStringAsFixed(2),
+                    "₹"+double.parse(data.perSmsCost).toStringAsFixed(3),
                     textAlign: TextAlign.center,
                     style: TextStyle(
                         color: kPrimaryColorBlue,

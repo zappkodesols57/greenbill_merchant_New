@@ -355,7 +355,7 @@ class BillInfoState extends State<BillInfo> {
                                 child: Center(
                                   child: ListTile(
                                     dense: true,
-                                    title: Text(snapshot.data[index].mobileNo,
+                                    title: Text(snapshot.data[index].mobileNo == "" ? "------":snapshot.data[index].mobileNo,
                                         style: TextStyle(fontSize: 15.0,fontWeight: FontWeight.bold)),
                                     subtitle: Text(
                                         "${snapshot.data[index].billDate}\nInvoice : ${snapshot.data[index].invoiceNo} ",
@@ -412,6 +412,7 @@ class BillInfoState extends State<BillInfo> {
                                           //           .last);
                                           // },
                                         ),
+                                        if(snapshot.data[index].mobileNo != "")
                                         IconButton(
                                           icon: Icon(
                                             FontAwesomeIcons.paperPlane,
@@ -430,6 +431,8 @@ class BillInfoState extends State<BillInfo> {
                                                 snapshot.data[index].mobileNo);
                                           },
                                         ),
+                                        if(snapshot.data[index].mobileNo == "")
+                                          SizedBox(width: 48,),
                                       ],
                                     ),
                                   ),

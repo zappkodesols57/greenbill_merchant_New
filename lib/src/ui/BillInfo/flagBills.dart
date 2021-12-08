@@ -492,7 +492,8 @@ class FlagBillsState extends State<FlagBills> {
                                           Container(
                                             width: 90.0,
                                             alignment: Alignment.center,
-                                            child: Text("₹ ${double.parse(snapshot[index].amount).toStringAsFixed(2)}", style: TextStyle(fontWeight: FontWeight.bold)),
+                                            child: Text("₹ ${double.parse(snapshot[index].amount).toStringAsFixed(2)}",
+                                                style: TextStyle(fontWeight: FontWeight.bold)),
                                           ),
                                         ],
                                       ),

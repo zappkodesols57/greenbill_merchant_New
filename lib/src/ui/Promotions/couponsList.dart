@@ -128,7 +128,7 @@ class _CouponsListState extends State<CouponsList> {
                                     snapshot.data[index].couponName,
                                     style: TextStyle(fontSize: 15.0, fontFamily: "PoppinsMedium", fontWeight: FontWeight.bold)
                                 ),
-                                subtitle: Text('Coupon Code : ${snapshot.data[index].couponCode}\nValid Till : ${snapshot.data[index].validThrough}\nTotal Users : ${snapshot.data[index].totalUser}\nTotal Amount : ${snapshot.data[index].totalAmt}',
+                                subtitle: Text('Coupon Code : ${snapshot.data[index].couponCode}\nValid Till : ${snapshot.data[index].validThrough}\nTotal Users : ${snapshot.data[index].totalUser}\nTotal Amount : ${snapshot.data[index].totalAmt.toStringAsFixed(2)}',
                                     style: TextStyle(fontSize: 11.0)) ,
                                 trailing: Wrap(
                                   spacing: 10, // space between two icons

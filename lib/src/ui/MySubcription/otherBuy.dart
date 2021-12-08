@@ -207,8 +207,8 @@ class _OtherBuyState extends State<OtherBuy> {
                             ),
                             Container(
                               width: size.width * 0.25,
-                              child: Text(": ₹ ${widget.amount.toStringAsFixed(2)} ",style:
-                              TextStyle(fontFamily: "PoppinsLight",
+                              child: Text(": ₹ ${widget.amount.toStringAsFixed(3)}",
+                                  style: TextStyle(fontFamily: "PoppinsLight",
                                   fontSize: 14.0,
                                   color: AppColors.kPrimaryColorBlue)),
                             ),
@@ -228,7 +228,7 @@ class _OtherBuyState extends State<OtherBuy> {
                               ),
                               Container(
                                 width: size.width * 0.25,
-                                child: Text(": ₹ ${IGST.toStringAsFixed(2)}",style:
+                                child: Text(": ₹ ${IGST.toStringAsFixed(3)}",style:
                                 TextStyle(fontFamily: "PoppinsLight",
                                     fontSize: 14.0,
                                     color: AppColors.kPrimaryColorBlue)),
@@ -248,7 +248,7 @@ class _OtherBuyState extends State<OtherBuy> {
                               ),
                               Container(
                                 width: size.width * 0.25,
-                                child: Text(": ₹ ${(IGST/2).toStringAsFixed(2)}",style:
+                                child: Text(": ₹ ${(IGST/2).toStringAsFixed(3)}",style:
                                 TextStyle(fontFamily: "PoppinsLight",
                                     fontSize: 14.0,
                                     color: AppColors.kPrimaryColorBlue)),
@@ -268,7 +268,7 @@ class _OtherBuyState extends State<OtherBuy> {
                               ),
                               Container(
                                 width: size.width * 0.25,
-                                child: Text(": ₹ ${(IGST/2).toStringAsFixed(2)}",style:
+                                child: Text(": ₹ ${(IGST/2).toStringAsFixed(3)}",style:
                                 TextStyle(fontFamily: "PoppinsLight",
                                     fontSize: 14.0,
                                     color: AppColors.kPrimaryColorBlue)),
@@ -288,7 +288,7 @@ class _OtherBuyState extends State<OtherBuy> {
                             ),
                             Container(
                               width: size.width * 0.25,
-                              child: Text(": ₹ ${Total.toStringAsFixed(2)}",style:
+                              child: Text(": ₹ ${Total.toStringAsFixed(3)}",style:
                               TextStyle(fontFamily: "PoppinsLight",
                                   fontSize: 14.0,
                                   color: AppColors.kPrimaryColorBlue)),
@@ -340,7 +340,7 @@ class _OtherBuyState extends State<OtherBuy> {
                           ),
                         ),
                         onPressed: () {
-                          _launchPayURL(Total.toStringAsFixed(2),checkedValue.toString(),"Green Bill Subscription");
+                          _launchPayURL(Total.toStringAsFixed(3),checkedValue.toString(),"Green Bill Subscription");
 
                         }),
                   ),

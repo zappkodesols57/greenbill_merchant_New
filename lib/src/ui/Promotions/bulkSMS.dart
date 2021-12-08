@@ -35,7 +35,6 @@ class BulkSMSState extends State<BulkSMS> {
   Dio dio = new Dio();
   TextEditingController query = new TextEditingController();
 
-
   @override
   void initState() {
     getCredentials();
@@ -303,6 +302,7 @@ class BulkSMSState extends State<BulkSMS> {
                   ),
                 ),
               ),
+
              SizedBox(
              height: 10,
               ),

@@ -130,6 +130,7 @@ class BillRejectedState extends State<BillRejected> {
       print(responseJson);
       print("Delete Successful");
       print(data.status);
+      setState(() {});
       if(data.status == "success"){
         showInSnackBar("Bill Deleted Successfully");
 

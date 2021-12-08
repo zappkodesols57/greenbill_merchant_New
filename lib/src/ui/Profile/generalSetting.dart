@@ -52,6 +52,7 @@ class _MyGeneralSettingState extends State<GeneralSetting> {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     String token = prefs.getString("token");
     String storeID = prefs.getString("businessID");
+    teleController.text = prefs.getString("mobile");
     print('$storeID  $token');
 
     final param = {
@@ -84,7 +85,7 @@ class _MyGeneralSettingState extends State<GeneralSetting> {
         districtController.text = setting.data.mDistrict;
         stateController.text = setting.data.mState;
         addressController.text = setting.data.mAddress;
-        teleController.text = setting.data.mLandlineNumber;
+        // teleController.text = setting.data.mLandlineNumber;
         mobController.text = setting.data.mAlternateMobileNumber;
         cemailController.text = setting.data.mCompanyEmail;
         emailController.text = setting.data.mAlternateEmail;
@@ -503,11 +504,11 @@ class _MyGeneralSettingState extends State<GeneralSetting> {
                               borderRadius: const BorderRadius.all(Radius.circular(35.0)),
                             ),
                             prefixIcon: Icon(
-                              FontAwesomeIcons.phone,
+                              Icons.phone,
                               color: kPrimaryColorBlue,
                               size: 23.0,
                             ),
-                            labelText: "Phone Number",
+                            labelText: "Phone Number *",
                             labelStyle: TextStyle(
                                 fontFamily: "PoppinsLight", fontSize: 13.0, color: kPrimaryColorBlue),
                           ),
@@ -629,7 +630,7 @@ class _MyGeneralSettingState extends State<GeneralSetting> {
                               color: kPrimaryColorBlue,
                               size: 23.0,
                             ),
-                            labelText: "Company PAN Number *",
+                            labelText: "Company PAN Number",
                             labelStyle: TextStyle(
                                 fontFamily: "PoppinsLight", fontSize: 13.0, color: kPrimaryColorBlue),
                           ),
@@ -700,6 +701,46 @@ class _MyGeneralSettingState extends State<GeneralSetting> {
                               size: 23.0,
                             ),
                             labelText: "Business Name *",
+                            labelStyle: TextStyle(
+                                fontFamily: "PoppinsLight", fontSize: 13.0, color: kPrimaryColorBlue),
+                          ),
+                        ),
+                      ),
+                      Container(
+                        width: size.width * 0.95,
+                        padding: EdgeInsets.only(top: 0.0, bottom: 10.0, left: 0.0, right: 0.0),
+                        child: new TextField(
+                          enableInteractiveSelection: false, // will disable paste operation
+                          focusNode: new AlwaysDisabledFocusNode(),
+                          controller: teleController,
+                          style: TextStyle(
+                            //fontFamily: "PoppinsBold",
+                              fontSize: 17.0,
+                              color: Colors.black87),
+                          decoration: InputDecoration(
+                            border: InputBorder.none,
+                            counterStyle: TextStyle(height: double.minPositive,),
+                            counterText: "",
+                            contentPadding: const EdgeInsets.symmetric(vertical: 0.0),
+                            enabledBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                  color: kPrimaryColorBlue,
+                                  width: 0.5
+                              ),
+                              borderRadius: const BorderRadius.all(Radius.circular(35.0)),
+                            ),
+                            focusedBorder: new OutlineInputBorder(
+                              borderSide: BorderSide(
+                                  color: kPrimaryColorBlue,
+                                  width: 0.5),
+                              borderRadius: const BorderRadius.all(Radius.circular(35.0)),
+                            ),
+                            prefixIcon: Icon(
+                              FontAwesomeIcons.store,
+                              color: kPrimaryColorBlue,
+                              size: 23.0,
+                            ),
+                            labelText: "Mobile Number *",
                             labelStyle: TextStyle(
                                 fontFamily: "PoppinsLight", fontSize: 13.0, color: kPrimaryColorBlue),
                           ),
@@ -862,7 +903,7 @@ class _MyGeneralSettingState extends State<GeneralSetting> {
                               color: kPrimaryColorBlue,
                               size: 23.0,
                             ),
-                            labelText: "Website Url *",
+                            labelText: "Website Url",
                             labelStyle: TextStyle(
                                 fontFamily: "PoppinsLight", fontSize: 13.0, color: kPrimaryColorBlue),
                           ),
@@ -1209,7 +1250,7 @@ class _MyGeneralSettingState extends State<GeneralSetting> {
                       color: AppColors.kPrimaryColorBlue,
                     ),
                     child: Padding(
-                      padding: const EdgeInsets.only(top: 7.0),
+                      padding: const EdgeInsets.only(top: 10.0),
                       child: Text("Owner Details (Contact Person)",textAlign: TextAlign.center,
                         style: TextStyle(
                           fontSize: 17,

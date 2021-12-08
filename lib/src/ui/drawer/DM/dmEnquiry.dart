@@ -29,22 +29,18 @@ class Courses {
 
 class DmEnquiryState extends State<DmEnquiry> {
 
-
   static List<Courses> _plans = [
     Courses(id: 1, name: "Search Engine Optimization (SEO)"),
     Courses(id: 2, name: "Pay-Per Click Advertising (PPC)"),
     Courses(id: 3, name: "Social Media Marketing (SMM)"),
     Courses(id: 4, name: "Startup Digital Marketing Plan"),
     Courses(id: 5, name: "Enterprise Digital Marketing Plan"),
-
   ];
 
   final _items = _plans
       .map((plans) => MultiSelectItem<Courses>(plans, plans.name))
       .toList();
   List<Courses> _selectedAnimals = [];
-
-
 
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
   String id, token;

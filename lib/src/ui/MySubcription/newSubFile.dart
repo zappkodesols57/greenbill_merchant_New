@@ -446,7 +446,7 @@ print("$busId");
                                                   top: 0.0, bottom: 5.0, left: 5.0, right: 5.0),
                                               width: size.width * 0.4,
                                               child: Text(
-                                                "₹ "+snapshot.data[index].perBillCost,
+                                                "₹ "+double.parse(snapshot.data[index].perBillCost).toStringAsFixed(3),
                                                 textAlign: TextAlign.center,
                                                 style: TextStyle(
                                                     color: kPrimaryColorBlue,
@@ -482,7 +482,7 @@ print("$busId");
                                                   top: 0.0, bottom: 5.0, left: 5.0, right: 5.0),
                                               width: size.width * 0.4,
                                               child: Text(
-                                                "₹ "+snapshot.data[index].perDigitalBillCost,
+                                                "₹ "+double.parse(snapshot.data[index].perDigitalBillCost).toStringAsFixed(3),
                                                 textAlign: TextAlign.center,
                                                 style: TextStyle(
                                                     color: kPrimaryColorBlue,
@@ -520,7 +520,7 @@ print("$busId");
                                               padding: EdgeInsets.only(
                                                   top: 0.0, bottom: 5.0, left: 5.0, right: 5.0),
                                               width: size.width * 0.4,
-                                              child: Text("₹ "+snapshot.data[index].purchaseCost.toStringAsFixed(2),
+                                              child: Text("₹ "+snapshot.data[index].purchaseCost.toStringAsFixed(3),
                                                 textAlign: TextAlign.center,
                                                 style: TextStyle(
                                                     color: kPrimaryColorBlue,
@@ -558,7 +558,7 @@ print("$busId");
                                               padding: EdgeInsets.only(
                                                   top: 0.0, bottom: 5.0, left: 5.0, right: 5.0),
                                               width: size.width * 0.4,
-                                              child: Text("₹ "+snapshot.data[index].totalAmountAvilable.toStringAsFixed(2),
+                                              child: Text("₹ "+snapshot.data[index].totalAmountAvilable.toStringAsFixed(3),
                                                 textAlign: TextAlign.center,
                                                 style: TextStyle(
                                                     color: kPrimaryColorBlue,
@@ -584,7 +584,6 @@ print("$busId");
                                               width: size.width * 0.4,
                                               child: Text(
                                                 "No. Of Users",
-
                                                 style: TextStyle(
                                                     color: Colors.black,
                                                     fontSize: 12.0,
@@ -750,7 +749,7 @@ print("$busId");
                                                     top: 10.0, bottom: 5.0, left: 5.0, right: 5.0),
                                                 width: size.width * 0.4,
                                                 child: Text(
-                                                  "₹ "+snapshot.data[index].promotionalSmsPurchaseCost.toStringAsFixed(2),
+                                                  "₹ "+snapshot.data[index].promotionalSmsPurchaseCost.toStringAsFixed(3),
                                                   textAlign: TextAlign.center,
                                                   style: TextStyle(
                                                       color: kPrimaryColorBlue,
@@ -869,7 +868,7 @@ print("$busId");
                                                     top: 0.0, bottom: 5.0, left: 5.0, right: 5.0),
                                                 width: size.width * 0.4,
                                                 child: Text(
-                                                  "₹ "+snapshot.data[index].promotionalSmsPerSmsCost,
+                                                  "₹ "+double.parse(snapshot.data[index].promotionalSmsPerSmsCost).toStringAsFixed(3),
                                                   textAlign: TextAlign.center,
                                                   style: TextStyle(
                                                       color: kPrimaryColorBlue,
@@ -908,7 +907,7 @@ print("$busId");
                                                     top: 0.0, bottom: 5.0, left: 5.0, right: 5.0),
                                                 width: size.width * 0.4,
                                                 child: Text(
-                                                  snapshot.data[index].promotionalSmsTotalSmsAvilable.toString(),
+                                                  snapshot.data[index].promotionalSmsTotalSmsAvilable.toStringAsFixed(3),
                                                   textAlign: TextAlign.center,
                                                   style: TextStyle(
                                                       color: kPrimaryColorBlue,
@@ -1061,7 +1060,7 @@ print("$busId");
                                                     top: 0.0, bottom: 5.0, left: 5.0, right: 5.0),
                                                 width: size.width * 0.4,
                                                 child: Text(
-                                                  "₹ "+snapshot.data[index].transactionalSmsPurchaseCost.toString(),
+                                                  "₹ "+snapshot.data[index].transactionalSmsPurchaseCost.toStringAsFixed(3),
                                                   textAlign: TextAlign.center,
                                                   style: TextStyle(
                                                       color: kPrimaryColorBlue,
@@ -1180,7 +1179,7 @@ print("$busId");
                                                     top: 0.0, bottom: 5.0, left: 5.0, right: 5.0),
                                                 width: size.width * 0.4,
                                                 child: Text(
-                                                  "₹ "+snapshot.data[index].transactionalSmsPerSmsCost,
+                                                  "₹ "+double.parse(snapshot.data[index].transactionalSmsPerSmsCost).toStringAsFixed(3),
                                                   textAlign: TextAlign.center,
                                                   style: TextStyle(
                                                       color: kPrimaryColorBlue,
@@ -1219,7 +1218,7 @@ print("$busId");
                                                     top: 0.0, bottom: 5.0, left: 5.0, right: 5.0),
                                                 width: size.width * 0.4,
                                                 child: Text(
-                                                  snapshot.data[index].transactionalSmsTotalSmsAvilable.toStringAsFixed(2),
+                                                  snapshot.data[index].transactionalSmsTotalSmsAvilable.toStringAsFixed(3),
                                                   textAlign: TextAlign.center,
                                                   style: TextStyle(
                                                       color: kPrimaryColorBlue,

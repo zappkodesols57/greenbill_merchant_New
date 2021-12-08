@@ -295,7 +295,7 @@ class _AddOnBuyState extends State<AddOnBuy> {
                               ),
                               Container(
                                 width: size.width * 0.25,
-                                child: Text(": ₹ ${IGST.toStringAsFixed(2)}",style:
+                                child: Text(": ₹ ${IGST.toStringAsFixed(3)}",style:
                                 TextStyle(fontFamily: "PoppinsLight",
                                     fontSize: 14.0,
                                     color: AppColors.kPrimaryColorBlue)),
@@ -316,7 +316,7 @@ class _AddOnBuyState extends State<AddOnBuy> {
 
                               Container(
                                 width: size.width * 0.25,
-                                child: Text(": ₹ ${(IGST/2).toStringAsFixed(2)}",style:
+                                child: Text(": ₹ ${(IGST/2).toStringAsFixed(3)}",style:
                                 TextStyle(fontFamily: "PoppinsLight",
                                     fontSize: 14.0,
                                     color: AppColors.kPrimaryColorBlue)),
@@ -336,7 +336,7 @@ class _AddOnBuyState extends State<AddOnBuy> {
                               ),
                               Container(
                                 width: size.width * 0.25,
-                                child: Text(": ₹ ${(IGST/2).toStringAsFixed(2)}",style:
+                                child: Text(": ₹ ${(IGST/2).toStringAsFixed(3)}",style:
                                 TextStyle(fontFamily: "PoppinsLight",
                                     fontSize: 14.0,
                                     color: AppColors.kPrimaryColorBlue)),
@@ -356,7 +356,7 @@ class _AddOnBuyState extends State<AddOnBuy> {
                             ),
                             Container(
                               width: size.width * 0.25,
-                              child: Text(Total == null ?": ₹ 0.0" :": ₹ ${Total.toStringAsFixed(2)}",style:
+                              child: Text(Total == null ?": ₹ 0.0" :": ₹ ${Total.toStringAsFixed(3)}",style:
                               TextStyle(fontFamily: "PoppinsLight",
                                   fontSize: 14.0,
                                   color: AppColors.kPrimaryColorBlue)),
@@ -408,7 +408,7 @@ class _AddOnBuyState extends State<AddOnBuy> {
                           ),
                         ),
                         onPressed: () {
-                          _launchPayURL(Total.toStringAsFixed(2),checkedValue.toString(),"Green Bill Subscription");
+                          _launchPayURL(Total.toStringAsFixed(3),checkedValue.toString(),"Green Bill Subscription");
                         }),
                   ),
                 ],

@@ -141,7 +141,6 @@ class _ViewBillState extends State<ViewBill> {
               ),
             ],
           )
-
     );
   }
 

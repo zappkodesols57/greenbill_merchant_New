@@ -89,6 +89,10 @@ class ReceivedPaymentsState extends State<ReceivedPayments> {
           element.amount.contains(query.text.toString()) || element.transactionId.contains(query.text)).toList();
 
     } else {
+      setState(() {
+        totalTran = 0;
+        total = 0;
+      });
       throw Exception('Failed to load List');
     }
   }

@@ -10,9 +10,7 @@ import 'package:greenbill_merchant/src/ui/login/login_Page_Merchant.dart';
 import 'package:package_info/package_info.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
-
 import 'Help&Support/helpAndSupport.dart';
-
 
 class Settings extends StatefulWidget {
   @override
@@ -21,9 +19,8 @@ class Settings extends StatefulWidget {
 
 class SettingsState extends State<Settings> {
   String version = '';
-  String aboutUS = 'http://www.greenbill.in/about-us/';
+  String aboutUS = 'http://www.greenbill.in/';
   String  TC = 'http://www.greenbill.in/terms-conditions/';
-
 
   @override
   void initState() {

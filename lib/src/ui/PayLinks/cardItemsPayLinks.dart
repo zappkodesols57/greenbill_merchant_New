@@ -150,7 +150,7 @@ class PayLinksCardState extends State<PayLinksCard> {
               Padding(
                 padding: EdgeInsets.only(left: (cardDimenWidth * 0.11) + 25,),
                 child: Text(
-                  "Amount : ${"₹ "+widget.data.amount+".00"}\nDate : ${widget.data.createdAt.day}-${widget.data
+                  "Amount : ₹ ${double.parse(widget.data.amount).toStringAsFixed(2)}\nDate : ${widget.data.createdAt.day}-${widget.data
                       .createdAt.month}-${widget.data.createdAt.year}",
                   style: TextStyle(
                     fontSize: cardDimenWidth * 0.04,
@@ -161,7 +161,7 @@ class PayLinksCardState extends State<PayLinksCard> {
               Padding(
                 padding: EdgeInsets.only(left: (cardDimenWidth * 0.11) + 25,),
                 child: Text(
-                  "Description: ${(widget.data.description.length > 18) ? widget.data
+                  "Description : ${(widget.data.description.length > 18) ? widget.data
                       .description.substring(0, 18) + '...' : widget.data
                       .description}",
                   style: TextStyle(

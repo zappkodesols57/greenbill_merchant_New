@@ -131,9 +131,9 @@ class _MyOfferListState extends State<MyOfferList> {
                                     "Audience : "+snapshot.data[index].offerType.toString(),
                                     style: TextStyle(fontSize: 12.0, fontFamily: "PoppinsMedium", fontWeight: FontWeight.bold)
                                 ),
-                                subtitle: Text((snapshot.data[index].status=="0")?'Status : Waiting For Approval \nValid Till : ${snapshot.data[index].validThrough}\nTotal Users : ${snapshot.data[index].totalUser}\nTotal Amount : ${snapshot.data[index].totalAmt}'
-                                          : (snapshot.data[index].status == "2") ?'Status : Disapproved \nValid Till : ${snapshot.data[index].validThrough}\nTotal Users : ${snapshot.data[index].totalUser}\nTotal Amount : ${snapshot.data[index].totalAmt}'
-                                          :'Status : Approved \nValid Till : ${snapshot.data[index].validThrough}\nTotal Users : ${snapshot.data[index].totalUser}\nTotal Amount : ${snapshot.data[index].totalAmt}',
+                                subtitle: Text((snapshot.data[index].status=="0")?'Status : Waiting For Approval \nValid Till : ${snapshot.data[index].validThrough}\nTotal Users : ${snapshot.data[index].totalUser}\nTotal Amount : ${snapshot.data[index].totalAmt.toStringAsFixed(2)}'
+                                          : (snapshot.data[index].status == "2") ?'Status : Disapproved \nValid Till : ${snapshot.data[index].validThrough}\nTotal Users : ${snapshot.data[index].totalUser}\nTotal Amount : ${snapshot.data[index].totalAmt.toStringAsFixed(2)}'
+                                          :'Status : Approved \nValid Till : ${snapshot.data[index].validThrough}\nTotal Users : ${snapshot.data[index].totalUser}\nTotal Amount : ${snapshot.data[index].totalAmt.toStringAsFixed(2)}',
                                     style: TextStyle(fontSize: 11.0)),
                                 trailing: Wrap(
                                   spacing: 10, // space between two icons

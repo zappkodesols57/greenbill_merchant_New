@@ -85,6 +85,10 @@ class HistoryState extends State<History> {
                       element.purchaseDate.contains(query.text) || element.cost.toString().contains(query.text));
 
     } else {
+      setState(() {
+        total = "0";
+        totalTran = 0;
+      });
       throw Exception('Failed to load List');
     }
   }
@@ -344,7 +348,7 @@ class HistoryState extends State<History> {
                               Container(
                                 alignment: Alignment.center,
                                 width: size.width * 0.4,
-                                child: Text("₹"+total.toString(),
+                                child: Text("₹"+double.parse(total).toStringAsFixed(2),
                                   style: TextStyle(
                                       color: Colors.black,
                                       fontSize: 12.0,

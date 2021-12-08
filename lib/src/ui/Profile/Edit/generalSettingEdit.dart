@@ -176,6 +176,9 @@ class _MyGeneralSettingEditState extends State<GeneralSettingEdit> {
       adharNo,
       nle,
       ale;
+
+  String token,mobileNo;
+
   _MyGeneralSettingEditState(
       this.businessName,
       this.businessCategory,
@@ -236,6 +239,16 @@ class _MyGeneralSettingEditState extends State<GeneralSettingEdit> {
     _isButtonDisabledColor = true;
     // j2pValue = "no";
     setDetails();
+    getCredentials();
+  }
+
+  getCredentials() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    setState(() {
+      token = prefs.getString("token");
+      teleController.text =prefs.getString("mobile");
+
+    });
   }
 
   void setDetails() {
@@ -721,11 +734,11 @@ class _MyGeneralSettingEditState extends State<GeneralSettingEdit> {
                             borderRadius: const BorderRadius.all(Radius.circular(35.0)),
                           ),
                           prefixIcon: Icon(
-                            FontAwesomeIcons.phone,
+                            Icons.phone,
                             color: kPrimaryColorBlue,
                             size: 23.0,
                           ),
-                          labelText: "Phone Number",
+                          labelText: "Phone Number *",
                           labelStyle: TextStyle(
                               fontFamily: "PoppinsLight", fontSize: 13.0, color: kPrimaryColorBlue),
                         ),
@@ -863,7 +876,7 @@ class _MyGeneralSettingEditState extends State<GeneralSettingEdit> {
                             color: kPrimaryColorBlue,
                             size: 23.0,
                           ),
-                          labelText: "Company PAN Number *",
+                          labelText: "Company PAN Number",
                           labelStyle: TextStyle(
                               fontFamily: "PoppinsLight", fontSize: 13.0, color: kPrimaryColorBlue),
                         ),
@@ -949,9 +962,48 @@ class _MyGeneralSettingEditState extends State<GeneralSettingEdit> {
                       width: size.width * 0.95,
                       padding: EdgeInsets.only(top: 0.0, bottom: 10.0, left: 0.0, right: 0.0),
                       child: new TextField(
+                        focusNode: new AlwaysDisabledFocusNode(),
+                        controller: teleController,
+                        style: TextStyle(
+                          //fontFamily: "PoppinsBold",
+                            fontSize: 17.0,
+                            color: Colors.black87),
+                        decoration: InputDecoration(
+                          border: InputBorder.none,
+                          counterStyle: TextStyle(height: double.minPositive,),
+                          counterText: "",
+                          contentPadding: const EdgeInsets.symmetric(vertical: 0.0),
+                          enabledBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                                color: kPrimaryColorBlue,
+                                width: 0.5
+                            ),
+                            borderRadius: const BorderRadius.all(Radius.circular(35.0)),
+                          ),
+                          focusedBorder: new OutlineInputBorder(
+                            borderSide: BorderSide(
+                                color: kPrimaryColorBlue,
+                                width: 0.5),
+                            borderRadius: const BorderRadius.all(Radius.circular(35.0)),
+                          ),
+                          prefixIcon: Icon(
+                            FontAwesomeIcons.mobile,
+                            color: kPrimaryColorBlue,
+                            size: 23.0,
+                          ),
+                          labelText: "Mobile Number *",
+                          labelStyle: TextStyle(
+                              fontFamily: "PoppinsLight", fontSize: 13.0, color: kPrimaryColorBlue),
+                        ),
+                      ),
+                    ),
+                    Container(
+                      width: size.width * 0.95,
+                      padding: EdgeInsets.only(top: 0.0, bottom: 10.0, left: 0.0, right: 0.0),
+                      child: new TextField(
                         enableInteractiveSelection:
                         false, // will disable paste operation
-                        focusNode: myFocusNodeCat,
+                        focusNode: new AlwaysDisabledFocusNode(),
                         controller: catController,
                         onChanged: (value) {
                           setState(() {
@@ -1130,7 +1182,7 @@ class _MyGeneralSettingEditState extends State<GeneralSettingEdit> {
                             color: kPrimaryColorBlue,
                             size: 23.0,
                           ),
-                          labelText: "Website Url *",
+                          labelText: "Website Url",
                           labelStyle: TextStyle(
                               fontFamily: "PoppinsLight", fontSize: 13.0, color: kPrimaryColorBlue),
                         ),
@@ -1502,13 +1554,12 @@ class _MyGeneralSettingEditState extends State<GeneralSettingEdit> {
                 child: Container(
                   width: MediaQuery.of(context).size.width,
                   height: 45,
-
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(25.0),
                     color: AppColors.kPrimaryColorBlue,
                   ),
                   child: Padding(
-                    padding: const EdgeInsets.only(top: 7.0),
+                    padding: const EdgeInsets.only(top: 10.0),
                     child: Text("Owner Details (Contact Person)",textAlign: TextAlign.center,
                       style: TextStyle(
                         fontSize: 17,
@@ -2235,7 +2286,7 @@ class _MyGeneralSettingEditState extends State<GeneralSettingEdit> {
 
   Future<List<Datumoo>> citiesSelect() async {
     final param = {
-      "state": state,
+      "state": statee,
     };
 
     final res = await http.post(
@@ -2288,68 +2339,47 @@ class _MyGeneralSettingEditState extends State<GeneralSettingEdit> {
 
   Future<void> save() async {
     if (companyController.text.isEmpty) {
+      myFocusNodeCompany.unfocus();
       showInSnackBar("Please enter Company Name", 2);
+      return null;
+    }
+    if (phoneController.text.isEmpty) {
+      myFocusNodeBillingPhone.unfocus();
+      showInSnackBar("Please enter Phone Number", 2);
       return null;
     }
 
     if (addController.text.isEmpty) {
+      myFocusNodeBillingAdd.unfocus();
       showInSnackBar("Please enter Billing Address", 2);
       return null;
     }
 
-    if (panController.text.isEmpty) {
-      showInSnackBar("Please enter Company PAN Number", 2);
-      return null;
-    }
+    // if (panController.text.isEmpty) {
+    //   showInSnackBar("Please enter Company PAN Number", 2);
+    //   return null;
+    // }
 
-    if (siteController.text.isEmpty) {
-      showInSnackBar("Please enter Website Url", 2);
-      return null;
-    }
-
-    if (firstController.text.isEmpty) {
-      showInSnackBar("Please enter Owners First Name", 2);
-      return null;
-    }
-
-    if (lastController.text.isEmpty) {
-      showInSnackBar("Please enter Owners Last Name", 2);
-      return null;
+    if(panController.text.isNotEmpty) {
+      if (validatePan(panController.text) == false) {
+        myFocusNodePan.unfocus();
+        showInSnackBar("Invalid Pan Number", 2);
+        return null;
+      }
     }
 
     if (nameController.text.isEmpty) {
+      myFocusNodeName.unfocus();
       showInSnackBar("Please enter Business Name", 2);
       return null;
     }
 
-    if (pinController.text.isEmpty) {
-      showInSnackBar("Please enter valid Pin Code", 2);
-      return null;
-    }
-    if (cityController.text.isEmpty) {
-      showInSnackBar("Please enter City", 2);
-      return null;
-    }
-    if (areaController.text.isEmpty) {
-      showInSnackBar("Please enter Area", 2);
-      return null;
-    }
-    if (districtController.text.isEmpty) {
-      showInSnackBar("Please enter District", 2);
-      return null;
-    }
-    if (stateController.text.isEmpty) {
-      showInSnackBar("Please enter State", 2);
-      return null;
-    }
-    if (addressController.text.isEmpty) {
-      showInSnackBar("Please enter Address", 2);
-      return null;
-    }
     if (cemailController.text.isEmpty) {
+      myFocusNodeCemail.unfocus();
       showInSnackBar("Please enter Company Email", 2);
       return null;
     }
+
     if (cemailController.text.isNotEmpty) {
       if (cemailController.text.contains('com') ||
           cemailController.text.contains('net') ||
@@ -2358,14 +2388,72 @@ class _MyGeneralSettingEditState extends State<GeneralSettingEdit> {
           cemailController.text.contains('mil') ||
           cemailController.text.contains('gov')) {
         if (validateEmail(cemailController.text) == false) {
+          myFocusNodeCemail.unfocus();
           showInSnackBar("Invalid Company Email", 2);
           return null;
         }
       } else {
+        myFocusNodeCemail.unfocus();
         showInSnackBar("Invalid Email", 2);
         return null;
       }
     }
+
+
+
+    if (stateController.text.isEmpty) {
+      showInSnackBar("Please enter State", 2);
+      return null;
+    }
+
+    if (cityController.text.isEmpty) {
+      showInSnackBar("Please enter City", 2);
+      return null;
+    }
+
+    if (addressController.text.isEmpty) {
+      myFocusNodeAddress.unfocus();
+      showInSnackBar("Please enter Address", 2);
+      return null;
+    }
+
+    if (areaController.text.isEmpty) {
+      myFocusNodeArea.unfocus();
+      showInSnackBar("Please enter Area", 2);
+      return null;
+    }
+
+    if (districtController.text.isEmpty) {
+      myFocusNodeDistrict.unfocus();
+      showInSnackBar("Please enter District", 2);
+      return null;
+    }
+
+    if (pinController.text.isEmpty) {
+      myFocusNodePin.unfocus();
+      showInSnackBar("Please enter valid Pin Code", 2);
+      return null;
+    }
+
+    // if (siteController.text.isEmpty) {
+    //   showInSnackBar("Please enter Website Url", 2);
+    //   return null;
+    // }
+
+    if (firstController.text.isEmpty) {
+      myFocusNodeBillingFirstName.unfocus();
+      showInSnackBar("Please enter Owners First Name", 2);
+      return null;
+    }
+
+    if (lastController.text.isEmpty) {
+      myFocusNodeBillingLastName.unfocus();
+      showInSnackBar("Please enter Owners Last Name", 2);
+      return null;
+    }
+
+
+
     if (emailController.text.isNotEmpty) {
       if (emailController.text.contains('com') ||
           emailController.text.contains('net') ||
@@ -2374,42 +2462,40 @@ class _MyGeneralSettingEditState extends State<GeneralSettingEdit> {
           emailController.text.contains('mil') ||
           emailController.text.contains('gov')) {
         if (validateEmail(emailController.text) == false) {
+          myFocusNodeEmail.unfocus();
           showInSnackBar("Invalid Alternate Email", 2);
           return null;
         }
       } else {
+        myFocusNodeEmail.unfocus();
         showInSnackBar("Invalid Email", 2);
         return null;
       }
     }
-    if (panController.text.isEmpty) {
-      showInSnackBar("Please enter Pan Number", 2);
-      return null;
-    }
-    if (validatePan(panController.text) == false) {
-      showInSnackBar("Invalid Pan Number", 2);
-      return null;
-    }
-    if (accController.text.isEmpty) {
-      showInSnackBar("Please enter Account Number", 2);
-      return null;
-    }
-    if (ifscController.text.isEmpty) {
-      showInSnackBar("Please enter IFSC Code", 2);
-      return null;
-    }
+    // if (accController.text.isEmpty) {
+    //   showInSnackBar("Please enter Account Number", 2);
+    //   return null;
+    // }
+    // if (ifscController.text.isEmpty) {
+    //   showInSnackBar("Please enter IFSC Code", 2);
+    //   return null;
+    // }
+
+    if(ifscController.text.isNotEmpty){
     if (validateIFSC(ifscController.text) == false) {
+      myFocusNodeIfsc.unfocus();
       showInSnackBar("Invalid IFSC Code", 2);
       return null;
     }
-    if (bnameController.text.isEmpty) {
-      showInSnackBar("Please enter Bank Name", 2);
-      return null;
     }
-    if (branchController.text.isEmpty) {
-      showInSnackBar("Please enter Branch Name", 2);
-      return null;
-    }
+    // if (bnameController.text.isEmpty) {
+    //   showInSnackBar("Please enter Bank Name", 2);
+    //   return null;
+    // }
+    // if (branchController.text.isEmpty) {
+    //   showInSnackBar("Please enter Branch Name", 2);
+    //   return null;
+    // }
 
     SchedulerBinding.instance
         .addPostFrameCallback((_) => _showLoaderDialog(context));
