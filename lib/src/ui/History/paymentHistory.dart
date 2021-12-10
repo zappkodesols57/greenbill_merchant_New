@@ -56,7 +56,7 @@ class HistoryState extends State<History> {
       id = prefs.getInt("userID").toString();
       storeID = prefs.getString("businessID");
     });
-    print('$token\n$id\n$storeID');
+    print('swswswswsws $token\n$id\n$storeID');
     getInfo();
   }
 
@@ -135,9 +135,14 @@ class HistoryState extends State<History> {
         firstDate: DateTime(2000),
         lastDate: DateTime.now());
     eDate = '${e.year.toString()}-${e.month.toString()}-${e.day.toString()}';
-    toDateController.text = DateFormat("dd-MM-yyyy").format(e);
-    getInfo();
-    setState(() {});
+    if(fDate == "")
+    {
+      showInSnackBar("Please Select From Date");
+    }else {
+      toDateController.text = DateFormat("dd-MM-yyyy").format(e);
+      getInfo();
+      setState(() {});
+    }
     return eDate;
   }
 
@@ -410,9 +415,7 @@ class HistoryState extends State<History> {
             ),
 
             Expanded(
-
               child: FutureBuilder<List<Datum>>(
-
                 future: getBillInfoList(),
                 builder: (BuildContext context,
                     AsyncSnapshot<List<Datum>> snapshot) {
@@ -452,15 +455,13 @@ class HistoryState extends State<History> {
                                           snapshot.data[index].business,
                                           style: TextStyle(fontSize: 15.0, fontFamily: "PoppinsMedium", fontWeight: FontWeight.bold)
                                       ),
-                                      subtitle: Text('Purchase Date : ${snapshot.data[index].purchaseDate }\nTransaction Id : ${snapshot.data[index].transactionId == null ? "----" : snapshot.data[index].transactionId}\nPayment Mode : ${snapshot.data[index].mode}',
-                                          style: TextStyle(fontSize: 10.0)) ,
+                                      subtitle: Text('Purchase Date : ${snapshot.data[index].purchaseDate }\nDescription : ${snapshot.data[index].description }\nTransaction Id : ${snapshot.data[index].transactionId == null ? "----" : snapshot.data[index].transactionId} ${snapshot.data[index].mode != "" ?('\nPayment Mode : ${snapshot.data[index].mode}') : ""}',
+                                          style: TextStyle(fontSize: 11.5)) ,
                                       isThreeLine: false,
                                       trailing: Wrap(
                                         spacing: 10, // space between two icons
-                                        crossAxisAlignment:
-                                        WrapCrossAlignment.center,
+                                        crossAxisAlignment: WrapCrossAlignment.center,
                                         children: <Widget>[
-
                                           Text(
                                               "₹ ${(snapshot.data[index].cost).toStringAsFixed(2)}",
                                               style: TextStyle(fontSize: 15.0, fontFamily: "PoppinsMedium", fontWeight: FontWeight.bold)

@@ -964,6 +964,7 @@ class _MyGeneralSettingEditState extends State<GeneralSettingEdit> {
                       child: new TextField(
                         focusNode: new AlwaysDisabledFocusNode(),
                         controller: teleController,
+                        enableInteractiveSelection: false,
                         style: TextStyle(
                           //fontFamily: "PoppinsBold",
                             fontSize: 17.0,
@@ -2316,6 +2317,12 @@ class _MyGeneralSettingEditState extends State<GeneralSettingEdit> {
     return regExp.hasMatch(value);
   }
 
+  bool validateGstin(String value) {
+    String pattern = r"^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[1-9A-Z]{1}Z[0-9A-Z]{1}$";
+    RegExp regExp = new RegExp(pattern);
+    return regExp.hasMatch(value);
+  }
+
   bool validateIFSC(String value) {
     String pattern = r"^[A-Z]{4}0[A-Z0-9]{6}$";
     RegExp regExp = new RegExp(pattern);
@@ -2343,6 +2350,14 @@ class _MyGeneralSettingEditState extends State<GeneralSettingEdit> {
       showInSnackBar("Please enter Company Name", 2);
       return null;
     }
+
+    if(gstController.text.isNotEmpty) {
+      if (validateGstin(gstController.text) == false) {
+        showInSnackBar("Invalid GSTIN Number", 2);
+        return null;
+      }
+    }
+
     if (phoneController.text.isEmpty) {
       myFocusNodeBillingPhone.unfocus();
       showInSnackBar("Please enter Phone Number", 2);
@@ -2382,6 +2397,7 @@ class _MyGeneralSettingEditState extends State<GeneralSettingEdit> {
 
     if (cemailController.text.isNotEmpty) {
       if (cemailController.text.contains('com') ||
+          cemailController.text.contains('co')  ||
           cemailController.text.contains('net') ||
           cemailController.text.contains('edu') ||
           cemailController.text.contains('org') ||
@@ -2456,6 +2472,7 @@ class _MyGeneralSettingEditState extends State<GeneralSettingEdit> {
 
     if (emailController.text.isNotEmpty) {
       if (emailController.text.contains('com') ||
+          emailController.text.contains('co')  ||
           emailController.text.contains('net') ||
           emailController.text.contains('edu') ||
           emailController.text.contains('org') ||

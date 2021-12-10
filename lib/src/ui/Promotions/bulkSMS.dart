@@ -396,7 +396,7 @@ class BulkSMSState extends State<BulkSMS> {
                            color: kPrimaryColorBlue,
                            size: 20.0,
                          ),
-                         labelText: "City *",
+                         labelText: "City",
                          labelStyle: TextStyle(
                              fontFamily: "PoppinsLight", fontSize: 13.0,color: kPrimaryColorBlue),
                        ),
@@ -443,7 +443,7 @@ class BulkSMSState extends State<BulkSMS> {
                            color: kPrimaryColorBlue,
                            size: 20.0,
                          ),
-                         labelText: "Area *",
+                         labelText: "Area",
                          labelStyle: TextStyle(
                              fontFamily: "PoppinsLight", fontSize: 13.0,color: kPrimaryColorBlue),
                        ),
@@ -569,7 +569,7 @@ class BulkSMSState extends State<BulkSMS> {
 
                             headerController.text = snapshot.data.data[index].headerContent;
                             setState(() {
-                              header = snapshot.data.data[index].headerId.toString();
+                              header = snapshot.data.data[index].headerContent.toString();
                             });
                             Navigator.of(context).pop();
                           },
@@ -1154,16 +1154,16 @@ class BulkSMSState extends State<BulkSMS> {
       showInSnackBar("Please enter State");
       return null;
     }
-    if(cityController.text.isEmpty){
-      showInSnackBar("Please enter City");
-      return null;
-    }
-    if(areaController.text.isEmpty){
-      showInSnackBar("Please enter Area");
-      return null;
-    }
+    // if(cityController.text.isEmpty){
+    //   showInSnackBar("Please enter City");
+    //   return null;
+    // }
+    // if(areaController.text.isEmpty){
+    //   showInSnackBar("Please enter Area");
+    //   return null;
+    // }
 
-    // _showLoaderDialog(context);
+    _showLoaderDialog(context);
 
     final params = {
       "user_id":id,
@@ -1173,9 +1173,10 @@ class BulkSMSState extends State<BulkSMS> {
       "template_id":template,
       "message":templateController.text,
       "customer_state_value":state,
-      "customer_city_value":city,
-      "customer_area_value":area,
+      "customer_city_value":city == null ? "" : city,
+      "customer_area_value":area == null ? "" : area,
     };
+
     print(">>>>$params");
 
 
@@ -1184,7 +1185,8 @@ class BulkSMSState extends State<BulkSMS> {
 
     print(response.statusCode);
     if(response.statusCode == 500){
-      showInSnackBar("Error In Database");
+      Navigator.of(context, rootNavigator: true).pop();
+      showInSnackBar("Error From Server");
     }
     Bulk data;
     var responseJson = json.decode(response.body);
@@ -1192,6 +1194,7 @@ class BulkSMSState extends State<BulkSMS> {
     print(responseJson);
 
     if (response.statusCode == 200) {
+      Navigator.of(context, rootNavigator: true).pop();
       data = new Bulk.fromJson(jsonDecode(response.body));
       print(responseJson);
       print(data.status);
@@ -1212,6 +1215,7 @@ class BulkSMSState extends State<BulkSMS> {
       }
     } else {
       data = new Bulk.fromJson(jsonDecode(response.body));
+      Navigator.of(context, rootNavigator: true).pop();
       showInSnackBar(data.message);
       }
   }

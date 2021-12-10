@@ -622,10 +622,33 @@ class _HomePageState extends State<HomePage> {
         firstDate: DateTime(2000),
         lastDate: DateTime.now());
     eDate = '${e.year.toString()}-${e.month.toString()}-${e.day.toString()}';
-    toDateController.text = DateFormat("dd-MM-yyyy").format(e);
-    getAnalysisa();
-    changeState();
-    return eDate;
+    if(fDate == "")
+    {
+      showInSnackBar("Please Select From Date");
+    }else
+    {
+      toDateController.text = DateFormat("dd-MM-yyyy").format(e);
+      getAnalysisa();
+      changeState();
+    }
+      return eDate;
+  }
+
+  void showInSnackBar(String value) {
+    FocusScope.of(context).requestFocus(new FocusNode());
+    _scaffoldKey.currentState?.removeCurrentSnackBar();
+    _scaffoldKey.currentState.showSnackBar(new SnackBar(
+      content: new Text(
+        value,
+        textAlign: TextAlign.center,
+        style: TextStyle(
+            color: Colors.white,
+            fontSize: 16.0,
+            fontFamily: "PoppinsMedium"),
+      ),
+      backgroundColor: kPrimaryColorBlue,
+      duration: Duration(seconds: 2),
+    ));
   }
 
   void changeState() {

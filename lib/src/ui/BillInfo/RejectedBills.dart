@@ -105,8 +105,13 @@ class BillRejectedState extends State<BillRejected> {
         firstDate: DateTime(2000),
         lastDate: DateTime.now());
     eDate = '${e.year.toString()}-${e.month.toString()}-${e.day.toString()}';
-    toDateController.text = DateFormat("dd-MM-yyyy").format(e);
-    setState(() {});
+    if(fDate == "")
+    {
+      showInSnackBar("Please Select From Date");
+    }else {
+      toDateController.text = DateFormat("dd-MM-yyyy").format(e);
+      setState(() {});
+    }
     return eDate;
   }
 
