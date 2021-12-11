@@ -599,15 +599,14 @@ class _MyGeneralSettingState extends State<GeneralSetting> {
                         width: size.width * 0.95,
                         padding: EdgeInsets.only(top: 0.0, bottom: 10.0, left: 0.0, right: 0.0),
                         child: new TextField(
-                          enableInteractiveSelection:
-                          false, // will disable paste operation
+                          enableInteractiveSelection: false, // will disable paste operation
                           focusNode: new AlwaysDisabledFocusNode(),
                           controller: panController,
                           style: TextStyle(
                             //fontFamily: "PoppinsBold",
                               fontSize: 17.0,
                               color: Colors.black87),
-                          decoration: InputDecoration(
+                            decoration: InputDecoration(
                             border: InputBorder.none,
                             counterStyle: TextStyle(height: double.minPositive,),
                             counterText: "",
@@ -630,7 +629,7 @@ class _MyGeneralSettingState extends State<GeneralSetting> {
                               color: kPrimaryColorBlue,
                               size: 23.0,
                             ),
-                            labelText: "Company PAN Number",
+                            labelText: "Company PAN Number *",
                             labelStyle: TextStyle(
                                 fontFamily: "PoppinsLight", fontSize: 13.0, color: kPrimaryColorBlue),
                           ),
@@ -645,7 +644,6 @@ class _MyGeneralSettingState extends State<GeneralSetting> {
                   child: Container(
                     width: MediaQuery.of(context).size.width,
                     height: 45,
-
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(25.0),
                       color: AppColors.kPrimaryColorBlue,
@@ -657,7 +655,8 @@ class _MyGeneralSettingState extends State<GeneralSetting> {
                           fontSize: 20,
                           color: Colors.white,
                           fontWeight: FontWeight.bold,
-                        ),),
+                        ),
+                      ),
                     ),
                   ),
                 ),

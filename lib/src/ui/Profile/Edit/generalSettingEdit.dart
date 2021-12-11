@@ -876,7 +876,7 @@ class _MyGeneralSettingEditState extends State<GeneralSettingEdit> {
                             color: kPrimaryColorBlue,
                             size: 23.0,
                           ),
-                          labelText: "Company PAN Number",
+                          labelText: "Company PAN Number *",
                           labelStyle: TextStyle(
                               fontFamily: "PoppinsLight", fontSize: 13.0, color: kPrimaryColorBlue),
                         ),
@@ -2370,10 +2370,10 @@ class _MyGeneralSettingEditState extends State<GeneralSettingEdit> {
       return null;
     }
 
-    // if (panController.text.isEmpty) {
-    //   showInSnackBar("Please enter Company PAN Number", 2);
-    //   return null;
-    // }
+    if (panController.text.isEmpty) {
+      showInSnackBar("Please enter Company PAN Number", 2);
+      return null;
+    }
 
     if(panController.text.isNotEmpty) {
       if (validatePan(panController.text) == false) {
