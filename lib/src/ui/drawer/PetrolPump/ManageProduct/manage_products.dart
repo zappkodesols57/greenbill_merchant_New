@@ -187,7 +187,7 @@ class ManageProductsState extends State<ManageProducts> {
                                         style: TextStyle(fontFamily: "PoppinsBold"),
                                       ),
                                     ),
-                                    Text(double.parse(snapshot.data.data[index].productCost).toStringAsFixed(3),
+                                    Text(double.parse(snapshot.data.data[index].productCost).toStringAsFixed(2),
                                       textAlign: TextAlign.center,
                                       style: TextStyle(fontFamily: "PoppinsBold"),
                                     ),

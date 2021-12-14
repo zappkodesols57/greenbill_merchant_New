@@ -563,7 +563,7 @@ class _MyPersonalInfoState extends State<PersonalInfo> {
                           color: kPrimaryColorBlue,
                           size: 23.0,
                         ),
-                        labelText: "Date of Birth *",
+                        labelText: "Date of Birth",
                         labelStyle: TextStyle(
                             fontFamily: "PoppinsLight", fontSize: 13.0, color: kPrimaryColorBlue),
                       ),
@@ -609,7 +609,7 @@ class _MyPersonalInfoState extends State<PersonalInfo> {
                           color: kPrimaryColorBlue,
                           size: 23.0,
                         ),
-                        labelText: "Designation *",
+                        labelText: "Designation",
                         labelStyle: TextStyle(
                             fontFamily: "PoppinsLight", fontSize: 13.0, color: kPrimaryColorBlue),
                       ),
@@ -663,7 +663,7 @@ class _MyPersonalInfoState extends State<PersonalInfo> {
                     color: kPrimaryColorBlue,
                     size: 23.0,
                   ),
-                  labelText: "Aadhar Number *",
+                  labelText: "Aadhar Number",
                   labelStyle: TextStyle(
                       fontFamily: "PoppinsLight", fontSize: 13.0, color: kPrimaryColorBlue),
                 ),
@@ -720,7 +720,7 @@ class _MyPersonalInfoState extends State<PersonalInfo> {
                     color: kPrimaryColorBlue,
                     size: 23.0,
                   ),
-                  labelText: "Pan Number *",
+                  labelText: "Pan Number",
                   labelStyle: TextStyle(
                       fontFamily: "PoppinsLight", fontSize: 13.0, color: kPrimaryColorBlue),
                 ),
@@ -935,37 +935,41 @@ class _MyPersonalInfoState extends State<PersonalInfo> {
         return null;
       }
     }
-    if (dobController.text.isEmpty) {
-      showInSnackBar("Please enter Date of Birth", 2);
-      return null;
+    // if (dobController.text.isEmpty) {
+    //   showInSnackBar("Please enter Date of Birth", 2);
+    //   return null;
+    // }
+    // if (degiController.text.isEmpty) {
+    //   showInSnackBar("Please enter Designation", 2);
+    //   return null;
+    // }
+    // if (aadharController.text.isEmpty) {
+    //   showInSnackBar("Please enter Aadhar Number", 2);
+    //   return null;
+    // }
+       if(aadharController.text.isNotEmpty) {
+      if (aadharController.text.length < 12) {
+        showInSnackBar("Please enter valid Aadhar Number", 2);
+        return null;
+      }
     }
-    if (degiController.text.isEmpty) {
-      showInSnackBar("Please enter Designation", 2);
-      return null;
-    }
-    if (aadharController.text.isEmpty) {
-      showInSnackBar("Please enter Aadhar Number", 2);
-      return null;
-    }
-    if (aadharController.text.length < 12) {
-      showInSnackBar("Please enter valid Aadhar Number", 2);
-      return null;
-    }
-    if (panController.text.isEmpty) {
-      showInSnackBar("Please enter Pan Number", 2);
-      return null;
-    }
-    if (panController.text.length < 10) {
-      showInSnackBar("Please enter valid Pan Number", 2);
-      return null;
-    }
-    if (panController.text.length > 10) {
-      showInSnackBar("Please enter valid Pan Number", 2);
-      return null;
-    }
-    if (validatePan(panController.text) == false) {
-      showInSnackBar("Invalid Pan Number", 2);
-      return null;
+    // if (panController.text.isEmpty) {
+    //   showInSnackBar("Please enter Pan Number", 2);
+    //   return null;
+    // }
+       if(panController.text.isNotEmpty) {
+      if (panController.text.length < 10) {
+        showInSnackBar("Please enter valid Pan Number", 2);
+        return null;
+      }
+      if (panController.text.length > 10) {
+        showInSnackBar("Please enter valid Pan Number", 2);
+        return null;
+      }
+      if (validatePan(panController.text) == false) {
+        showInSnackBar("Invalid Pan Number", 2);
+        return null;
+      }
     }
 
     SchedulerBinding.instance
@@ -986,6 +990,7 @@ class _MyPersonalInfoState extends State<PersonalInfo> {
       "m_adhaar_number": aadharController.text,
       "m_pan_number": panController.text,
     };
+    print(param);
 
     final response = await http.post(
       "http://157.230.228.250/set-merchant-profile-api/",

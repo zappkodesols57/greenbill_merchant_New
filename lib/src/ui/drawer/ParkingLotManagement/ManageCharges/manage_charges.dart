@@ -129,7 +129,7 @@ class ManageChargesState extends State<ManageCharges> {
                               Text("For Hours: ${snapshot.data.data[index].forHours}",
                                 style: TextStyle(fontFamily: "PoppinsBold"),
                               ),
-                              Text("Charges: ${double.parse(snapshot.data.data[index].charges).toStringAsFixed(3)}",
+                              Text("Charges: ${double.parse(snapshot.data.data[index].charges).toStringAsFixed(2)}",
                                 style: TextStyle(fontFamily: "PoppinsBold"),
                               ),
                               if(snapshot.data.data[index].forAdditionalHours != "")

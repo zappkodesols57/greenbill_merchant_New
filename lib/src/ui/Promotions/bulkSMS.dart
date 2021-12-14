@@ -181,7 +181,11 @@ class BulkSMSState extends State<BulkSMS> {
                 ),
                 child: new TextField(
                   onTap: (){
-                    smsHeaderDialog(context);
+                    if(radioItem != null) {
+                      smsHeaderDialog(context);
+                    }else{
+                      showInSnackBar("Please Select SMS Type");
+                    }
                   },
                   enableInteractiveSelection: false, // will disable paste operation
                   focusNode: new AlwaysDisabledFocusNode(),
@@ -228,7 +232,11 @@ class BulkSMSState extends State<BulkSMS> {
                 ),
                 child: new TextField(
                   onTap: (){
-                    templateDialog(context);
+                    if(headerController.text.isNotEmpty) {
+                      templateDialog(context);
+                    }else{
+                      showInSnackBar("Please Select SMS Header");
+                    }
                   },
                   enableInteractiveSelection: false, // will disable paste operation
                   focusNode: new AlwaysDisabledFocusNode(),
@@ -491,6 +499,7 @@ class BulkSMSState extends State<BulkSMS> {
 
     final param = {
       "user_id": id,
+      "header_type": radioItem,
     };
 
     print(">>>>>>>>>$id\n$token");
@@ -617,6 +626,7 @@ class BulkSMSState extends State<BulkSMS> {
 
     final param = {
       "user_id": id,
+      "SMSheader": header,
     };
 
     print(">>>>>>>>>$id\n$token");
@@ -1198,7 +1208,6 @@ class BulkSMSState extends State<BulkSMS> {
       data = new Bulk.fromJson(jsonDecode(response.body));
       print(responseJson);
       print(data.status);
-      if(data.status == "success"){
         showInSnackBar(data.message);
         setState(() {
           radioItem = null;
@@ -1209,10 +1218,6 @@ class BulkSMSState extends State<BulkSMS> {
           cityController.clear();
           areaController.clear();
         });
-      } else {
-        data = new Bulk.fromJson(jsonDecode(response.body));
-        showInSnackBar(data.message);
-      }
     } else {
       data = new Bulk.fromJson(jsonDecode(response.body));
       Navigator.of(context, rootNavigator: true).pop();

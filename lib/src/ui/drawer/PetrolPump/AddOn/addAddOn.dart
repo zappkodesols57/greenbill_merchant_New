@@ -279,5 +279,4 @@ class AddAddonState extends State<AddAddon> {
       duration: Duration(seconds: 2),
     ));
   }
-
 }

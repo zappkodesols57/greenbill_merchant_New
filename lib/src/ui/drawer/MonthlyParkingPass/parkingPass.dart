@@ -224,7 +224,7 @@ class ParkingPassState extends State<ParkingPass> {
                                           Colors.white,
                                         ),
                                         trailing: Text(
-                                            "₹ ${double.parse(snapshot.data[index].amount).toStringAsFixed(3)}",
+                                            "₹ ${double.parse(snapshot.data[index].amount).toStringAsFixed(2)}",
                                             style: TextStyle(
                                                 fontWeight: FontWeight.bold,
                                                 fontSize: 17.0)
