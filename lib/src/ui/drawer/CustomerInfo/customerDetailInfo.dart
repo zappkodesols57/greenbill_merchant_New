@@ -16,6 +16,7 @@ import 'package:http/http.dart' as http;
 import 'package:image_downloader/image_downloader.dart';
 import 'package:open_file/open_file.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class CustomerDetailInfo extends StatefulWidget {
   final String token, id, storeID, mobileNo, email, name, state, city;
@@ -510,7 +511,8 @@ class CustomerDetailInfoState extends State<CustomerDetailInfo> {
                                         ],
                                       ),
                                       onTap: () {
-                                        // Navigator.push(context, MaterialPageRoute(builder:  (context)=>MerchantBillList(snapshot.data[index].mBusinessName)));
+                                        launch(snapshot.data.allBills[index].newBillUrl);
+                                        // Navigator.push(context, MaterialPageRoute(builder:(context)=>MerchantBillList(snapshot.data[index].mBusinessName)));
                                       },
                                     ),
                                   );
@@ -656,6 +658,7 @@ class CustomerDetailInfoState extends State<CustomerDetailInfo> {
                                         ],
                                       ),
                                       onTap: () {
+                                        launch(snapshot.data.datad[index].memoUrl);
                                         // Navigator.push(context, MaterialPageRoute(builder:  (context)=>MerchantBillList(snapshot.data[index].mBusinessName)));
                                       },
                                     ),
@@ -799,6 +802,7 @@ class CustomerDetailInfoState extends State<CustomerDetailInfo> {
                                         ],
                                       ),
                                       onTap: () {
+                                        launch(snapshot.data.datar[index].receiptUrl);
                                         // Navigator.push(context, MaterialPageRoute(builder:  (context)=>MerchantBillList(snapshot.data[index].mBusinessName)));
                                       },
                                     ),

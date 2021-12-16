@@ -38,18 +38,21 @@ class datareceipt {
     this.date,
     this.receptNo,
     this.amount,
+    this.receiptUrl,
   });
 
   int Id;
   String date;
   String receptNo;
   String amount;
+  String receiptUrl;
 
   factory datareceipt.fromJson(Map<String, dynamic> json) => datareceipt(
     Id: json["id"],
     date: json["date"],
     amount: json["amount"],
     receptNo: json["receipt_no"],
+    receiptUrl: json["receipt_url"],
   );
 
   Map<String, dynamic> toJson() => {
@@ -57,6 +60,7 @@ class datareceipt {
     "date": date,
     "amount": amount,
     "receipt_no": receptNo,
+    "receipt_url": receiptUrl,
   };
 }
 

@@ -38,6 +38,8 @@ class _MyPersonalInfoState extends State<PersonalInfo> {
   bool _verified = false;
   bool _PHverified = false;
 
+  String storeID;
+
   _MyPersonalInfoState(this.pic);
 
   @override
@@ -53,6 +55,7 @@ class _MyPersonalInfoState extends State<PersonalInfo> {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     number = prefs.getString("mobile");
     id = prefs.getInt("userID");
+    storeID = prefs.getString("businessID");
     token = prefs.getString("token");
     print('$number $id $token');
 
@@ -100,6 +103,7 @@ class _MyPersonalInfoState extends State<PersonalInfo> {
   Future<void> setData(int id, String token) async {
     final param = {
       "user_id": id.toString(),
+      "b_id": storeID.toString(),
     };
 
     final response = await http.post(
@@ -745,29 +749,29 @@ class _MyPersonalInfoState extends State<PersonalInfo> {
                 child: new Image.network(
                   '${profile.text}',
                   // height: size.height * 0.1,
-                  height: 90.0,
-                  width: 90.0,
+                  height: 100.0,
+                  width: 100.0,
                   fit: BoxFit.fill,
                 ),
               ),
-              Positioned(
-                bottom: 3.0,
-                right: 0.0,
-                child: InkWell(
-                  onTap: () {
-                    _showSelectionDialog(context);
-                  },
-                  child: CircleAvatar(
-                    radius: size.width * 0.035,
-                    backgroundColor: Colors.blue,
-                    child: Icon(
-                      FontAwesomeIcons.camera,
-                      color: Colors.white,
-                      size: 13.0,
-                    ),
-                  ),
-                ),
-              ),
+              // Positioned(
+              //   bottom: 3.0,
+              //   right: 0.0,
+              //   child: InkWell(
+              //     onTap: () {
+              //       _showSelectionDialog(context);
+              //     },
+              //     child: CircleAvatar(
+              //       radius: size.width * 0.035,
+              //       backgroundColor: Colors.blue,
+              //       child: Icon(
+              //         FontAwesomeIcons.camera,
+              //         color: Colors.white,
+              //         size: 13.0,
+              //       ),
+              //     ),
+              //   ),
+              // ),
             ],
           ),
         ),

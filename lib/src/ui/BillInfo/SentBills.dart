@@ -17,6 +17,7 @@ import 'package:intl/intl.dart';
 import 'package:open_file/open_file.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class BillInfo extends StatefulWidget {
   @override
@@ -440,6 +441,9 @@ class BillInfoState extends State<BillInfo> {
                                           SizedBox(width: 48,),
                                       ],
                                     ),
+                                    onTap: (){
+                                      launch(snapshot.data[index].url);
+                                    },
                                   ),
                                 ),
                               );

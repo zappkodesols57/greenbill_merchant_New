@@ -38,6 +38,7 @@ class datacash {
     this.date,
     this.memoNo,
     this.amount,
+    this.memoUrl,
 
   });
 
@@ -45,12 +46,14 @@ class datacash {
   String date;
   String memoNo;
   String amount;
+  String memoUrl;
 
   factory datacash.fromJson(Map<String, dynamic> json) => datacash(
     Id: json["id"],
     date: json["date"],
     amount: json["amount"],
     memoNo: json["memo_no"],
+    memoUrl: json["memo_url"],
   );
 
   Map<String, dynamic> toJson() => {
@@ -58,6 +61,7 @@ class datacash {
     "date": date,
     "amount": amount,
     "memo_no": memoNo,
+    "memo_url": memoUrl,
   };
 }
 

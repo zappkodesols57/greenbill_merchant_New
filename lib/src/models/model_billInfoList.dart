@@ -37,8 +37,10 @@ class AllBill {
     this.billDate,
     this.billFile,
     this.dbTable,
-    this.customerAdded,
     this.time,
+    this.url,
+    this.customerAdded,
+
   });
 
   int billId;
@@ -49,6 +51,7 @@ class AllBill {
   String billFile;
   String dbTable;
   String time;
+  String url;
   bool customerAdded;
 
   factory AllBill.fromJson(Map<String, dynamic> json) => AllBill(
@@ -61,6 +64,7 @@ class AllBill {
     dbTable: json["db_table"],
     customerAdded: json["customer_added"],
     time: json["created_at"],
+    url: json["url"],
   );
 
   Map<String, dynamic> toJson() => {
@@ -73,5 +77,6 @@ class AllBill {
     "db_table": dbTable,
     "customer_added": customerAdded,
     "created_at": time,
+    "url": url,
   };
 }

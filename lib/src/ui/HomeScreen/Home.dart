@@ -139,6 +139,7 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
 
     final param = {
       "user_id": id.toString(),
+      "b_id": storeID.toString(),
     };
 
     final response = await http.post(
@@ -315,8 +316,8 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
                         leading:
                         (snapshot.data[index].mBusinessLogo != null)
                             ? CircleAvatar(
-                          backgroundColor: kPrimaryColorBlue,
-                          backgroundImage: NetworkImage(snapshot.data[index].mBusinessLogo),
+                          backgroundColor: Colors.white,
+                          backgroundImage: NetworkImage("http://157.230.228.250/"+snapshot.data[index].mBusinessLogo),
                         )
                             : CircleAvatar(
                           backgroundColor: kPrimaryColorBlue,
@@ -623,8 +624,7 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
                       }),
                   onDetailsPressed: () {
                     profileView();
-                  },
-                  //.. This line of code provides the usage of multiple accounts
+                  }, //.. This line of code provides the usage of multiple accounts
                   otherAccountsPictures: <Widget>[
                     GestureDetector(
                       onTap: () => Navigator.of(context).pop(),

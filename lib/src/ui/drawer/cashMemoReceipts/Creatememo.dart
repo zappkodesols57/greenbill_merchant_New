@@ -425,7 +425,8 @@ class _CreateReceiptsState extends State<CreateMemo> {
                               controller: totalController,
                               keyboardType: TextInputType.phone,
                               inputFormatters: <TextInputFormatter>[
-                                FilteringTextInputFormatter.digitsOnly
+                                LengthLimitingTextInputFormatter(8),
+                                FilteringTextInputFormatter.allow( RegExp(r'^(\d+)?\.?\d{0,2}'))
                               ],
                               style: TextStyle(
                                   fontFamily: "PoppinsLight",
