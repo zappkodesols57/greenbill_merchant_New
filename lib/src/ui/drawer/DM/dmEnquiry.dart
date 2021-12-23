@@ -43,7 +43,7 @@ class DmEnquiryState extends State<DmEnquiry> {
   List<Courses> _selectedAnimals = [];
 
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
-  String id, token;
+  String id, token,email;
   String dropdownInt;
   String _chosenName, _chosenValue;
 
@@ -66,9 +66,11 @@ class DmEnquiryState extends State<DmEnquiry> {
     setState(() {
       id = prefs.getInt("userID").toString();
       token = prefs.getString("token");
+      email = prefs.getString("email");
     });
     nameController.text = widget.name;
     mobController.text = widget.mob;
+    emailController.text = email;
     getStore(prefs.getInt("userID").toString());
   }
 

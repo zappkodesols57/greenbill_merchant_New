@@ -1,6 +1,8 @@
 import 'dart:convert';
 import 'dart:io';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:greenbill_merchant/src/models/model_checkReceipt.dart';
+import 'package:greenbill_merchant/src/models/model_stamp.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -20,10 +22,13 @@ class CreateReceipts extends StatefulWidget {
 
 class _CreateReceiptsState extends State<CreateReceipts> {
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
+  final ScrollController _controller = ScrollController();
+
 
   TextEditingController mobController = new TextEditingController();
   TextEditingController crfController = new TextEditingController();
   TextEditingController rsController = new TextEditingController();
+  TextEditingController stampController = new TextEditingController();
   TextEditingController amtForController = new TextEditingController();
   TextEditingController totalController = new TextEditingController();
   TextEditingController gtController = new TextEditingController();
@@ -40,6 +45,8 @@ class _CreateReceiptsState extends State<CreateReceipts> {
   String val1 = "";
   String val2 = "";
   String val3 = "";
+  String radioItem,stampId,stamptype,stamptype2,stampId2;
+  bool custom=false;
 
   String token, id, mob, storeID;
 
@@ -55,6 +62,7 @@ class _CreateReceiptsState extends State<CreateReceipts> {
     mobController.dispose();
     crfController.dispose();
     rsController.dispose();
+    stampController.dispose();
     amtForController.dispose();
     totalController.dispose();
     gtController.dispose();
@@ -117,6 +125,7 @@ class _CreateReceiptsState extends State<CreateReceipts> {
         ],
       ),
       body: SingleChildScrollView(
+        controller: _controller,
         child: Center(
           child: Column(
             children: [
@@ -427,7 +436,6 @@ class _CreateReceiptsState extends State<CreateReceipts> {
                         },
                       ),
                     ),
-
                   ],
                 ),
 
@@ -698,11 +706,267 @@ class _CreateReceiptsState extends State<CreateReceipts> {
                   ),
                 ),
               ),
+              Container(
+                width: size.width,
+                padding: EdgeInsets.only(left: 20.0),
+                child: RichText(
+                  text: TextSpan(
+                      text: 'Stamp Type',
+                      style: TextStyle(
+                        fontFamily: "PoppinsLight",
+                        fontSize: 13.0,
+                        color: kPrimaryColorBlue,
+                        fontWeight: FontWeight.bold,
+                      ),
+                      children: <TextSpan>[
+                        TextSpan(
+                          text: '*',
+                          style: TextStyle(
+                            color: kPrimaryColorBlue,
+                            fontStyle: FontStyle.normal,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                      ]),
+                ),
+              ),
+              Container(
+                width: size.width * 0.95,
+                padding: EdgeInsets.only(
+                    top: 0.0, bottom: 10.0, left: 0.0, right: 0.0),
+                child: Row(
+                  children: <Widget>[
+                    Container(
+                      width: size.width * 0.50,
+                      alignment: Alignment.centerLeft,
+                      child: RadioListTile(
+                        dense: true,
+                        groupValue: radioItem,
+                        title: Text('Default Stamps',style: TextStyle(
+                            fontWeight: FontWeight.normal, fontSize: 13.0, color: kPrimaryColorBlue),),
+
+                        value: 'Default Stamps',
+                        onChanged: (val) {
+                          setState(() {
+                            radioItem = val;
+                            print("radioItem "+radioItem);
+                            custom=true;
+                            _controller.jumpTo(_controller.position.maxScrollExtent);
+                          });
+                        },
+                      ),
+                    ),
+
+                    Container(
+                      width: size.width * 0.45,
+                      alignment: Alignment.centerLeft,
+
+                      child:RadioListTile(
+                        dense: true,
+                        groupValue: radioItem,
+                        title: Text('Own Stamp',style: TextStyle(
+                            fontWeight: FontWeight.normal, fontSize: 13.0, color: kPrimaryColorBlue),),
+                        value: 'Own Stamps',
+                        onChanged: (val) {
+                          setState(() {
+                            custom=false;
+                            radioItem = val;
+                            stampId = null;
+                            stamptype = null;
+                            print("$stamptype  $stampId  $stampId2 $stamptype2");
+                            getStampLists();
+                          });
+                        },
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              if(custom == true)
+                Container(
+                  width: size.width * 0.95,
+                  padding: EdgeInsets.only(
+                      top: 0.0, bottom: 0.0, left: 0.0, right: 0.0),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(5),
+                  ),
+                  child: new TextField(
+                    onTap: (){
+                      stampDialog(context);
+                    },
+                    enableInteractiveSelection: false, // will disable paste operation
+                    focusNode: new AlwaysDisabledFocusNode(),
+                    controller: stampController,
+                    style: TextStyle(
+                        fontFamily: "PoppinsLight",
+                        fontSize: 17.0,
+                        color: kPrimaryColorBlue),
+                    decoration: InputDecoration(
+                      border: InputBorder.none,
+                      counterStyle: TextStyle(height: double.minPositive,),
+                      counterText: "",
+                      contentPadding: const EdgeInsets.symmetric(vertical: 0.0),
+                      enabledBorder: OutlineInputBorder(
+                        borderSide: BorderSide(color: kPrimaryColorBlue, width: 0.5),
+                        borderRadius: const BorderRadius.all(Radius.circular(35.0)),
+                      ),
+                      focusedBorder: new OutlineInputBorder(
+                        borderSide: BorderSide(color: kPrimaryColorBlue, width: 0.5),
+                        borderRadius: const BorderRadius.all(Radius.circular(35.0)),
+                      ),
+                      prefixIcon: Icon(
+                        FontAwesomeIcons.stamp,
+                        color: kPrimaryColorBlue,
+                        size: 20.0,
+                      ),
+                      labelText: "Select Stamp *",
+                      labelStyle: TextStyle(
+                          fontFamily: "PoppinsLight", fontSize: 13.0,color: kPrimaryColorBlue),
+                    ),
+                  ),
+                ),
+              SizedBox(height: 10.0,),
             ],
           ),
         ),
       ),
     );
+  }
+
+  stampDialog(BuildContext context){
+    showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text(
+              'Select Stamp',
+              style: TextStyle(
+                  color: Colors.black87,
+                  fontWeight: FontWeight.w800,
+                  fontSize: 15.0,
+                  fontFamily: "PoppinsMedium"
+              ),
+            ),
+            content: stampDialoagContainer(),
+            actions: <Widget>[
+              TextButton(
+                child: Text('Cancel', style: TextStyle(color: kPrimaryColorBlue)),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+              ),
+            ],
+          );
+        });
+  }
+
+
+  Widget stampDialoagContainer() {
+    return Container(
+      height: 230.0, // Change as per your requirement
+      width: 300.0, // Change as per your requirement
+      child: FutureBuilder<Stamp>(
+        future: getStampLists(),
+        builder: (BuildContext context, AsyncSnapshot<Stamp> snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting)
+            return Center(
+              child: Center(
+                  child: CircularProgressIndicator(
+                    valueColor: AlwaysStoppedAnimation<Color>(kPrimaryColorBlue),
+                  )),
+            );
+          else if (snapshot.hasError) {
+            return Center(
+              child: Text("No Stamps Found"),
+            );
+          } else{
+            if (snapshot.connectionState == ConnectionState.done &&
+                snapshot.hasData) {
+              return Scrollbar(
+                  radius: Radius.circular(5.0),
+                  isAlwaysShown: true,
+                  controller: _controller,
+                  thickness: 3.0,
+                  child: ListView.builder(
+                      controller: _controller,
+                      itemCount: snapshot.data.data1.length,
+                      itemBuilder: (BuildContext context, int index) {
+                        return ListTile(
+                          title: Text(
+                            snapshot.data.data1[index].stampName,
+                            style: TextStyle(fontSize: 15.0,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          leading: CircleAvatar(
+                            foregroundColor: Colors.white,
+                            backgroundColor: kPrimaryColorBlue,
+                            child: Text(
+                              snapshot.data.data1[index].stampName.substring(0,1).toUpperCase(),
+                              style: TextStyle(fontSize: 18.0,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ),
+                          // trailing: Wrap(
+                          //   spacing: 12, // space between two icons
+                          //   children: <Widget>[
+                          //     Icon(FontAwesomeIcons.rupeeSign, size: 16.0, color: Colors.black,),
+                          //     Text('${snapshot.data.data[index].productCost} /Lit', style: TextStyle(fontWeight: FontWeight.bold)),
+                          //     // Icon(Icons.message),
+                          //   ],
+                          // ),
+                          onTap: () async {
+
+                            stampController.text = snapshot.data.data1[index].stampName;
+                            setState(() {
+                              stampId = snapshot.data.data1[index].stampId.toString();
+                              stamptype = snapshot.data.data1[index].type.toString();
+                            });
+                            Navigator.of(context).pop();
+                          },
+                        );
+                      }
+                  )
+              );
+            } else {
+              return Center(child: Text("No Headers Found"),);
+            }
+          }
+
+        },
+      ),
+    );
+  }
+
+
+  Future<Stamp> getStampLists() async {
+
+    final param = {
+      "business_id": storeID,
+    };
+
+    print(">>>>>>>>>$id\n$storeID");
+
+    final res = await http.post(
+      Uri.parse("http://157.230.228.250/get-stamp-data-api/"),
+      body: param,
+      headers: {HttpHeaders.authorizationHeader: "Token $token"},
+    );
+
+    print(res.body);
+    if(200 == res.statusCode){
+      print(stampFromJson(res.body).data1.length);
+      print(stampFromJson(res.body).data2.length);
+      setState(() {
+        stamptype2 = stampFromJson(res.body).data2[0].type2;
+        stampId2 = stampFromJson(res.body).data2[0].stamp2Id.toString();
+      });
+      print("_____$stamptype2 _____ $stampId2 ________${stampFromJson(res.body).data2}");
+      return stampFromJson(res.body);
+    } else{
+      throw Exception('Failed to load Stamps List');
+    }
   }
 
   _showLoaderDialog(BuildContext context) {
@@ -816,6 +1080,19 @@ class _CreateReceiptsState extends State<CreateReceipts> {
     //   return null;
     // }
 
+
+
+    if(radioItem == null){
+      showInSnackBar("Please Select Stamp Type");
+      return null;
+    }
+    if(radioItem == "Default Stamps"){
+      if(stampController.text.isEmpty){
+        showInSnackBar("Please Select Stamp");
+        return null;
+      }
+    }
+
     if(radioItem1 == null){
       showInSnackBar("Please Select Payment Method");
       return null;
@@ -856,6 +1133,8 @@ class _CreateReceiptsState extends State<CreateReceipts> {
       "term_and_condition2": term2.text,
       "term_and_condition3": term3.text,
       "total": totalController.text,
+      "stamp_id": stampId == null ? stampId2 : stampId,
+      "stamp_type": custom == true ? "1" : "2",
     };
 
     print(param);

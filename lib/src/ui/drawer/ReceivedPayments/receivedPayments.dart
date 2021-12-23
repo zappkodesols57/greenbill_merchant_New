@@ -34,6 +34,7 @@ class ReceivedPaymentsState extends State<ReceivedPayments> {
   String fDate = "";
   String eDate = "";
   double total = 0;
+  DateTime dateTime;
   final ScrollController _controller = ScrollController();
   File media;
   Dio dio = new Dio();
@@ -132,6 +133,7 @@ class ReceivedPaymentsState extends State<ReceivedPayments> {
       firstDate: DateTime(2000),
       lastDate: DateTime.now(),
     );
+    dateTime = e;
     fDate = '${e.year.toString()}-${e.month.toString()}-${e.day.toString()}';
     fromDateController.text = DateFormat("dd-MM-yyyy").format(e);
     // changeState();
@@ -142,7 +144,7 @@ class ReceivedPaymentsState extends State<ReceivedPayments> {
     DateTime e = await showDatePicker(
         context: context,
         initialDate: DateTime.now(),
-        firstDate: DateTime(2000),
+        firstDate: dateTime,
         lastDate: DateTime.now());
     eDate = '${e.year.toString()}-${e.month.toString()}-${e.day.toString()}';
     if(fDate == "")

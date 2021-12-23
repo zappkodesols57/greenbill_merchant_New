@@ -39,6 +39,7 @@ class BillIncomingState extends State<BillIncoming> {
   TextEditingController toDateController = new TextEditingController();
   String fDate = "";
   String eDate = "";
+  DateTime dateTime;
   final path = '/storage/emulated/0/Download';
   Dio dio = new Dio();
   TextEditingController query = new TextEditingController();
@@ -139,6 +140,7 @@ class BillIncomingState extends State<BillIncoming> {
       firstDate: DateTime(2000),
       lastDate: DateTime.now(),
     );
+    dateTime = e;
     fDate = '${e.year.toString()}-${e.month.toString()}-${e.day.toString()}';
     fromDateController.text = DateFormat("dd-MM-yyyy").format(e);
     // changeState();
@@ -149,7 +151,7 @@ class BillIncomingState extends State<BillIncoming> {
     DateTime e = await showDatePicker(
         context: context,
         initialDate: DateTime.now(),
-        firstDate: DateTime(2000),
+        firstDate: dateTime,
         lastDate: DateTime.now());
     eDate = '${e.year.toString()}-${e.month.toString()}-${e.day.toString()}';
     if(fDate == "")

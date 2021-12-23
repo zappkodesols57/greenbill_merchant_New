@@ -31,6 +31,7 @@ class CashMemoListState extends State<CashMemoList> {
   TextEditingController toDateController = new TextEditingController();
   String fDate = "";
   String eDate = "";
+  DateTime dateTime;
   final ScrollController _controller = ScrollController();
   TextEditingController query = new TextEditingController();
 
@@ -63,6 +64,7 @@ class CashMemoListState extends State<CashMemoList> {
       firstDate: DateTime(2000),
       lastDate: DateTime.now(),
     );
+    dateTime = e;
     fDate = '${e.year.toString()}-${e.month.toString()}-${e.day.toString()}';
     fromDateController.text = DateFormat("dd-MM-yyyy").format(e);
     // changeState();
@@ -73,7 +75,7 @@ class CashMemoListState extends State<CashMemoList> {
     DateTime e = await showDatePicker(
         context: context,
         initialDate: DateTime.now(),
-        firstDate: DateTime(2000),
+        firstDate: dateTime,
         lastDate: DateTime.now());
     eDate = '${e.year.toString()}-${e.month.toString()}-${e.day.toString()}';
     if(fDate == "")

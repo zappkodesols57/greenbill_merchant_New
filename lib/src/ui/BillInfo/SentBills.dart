@@ -14,8 +14,6 @@ import 'package:greenbill_merchant/src/ui/BillInfo/ViewBill.dart';
 import 'package:http/http.dart' as http;
 import 'package:image_downloader/image_downloader.dart';
 import 'package:intl/intl.dart';
-import 'package:open_file/open_file.dart';
-import 'package:path_provider/path_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -33,6 +31,7 @@ class BillInfoState extends State<BillInfo> {
   TextEditingController toDateController = new TextEditingController();
   String fDate = "";
   String eDate = "";
+  DateTime dateTime;
   Dio dio = new Dio();
   TextEditingController query = new TextEditingController();
 
@@ -96,6 +95,7 @@ class BillInfoState extends State<BillInfo> {
       firstDate: DateTime(2000),
       lastDate: DateTime.now(),
     );
+    dateTime = e;
     fDate = '${e.year.toString()}-${e.month.toString()}-${e.day.toString()}';
     fromDateController.text = DateFormat("dd-MM-yyyy").format(e);
     // changeState();
@@ -106,7 +106,7 @@ class BillInfoState extends State<BillInfo> {
     DateTime e = await showDatePicker(
         context: context,
         initialDate: DateTime.now(),
-        firstDate: DateTime(2000),
+        firstDate: dateTime,
         lastDate: DateTime.now());
     eDate = '${e.year.toString()}-${e.month.toString()}-${e.day.toString()}';
     if(fDate == "")

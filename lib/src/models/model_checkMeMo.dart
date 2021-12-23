@@ -15,11 +15,11 @@ class CheckMemo {
   });
 
   String status;
-  List<Datum2> data;
+  List<Datumm2> data;
 
   factory CheckMemo.fromJson(Map<String, dynamic> json) => CheckMemo(
     status: json["status"],
-    data: List<Datum2>.from(json["data"].map((x) => Datum2.fromJson(x))),
+    data: List<Datumm2>.from(json["data"].map((x) => Datumm2.fromJson(x))),
   );
 
   Map<String, dynamic> toJson() => {
@@ -28,8 +28,8 @@ class CheckMemo {
   };
 }
 
-class Datum2 {
-  Datum2({
+class Datumm2 {
+  Datumm2({
     this.templateNo,
     this.term1,
     this.term2,
@@ -42,7 +42,7 @@ class Datum2 {
   String term2;
   String term3;
 
-  factory Datum2.fromJson(Map<String, dynamic> json) => Datum2(
+  factory Datumm2.fromJson(Map<String, dynamic> json) => Datumm2(
     templateNo: json["template_id"],
     term1: json["term1"],
     term2: json["term2"],

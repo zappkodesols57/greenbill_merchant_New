@@ -30,6 +30,7 @@ class FlagBillsState extends State<FlagBills> {
   TextEditingController toDateController = new TextEditingController();
   String fDate = "";
   String eDate = "";
+  DateTime dateTime;
   bool _isLoading, _hasData, _isCheckAll;
   MultiSelectController controller = new MultiSelectController();
   List<bool> inputs = new List<bool>();
@@ -187,6 +188,7 @@ class FlagBillsState extends State<FlagBills> {
       firstDate: DateTime(2000),
       lastDate: DateTime.now(),
     );
+    dateTime = e;
     fDate = '${e.year.toString()}-${e.month.toString()}-${e.day.toString()}';
     fromDateController.text = DateFormat("dd-MM-yyyy").format(e);
     // changeState();
@@ -197,7 +199,7 @@ class FlagBillsState extends State<FlagBills> {
     DateTime e = await showDatePicker(
         context: context,
         initialDate: DateTime.now(),
-        firstDate: DateTime(2000),
+        firstDate: dateTime,
         lastDate: DateTime.now());
     eDate = '${e.year.toString()}-${e.month.toString()}-${e.day.toString()}';
     if(fDate == "")

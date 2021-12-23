@@ -61,12 +61,11 @@ class ValidateRegistrationState extends State<ValidateRegistration> {
 
   TextEditingController otpController = new TextEditingController();
 
-
-  int _counter = 15;
+  int _counter = 0;
   Timer _timer ;
 
   void _startTimer(){
-    _counter = 15;
+    _counter = 0;
     if(_timer != null){
       _timer.cancel();
     }
@@ -168,17 +167,17 @@ class ValidateRegistrationState extends State<ValidateRegistration> {
                       child: PinFieldAutoFill(
                         onCodeChanged: (value){
                           print(value);
-                          if(value.length == 6){
-                            validateOTP();
-                          }
+                          // if(value.length == 6){
+                          //   validateOTP();
+                          // }
                         },
                         codeLength: 6,
                         controller: otpController,
                         focusNode: myFocusNodeOtp,
                         autofocus: false,
-                        onCodeSubmitted: (value){
-                          validateOTP();
-                        },
+                        // onCodeSubmitted: (value){
+                        //   validateOTP();
+                        // },
                       ),
                     ),
                     Container(

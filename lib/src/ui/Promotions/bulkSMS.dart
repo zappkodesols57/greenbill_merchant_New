@@ -46,6 +46,7 @@ class BulkSMSState extends State<BulkSMS> {
     super.dispose();
     _controller.dispose();
     headerController.dispose();
+    CampaignController.dispose();
     templateController.dispose();
     messageController.dispose();
     radioController.dispose();
@@ -56,6 +57,7 @@ class BulkSMSState extends State<BulkSMS> {
   }
 
   TextEditingController headerController = new TextEditingController();
+  TextEditingController CampaignController = new TextEditingController();
   TextEditingController templateController = new TextEditingController();
   TextEditingController messageController = new TextEditingController();
   TextEditingController radioController = new TextEditingController();
@@ -171,6 +173,49 @@ class BulkSMSState extends State<BulkSMS> {
                     )
                   ],
                 ),
+              ),
+              Container(
+                width: size.width * 0.95,
+                padding: EdgeInsets.only(
+                    top: 0.0, bottom: 0.0, left: 0.0, right: 0.0),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(5),
+                ),
+                child: new TextField(
+                  onTap: (){},
+                  // enableInteractiveSelection: false, // will disable paste operation
+                  // focusNode: new AlwaysDisabledFocusNode(),
+                  controller: CampaignController,
+                  style: TextStyle(
+                      fontFamily: "PoppinsBold",
+                      fontSize: 17.0,
+                      color: kPrimaryColorBlue),
+                  decoration: InputDecoration(
+                    border: InputBorder.none,
+                    counterStyle: TextStyle(height: double.minPositive,),
+                    counterText: "",
+                    contentPadding: const EdgeInsets.symmetric(vertical: 0.0),
+                    enabledBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: kPrimaryColorBlue, width: 0.5),
+                      borderRadius: const BorderRadius.all(Radius.circular(35.0)),
+                    ),
+                    focusedBorder: new OutlineInputBorder(
+                      borderSide: BorderSide(color: kPrimaryColorBlue, width: 0.5),
+                      borderRadius: const BorderRadius.all(Radius.circular(35.0)),
+                    ),
+                    prefixIcon: Icon(
+                      Icons.perm_contact_calendar_outlined,
+                      color: kPrimaryColorBlue,
+                      size: 20.0,
+                    ),
+                    labelText: "Campaign Name *",
+                    labelStyle: TextStyle(
+                        fontFamily: "PoppinsLight", fontSize: 13.0,color: kPrimaryColorBlue),
+                  ),
+                ),
+              ),
+              SizedBox(
+                height: 10,
               ),
               Container(
                 width: size.width * 0.95,
@@ -1147,6 +1192,10 @@ class BulkSMSState extends State<BulkSMS> {
       return null;
     }
 
+    if(CampaignController.text.isEmpty){
+      showInSnackBar("Please Enter Campaign Name");
+      return null;
+    }
     if(headerController.text.isEmpty){
       showInSnackBar("Please Select Header");
       return null;
@@ -1183,8 +1232,10 @@ class BulkSMSState extends State<BulkSMS> {
       "template_id":template,
       "message":templateController.text,
       "customer_state_value":state,
+      "campaign_name":CampaignController.text,
       "customer_city_value":city == null ? "" : city,
       "customer_area_value":area == null ? "" : area,
+
     };
 
     print(">>>>$params");

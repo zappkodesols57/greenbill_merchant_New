@@ -30,6 +30,7 @@ class HistoryState extends State<History> {
   String fDate = "";
   String eDate = "";
   String total="0";
+  DateTime dateTime;
   final ScrollController _controller = ScrollController();
   File media;
   Dio dio = new Dio();
@@ -122,6 +123,7 @@ class HistoryState extends State<History> {
       firstDate: DateTime(2000),
       lastDate: DateTime.now(),
     );
+    dateTime= e;
     fDate = '${e.year.toString()}-${e.month.toString()}-${e.day.toString()}';
     fromDateController.text = DateFormat("dd-MM-yyyy").format(e);
     // changeState();
@@ -132,7 +134,7 @@ class HistoryState extends State<History> {
     DateTime e = await showDatePicker(
         context: context,
         initialDate: DateTime.now(),
-        firstDate: DateTime(2000),
+        firstDate: dateTime,
         lastDate: DateTime.now());
     eDate = '${e.year.toString()}-${e.month.toString()}-${e.day.toString()}';
     if(fDate == "")

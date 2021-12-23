@@ -27,6 +27,7 @@ class _ReceiptState extends State<Receipt>{
   TextEditingController toDateController = new TextEditingController();
   String fDate = "";
   String eDate = "";
+  DateTime dateTime;
   final ScrollController _controller = ScrollController();
   TextEditingController query = new TextEditingController();
 
@@ -59,6 +60,7 @@ class _ReceiptState extends State<Receipt>{
       firstDate: DateTime(2000),
       lastDate: DateTime.now(),
     );
+    dateTime = e;
     fDate = '${e.year.toString()}-${e.month.toString()}-${e.day.toString()}';
     fromDateController.text = DateFormat("dd-MM-yyyy").format(e);
     // changeState();
@@ -69,7 +71,7 @@ class _ReceiptState extends State<Receipt>{
     DateTime e = await showDatePicker(
         context: context,
         initialDate: DateTime.now(),
-        firstDate: DateTime(2000),
+        firstDate: dateTime,
         lastDate: DateTime.now());
     eDate = '${e.year.toString()}-${e.month.toString()}-${e.day.toString()}';
     if(fDate == "")

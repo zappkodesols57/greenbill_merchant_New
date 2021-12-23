@@ -48,6 +48,7 @@ class _HomePageState extends State<HomePage> {
   static String returningCustomerValue = "0";
   static Map<String, double> dataMap;
   bool _headerEnabled, _headerBusiness;
+  DateTime dateTime;
 
   int todayTransaction = 0;
   TextEditingController fromDateController = new TextEditingController();
@@ -341,12 +342,11 @@ class _HomePageState extends State<HomePage> {
     return data;
   }
 
-
   Future<List<DoughnutChartData>> coupenDetails() async {
     final param = {
       "merchant_business_id": storeID,
-
     };
+
     String url = "http://157.230.228.250/merchant-coupons-details-graph-api/";
 
     final response = await http.post(
@@ -609,6 +609,7 @@ class _HomePageState extends State<HomePage> {
       firstDate: DateTime(2000),
       lastDate: DateTime.now(),
     );
+    dateTime = e;
     fDate = '${e.year.toString()}-${e.month.toString()}-${e.day.toString()}';
     fromDateController.text = DateFormat("dd-MM-yyyy").format(e);
     // changeState();
@@ -619,7 +620,7 @@ class _HomePageState extends State<HomePage> {
     DateTime e = await showDatePicker(
         context: context,
         initialDate: DateTime.now(),
-        firstDate: DateTime(2000),
+        firstDate: dateTime,
         lastDate: DateTime.now());
     eDate = '${e.year.toString()}-${e.month.toString()}-${e.day.toString()}';
     if(fDate == "")
