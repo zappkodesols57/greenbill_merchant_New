@@ -578,6 +578,8 @@ class _MyPersonalInfoState extends State<PersonalInfo> {
                     padding: EdgeInsets.only(
                         top: 0.0, bottom: 10.0, left: 0.0, right: 0.0),
                     child: TextField(
+                      inputFormatters: [FilteringTextInputFormatter.allow(RegExp("[0-9a-zA-Z]")),
+                        LengthLimitingTextInputFormatter(15)],
                       focusNode: myFocusNodeDegi,
                       controller: degiController,
                       onChanged: (value) {
@@ -914,6 +916,7 @@ class _MyPersonalInfoState extends State<PersonalInfo> {
       showInSnackBar("Please enter First Name", 2);
       return null;
     }
+
     if (lnameController.text.isEmpty) {
       showInSnackBar("Please enter Last Name", 2);
       return null;
@@ -989,7 +992,7 @@ class _MyPersonalInfoState extends State<PersonalInfo> {
       "m_email": emailController.text,
       "first_name": fnameController.text,
       "last_name": lnameController.text,
-      "m_dob": dobController.text,
+      "m_dob": dobController.text == null ? "" : dobController.text,
       "m_designation": degiController.text,
       "m_adhaar_number": aadharController.text,
       "m_pan_number": panController.text,

@@ -8,6 +8,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:greenbill_merchant/src/constants.dart';
+import 'package:greenbill_merchant/src/models/model_BulkCount.dart';
 import 'package:greenbill_merchant/src/models/model_BulkSMS.dart';
 import 'package:greenbill_merchant/src/models/model_area.dart';
 import 'package:greenbill_merchant/src/models/model_city.dart';
@@ -29,11 +30,13 @@ class BulkSMSState extends State<BulkSMS> {
   String radioItem;
   String message;
   String header,template,state,city,area;
-  bool custom=false;
+  bool custom = false;
   final ScrollController _controller = ScrollController();
   File media;
   Dio dio = new Dio();
   TextEditingController query = new TextEditingController();
+
+  int count = 0;
 
   @override
   void initState() {
@@ -56,6 +59,8 @@ class BulkSMSState extends State<BulkSMS> {
     query.dispose();
   }
 
+  final FocusNode campaignController = FocusNode();
+
   TextEditingController headerController = new TextEditingController();
   TextEditingController CampaignController = new TextEditingController();
   TextEditingController templateController = new TextEditingController();
@@ -72,6 +77,97 @@ class BulkSMSState extends State<BulkSMS> {
       id = prefs.getInt("userID").toString();
       storeID = prefs.getString("businessID");
     });
+    // getCount();
+  }
+
+
+
+  Future<CountBulk> getCount1() async {
+
+    final param = {
+      "customer_state_value": state,
+      "customer_city_value": "",
+      "customer_area_value": "",
+    };
+
+    print(">>>>>>>>>$id\n$token");
+
+    final res = await http.post(
+      Uri.parse("http://157.230.228.250/get-customer-count-by-state-city-area-api/"),
+      body: param,
+      headers: {HttpHeaders.authorizationHeader: "Token $token"},
+    );
+
+    print(res.body);
+    if(200 == res.statusCode){
+      print(countFromJson(res.body).data);
+      setState(() {
+        count = countFromJson(res.body).data;
+      });
+      return countFromJson(res.body);
+    } else{
+      throw Exception('Failed to load Template List');
+    }
+  }
+
+  Future<CountBulk> getCount2() async {
+
+    final param = {
+      "customer_state_value": "",
+      "customer_city_value": city,
+      "customer_area_value": "",
+    };
+
+    print(">>>>>>>>>$id\n$token");
+
+    final res = await http.post(
+      Uri.parse("http://157.230.228.250/get-customer-count-by-state-city-area-api/"),
+      body: param,
+      headers: {HttpHeaders.authorizationHeader: "Token $token"},
+    );
+
+    print(res.body);
+    if(200 == res.statusCode){
+      print(countFromJson(res.body).data);
+      setState(() {
+        count = countFromJson(res.body).data;
+      });
+      return countFromJson(res.body);
+    } else{
+      throw Exception('Failed to load Template List');
+    }
+  }
+
+
+  Future<CountBulk> getCount3() async {
+
+    final param = {
+      "customer_state_value": "",
+      "customer_city_value": "",
+      "customer_area_value": area,
+    };
+
+    print(">>>>>>>>>$id\n$token");
+
+    final res = await http.post(
+      Uri.parse("http://157.230.228.250/get-customer-count-by-state-city-area-api/"),
+      body: param,
+      headers: {HttpHeaders.authorizationHeader: "Token $token"},
+    );
+
+    print(res.body);
+    if(200 == res.statusCode){
+      print(countFromJson(res.body).data);
+      setState(() {
+        count = countFromJson(res.body).data;
+      });
+      return countFromJson(res.body);
+    } else{
+      setState(() {
+        count = 0;
+      });
+      throw Exception('Failed to load Template List');
+    }
   }
 
   @override
@@ -142,7 +238,6 @@ class BulkSMSState extends State<BulkSMS> {
                         groupValue: radioItem,
                         title: Text('Transactional',style: TextStyle(
                             fontWeight: FontWeight.bold, fontSize: 16.0, color: kPrimaryColorBlue),),
-
                         value: 'transactional',
                         onChanged: (val) {
                           setState(() {
@@ -184,7 +279,7 @@ class BulkSMSState extends State<BulkSMS> {
                 child: new TextField(
                   onTap: (){},
                   // enableInteractiveSelection: false, // will disable paste operation
-                  // focusNode: new AlwaysDisabledFocusNode(),
+                  focusNode: campaignController,
                   controller: CampaignController,
                   style: TextStyle(
                       fontFamily: "PoppinsBold",
@@ -226,6 +321,7 @@ class BulkSMSState extends State<BulkSMS> {
                 ),
                 child: new TextField(
                   onTap: (){
+                    campaignController.unfocus();
                     if(radioItem != null) {
                       smsHeaderDialog(context);
                     }else{
@@ -277,6 +373,7 @@ class BulkSMSState extends State<BulkSMS> {
                 ),
                 child: new TextField(
                   onTap: (){
+                    campaignController.unfocus();
                     if(headerController.text.isNotEmpty) {
                       templateDialog(context);
                     }else{
@@ -369,6 +466,7 @@ class BulkSMSState extends State<BulkSMS> {
                 ),
                 child: new TextField(
                   onTap: (){
+                    campaignController.unfocus();
                     stateDialog(context);
                   },
                   enableInteractiveSelection: false, // will disable paste operation
@@ -422,6 +520,7 @@ class BulkSMSState extends State<BulkSMS> {
                      ),
                      child: new TextField(
                        onTap: (){
+                         campaignController.unfocus();
                          cityDialog(context);
                        },
                        enableInteractiveSelection: false, // will disable paste operation
@@ -469,6 +568,7 @@ class BulkSMSState extends State<BulkSMS> {
                      ),
                      child: new TextField(
                        onTap: (){
+                         campaignController.unfocus();
                          areaDialog(context);
                        },
                        enableInteractiveSelection: false, // will disable paste operation
@@ -504,7 +604,22 @@ class BulkSMSState extends State<BulkSMS> {
                    ),
                    ],
                    )
-                )
+                ),
+              SizedBox(height: 10.0,),
+              Container(
+                width: size.width * 0.60,
+                alignment: Alignment.center,
+                child: Center(
+                  child: Row(
+                    children: [
+                      Text("Total number of Recipient : ",style: TextStyle(fontFamily: "PoppinsLight",
+                          fontWeight: FontWeight.normal, fontSize: 15.0, color: kPrimaryColorBlue),),
+                      Text(count.toString(),style: TextStyle(fontFamily: "PoppinsLight",
+                          fontWeight: FontWeight.bold, fontSize: 15.0)),
+                    ],
+                  ),
+                ),
+              ),
             ],
           ),
         ),
@@ -877,7 +992,12 @@ class BulkSMSState extends State<BulkSMS> {
                             stateController.text = snapshot.data.data[index].cState;
                             setState(() {
                               state = snapshot.data.data[index].cState;
+                              cityController.clear();
+                              areaController.clear();
+                              city = null;
+                              area = null;
                             });
+                            getCount1();
                             Navigator.of(context).pop();
                           },
                         );
@@ -1003,7 +1123,10 @@ class BulkSMSState extends State<BulkSMS> {
                             cityController.text = snapshot.data.data[index].cCity;
                             setState(() {
                               city = snapshot.data.data[index].cCity;
+                              areaController.clear();
+                              area = null;
                             });
+                            getCount2();
                             Navigator.of(context).pop();
                           },
                         );
@@ -1133,6 +1256,7 @@ class BulkSMSState extends State<BulkSMS> {
                             setState(() {
                               area = snapshot.data.data[index].cArea;
                             });
+                            getCount3();
                             Navigator.of(context).pop();
                           },
                         );

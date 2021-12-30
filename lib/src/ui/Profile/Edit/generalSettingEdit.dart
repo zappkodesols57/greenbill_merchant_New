@@ -835,7 +835,8 @@ class _MyGeneralSettingEditState extends State<GeneralSettingEdit> {
                               fontFamily: "PoppinsLight", fontSize: 13.0, color: kPrimaryColorBlue),
                         ),
                       ),
-                    ),Container(
+                    ),
+                    Container(
                       width: size.width * 0.95,
                       padding: EdgeInsets.only(top: 0.0, bottom: 10.0, left: 0.0, right: 0.0),
                       child: new TextField(
@@ -2310,6 +2311,12 @@ class _MyGeneralSettingEditState extends State<GeneralSettingEdit> {
     RegExp regExp = new RegExp(pattern);
     return regExp.hasMatch(value);
   }
+  bool validateUrl(String value) {
+    String pattern =
+        r'(?:(?:https?|ftp):\/\/)?[\w/\-?=%.]+\.[\w/\-?=%.]+';
+    RegExp regExp = new RegExp(pattern);
+    return regExp.hasMatch(value);
+  }
 
   bool validatePan(String value) {
     String pattern = r"[A-Z]{5}[0-9]{4}[A-Z]{1}";
@@ -2364,10 +2371,36 @@ class _MyGeneralSettingEditState extends State<GeneralSettingEdit> {
       return null;
     }
 
+    if (phoneController.text.length < 10) {
+      myFocusNodeBillingPhone.unfocus();
+      showInSnackBar("Please enter Valid Phone Number", 2);
+      return null;
+    }
+
     if (addController.text.isEmpty) {
       myFocusNodeBillingAdd.unfocus();
       showInSnackBar("Please enter Billing Address", 2);
       return null;
+    }
+
+    if (emailBController.text.isNotEmpty) {
+      if (emailBController.text.contains('com') ||
+          emailBController.text.contains('co')  ||
+          emailBController.text.contains('net') ||
+          emailBController.text.contains('edu') ||
+          emailBController.text.contains('org') ||
+          emailBController.text.contains('mil') ||
+          emailBController.text.contains('gov')) {
+        if (validateEmail(emailBController.text) == false) {
+          // myFocusNodeBillingEmail.unfocus();
+          showInSnackBar("Invalid Company Email", 2);
+          return null;
+        }
+      } else {
+        // myFocusNodeBillingEmail.unfocus();
+        showInSnackBar("Invalid Email", 2);
+        return null;
+      }
     }
 
     if (panController.text.isEmpty) {
@@ -2404,16 +2437,17 @@ class _MyGeneralSettingEditState extends State<GeneralSettingEdit> {
           cemailController.text.contains('mil') ||
           cemailController.text.contains('gov')) {
         if (validateEmail(cemailController.text) == false) {
-          myFocusNodeCemail.unfocus();
+          // myFocusNodeCemail.unfocus();
           showInSnackBar("Invalid Company Email", 2);
           return null;
         }
       } else {
         myFocusNodeCemail.unfocus();
-        showInSnackBar("Invalid Email", 2);
+        showInSnackBar("Invalid Company Email", 2);
         return null;
       }
     }
+
 
 
 
@@ -2451,10 +2485,27 @@ class _MyGeneralSettingEditState extends State<GeneralSettingEdit> {
       return null;
     }
 
-    // if (siteController.text.isEmpty) {
-    //   showInSnackBar("Please enter Website Url", 2);
-    //   return null;
-    // }
+    if (siteController.text.isNotEmpty) {
+      if (siteController.text.startsWith('http') ||
+          siteController.text.startsWith('https'))
+      {
+        if(siteController.text.endsWith('com') ||
+           siteController.text.endsWith('in')  ||
+           siteController.text.endsWith('co')  ||
+           siteController.text.endsWith('net') ||
+           siteController.text.endsWith('edu') ||
+           siteController.text.endsWith('org') ||
+           siteController.text.endsWith('mil') ||
+           siteController.text.endsWith('gov'))
+        {}
+        else {// myFocusNodeBillingWebSite.unfocus();
+          showInSnackBar("Invalid Website Url", 2);
+          return null;}
+      } else {
+          showInSnackBar("Invalid Url", 2);
+          return null;
+      }
+    }
 
     if (firstController.text.isEmpty) {
       myFocusNodeBillingFirstName.unfocus();
@@ -2467,8 +2518,6 @@ class _MyGeneralSettingEditState extends State<GeneralSettingEdit> {
       showInSnackBar("Please enter Owners Last Name", 2);
       return null;
     }
-
-
 
     if (emailController.text.isNotEmpty) {
       if (emailController.text.contains('com') ||

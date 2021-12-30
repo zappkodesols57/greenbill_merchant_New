@@ -348,7 +348,7 @@ class FlagBillsState extends State<FlagBills> {
                             color: kPrimaryColorBlue,
                             size: 20.0,
                           ),
-                          hintText: "From",
+                          hintText: "From *",
 
                           hintStyle: TextStyle(
                               fontFamily: "PoppinsBold",
@@ -394,7 +394,7 @@ class FlagBillsState extends State<FlagBills> {
                             color: kPrimaryColorBlue,
                             size: 20.0,
                           ),
-                          hintText: "To",
+                          hintText: "To *",
 
                           hintStyle: TextStyle(
                               fontFamily: "PoppinsBold",
