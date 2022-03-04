@@ -369,7 +369,7 @@ print("$busId");
                             return Container(padding: EdgeInsets.fromLTRB(10, 10, 10, 0),
                               width: double.maxFinite,
                               child: Card(
-                                elevation: 5.0,
+                                elevation: 2.0,
                                 shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.only(topLeft: Radius.elliptical(30, 20),bottomRight:  Radius.elliptical(30, 20)),
                                 ),
@@ -708,7 +708,7 @@ print("$busId");
                               return Container(padding: EdgeInsets.fromLTRB(10, 10, 10, 0),
                                 width: double.maxFinite,
                                 child: Card(
-                                  elevation: 5.0,
+                                  elevation: 2.0,
                                   shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.only(topLeft: Radius.elliptical(30, 20),bottomRight:  Radius.elliptical(30, 20)),
                                   ),
@@ -1019,7 +1019,7 @@ print("$busId");
                               return Container(padding: EdgeInsets.fromLTRB(10, 10, 10, 0),
                                 width: double.maxFinite,
                                 child: Card(
-                                  elevation: 5.0,
+                                  elevation: 2.0,
                                   shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.only(topLeft: Radius.elliptical(30, 20),bottomRight:  Radius.elliptical(30, 20)),
                                   ),

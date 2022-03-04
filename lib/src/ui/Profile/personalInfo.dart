@@ -835,6 +835,7 @@ class _MyPersonalInfoState extends State<PersonalInfo> {
     }
   }
 
+
   Future<Null> _cropImage(File picture) async {
     File croppedFile = await ImageCropper.cropImage(
       sourcePath: picture.path,

@@ -25,7 +25,6 @@ class _CreateReceiptsState extends State<CreateMemo> {
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
   final ScrollController _controller = ScrollController();
 
-
   TextEditingController mobController = new TextEditingController();
   TextEditingController crfController = new TextEditingController();
   TextEditingController rsController = new TextEditingController();
@@ -37,21 +36,16 @@ class _CreateReceiptsState extends State<CreateMemo> {
   TextEditingController totalInWordController = new TextEditingController();
   TextEditingController quantityController = new TextEditingController();
   TextEditingController addressController = new TextEditingController();
-
   TextEditingController newDisc = new TextEditingController();
   TextEditingController newRate = new TextEditingController();
   TextEditingController newAmount = new TextEditingController();
   TextEditingController newQuantity = new TextEditingController();
-
   TextEditingController newDisc2 = new TextEditingController();
   TextEditingController newRate2 = new TextEditingController();
   TextEditingController newQuantity2 = new TextEditingController();
-
-
   TextEditingController newDisc3 = new TextEditingController();
   TextEditingController newRate3 = new TextEditingController();
   TextEditingController newQuantity3 = new TextEditingController();
-
   TextEditingController term1 = new TextEditingController();
   TextEditingController term2 = new TextEditingController();
   TextEditingController term3 = new TextEditingController();
@@ -60,9 +54,7 @@ class _CreateReceiptsState extends State<CreateMemo> {
   String template = "",
       templateID;
   String token, id, mob, storeID;
-
   bool showButton = false;
-
   //bool showButton=false;
 
   bool removeButton1 = false;
@@ -82,8 +74,8 @@ class _CreateReceiptsState extends State<CreateMemo> {
   List<String> quanAll = [];
 
   String radioItem,stampId,stamptype,stamptype2,stampId2;
-  bool custom=false;
 
+  bool custom=false;
 
   @override
   void initState() {
@@ -641,7 +633,8 @@ class _CreateReceiptsState extends State<CreateMemo> {
                         child: TextField(
                           maxLength: 15,
                           controller: newDisc,
-                          inputFormatters: [new WhitelistingTextInputFormatter(
+                          inputFormatters: [
+                            new WhitelistingTextInputFormatter(
                               RegExp("[a-z A-Z]")),
                           ],
                           style: TextStyle(
@@ -684,7 +677,6 @@ class _CreateReceiptsState extends State<CreateMemo> {
                         ),
                       ),
                       Container(
-
                         width: size.width,
                         padding: EdgeInsets.only(
                             top: 0.0, bottom: 10.0, left: 0.0, right: 0.0),

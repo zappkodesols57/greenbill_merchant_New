@@ -184,14 +184,6 @@ class BulkSMSState extends State<BulkSMS> {
             Navigator.pop(context, false);
           },
         ),
-        actions: <Widget>[
-          TextButton(
-            onPressed: (){
-              create();
-            },
-            child: Text("SEND", style: TextStyle(color: Colors.white),),
-          ),
-        ],
       ),
       body: SingleChildScrollView(
         child: Center(
@@ -227,7 +219,7 @@ class BulkSMSState extends State<BulkSMS> {
               Container(
                 width: size.width * 0.95,
                 padding: EdgeInsets.only(
-                    top: 0.0, bottom: 10.0, left: 0.0, right: 0.0),
+                    top: 0.0, bottom: 5.0, left: 0.0, right: 0.0),
                 child: Column(
                   children: <Widget>[
                     Container(
@@ -605,7 +597,7 @@ class BulkSMSState extends State<BulkSMS> {
                    ],
                    )
                 ),
-              SizedBox(height: 10.0,),
+              // SizedBox(height: 10.0,),
               Container(
                 width: size.width * 0.60,
                 alignment: Alignment.center,
@@ -615,10 +607,21 @@ class BulkSMSState extends State<BulkSMS> {
                       Text("Total number of Recipient : ",style: TextStyle(fontFamily: "PoppinsLight",
                           fontWeight: FontWeight.normal, fontSize: 15.0, color: kPrimaryColorBlue),),
                       Text(count.toString(),style: TextStyle(fontFamily: "PoppinsLight",
-                          fontWeight: FontWeight.bold, fontSize: 15.0)),
+                          fontWeight: FontWeight.bold, fontSize: 15.0, color: kPrimaryColorBlue)),
                     ],
                   ),
                 ),
+              ),
+              SizedBox(height: 10.0,),
+              MaterialButton(onPressed: (){
+                create();
+              },
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(25)
+                ),
+                color: kPrimaryColorBlue,
+                padding: EdgeInsets.only(left: 40,right: 40,top: 10,bottom: 10),
+                child: Text("SEND", style: TextStyle(fontSize: 16,fontFamily: "PoppinsBold",color: Colors.white),),
               ),
             ],
           ),

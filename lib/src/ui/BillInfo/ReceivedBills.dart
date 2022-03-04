@@ -413,7 +413,6 @@ class BillIncomingState extends State<BillIncoming> {
                           size: 20.0,
                         ),
                         hintText: "To *",
-
                         hintStyle: TextStyle(
                             fontFamily: "PoppinsBold",
                             fontSize: 12.0,
@@ -424,8 +423,7 @@ class BillIncomingState extends State<BillIncoming> {
                 ],
               ),
             ),
-            SizedBox(height: 5.0,),
-
+            // SizedBox(height: 5.0,),
             ListTile(
               tileColor: kPrimaryColorBlue,
               title: Container(
@@ -451,7 +449,7 @@ class BillIncomingState extends State<BillIncoming> {
                     ),
                   ),
                   Container(
-                    width: 70.0,
+                    width: 73.0,
                     child: Text(
                       "Action",
                       textAlign: TextAlign.center,
@@ -554,29 +552,29 @@ class BillIncomingState extends State<BillIncoming> {
                                         //     ),
                                         //   ),
 
+                                        // if(snapshot.data[index].billImage != "")
+                                        // Container(
+                                        //   width: 31.0,
+                                        //   child: IconButton(
+                                        //     icon: Icon(
+                                        //       FontAwesomeIcons.download,
+                                        //       size: 15.0,
+                                        //       color: kPrimaryColorBlue,
+                                        //     ),
+                                        //     onPressed: () async {
+                                        //
+                                        //       if (await Permission.storage.request().isGranted) {
+                                        //         await ImageDownloader.downloadImage("http://157.230.228.250/"+snapshot.data[index].billImage).then((context) => showInSnackBar("Download Complete"));
+                                        //
+                                        //       } else{
+                                        //         showInSnackBar("Permission Denied");
+                                        //       }
+                                        //     },
+                                        //   ),
+                                        // ),
                                         if(snapshot.data[index].billImage != "")
                                         Container(
-                                          width: 31.0,
-                                          child: IconButton(
-                                            icon: Icon(
-                                              FontAwesomeIcons.download,
-                                              size: 15.0,
-                                              color: kPrimaryColorBlue,
-                                            ),
-                                            onPressed: () async {
-
-                                              if (await Permission.storage.request().isGranted) {
-                                                await ImageDownloader.downloadImage("http://157.230.228.250/"+snapshot.data[index].billImage).then((context) => showInSnackBar("Download Complete"));
-
-                                              } else{
-                                                showInSnackBar("Permission Denied");
-                                              }
-                                            },
-                                          ),
-                                        ),
-                                        if(snapshot.data[index].billImage != "")
-                                        Container(
-                                          width: 31.0,
+                                          width: 65.0,
                                           child: IconButton(
                                             icon: Icon(
                                               FontAwesomeIcons.plus,

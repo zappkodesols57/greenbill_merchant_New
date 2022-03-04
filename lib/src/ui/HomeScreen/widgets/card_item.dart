@@ -28,191 +28,194 @@ class CardItem extends StatelessWidget {
     double cardSubTitle = cardDimenWidth * 0.075;
     double iconDimen = cardDimenWidth * 0.2;
     double iconSize = iconDimen * 0.6;
-    return Container(
-      height: cardDimenHeight,
-      width: cardDimenWidth,
-      decoration: BoxDecoration(
-          borderRadius: BorderRadius.all(Radius.circular(10)),
-          gradient: LinearGradient(
-              begin: Alignment.topLeft,
-              end: Alignment.bottomCenter,
-              colors: [
-                Colors.white,
-                Colors.white,
-                Colors.white.withOpacity(0.8)
-              ]),
-          boxShadow: [
-            BoxShadow(
-                color: Constants.softHighlightColor,
-                offset: Offset(-10, -10),
-                spreadRadius: 0,
-                blurRadius: 10),
-            BoxShadow(
-                color: Constants.softShadowColor,
-                offset: Offset(5, 5),
-                spreadRadius: 0,
-                blurRadius: 10)
-          ]
-      ),
-      child: Padding(
-        padding: EdgeInsets.all(size.width * 0.03),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(
-              children: [
-                Container(
-                  height: iconDimen,
-                  width: iconDimen,
-                  child: NeuomorphicCircle(
-                    innerShadow: false,
-                    outerShadow: false,
-                    backgroundColor: Colors.white,
-                    shadowColor: Constants.softShadowColor,
-                    highlightColor: Constants.highlightColor,
-                    child:  Icon(
-                      iconData,
-                      size: iconSize,
-                      color: Colors.deepOrange.withOpacity(0.8),
+    return Card(
+      elevation: 2,
+      child: Container(
+        height: cardDimenHeight,
+        width: cardDimenWidth,
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.all(Radius.circular(10)),
+            gradient: LinearGradient(
+                begin: Alignment.topLeft,
+                end: Alignment.bottomCenter,
+                colors: [
+                  Colors.white,
+                  Colors.white,
+                  Colors.white.withOpacity(0.8)
+                ]),
+            // boxShadow: [
+            //   BoxShadow(
+            //       color: Constants.softHighlightColor,
+            //       offset: Offset(-10, -10),
+            //       spreadRadius: 0,
+            //       blurRadius: 10),
+            //   BoxShadow(
+            //       color: Constants.softShadowColor,
+            //       offset: Offset(5, 5),
+            //       spreadRadius: 0,
+            //       blurRadius: 10)
+            // ]
+        ),
+        child: Padding(
+          padding: EdgeInsets.all(size.width * 0.03),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                children: [
+                  Container(
+                    height: iconDimen,
+                    width: iconDimen,
+                    child: NeuomorphicCircle(
+                      innerShadow: false,
+                      outerShadow: false,
+                      backgroundColor: Colors.white,
+                      shadowColor: Constants.softShadowColor,
+                      highlightColor: Constants.highlightColor,
+                      child:  Icon(
+                        iconData,
+                        size: iconSize,
+                        color: Colors.deepOrange.withOpacity(0.8),
+                      ),
                     ),
                   ),
-                ),
-                SizedBox(width: size.width * 0.03,),
-                Text(
-                  title,
-                  style: TextStyle(
-                      color: kPrimaryColorBlue,
-                      fontSize: cardTitle,
-                      fontFamily: "PoppinsBold",
-                      ),
-                ),
-              ],
-            ),
-            SizedBox(height: size.width * 0.03,),
-            (catID == "11") ? Expanded(
-              child: (title != "Sales" && title != "Rate") ?
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  (category == null) ? SizedBox.shrink() :
-                  Text(category,
-                      style: TextStyle(
+                  SizedBox(width: size.width * 0.03,),
+                  Text(
+                    title,
+                    style: TextStyle(
                         color: kPrimaryColorBlue,
-                        fontSize: cardSubTitle,
+                        fontSize: cardTitle,
+                        fontFamily: "PoppinsBold",
+                        ),
+                  ),
+                ],
+              ),
+              SizedBox(height: size.width * 0.03,),
+              (catID == "11") ? Expanded(
+                child: (title != "Sales" && title != "Rate") ?
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    (category == null) ? SizedBox.shrink() :
+                    Text(category,
+                        style: TextStyle(
+                          color: kPrimaryColorBlue,
+                          fontSize: cardSubTitle,
+                            fontFamily: "PoppinsBold",
+                            )
+                    ),
+                    (categoryTwo == null) ? SizedBox.shrink() :
+                    Text(categoryTwo,
+                        style: TextStyle(
+                            color: kPrimaryColorBlue,
+                          fontSize: cardSubTitle,
                           fontFamily: "PoppinsBold",
+                        )
+                    ),
+                    (categoryThree == null) ? SizedBox.shrink() :
+                    Text(categoryThree,
+                        style: TextStyle(
+                          color: kPrimaryColorBlue,
+                          fontSize: cardSubTitle,
+                          fontFamily: "PoppinsBold",
+                        )
+                    ),
+                  ],
+                ) :
+                ((title == "Sales") ?
+                ListView.builder(
+                    itemCount: data.todaysSales.length,
+                    shrinkWrap: true,
+                    reverse: false,
+                    itemBuilder: (BuildContext context, int index) {
+                      return new Text("${data.todaysSales[index].productName} - ₹ ${data.todaysSales[index].totalAmountColleted.toStringAsFixed(2)}",
+                          style: TextStyle(
+                            color: kPrimaryColorBlue,
+                            fontSize: cardSubTitle,
+                            fontFamily: "PoppinsBold",
                           )
-                  ),
-                  (categoryTwo == null) ? SizedBox.shrink() :
-                  Text(categoryTwo,
-                      style: TextStyle(
-                          color: kPrimaryColorBlue,
-                        fontSize: cardSubTitle,
-                        fontFamily: "PoppinsBold",
-                      )
-                  ),
-                  (categoryThree == null) ? SizedBox.shrink() :
-                  Text(categoryThree,
-                      style: TextStyle(
-                        color: kPrimaryColorBlue,
-                        fontSize: cardSubTitle,
-                        fontFamily: "PoppinsBold",
-                      )
-                  ),
-                ],
-              ) :
-              ((title == "Sales") ?
-              ListView.builder(
-                  itemCount: data.todaysSales.length,
-                  shrinkWrap: true,
-                  reverse: false,
-                  itemBuilder: (BuildContext context, int index) {
-                    return new Text("${data.todaysSales[index].productName} - ₹ ${data.todaysSales[index].totalAmountColleted.toStringAsFixed(2)}",
+                      );
+                    }
+                ) :
+                ListView.builder(
+                    itemCount: data.todaysRate.length,
+                    shrinkWrap: true,
+                    reverse: false,
+                    itemBuilder: (BuildContext context, int index) {
+                      return new Text("${data.todaysRate[index].productName} - ₹ ${data.todaysRate[index].productCost.toStringAsFixed(2)}/L",
+                          style: TextStyle(
+                            color: kPrimaryColorBlue,
+                            fontSize: cardSubTitle,
+                            fontFamily: "PoppinsBold",
+                          )
+                      );
+                    }
+                )),
+              ) : Expanded(
+                child: (title != "Space" && title != "Not Exited") ?
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    (category == null) ? SizedBox.shrink() :
+                    Text(category,
                         style: TextStyle(
                           color: kPrimaryColorBlue,
                           fontSize: cardSubTitle,
                           fontFamily: "PoppinsBold",
                         )
-                    );
-                  }
-              ) :
-              ListView.builder(
-                  itemCount: data.todaysRate.length,
-                  shrinkWrap: true,
-                  reverse: false,
-                  itemBuilder: (BuildContext context, int index) {
-                    return new Text("${data.todaysRate[index].productName} - ₹ ${data.todaysRate[index].productCost.toStringAsFixed(2)}/L",
+                    ),
+                    (categoryTwo == null) ? SizedBox.shrink() :
+                    Text(categoryTwo,
                         style: TextStyle(
                           color: kPrimaryColorBlue,
                           fontSize: cardSubTitle,
                           fontFamily: "PoppinsBold",
                         )
-                    );
-                  }
-              )),
-            ) : Expanded(
-              child: (title != "Space" && title != "Not Exited") ?
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  (category == null) ? SizedBox.shrink() :
-                  Text(category,
-                      style: TextStyle(
-                        color: kPrimaryColorBlue,
-                        fontSize: cardSubTitle,
-                        fontFamily: "PoppinsBold",
-                      )
-                  ),
-                  (categoryTwo == null) ? SizedBox.shrink() :
-                  Text(categoryTwo,
-                      style: TextStyle(
-                        color: kPrimaryColorBlue,
-                        fontSize: cardSubTitle,
-                        fontFamily: "PoppinsBold",
-                      )
-                  ),
-                  (categoryThree == null) ? SizedBox.shrink() :
-                  Text(categoryThree,
-                      style: TextStyle(
-                        color: kPrimaryColorBlue,
-                        fontSize: cardSubTitle,
-                        fontFamily: "PoppinsBold",
-                      )
-                  ),
-                ],
-              ) :
-              ((title == "Space") ?
-              ListView.builder(
-                  itemCount: parkingData.spaceAvailable.length,
-                  shrinkWrap: true,
-                  reverse: false,
-                  itemBuilder: (BuildContext context, int index) {
-                    return new Text("${parkingData.spaceAvailable[index].vehicleType} - ${parkingData.spaceAvailable[index].availableParkingSpace}/${parkingData.spaceAvailable[index].totalSpace}",
+                    ),
+                    (categoryThree == null) ? SizedBox.shrink() :
+                    Text(categoryThree,
                         style: TextStyle(
                           color: kPrimaryColorBlue,
                           fontSize: cardSubTitle,
                           fontFamily: "PoppinsBold",
                         )
-                    );
-                  }
-              ) :
-              ListView.builder(
-                  itemCount: parkingData.notExited.length,
-                  shrinkWrap: true,
-                  reverse: false,
-                  itemBuilder: (BuildContext context, int index) {
-                    return new Text("${parkingData.notExited[index].vehicleType} - ${parkingData.notExited[index].spaceUsed}",
-                        style: TextStyle(
-                          color: kPrimaryColorBlue,
-                          fontSize: cardSubTitle,
-                          fontFamily: "PoppinsBold",
-                        )
-                    );
-                  }
-              )),
-            ),
-          ],
+                    ),
+                  ],
+                ) :
+                ((title == "Space") ?
+                ListView.builder(
+                    itemCount: parkingData.spaceAvailable.length,
+                    shrinkWrap: true,
+                    reverse: false,
+                    itemBuilder: (BuildContext context, int index) {
+                      return new Text("${parkingData.spaceAvailable[index].vehicleType} - ${parkingData.spaceAvailable[index].availableParkingSpace}/${parkingData.spaceAvailable[index].totalSpace}",
+                          style: TextStyle(
+                            color: kPrimaryColorBlue,
+                            fontSize: cardSubTitle,
+                            fontFamily: "PoppinsBold",
+                          )
+                      );
+                    }
+                ) :
+                ListView.builder(
+                    itemCount: parkingData.notExited.length,
+                    shrinkWrap: true,
+                    reverse: false,
+                    itemBuilder: (BuildContext context, int index) {
+                      return new Text("${parkingData.notExited[index].vehicleType} - ${parkingData.notExited[index].spaceUsed}",
+                          style: TextStyle(
+                            color: kPrimaryColorBlue,
+                            fontSize: cardSubTitle,
+                            fontFamily: "PoppinsBold",
+                          )
+                      );
+                    }
+                )),
+              ),
+            ],
+          ),
         ),
       ),
     );

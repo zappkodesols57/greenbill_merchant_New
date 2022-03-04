@@ -123,7 +123,7 @@ class _MyOfferListState extends State<MyOfferList> {
                         return Hero(
                           tag: snapshot.data[index].id,
                           child: Card(
-                            elevation: 5.0,
+                            elevation: 1.0,
                             child: Center(
                               child: ListTile(
                                 dense: true,

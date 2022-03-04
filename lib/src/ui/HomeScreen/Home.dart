@@ -47,6 +47,7 @@ class HomeActivity extends StatelessWidget {
     return MaterialApp(
       title: 'GB Business',
       theme: ThemeData(
+        canvasColor: Colors.white,
         primaryColor: kPrimaryColorBlue,
       ),
       debugShowCheckedModeBanner: false,
@@ -96,7 +97,6 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
       print(">>>${msg.notification.body}>>>${msg.notification.title}");
       fcmMessageHandler(msg.notification.title, navigatorKey, context);
     });
-
 
     super.initState();
     _pageController = PageController();
@@ -230,9 +230,6 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
           context, MaterialPageRoute(builder: (context) => MyHomePage()));
     }
   }
-
-
-
 
   // j2pStatus() async {
   //   SharedPreferences preferences = await SharedPreferences.getInstance();
@@ -639,25 +636,28 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
                       ),
                     ),
                   ],
-
                   decoration: BoxDecoration(
                     color: kPrimaryColorBlue,
                   ),
                 ),
+
+                if( storeCatID == "11" || storeCatID == "12")
                 ListTile(
-                    dense: false,
-                    title: Text("Manage QR Code"),
+                    tileColor: Colors.white,
+                    dense: true,
+                    horizontalTitleGap: 5.0,
+                    title: Text("Manage QR Code",style: TextStyle(color: Colors.black, fontSize: 15.0, fontWeight: FontWeight.w600),),
                     leading: Container(
                       width: 35.0,
                       height: 35.0,
-                      margin: const EdgeInsets.only(right: 10.0),
+                      // margin: const EdgeInsets.only(right: 10.0),
                       decoration: new BoxDecoration(
                         color: Colors.white,
                         borderRadius: new BorderRadius.circular(25.0),
                       ),
                       alignment: Alignment.center,
                       child: new Icon(CupertinoIcons.qrcode,
-                          color: kPrimaryColorBlue, size: 25.0),
+                          color: kPrimaryColorBlue, size: 20.0),
                     ),
                     onTap: () {
                       print("Manage QRs");
@@ -665,21 +665,24 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
                       Navigator.push(context,
                           MaterialPageRoute(builder: (context) => AllQrLists()));
                     }),
-                if(storeCatID != "11" && storeCatID != "1")
+
+                if(storeCatID == "12")
                   ListTile(
-                      dense: false,
-                      title: Text("Parking Pass"),
+                      tileColor: Colors.white,
+                      dense: true,
+                      horizontalTitleGap: 5.0,
+                      title: Text("Parking Pass",style: TextStyle(color: Colors.black, fontSize: 15.0, fontWeight: FontWeight.w600)),
                       leading: Container(
                         width: 35.0,
                         height: 35.0,
-                        margin: const EdgeInsets.only(right: 10.0),
+                        // margin: const EdgeInsets.only(right: 10.0),
                         decoration: new BoxDecoration(
                           color: Colors.white,
                           borderRadius: new BorderRadius.circular(25.0),
                         ),
                         alignment: Alignment.center,
                         child: new Icon(CupertinoIcons.person_crop_rectangle,
-                            color: kPrimaryColorBlue, size: 25.0),
+                            color: kPrimaryColorBlue, size: 20.0),
                       ),
                       onTap: () {
                         print("Parking Pass");
@@ -690,19 +693,21 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
                   ),
                 if(storeCatID != "11" && storeCatID != "12")
                 ListTile(
-                    dense: false,
-                    title: Text("Cash Memo & Receipt"),
+                    tileColor: Colors.white,
+                    dense: true,
+                    horizontalTitleGap: 5.0,
+                    title: Text("Cash Memo & Receipt",style: TextStyle(color: Colors.black, fontSize: 15.0, fontWeight: FontWeight.w600)),
                     leading: Container(
                       width: 35.0,
                       height: 35.0,
-                      margin: const EdgeInsets.only(right: 10.0),
+                      // margin: const EdgeInsets.only(right: 10.0),
                       decoration: new BoxDecoration(
                         color: Colors.white,
                         borderRadius: new BorderRadius.circular(25.0),
                       ),
                       alignment: Alignment.center,
                       child: new Icon(CupertinoIcons.doc_text_search,
-                          color: kPrimaryColorBlue, size: 25.0),
+                          color: kPrimaryColorBlue, size: 20.0),
                     ),
                     onTap: () {
                       Navigator.of(context).pop();
@@ -712,19 +717,21 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
                 ),
                 if(storeCatID != "11" && storeCatID != "12")
                   ListTile(
-                      dense: false,
-                      title: Text("Customer Info"),
+                      tileColor: Colors.white,
+                      dense: true,
+                     horizontalTitleGap: 5.0,
+                      title: Text("Customer Info",style: TextStyle(color: Colors.black, fontSize: 15.0, fontWeight: FontWeight.w600)),
                       leading: Container(
                         width: 35.0,
                         height: 35.0,
-                        margin: const EdgeInsets.only(right: 10.0),
+                        // margin: const EdgeInsets.only(right: 10.0),
                         decoration: new BoxDecoration(
                           color: Colors.white,
                           borderRadius: new BorderRadius.circular(25.0),
                         ),
                         alignment: Alignment.center,
                         child: new Icon(CupertinoIcons.person_3,
-                            color: kPrimaryColorBlue, size: 25.0),
+                            color: kPrimaryColorBlue, size: 20.0),
                       ),
                       onTap: () {
                         Navigator.of(context).pop();
@@ -734,19 +741,21 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
                   ),
                 if(storeCatID != "11" && storeCatID != "12")
                 ListTile(
-                    dense: false,
-                    title: Text("Ratings"),
+                    tileColor: Colors.white,
+                    dense: true,
+                   horizontalTitleGap: 5.0,
+                    title: Text("Ratings",style: TextStyle(color: Colors.black, fontSize: 15.0, fontWeight: FontWeight.w600)),
                     leading: Container(
                       width: 35.0,
                       height: 35.0,
-                      margin: const EdgeInsets.only(right: 10.0),
+                      // margin: const EdgeInsets.only(right: 10.0),
                       decoration: new BoxDecoration(
                         color: Colors.white,
                         borderRadius: new BorderRadius.circular(25.0),
                       ),
                       alignment: Alignment.center,
                       child: new Icon(CupertinoIcons.star,
-                          color: kPrimaryColorBlue, size: 25.0),
+                          color: kPrimaryColorBlue, size: 20.0),
                     ),
                     onTap: () {
                       Navigator.of(context).pop();
@@ -756,19 +765,21 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
                 ),
                 if(storeCatID != "11" && storeCatID != "12")
                 ListTile(
-                    dense: false,
-                    title: Text("Bulk SMS"),
+                    tileColor: Colors.white,
+                    dense: true,
+                   horizontalTitleGap: 5.0,
+                    title: Text("Bulk SMS",style: TextStyle(color: Colors.black, fontSize: 15.0, fontWeight: FontWeight.w600)),
                     leading: Container(
                       width: 35.0,
                       height: 35.0,
-                      margin: const EdgeInsets.only(right: 10.0),
+                      // margin: const EdgeInsets.only(right: 10.0),
                       decoration: new BoxDecoration(
                         color: Colors.white,
                         borderRadius: new BorderRadius.circular(25.0),
                       ),
                       alignment: Alignment.center,
                       child: new Icon(CupertinoIcons.bubble_left_bubble_right,
-                          color: kPrimaryColorBlue, size: 25.0),
+                          color: kPrimaryColorBlue, size: 20.0),
                     ),
                     onTap: () {
                       Navigator.of(context).pop();
@@ -777,7 +788,7 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
                     }),
 
                 /* ListTile(
-                  dense: false,
+                  // dense: false,
                   title: Text("Received Payments"),
                   leading: Container(
                     width: 35.0,
@@ -798,19 +809,21 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
                   }),*/
                 if(storeCatID != "11" && storeCatID != "12")
                 ListTile(
-                    dense: false,
-                    title: Text("Promotions"),
+                    tileColor: Colors.white,
+                    dense: true,
+                   horizontalTitleGap: 5.0,
+                    title: Text("Promotions",style: TextStyle(color: Colors.black, fontSize: 15.0, fontWeight: FontWeight.w600)),
                     leading: Container(
                       width: 35.0,
                       height: 35.0,
-                      margin: const EdgeInsets.only(right: 10.0),
+                      // margin: const EdgeInsets.only(right: 10.0),
                       decoration: new BoxDecoration(
                         color: Colors.white,
                         borderRadius: new BorderRadius.circular(25.0),
                       ),
                       alignment: Alignment.center,
                       child: new Icon(CupertinoIcons.ticket,
-                          color: kPrimaryColorBlue, size: 25.0),
+                          color: kPrimaryColorBlue, size: 20.0),
                     ),
                     onTap: () {
                       Navigator.of(context).pop();
@@ -820,19 +833,21 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
                 ),
                 if(storeCatID == "12")
                   ListTile(
-                      dense: false,
-                      title: Text("Exit Parked Vehicles"),
+                      tileColor: Colors.white,
+                      dense: true,
+                     horizontalTitleGap: 5.0,
+                      title: Text("Exit Parked Vehicles",style: TextStyle(color: Colors.black, fontSize: 15.0, fontWeight: FontWeight.w600)),
                       leading: Container(
                         width: 35.0,
                         height: 35.0,
-                        margin: const EdgeInsets.only(right: 10.0),
+                        // margin: const EdgeInsets.only(right: 10.0),
                         decoration: new BoxDecoration(
                           color: Colors.white,
                           borderRadius: new BorderRadius.circular(25.0),
                         ),
                         alignment: Alignment.center,
                         child: new Icon(CupertinoIcons.check_mark_circled,
-                            color: kPrimaryColorBlue, size: 25.0),
+                            color: kPrimaryColorBlue, size: 20.0),
                       ),
                       onTap: () {
                         Navigator.of(context).pop();
@@ -842,25 +857,31 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
                   ),
                 if(storeCatID == "12")
                   ExpansionTile(
-                    title: Text("Parking Lot Management"),
+                    collapsedBackgroundColor: Colors.white,
+                    backgroundColor: Colors.white,
+                    title: Align(
+                        alignment: Alignment(-1.9, 0),
+                        child: Text("Parking Lot Management",style: TextStyle(color: Colors.black, fontSize: 15.0, fontWeight: FontWeight.w600))),
                     expandedAlignment: Alignment.centerRight,
                     leading: Container(
                       width: 35.0,
                       height: 35.0,
-                      margin: const EdgeInsets.only(right: 10.0),
+                      // margin: const EdgeInsets.only(right: 10.0),
                       decoration: new BoxDecoration(
                         color: Colors.white,
                         borderRadius: new BorderRadius.circular(25.0),
                       ),
                       alignment: Alignment.center,
                       child: new Icon(FontAwesomeIcons.tasks,
-                          color: kPrimaryColorBlue, size: 25.0),
+                          color: kPrimaryColorBlue, size: 20.0),
                     ),
                     maintainState: true,
                     children: [
                       ListTile(
+                        tileColor: Colors.white,
                         dense: true,
-                        title: Text("Manage Vehicle Type"),
+                       // horizontalTitleGap: 5.0,
+                        title: Text("Manage Vehicle Type",style: TextStyle(color: Colors.black, fontSize: 15.0, fontWeight: FontWeight.w600)),
                         onTap: (){
                           Navigator.of(context).pop();
                           Navigator.push(context,
@@ -868,8 +889,10 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
                         },
                       ),
                       ListTile(
+                        tileColor: Colors.white,
                         dense: true,
-                        title: Text("Manage Parking Space"),
+                       // horizontalTitleGap: 5.0,
+                        title: Text("Manage Parking Space",style: TextStyle(color: Colors.black, fontSize: 15.0, fontWeight: FontWeight.w600)),
                         onTap: (){
                           Navigator.of(context).pop();
                           Navigator.push(context,
@@ -877,8 +900,10 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
                         },
                       ),
                       ListTile(
+                        tileColor: Colors.white,
                         dense: true,
-                        title: Text("Manage Charges"),
+                       // horizontalTitleGap: 5.0,
+                        title: Text("Manage Charges",style: TextStyle(color: Colors.black, fontSize: 15.0, fontWeight: FontWeight.w600)),
                         onTap: (){
                           Navigator.of(context).pop();
                           Navigator.push(context,
@@ -889,19 +914,21 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
                   ),
                 if(storeCatID == "11")
                   ListTile(
-                      dense: false,
-                      title: Text("Manage Products"),
+                      tileColor: Colors.white,
+                      dense: true,
+                     horizontalTitleGap: 5.0,
+                      title: Text("Manage Products",style: TextStyle(color: Colors.black, fontSize: 15.0, fontWeight: FontWeight.w600)),
                       leading: Container(
                         width: 35.0,
                         height: 35.0,
-                        margin: const EdgeInsets.only(right: 10.0),
+                        // margin: const EdgeInsets.only(right: 10.0),
                         decoration: new BoxDecoration(
                           color: Colors.white,
                           borderRadius: new BorderRadius.circular(25.0),
                         ),
                         alignment: Alignment.center,
                         child: new Icon(FontAwesomeIcons.gasPump,
-                            color: kPrimaryColorBlue, size: 25.0),
+                            color: kPrimaryColorBlue, size: 20.0),
                       ),
                       onTap: () {
                         Navigator.of(context).pop();
@@ -911,19 +938,21 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
                   ),
                 if(storeCatID == "11")
                   ListTile(
-                      dense: false,
-                      title: Text("Manage Ad-Ons"),
+                      tileColor: Colors.white,
+                      dense: true,
+                     horizontalTitleGap: 5.0,
+                      title: Text("Manage Ad-Ons",style: TextStyle(color: Colors.black, fontSize: 15.0, fontWeight: FontWeight.w600)),
                       leading: Container(
                         width: 35.0,
                         height: 35.0,
-                        margin: const EdgeInsets.only(right: 10.0),
+                        // margin: const EdgeInsets.only(right: 10.0),
                         decoration: new BoxDecoration(
                           color: Colors.white,
                           borderRadius: new BorderRadius.circular(25.0),
                         ),
                         alignment: Alignment.center,
                         child: new Icon(FontAwesomeIcons.oilCan,
-                            color: kPrimaryColorBlue, size: 25.0),
+                            color: kPrimaryColorBlue, size: 20.0),
                       ),
                       onTap: () {
                         Navigator.of(context).pop();
@@ -933,19 +962,21 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
                   ),
                 if(storeCatID == "11")
                   ListTile(
-                      dense: false,
-                      title: Text("Manage Nozzle"),
+                      tileColor: Colors.white,
+                      dense: true,
+                     horizontalTitleGap: 5.0,
+                      title: Text("Manage Nozzle",style: TextStyle(color: Colors.black, fontSize: 15.0, fontWeight: FontWeight.w600)),
                       leading: Container(
                         width: 35.0,
                         height: 35.0,
-                        margin: const EdgeInsets.only(right: 10.0),
+                        // margin: const EdgeInsets.only(right: 10.0),
                         decoration: new BoxDecoration(
                           color: Colors.white,
                           borderRadius: new BorderRadius.circular(25.0),
                         ),
                         alignment: Alignment.center,
                         child: new Icon(CupertinoIcons.drop,
-                            color: kPrimaryColorBlue, size: 25.0),
+                            color: kPrimaryColorBlue, size: 20.0),
                       ),
                       onTap: () {
                         Navigator.of(context).pop();
@@ -953,19 +984,21 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
                       }
                   ),
                 ListTile(
-                    dense: false,
-                    title: Text("Add User"),
+                    tileColor: Colors.white,
+                    dense: true,
+                   horizontalTitleGap: 5.0,
+                    title: Text("Add User",style: TextStyle(color: Colors.black, fontSize: 15.0, fontWeight: FontWeight.w600)),
                     leading: Container(
                       width: 35.0,
                       height: 35.0,
-                      margin: const EdgeInsets.only(right: 10.0),
+                      // margin: const EdgeInsets.only(right: 10.0),
                       decoration: new BoxDecoration(
                         color: Colors.white,
                         borderRadius: new BorderRadius.circular(25.0),
                       ),
                       alignment: Alignment.center,
                       child: new Icon(CupertinoIcons.person_add,
-                          color: kPrimaryColorBlue, size: 25.0),
+                          color: kPrimaryColorBlue, size: 20.0),
                     ),
                     onTap: () {
                       Navigator.of(context).pop();
@@ -975,19 +1008,21 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
                 ),
                 if(storeCatID != "11" && storeCatID != "12")
                   ListTile(
-                      dense: false,
-                      title: Text("Digital Marketing"),
+                      tileColor: Colors.white,
+                      dense: true,
+                     horizontalTitleGap: 5.0,
+                      title: Text("Digital Marketing",style: TextStyle(color: Colors.black, fontSize: 15.0, fontWeight: FontWeight.w600)),
                       leading: Container(
                         width: 35.0,
                         height: 35.0,
-                        margin: const EdgeInsets.only(right: 10.0),
+                        // margin: const EdgeInsets.only(right: 10.0),
                         decoration: new BoxDecoration(
                           color: Colors.white,
                           borderRadius: new BorderRadius.circular(25.0),
                         ),
                         alignment: Alignment.center,
                         child: new Icon(CupertinoIcons.speaker_zzz,
-                            color: kPrimaryColorBlue, size: 25.0),
+                            color: kPrimaryColorBlue, size: 20.0),
                       ),
                       onTap: () {
                         Navigator.of(context).pop();
@@ -999,7 +1034,7 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
                                     profileMob.text)));
                       }),
                 // ListTile(
-                //     dense: false,
+                // //     dense: false,
                 //     title: Text("Offers"),
                 //     leading: Container(
                 //       width: 35.0,
@@ -1017,19 +1052,21 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
                 //       // Navigator.of(context).pop();
                 //     }),
                 ListTile(
-                    dense: false,
-                    title: Text("Refer a Store"),
+                    tileColor: Colors.white,
+                    dense: true,
+                   horizontalTitleGap: 5.0,
+                    title: Text("Refer a Store",style: TextStyle(color: Colors.black, fontSize: 15.0, fontWeight: FontWeight.w600)),
                     leading: Container(
                       width: 35.0,
                       height: 35.0,
-                      margin: const EdgeInsets.only(right: 10.0),
+                      // margin: const EdgeInsets.only(right: 10.0),
                       decoration: new BoxDecoration(
                         color: Colors.white,
                         borderRadius: new BorderRadius.circular(25.0),
                       ),
                       alignment: Alignment.center,
                       child: new Icon(CupertinoIcons.shopping_cart,
-                          color: kPrimaryColorBlue, size: 25.0),
+                          color: kPrimaryColorBlue, size: 20.0),
                     ),
                     onTap: () {
                       print("Refer a Store");
@@ -1038,19 +1075,21 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
                           MaterialPageRoute(builder: (context) => ReferralPage()));
                     }),
                 ListTile(
-                    dense: false,
-                    title: Text("Share a Word"),
+                    tileColor: Colors.white,
+                    dense: true,
+                   horizontalTitleGap: 5.0,
+                    title: Text("Share a Word",style: TextStyle(color: Colors.black, fontSize: 15.0, fontWeight: FontWeight.w600)),
                     leading: Container(
                       width: 35.0,
                       height: 35.0,
-                      margin: const EdgeInsets.only(right: 10.0),
+                      // margin: const EdgeInsets.only(right: 10.0),
                       decoration: new BoxDecoration(
                         color: Colors.white,
                         borderRadius: new BorderRadius.circular(25.0),
                       ),
                       alignment: Alignment.center,
                       child: new Icon(CupertinoIcons.arrowshape_turn_up_right,
-                          color: kPrimaryColorBlue, size: 25.0),
+                          color: kPrimaryColorBlue, size: 20.0),
                     ),
                     onTap: () {
                       Navigator.of(context).pop();
@@ -1058,7 +1097,7 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
                           MaterialPageRoute(builder: (context) => ShareAWord()));
                     }),
                 // ListTile(
-                //     dense: false,
+                // //     dense: false,
                 //     title: Text("Feedback"),
                 //     leading: Container(
                 //       width: 35.0,
@@ -1078,19 +1117,21 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
                 //           MaterialPageRoute(builder: (context) => Feedback1()));
                 //     }),
                 ListTile(
-                    dense: false,
-                    title: Text("Settings"),
+                  tileColor: Colors.white,
+                    dense: true,
+                   horizontalTitleGap: 5.0,
+                    title: Text("Settings",style: TextStyle(color: Colors.black, fontSize: 15.0, fontWeight: FontWeight.w600)),
                     leading: Container(
                       width: 35.0,
                       height: 35.0,
-                      margin: const EdgeInsets.only(right: 10.0),
+                      // margin: const EdgeInsets.only(right: 10.0),
                       decoration: new BoxDecoration(
                         color: Colors.white,
                         borderRadius: new BorderRadius.circular(25.0),
                       ),
                       alignment: Alignment.center,
                       child: new Icon(CupertinoIcons.settings,
-                          color: kPrimaryColorBlue, size: 25.0),
+                          color: kPrimaryColorBlue, size: 20.0),
                     ),
                     onTap: () {
                       Navigator.of(context).pop();

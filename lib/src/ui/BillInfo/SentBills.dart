@@ -291,8 +291,7 @@ class BillInfoState extends State<BillInfo> {
                 ],
               ),
             ),
-            SizedBox(height: 5.0,),
-
+            // SizedBox(height: 5.0,),
             ListTile(
               tileColor: kPrimaryColorBlue,
               title: Text(
@@ -302,7 +301,7 @@ class BillInfoState extends State<BillInfo> {
                 TextStyle(color: Colors.white, fontFamily: "PoppinsBold"),
               ),
               trailing: Wrap(
-                spacing: 32, // space between two icons
+                spacing: 10, // space between two icons
                 crossAxisAlignment: WrapCrossAlignment.center,
                 children: <Widget>[
                   Container(
@@ -315,10 +314,10 @@ class BillInfoState extends State<BillInfo> {
                     ),
                   ),
                   Container(
-                    width: 75.0,
+                    width: 65.0,
                     child: Text(
                       "Action",
-                      textAlign: TextAlign.start,
+                      textAlign: TextAlign.center,
                       style: TextStyle(
                           color: Colors.white, fontFamily: "PoppinsBold"),
                     ),
@@ -362,7 +361,7 @@ class BillInfoState extends State<BillInfo> {
                                   child: ListTile(
                                     dense: true,
                                     title: Text(snapshot.data[index].mobileNo == "" ? "------":snapshot.data[index].mobileNo,
-                                        style: TextStyle(fontSize: 15.0,fontWeight: FontWeight.bold)),
+                                        style: TextStyle(fontSize: 13.0,fontWeight: FontWeight.w600)),
                                     subtitle: Text(
                                         "${snapshot.data[index].billDate}\nInvoice : ${snapshot.data[index].invoiceNo} ",
                                         style: TextStyle(
@@ -380,11 +379,10 @@ class BillInfoState extends State<BillInfo> {
                                     //   child: Icon(Icons.receipt_long, color: Colors.white,),
                                     // ),
                                     trailing: Wrap(
-                                      spacing: 0, // space between two icons
+                                      // spacing: 1, // space between two icons
                                       crossAxisAlignment:
                                           WrapCrossAlignment.center,
                                       children: <Widget>[
-
                                         Container(
                                             alignment: Alignment.center,
                                             width: 100.0,
@@ -392,53 +390,56 @@ class BillInfoState extends State<BillInfo> {
                                                 style: TextStyle(
                                                     fontWeight: FontWeight.bold))
                                         ),
-                                        IconButton(
-                                          icon: Icon(
-                                            FontAwesomeIcons.download,
-                                            size: 15.0,
-                                            color: kPrimaryColorBlue,
-                                          ),
-                                          onPressed: () async {
-                                            try {
-                                              await ImageDownloader.downloadImage(snapshot.data[index].billFile).then((context) => showInSnackBar("Download Complete"));
-                                            }
-                                            on PlatformException catch (error) {
-                                              print(error);
-                                            }
-                                          },
-                                          // {
-                                          //   if (snapshot.data[index].billFile.isEmpty) {
-                                          //     showInSnackBar("No Bill Found!");
-                                          //     return null;
-                                          //   }
-                                          //   openBill(
-                                          //       snapshot.data[index].billFile,
-                                          //       snapshot.data[index].billFile
-                                          //           .split("/")
-                                          //           .last);
-                                          // },
-                                        ),
+                                        // IconButton(
+                                        //   icon: Icon(
+                                        //     FontAwesomeIcons.download,
+                                        //     size: 15.0,
+                                        //     color: kPrimaryColorBlue,
+                                        //   ),
+                                        //   onPressed: () async {
+                                        //     try {
+                                        //       await ImageDownloader.downloadImage(snapshot.data[index].billFile).then((context) => showInSnackBar("Download Complete"));
+                                        //     }
+                                        //     on PlatformException catch (error) {
+                                        //       print(error);
+                                        //     }
+                                        //   },
+                                        //   // {
+                                        //   //   if (snapshot.data[index].billFile.isEmpty) {
+                                        //   //     showInSnackBar("No Bill Found!");
+                                        //   //     return null;
+                                        //   //   }
+                                        //   //   openBill(
+                                        //   //       snapshot.data[index].billFile,
+                                        //   //       snapshot.data[index].billFile
+                                        //   //           .split("/")
+                                        //   //           .last);
+                                        //   // },
+                                        // ),
                                         if(snapshot.data[index].mobileNo != "")
-                                        IconButton(
-                                          icon: Icon(
-                                            FontAwesomeIcons.paperPlane,
-                                            size: 15.0,
-                                            color: kPrimaryColorBlue,
+                                        Container(
+                                          width:60,
+                                          child: IconButton(
+                                            icon: Icon(
+                                              FontAwesomeIcons.paperPlane,
+                                              size: 15.0,
+                                              color: kPrimaryColorBlue,
+                                            ),
+                                            onPressed: () {
+                                              if (snapshot
+                                                  .data[index].billFile.isEmpty) {
+                                                showInSnackBar("No Bill Found!");
+                                                return null;
+                                              }
+                                              sendSms(
+                                                  snapshot.data[index].billId,
+                                                  snapshot.data[index].dbTable,
+                                                  snapshot.data[index].mobileNo);
+                                            },
                                           ),
-                                          onPressed: () {
-                                            if (snapshot
-                                                .data[index].billFile.isEmpty) {
-                                              showInSnackBar("No Bill Found!");
-                                              return null;
-                                            }
-                                            sendSms(
-                                                snapshot.data[index].billId,
-                                                snapshot.data[index].dbTable,
-                                                snapshot.data[index].mobileNo);
-                                          },
                                         ),
                                         if(snapshot.data[index].mobileNo == "")
-                                          SizedBox(width: 48,),
+                                          SizedBox(width: 60,),
                                       ],
                                     ),
                                     onTap: (){

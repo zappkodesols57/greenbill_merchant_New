@@ -118,7 +118,7 @@ class ViewAllUsersState extends State<ViewAllUsers> {
                     controller: _controller,
                     itemBuilder: (BuildContext context, int index) {
                       return new Card(
-                        elevation: 2.0,
+                        elevation: 1.0,
                         child: Center(
                           child: ListTile(
                             dense: true,
@@ -126,30 +126,31 @@ class ViewAllUsersState extends State<ViewAllUsers> {
                               style: TextStyle(fontFamily: "PoppinsBold"),
                             ),
                             subtitle: Text("Mob: ${snapshot.data.data[index].mobileNo} . Role: ${snapshot.data.data[index].roleName}"
-                                "\nEmail: ${snapshot.data.data[index].email}",),
-                            leading: Container(
-                              width: 40.0,
-                              height: 40.0,
-                              decoration: new BoxDecoration(
-                                color: Colors.primaries[
-                                Random().nextInt(Colors
-                                    .primaries.length)],
-                                borderRadius:
-                                new BorderRadius.circular(
-                                    25.0),
-                              ),
-                              alignment: Alignment.center,
-                              child: new Text(snapshot.data.data[index].name.characters.getRange(0,1).toString()
-                                    .toUpperCase(),
-                                style: TextStyle(
-                                  fontSize: 23.0,
-                                  color: Colors.white,
-                                  fontWeight:
-                                  FontWeight.normal,
-                                  fontFamily: "PoppinsLight",
-                                ),
-                              ),
-                            ),
+                                "\nEmail: ${snapshot.data.data[index].email}"),
+                            leading: SizedBox(width: 5,),
+                            // Container(
+                            //   width: 40.0,
+                            //   height: 40.0,
+                            //   decoration: new BoxDecoration(
+                            //     color: Colors.primaries[
+                            //     Random().nextInt(Colors
+                            //         .primaries.length)],
+                            //     borderRadius:
+                            //     new BorderRadius.circular(
+                            //         25.0),
+                            //   ),
+                            //   alignment: Alignment.center,
+                            //   child: new Text(snapshot.data.data[index].name.characters.getRange(0,1).toString()
+                            //         .toUpperCase(),
+                            //     style: TextStyle(
+                            //       fontSize: 23.0,
+                            //       color: Colors.white,
+                            //       fontWeight:
+                            //       FontWeight.normal,
+                            //       fontFamily: "PoppinsLight",
+                            //     ),
+                            //   ),
+                            // ),
                           ),
                         )
                       );

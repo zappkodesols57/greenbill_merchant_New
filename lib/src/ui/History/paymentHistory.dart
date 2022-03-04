@@ -331,7 +331,7 @@ class HistoryState extends State<History> {
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(10.0),
                         ),
-                        elevation:10,
+                        elevation:2,
                         child:Container(
                           height: 60,
                           width: size.width * 0.45,
@@ -369,12 +369,11 @@ class HistoryState extends State<History> {
                     ),
 
                     Container(
-
                       child:Card(
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(10.0),
                         ),
-                        elevation:10,
+                        elevation:2,
                         child:Container(
                           height: 60,
                           width: size.width * 0.45,
@@ -449,7 +448,7 @@ class HistoryState extends State<History> {
                             itemBuilder: (BuildContext context, int index) {
                               return
                                  Card(
-                                  elevation: 2.0,
+                                  elevation: 1.0,
                                   child: Center(
                                     child: ListTile(
                                       dense: true,

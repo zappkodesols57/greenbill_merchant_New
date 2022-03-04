@@ -330,13 +330,14 @@ class ReceivedPaymentsState extends State<ReceivedPayments> {
               child: Container(
                 width: size.width * 0.9,
                 child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Container(
                       child:Card(
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(10.0),
                         ),
-                        elevation:10,
+                        elevation:2,
                         child:Container(
                           height: 60,
                           width: size.width * 0.45,
@@ -377,7 +378,7 @@ class ReceivedPaymentsState extends State<ReceivedPayments> {
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(10.0),
                         ),
-                        elevation:10,
+                        elevation:2,
                         child:Container(
                           height: 60,
                           width: size.width * 0.45,
@@ -452,10 +453,9 @@ class ReceivedPaymentsState extends State<ReceivedPayments> {
                             itemBuilder: (BuildContext context, int index) {
                               return
                                  Card(
-                                  elevation: 2.0,
+                                  elevation: 1.0,
                                   child: Center(
                                     child: ListTile(
-
                                       dense: true,
                                       title: Text("${snapshot.data[index].mobile == "" ? "Green Bill" :snapshot.data[index].mobile}",
                                           style: TextStyle(fontSize: 15.0, fontFamily: "PoppinsMedium", fontWeight: FontWeight.bold)

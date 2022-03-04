@@ -320,7 +320,7 @@ class BillRejectedState extends State<BillRejected> {
                 ],
               ),
             ),
-            SizedBox(height: 5.0,),
+            // SizedBox(height: 5.0,),
             ListTile(
               tileColor: kPrimaryColorBlue,
               title: Container(
@@ -333,6 +333,7 @@ class BillRejectedState extends State<BillRejected> {
                 ),
               ),
               trailing:Wrap(
+                spacing: 5,
                 crossAxisAlignment: WrapCrossAlignment.center,
               children: [
               Container(
@@ -345,7 +346,7 @@ class BillRejectedState extends State<BillRejected> {
                 ),
               ),
               Container(
-                width: 70.0,
+                width: 65.0,
                 child: Text(
                   "Action",
                   textAlign: TextAlign.center,
@@ -420,10 +421,7 @@ class BillRejectedState extends State<BillRejected> {
                                           child: IconButton(
                                             icon: Icon(Icons.delete_outlined, color: kPrimaryColorRed,),
                                             onPressed: () {
-
                                               deleteBill(snapshot.data[index].billId.toString(), snapshot.data[index].dbTable);
-
-
                                             },
                                           ),
                                         ),

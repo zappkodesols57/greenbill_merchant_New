@@ -235,11 +235,11 @@ class SettingsState extends State<Settings> {
                     height: 35.0,
                     margin: const EdgeInsets.only(right: 10.0),
                     decoration: new BoxDecoration(
-                      color: kPrimaryColorBlue,
+                      color: Colors.white,
                       borderRadius: new BorderRadius.circular(25.0),
                     ),
                     alignment: Alignment.center,
-                    child: new Icon(iconData, color: Colors.white, size: 20.0),
+                    child: new Icon(iconData, color: kPrimaryColorBlue, size: 20.0),
                   ),
                   new Text(title, style: textStyle),
                   new Expanded(child: new Container()),

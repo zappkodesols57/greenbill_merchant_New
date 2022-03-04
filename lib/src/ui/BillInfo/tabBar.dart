@@ -5,7 +5,7 @@ import 'package:greenbill_merchant/src/ui/BillInfo/ReceivedBills.dart';
 import 'package:greenbill_merchant/src/ui/BillInfo/RejectedBills.dart';
 import 'package:greenbill_merchant/src/ui/BillInfo/SentBills.dart';
 import 'package:greenbill_merchant/src/ui/BillInfo/flagBills.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+
 
 class BillsTab extends StatelessWidget {
   final String storeCatID;
@@ -16,7 +16,6 @@ class BillsTab extends StatelessWidget {
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
   String token, id, storeID;
 
-
   @override
 
   Widget build(BuildContext context) {
@@ -26,22 +25,31 @@ class BillsTab extends StatelessWidget {
       length: length,
         child: Scaffold(
           appBar: AppBar(
-            toolbarHeight: 80.0,
-            backgroundColor:  kPrimaryColorBlue,
+            toolbarHeight: 55.0,
+            backgroundColor: kPrimaryColorBlue,
             bottom: TabBar(
+              labelPadding: EdgeInsets.all(2.0),
               tabs: [
-                Tab(icon: Icon(FontAwesomeIcons.exchangeAlt), text: 'Received'),
-                Tab(icon: Icon(FontAwesomeIcons.exchangeAlt), text: 'Sent'),
-                Tab(icon: Icon(Icons.keyboard_return_outlined), text: 'Rejected'),
+                Container(
+                    height: 45,
+                    child: Tab(icon: Icon(FontAwesomeIcons.exchangeAlt,size: 18), text: 'Sent',iconMargin: EdgeInsets.only(bottom: 1.0))),
+                Container(
+                    height: 45,
+                    child: Tab(icon: Icon(FontAwesomeIcons.exchangeAlt,size: 18), text: 'Received',iconMargin: EdgeInsets.only(bottom: 1.0))),
+                Container(
+                    height: 45,
+                    child: Tab(icon: Icon(Icons.keyboard_return_outlined,size: 20), text: 'Rejected',iconMargin: EdgeInsets.only(bottom: 1.0))),
                 if(length==4)
-                Tab(icon: Icon(FontAwesomeIcons.flag), text: 'Flagged'),
+                Container(
+                    height: 45,
+                    child: Tab(icon: Icon(FontAwesomeIcons.flag,size: 18), text: 'Flagged',iconMargin: EdgeInsets.only(bottom: 1.0))),
               ],
             ),
           ),
           body: TabBarView(
             children: [
-              BillIncoming(),
               BillInfo(),
+              BillIncoming(),
               BillRejected(),
               if(length==4)
               FlagBills(),

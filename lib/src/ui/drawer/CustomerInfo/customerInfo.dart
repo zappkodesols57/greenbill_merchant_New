@@ -2,7 +2,9 @@ import 'dart:async';
 import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:greenbill_merchant/src/constants.dart';
+import 'package:greenbill_merchant/src/ui/drawer/CustomerInfo/add_customer.dart';
 import 'package:greenbill_merchant/src/ui/drawer/CustomerInfo/customerDetailInfo.dart';
 import 'package:greenbill_merchant/src/models/model_CustomerInfo.dart';
 import 'package:http/http.dart' as http;
@@ -83,7 +85,20 @@ class CustomerInfoState extends State<CustomerInfo> {
               Navigator.pop(context, true);
             },
           ),
+          actions: [
+            IconButton(
+                icon: Icon(
+                  Icons.person_add_alt,
+                  color: Colors.white,
+                  size: 25.0,
+                ),
+                onPressed: () {
+                  Navigator.push(context, MaterialPageRoute(builder: (context)=> AddCustomer())).then((value) { setState(() {});});
+                },
+            ),
+          ],
         ),
+
         body: Column(
           children: [
             Container(
@@ -171,26 +186,17 @@ class CustomerInfoState extends State<CustomerInfo> {
                               itemCount: snapshot.data.length,
                               itemBuilder: (BuildContext context, int index) {
                                 return Card(
-                                  elevation: 5,
+                                  elevation: 0.5,
                                   child: ListTile(
                                     title: Text(
                                         "Mobile No. : ${snapshot.data[index].mobileNo}",
                                         style: TextStyle(fontSize: 15.0)
                                     ),
-                                    trailing: RaisedButton(
-                                        shape: RoundedRectangleBorder(
-                                          borderRadius: BorderRadius.circular(15)),
-                                        child: Text("View Details",style: TextStyle(fontSize: 11.0 ,color: Colors.white),),
-                                      color: kPrimaryColorBlue,
-                                      onPressed:(){
-                                        Navigator.push(context, MaterialPageRoute(builder:  (context)=>CustomerDetailInfo(token, id, storeID,
-                                            snapshot.data[index].mobileNo,snapshot.data[index].email,snapshot.data[index].name,snapshot.data[index].state,snapshot.data[index].city)));
-                                      } ,
-                                    ),
-                                    // onTap: (){
-                                    //   Navigator.push(context, MaterialPageRoute(builder:  (context)=>CustomerDetailInfo(token, id, storeID,
-                                    //       snapshot.data[index].mobileNo,snapshot.data[index].email,snapshot.data[index].name,snapshot.data[index].state,snapshot.data[index].city)));
-                                    // },
+                                    trailing: Icon(Icons.arrow_forward_ios),
+                                    onTap: (){
+                                      Navigator.push(context, MaterialPageRoute(builder:  (context)=>CustomerDetailInfo(token, id, storeID,
+                                          snapshot.data[index].mobileNo,snapshot.data[index].email,snapshot.data[index].name,snapshot.data[index].state,snapshot.data[index].city)));
+                                    },
                                   ),
                                 );
                               }

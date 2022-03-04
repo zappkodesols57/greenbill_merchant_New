@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:greenbill_merchant/src/ui/HomeScreen/Home.dart';
 import 'package:greenbill_merchant/src/ui/login/login_Page_Merchant.dart';
 import 'package:greenbill_merchant/src/ui/values/values.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -39,7 +40,8 @@ class _OpacityanimateState extends State<Opacityanimate> {
           SharedPreferences prefs = await SharedPreferences.getInstance();
           bool check = (prefs.getBool("intro") == null) ? false : prefs.getBool("intro");
           if(check){
-            Get.off(Login_Merchant());
+            var status = prefs.getString("isLogin");
+            Get.off(status == null ? Login_Merchant() : HomeActivity());
           } else{
             Get.off(Liquid_Swipes());
           }

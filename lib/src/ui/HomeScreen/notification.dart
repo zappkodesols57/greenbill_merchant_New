@@ -95,7 +95,7 @@ class _NotificationsState extends State<Notifications> {
               padding: EdgeInsets.only(
                   top: 10.0, bottom: 10.0, left: 0.0, right: 0.0),
               decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(32),
+                borderRadius: BorderRadius.circular(30),
               ),
               child: TextField(
                 controller: query,
@@ -155,7 +155,7 @@ class _NotificationsState extends State<Notifications> {
                           child: CircularProgressIndicator(
                             valueColor:
                             AlwaysStoppedAnimation<Color>(kPrimaryColorBlue),
-                          )
+                          ),
                       ),
                     );
                   else {
@@ -180,7 +180,7 @@ class _NotificationsState extends State<Notifications> {
                           controller: _controller,
                           itemBuilder: (bui, index) {
                             return new Card(
-                                elevation: 5,
+                                elevation: 1,
                                 shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(10.0),
                                 ),

@@ -406,12 +406,12 @@ class FlagBillsState extends State<FlagBills> {
                   ],
                 ),
               ),
-              SizedBox(height: 5.0,),
+              // SizedBox(height: 5.0,),
               ListTile(
                 tileColor: kPrimaryColorBlue,
-                title:SizedBox(width: 1.0,),
+                title:SizedBox(width: 1.0),
                 trailing: Wrap(
-                  spacing: 30, // space between two icons
+                  spacing: 20, // space between two icons
                   crossAxisAlignment: WrapCrossAlignment.center,
                   children: <Widget>[
                     Container(
@@ -437,7 +437,7 @@ class FlagBillsState extends State<FlagBills> {
                       ),
                     ),
                     Container(
-                      width: 53.0,
+                      width: 57.0,
                       child: Text(
                         "Action",
                         textAlign: TextAlign.center,
@@ -490,7 +490,7 @@ class FlagBillsState extends State<FlagBills> {
                                       '\n${snapshot[index].flaggedReason}',
                                       style: TextStyle(fontSize: 10.0)) ,
                                   secondary: Wrap(
-                                    spacing: 15, // space between two icons
+                                    spacing: 5, // space between two icons
                                     crossAxisAlignment: WrapCrossAlignment.center,
                                     children: <Widget>[
                                       Column(

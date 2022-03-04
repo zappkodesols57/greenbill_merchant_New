@@ -681,15 +681,15 @@ class _HomePageState extends State<HomePage> {
                 child: Column(
                   children: <Widget>[
                     SizedBox(
-                      height: 5.0,
+                      height: 0.0,
                     ),
                     Row(
                       children: [
                         Container(
-                          padding: EdgeInsets.fromLTRB(5, 5, 5, 0),
+                          padding: EdgeInsets.fromLTRB(5, 3, 5, 0),
                           width: MediaQuery.of(context).size.width / 2,
                           child: Card(
-                            elevation: 10,
+                            elevation: 2,
                             color: Colors.white,
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(10.0),
@@ -765,10 +765,10 @@ class _HomePageState extends State<HomePage> {
                           ),
                         ),
                         Container(
-                          padding: EdgeInsets.fromLTRB(5, 5, 5, 0),
+                          padding: EdgeInsets.fromLTRB(5, 3, 5, 0),
                           width: MediaQuery.of(context).size.width / 2,
                           child: Card(
-                            elevation: 10,
+                            elevation: 2,
                             color: Colors.white,
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(10.0),
@@ -846,10 +846,10 @@ class _HomePageState extends State<HomePage> {
                     Row(
                       children: [
                         Container(
-                          padding: EdgeInsets.fromLTRB(5, 5, 5, 0),
+                          padding: EdgeInsets.fromLTRB(5, 0, 5, 0),
                           width: MediaQuery.of(context).size.width / 2,
                           child: Card(
-                            elevation: 10,
+                            elevation: 2,
                             color: Colors.white,
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(10.0),
@@ -882,7 +882,7 @@ class _HomePageState extends State<HomePage> {
                                           child: Icon(
                                             FontAwesomeIcons.chartLine,
                                             color:
-                                                Colors.green,
+                                                Colors.green.shade600,
                                           ),
                                         ),
                                       ),
@@ -915,7 +915,7 @@ class _HomePageState extends State<HomePage> {
                                       double.parse(totalSale).toStringAsFixed(2),
                                       textAlign: TextAlign.center,
                                       style: TextStyle(
-                                          color: Colors.green,
+                                          color: Colors.green.shade600,
                                           fontSize: 15.0,
                                           fontFamily: "PoppinsLight"),
                                     ),
@@ -926,10 +926,10 @@ class _HomePageState extends State<HomePage> {
                           ),
                         ),
                         Container(
-                          padding: EdgeInsets.fromLTRB(5, 5, 5, 0),
+                          padding: EdgeInsets.fromLTRB(5, 0, 5, 0),
                           width: MediaQuery.of(context).size.width / 2,
                           child: Card(
-                            elevation: 10,
+                            elevation: 2,
                             color: Colors.white,
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(10.0),
@@ -1009,10 +1009,10 @@ class _HomePageState extends State<HomePage> {
                     Row(
                       children: [
                         Container(
-                          padding: EdgeInsets.fromLTRB(5, 5, 5, 0),
+                          padding: EdgeInsets.fromLTRB(5, 0, 5, 0),
                           width: MediaQuery.of(context).size.width / 2,
                           child: Card(
-                            elevation: 10,
+                            elevation: 2,
                             color: Colors.white,
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(10.0),
@@ -1089,10 +1089,10 @@ class _HomePageState extends State<HomePage> {
                           ),
                         ),
                         Container(
-                          padding: EdgeInsets.fromLTRB(5, 5, 5, 0),
+                          padding: EdgeInsets.fromLTRB(5, 0, 5, 0),
                           width: MediaQuery.of(context).size.width / 2,
                           child: Card(
-                            elevation: 10,
+                            elevation: 2,
                             color: Colors.white,
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(10.0),
@@ -1174,10 +1174,10 @@ class _HomePageState extends State<HomePage> {
                     Row(
                       children: [
                         Container(
-                          padding: EdgeInsets.fromLTRB(5, 5, 5, 0),
+                          padding: EdgeInsets.fromLTRB(5, 0, 5, 0),
                           width: MediaQuery.of(context).size.width,
                           child: Card(
-                            elevation: 10,
+                            elevation: 2,
                             color: Colors.white,
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(10.0),
@@ -1282,10 +1282,10 @@ class _HomePageState extends State<HomePage> {
                       ],
                     ),
 
-                    SizedBox(height: 10.0,),
+                    // SizedBox(height: 10.0,),
 
                     Card(
-                      elevation: 10,
+                      elevation: 2,
                       color: Colors.white,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(10.0),
@@ -1393,7 +1393,7 @@ class _HomePageState extends State<HomePage> {
                       ),
                     ),
 
-                    SizedBox(height: 10.0,),
+                    SizedBox(height: 5.0,),
 
                     Container(
                       width: size.width * 0.95,
@@ -1432,7 +1432,7 @@ class _HomePageState extends State<HomePage> {
                             },
                           ),
                           SizedBox(
-                            height: 10.0,
+                            height: 5.0,
                           ),
                           FutureBuilder<List<DoughnutChartData>>(
                             future: DigitalBilling(),
@@ -1471,7 +1471,7 @@ class _HomePageState extends State<HomePage> {
                             },
                           ),
                           SizedBox(
-                            height: 10.0,
+                            height: 5.0,
                           ),
                           FutureBuilder<List<DoughnutChartData>>(
                             future: coupenDetails(),
@@ -1510,7 +1510,7 @@ class _HomePageState extends State<HomePage> {
                             },
                           ),
                           SizedBox(
-                            height: 10.0,
+                            height: 5.0,
                           ),
                           FutureBuilder<List<DoughnutChartData>>(
                             future: offerDetails(),
@@ -1548,10 +1548,10 @@ class _HomePageState extends State<HomePage> {
                             },
                           ),
                           Container(
-                            padding: EdgeInsets.fromLTRB(0, 10.00, 0, 10),
+                            padding: EdgeInsets.fromLTRB(0, 5.00, 0, 10),
                             width: double.maxFinite,
                             child: Card(
-                              elevation: 12.00,
+                              elevation: 2.00,
                               color: Colors.white,
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(25.0),
@@ -1581,7 +1581,7 @@ class _HomePageState extends State<HomePage> {
                                       ),
                                     ),
                                   ),
-                                  SizedBox(height: 10.0),
+                                  SizedBox(height: 5.0),
                                   Container(
                                     padding: EdgeInsets.only(
                                         top: 0.0,
@@ -1696,74 +1696,78 @@ class _HomePageState extends State<HomePage> {
                             ),
                           ),
 
-                          Container(
-                              width: size.width * 0.95,
-                              height: size.height * 0.35,
-                              padding: EdgeInsets.only(top: 10.0, bottom: 10.0),
-                              decoration: BoxDecoration(
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(30)),
-                                  color: Colors.white,
-                                  boxShadow: [
-                                    BoxShadow(
-                                        color: Constants.softHighlightColor,
-                                        offset: Offset(-10, -10),
-                                        spreadRadius: 0,
-                                        blurRadius: 10),
-                                    BoxShadow(
-                                        color: Constants.softShadowColor,
-                                        offset: Offset(5, 5),
-                                        spreadRadius: 0,
-                                        blurRadius: 10)
-                                  ]),
-                              child: FutureBuilder<List<ChartOtherData>>(
-                                future: fetchOtherCollection(),
-                                builder: (BuildContext context,
-                                    AsyncSnapshot<List<ChartOtherData>>
-                                        snapshot) {
-                                  if (snapshot.connectionState ==
-                                      ConnectionState.waiting)
-                                    return Center(
-                                        child: CircularProgressIndicator(
-                                      valueColor: AlwaysStoppedAnimation<Color>(
-                                          kPrimaryColorBlue),
-                                    ));
-                                  else if (snapshot.hasError) {
-                                    return Center(
-                                      child: Text("Graph Not Available"),
-                                    );
-                                  } else {
+                          Card(
+                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
+                            elevation: 2,
+                            child: Container(
+                                width: size.width * 0.95,
+                                height: size.height * 0.35,
+                                padding: EdgeInsets.only(top: 5.0, bottom: 0.0),
+                                decoration: BoxDecoration(
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(30)),
+                                    color: Colors.white,
+                                    // boxShadow: [
+                                    //   BoxShadow(
+                                    //       color: Constants.softHighlightColor,
+                                    //       offset: Offset(-10, -10),
+                                    //       spreadRadius: 0,
+                                    //       blurRadius: 10),
+                                    //   BoxShadow(
+                                    //       color: Constants.softShadowColor,
+                                    //       offset: Offset(5, 5),
+                                    //       spreadRadius: 0,
+                                    //       blurRadius: 10)
+                                    // ]
+                                ),
+                                child: FutureBuilder<List<ChartOtherData>>(
+                                  future: fetchOtherCollection(),
+                                  builder: (BuildContext context,
+                                      AsyncSnapshot<List<ChartOtherData>>
+                                          snapshot) {
                                     if (snapshot.connectionState ==
-                                            ConnectionState.done &&
-                                        snapshot.hasData) {
-                                      return Column(
-                                        children: [
-                                          Text(
-                                            "Bills Collection",
-                                            style: TextStyle(
-                                              color: kPrimaryColorBlue,
-                                              fontSize: size.width * 0.04,
-                                              fontFamily: "PoppinsBold",
-                                            ),
-                                          ),
-                                          Expanded(
-                                            child: _buildOtherSplineChart(
-                                                snapshot.data),
-                                          )
-                                        ],
-                                      );
-                                    } else {
+                                        ConnectionState.waiting)
                                       return Center(
                                           child: CircularProgressIndicator(
-                                        valueColor:
-                                            AlwaysStoppedAnimation<Color>(
-                                                kPrimaryColorBlue),
+                                        valueColor: AlwaysStoppedAnimation<Color>(
+                                            kPrimaryColorBlue),
                                       ));
+                                    else if (snapshot.hasError) {
+                                      return Center(
+                                        child: Text("Graph Not Available"),
+                                      );
+                                    } else {
+                                      if (snapshot.connectionState ==
+                                              ConnectionState.done &&
+                                          snapshot.hasData) {
+                                        return Column(
+                                          children: [
+                                            Text(
+                                              "Bills Collection",
+                                              style: TextStyle(
+                                                color: kPrimaryColorBlue,
+                                                fontSize: size.width * 0.04,
+                                                fontFamily: "PoppinsBold",
+                                              ),
+                                            ),
+                                            Expanded(
+                                              child: _buildOtherSplineChart(
+                                                  snapshot.data),
+                                            )
+                                          ],
+                                        );
+                                      } else {
+                                        return Center(
+                                            child: CircularProgressIndicator(
+                                          valueColor:
+                                              AlwaysStoppedAnimation<Color>(
+                                                  kPrimaryColorBlue),
+                                        ));
+                                      }
                                     }
-                                  }
-                                },
-                              )),
-
+                                  },
+                                )),
+                          ),
                           SizedBox(height: 10.0),
                           //
                           // Container(
@@ -1823,9 +1827,9 @@ class _HomePageState extends State<HomePage> {
                         ],
                       ),
                     ),
-                    SizedBox(
-                      height: 10.0,
-                    ),
+                    // SizedBox(
+                    //   height: 10.0,
+                    // ),
                     //RingChart(dataMap,size)
                   ],
                 ),
@@ -1867,7 +1871,7 @@ class _HomePageState extends State<HomePage> {
                                                   width: size.width * 0.1,
                                                   child: NeuomorphicCircle(
                                                       innerShadow: false,
-                                                      outerShadow: true,
+                                                      outerShadow: false,
                                                       backgroundColor:
                                                           Colors.white,
                                                       shadowColor: Constants
@@ -2245,7 +2249,7 @@ class _HomePageState extends State<HomePage> {
                       height: 10.0,
                     ),
                     Card(
-                      elevation: 10,
+                      elevation: 1,
                       color: Colors.white,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(10.0),
@@ -2452,112 +2456,117 @@ class _HomePageState extends State<HomePage> {
                       height: 10.0,
                     ),
                     (!_headerEnabled)
-                        ? Container(
-                            width: size.width * 0.95,
-                            height: size.height * 0.25,
-                            padding: EdgeInsets.only(top: 10.0, bottom: 10.0),
-                            decoration: BoxDecoration(
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(30)),
-                                color: Colors.white,
-                                boxShadow: [
-                                  BoxShadow(
-                                      color: Constants.softHighlightColor,
-                                      offset: Offset(-10, -10),
-                                      spreadRadius: 0,
-                                      blurRadius: 10),
-                                  BoxShadow(
-                                      color: Constants.softShadowColor,
-                                      offset: Offset(5, 5),
-                                      spreadRadius: 0,
-                                      blurRadius: 10)
-                                ]),
-                            child: FutureBuilder<List<Metadata>>(
-                              future: getUsersLists(),
-                              builder: (BuildContext context,
-                                  AsyncSnapshot<List<Metadata>> snapshot) {
-                                if (snapshot.connectionState ==
-                                    ConnectionState.waiting)
-                                  return Center(
-                                      child: CircularProgressIndicator(
-                                    valueColor: AlwaysStoppedAnimation<Color>(
-                                        kPrimaryColorBlue),
-                                  ));
-                                else if (snapshot.hasError) {
-                                  return Center(
-                                    child: Text("No Data Found!"),
-                                  );
-                                } else {
+                        ? Card(
+                      elevation: 2,
+                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(25)),
+                          child: Container(
+                              width: size.width * 0.95,
+                              height: size.height * 0.25,
+                              padding: EdgeInsets.only(top: 10.0, bottom: 10.0),
+                              decoration: BoxDecoration(
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(30)),
+                                  color: Colors.white,
+                                  // boxShadow: [
+                                  //   BoxShadow(
+                                  //       color: Constants.softHighlightColor,
+                                  //       offset: Offset(-10, -10),
+                                  //       spreadRadius: 0,
+                                  //       blurRadius: 10),
+                                  //   BoxShadow(
+                                  //       color: Constants.softShadowColor,
+                                  //       offset: Offset(5, 5),
+                                  //       spreadRadius: 0,
+                                  //       blurRadius: 10)
+                                  // ]
+                              ),
+                              child: FutureBuilder<List<Metadata>>(
+                                future: getUsersLists(),
+                                builder: (BuildContext context,
+                                    AsyncSnapshot<List<Metadata>> snapshot) {
                                   if (snapshot.connectionState ==
-                                          ConnectionState.done &&
-                                      snapshot.hasData) {
-                                    return Column(
-                                      children: [
-                                        Text(
-                                          "Users Analysis",
-                                          style: TextStyle(
-                                            color: kPrimaryColorBlue,
-                                            fontSize: size.width * 0.04,
-                                            fontFamily: "PoppinsBold",
-                                          ),
-                                        ),
-                                        Expanded(
-                                          child: Scrollbar(
-                                            isAlwaysShown: true,
-                                            controller: _controller,
-                                            thickness: 3.0,
-                                            child: ListView.builder(
-                                                itemCount: snapshot.data.length,
-                                                shrinkWrap: true,
-                                                reverse: false,
-                                                controller: _controller,
-                                                itemBuilder:
-                                                    (BuildContext context,
-                                                        int index) {
-                                                  return new ListTile(
-                                                    isThreeLine: false,
-                                                    dense: true,
-                                                    title: Text(
-                                                        snapshot
-                                                            .data[index].name,
-                                                        style: TextStyle(
-                                                            fontSize: 15.0)),
-                                                    subtitle: (snapshot
-                                                            .data[index]
-                                                            .loginDate
-                                                            .isNotEmpty)
-                                                        ? Text(
-                                                            'Login Detail: ${snapshot.data[index].loginDate} (${snapshot.data[index].loginTime}) . ${snapshot.data[index].logoutAt}'
-                                                            '\nTotal Bills: ${snapshot.data[index].totalBills} . Total Flagged: ${snapshot.data[index].totalFlagged}',
-                                                            style: TextStyle(
-                                                                fontSize: 10.0))
-                                                        : Text("Not login yet.",
-                                                            style: TextStyle(
-                                                                fontSize:
-                                                                    10.0)),
-                                                    trailing: Text(
-                                                        "₹ ${double.parse(snapshot.data[index].totalCollection).toStringAsFixed(2)}",
-                                                        style: TextStyle(
-                                                            fontWeight:
-                                                                FontWeight.bold,
-                                                            fontSize: 17.0)),
-                                                  );
-                                                }),
-                                          ),
-                                        )
-                                      ],
-                                    );
-                                  } else {
+                                      ConnectionState.waiting)
                                     return Center(
                                         child: CircularProgressIndicator(
                                       valueColor: AlwaysStoppedAnimation<Color>(
                                           kPrimaryColorBlue),
                                     ));
+                                  else if (snapshot.hasError) {
+                                    return Center(
+                                      child: Text("No Data Found!"),
+                                    );
+                                  } else {
+                                    if (snapshot.connectionState ==
+                                            ConnectionState.done &&
+                                        snapshot.hasData) {
+                                      return Column(
+                                        children: [
+                                          Text(
+                                            "Users Analysis",
+                                            style: TextStyle(
+                                              color: kPrimaryColorBlue,
+                                              fontSize: size.width * 0.04,
+                                              fontFamily: "PoppinsBold",
+                                            ),
+                                          ),
+                                          Expanded(
+                                            child: Scrollbar(
+                                              isAlwaysShown: true,
+                                              controller: _controller,
+                                              thickness: 3.0,
+                                              child: ListView.builder(
+                                                  itemCount: snapshot.data.length,
+                                                  shrinkWrap: true,
+                                                  reverse: false,
+                                                  controller: _controller,
+                                                  itemBuilder:
+                                                      (BuildContext context,
+                                                          int index) {
+                                                    return new ListTile(
+                                                      isThreeLine: false,
+                                                      dense: true,
+                                                      title: Text(
+                                                          snapshot
+                                                              .data[index].name,
+                                                          style: TextStyle(
+                                                              fontSize: 15.0)),
+                                                      subtitle: (snapshot
+                                                              .data[index]
+                                                              .loginDate
+                                                              .isNotEmpty)
+                                                          ? Text(
+                                                              'Login Detail: ${snapshot.data[index].loginDate} (${snapshot.data[index].loginTime}) . ${snapshot.data[index].logoutAt}'
+                                                              '\nTotal Bills: ${snapshot.data[index].totalBills} . Total Flagged: ${snapshot.data[index].totalFlagged}',
+                                                              style: TextStyle(
+                                                                  fontSize: 10.0))
+                                                          : Text("Not login yet.",
+                                                              style: TextStyle(
+                                                                  fontSize:
+                                                                      10.0)),
+                                                      trailing: Text(
+                                                          "₹ ${double.parse(snapshot.data[index].totalCollection).toStringAsFixed(2)}",
+                                                          style: TextStyle(
+                                                              fontWeight:
+                                                                  FontWeight.bold,
+                                                              fontSize: 17.0)),
+                                                    );
+                                                  }),
+                                            ),
+                                          )
+                                        ],
+                                      );
+                                    } else {
+                                      return Center(
+                                          child: CircularProgressIndicator(
+                                        valueColor: AlwaysStoppedAnimation<Color>(
+                                            kPrimaryColorBlue),
+                                      ));
+                                    }
                                   }
-                                }
-                              },
+                                },
+                              ),
                             ),
-                          )
+                        )
                         : Shimmer.fromColors(
                             baseColor: Colors.grey[300],
                             highlightColor: Colors.grey[100],
@@ -2578,124 +2587,129 @@ class _HomePageState extends State<HomePage> {
                       height: 10.0,
                     ),
                     (!_headerEnabled)
-                        ? Container(
-                            width: size.width * 0.95,
-                            height: size.height * 0.35,
-                            padding: EdgeInsets.only(top: 10.0, bottom: 10.0),
-                            decoration: BoxDecoration(
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(30)),
-                                color: Colors.white,
-                                boxShadow: [
-                                  BoxShadow(
-                                      color: Constants.softHighlightColor,
-                                      offset: Offset(-10, -10),
-                                      spreadRadius: 0,
-                                      blurRadius: 10),
-                                  BoxShadow(
-                                      color: Constants.softShadowColor,
-                                      offset: Offset(5, 5),
-                                      spreadRadius: 0,
-                                      blurRadius: 10)
-                                ]),
-                            child: (storeCatID == "11")
-                                ? FutureBuilder<List<ChartPetrolData>>(
-                                    future: fetchAllPetrolCollection(),
-                                    builder: (BuildContext context,
-                                        AsyncSnapshot<List<ChartPetrolData>>
-                                            snapshot) {
-                                      if (snapshot.connectionState ==
-                                          ConnectionState.waiting)
-                                        return Center(
-                                            child: CircularProgressIndicator(
-                                          valueColor:
-                                              AlwaysStoppedAnimation<Color>(
-                                                  kPrimaryColorBlue),
-                                        ));
-                                      else if (snapshot.hasError) {
-                                        return Center(
-                                          child: Text("Graph Not Available"),
-                                        );
-                                      } else {
+                        ? Card(
+                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
+                          elevation: 2,
+                          child: Container(
+                              width: size.width * 0.95,
+                              height: size.height * 0.35,
+                              padding: EdgeInsets.only(top: 10.0, bottom: 10.0),
+                              decoration: BoxDecoration(
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(30)),
+                                  color: Colors.white,
+                                  // boxShadow: [
+                                  //   BoxShadow(
+                                  //       color: Constants.softHighlightColor,
+                                  //       offset: Offset(-10, -10),
+                                  //       spreadRadius: 0,
+                                  //       blurRadius: 10),
+                                  //   BoxShadow(
+                                  //       color: Constants.softShadowColor,
+                                  //       offset: Offset(5, 5),
+                                  //       spreadRadius: 0,
+                                  //       blurRadius: 10)
+                                  // ]
+                              ),
+                              child: (storeCatID == "11")
+                                  ? FutureBuilder<List<ChartPetrolData>>(
+                                      future: fetchAllPetrolCollection(),
+                                      builder: (BuildContext context,
+                                          AsyncSnapshot<List<ChartPetrolData>>
+                                              snapshot) {
                                         if (snapshot.connectionState ==
-                                                ConnectionState.done &&
-                                            snapshot.hasData) {
-                                          return Column(
-                                            children: [
-                                              Text(
-                                                "Bills Collection",
-                                                style: TextStyle(
-                                                  color: kPrimaryColorBlue,
-                                                  fontSize: size.width * 0.04,
-                                                  fontFamily: "PoppinsBold",
-                                                ),
-                                              ),
-                                              Expanded(
-                                                child: _buildDefaultSplineChart(
-                                                    snapshot.data),
-                                              )
-                                            ],
-                                          );
-                                        } else {
+                                            ConnectionState.waiting)
                                           return Center(
                                               child: CircularProgressIndicator(
                                             valueColor:
                                                 AlwaysStoppedAnimation<Color>(
                                                     kPrimaryColorBlue),
                                           ));
-                                        }
-                                      }
-                                    },
-                                  )
-                                : FutureBuilder<List<ChartParkingData>>(
-                                    future: fetchAllParkingCollection(),
-                                    builder: (BuildContext context,
-                                        AsyncSnapshot<List<ChartParkingData>>
-                                            snapshot) {
-                                      if (snapshot.connectionState ==
-                                          ConnectionState.waiting)
-                                        return Center(
-                                            child: CircularProgressIndicator(
-                                          valueColor:
-                                              AlwaysStoppedAnimation<Color>(
-                                                  kPrimaryColorBlue),
-                                        ));
-                                      else if (snapshot.hasError) {
-                                        print(">>>>>>${snapshot.error}");
-                                        return Center(
-                                          child: Text("Graph Not Available"),
-                                        );
-                                      } else {
-                                        if (snapshot.connectionState ==
-                                                ConnectionState.done &&
-                                            snapshot.hasData) {
-                                          return Column(
-                                            children: [
-                                              Text(
-                                                "Bills Collection",
-                                                style: TextStyle(
-                                                  color: kPrimaryColorBlue,
-                                                  fontSize: size.width * 0.04,
-                                                  fontFamily: "PoppinsBold",
-                                                ),
-                                              ),
-                                              Expanded(
-                                                child: _buildParkingSplineChart(
-                                                    snapshot.data),
-                                              )
-                                            ],
+                                        else if (snapshot.hasError) {
+                                          return Center(
+                                            child: Text("Graph Not Available"),
                                           );
                                         } else {
+                                          if (snapshot.connectionState ==
+                                                  ConnectionState.done &&
+                                              snapshot.hasData) {
+                                            return Column(
+                                              children: [
+                                                Text(
+                                                  "Bills Collection",
+                                                  style: TextStyle(
+                                                    color: kPrimaryColorBlue,
+                                                    fontSize: size.width * 0.04,
+                                                    fontFamily: "PoppinsBold",
+                                                  ),
+                                                ),
+                                                Expanded(
+                                                  child: _buildDefaultSplineChart(
+                                                      snapshot.data),
+                                                )
+                                              ],
+                                            );
+                                          } else {
+                                            return Center(
+                                                child: CircularProgressIndicator(
+                                              valueColor:
+                                                  AlwaysStoppedAnimation<Color>(
+                                                      kPrimaryColorBlue),
+                                            ));
+                                          }
+                                        }
+                                      },
+                                    )
+                                  : FutureBuilder<List<ChartParkingData>>(
+                                      future: fetchAllParkingCollection(),
+                                      builder: (BuildContext context,
+                                          AsyncSnapshot<List<ChartParkingData>>
+                                              snapshot) {
+                                        if (snapshot.connectionState ==
+                                            ConnectionState.waiting)
                                           return Center(
                                               child: CircularProgressIndicator(
                                             valueColor:
                                                 AlwaysStoppedAnimation<Color>(
                                                     kPrimaryColorBlue),
                                           ));
+                                        else if (snapshot.hasError) {
+                                          print(">>>>>>${snapshot.error}");
+                                          return Center(
+                                            child: Text("Graph Not Available"),
+                                          );
+                                        } else {
+                                          if (snapshot.connectionState ==
+                                                  ConnectionState.done &&
+                                              snapshot.hasData) {
+                                            return Column(
+                                              children: [
+                                                Text(
+                                                  "Bills Collection",
+                                                  style: TextStyle(
+                                                    color: kPrimaryColorBlue,
+                                                    fontSize: size.width * 0.04,
+                                                    fontFamily: "PoppinsBold",
+                                                  ),
+                                                ),
+                                                Expanded(
+                                                  child: _buildParkingSplineChart(
+                                                      snapshot.data),
+                                                )
+                                              ],
+                                            );
+                                          } else {
+                                            return Center(
+                                                child: CircularProgressIndicator(
+                                              valueColor:
+                                                  AlwaysStoppedAnimation<Color>(
+                                                      kPrimaryColorBlue),
+                                            ));
+                                          }
                                         }
-                                      }
-                                    },
-                                  ))
+                                      },
+                                    )),
+                        )
                         : Shimmer.fromColors(
                             baseColor: Colors.grey[300],
                             highlightColor: Colors.grey[100],

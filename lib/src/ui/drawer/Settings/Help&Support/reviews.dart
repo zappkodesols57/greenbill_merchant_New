@@ -32,6 +32,9 @@ class ReviewsState extends State<Reviews> {
   File media;
   Dio dio = new Dio();
   TextEditingController query = new TextEditingController();
+  List <String> _listStar = ['Select Rating','⭐', '⭐⭐', '⭐⭐⭐', '⭐⭐⭐⭐', '⭐⭐⭐⭐⭐'];
+  String _selected;
+  String _selectedno;
 
   List<Color> palette = [
     Color.fromRGBO(0, 173, 239, 1.0),
@@ -132,7 +135,7 @@ class ReviewsState extends State<Reviews> {
         return ratingFromJson(res.body)
             .data
             .where(
-                (element) => element.ratingId.contains(query.text.toString()))
+                (element) => element.ratingId.contains(_selectedno.toString()))
             .toList();
       } else {
         count = ratingFromJson(res.body).count.toString();
@@ -194,78 +197,127 @@ class ReviewsState extends State<Reviews> {
       body: Column(
         children: [
           Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               Container(
-                child: Checkbox(
-                  value: search,
-                  onChanged: (value) {
-                    setState(() {
-                      search = value;
-                      query.clear();
-                    });
-                  },
+                child: Text("Search By Ratings",
+                  style: TextStyle(
+                      fontFamily: "PoppinsMedium",
+                      fontSize: 15.0,
+                      color: kPrimaryColorBlue),
                 ),
               ),
-              Text(
-                "Search By Ratings ( 1 to 5 )",
-                style: TextStyle(
-                    fontFamily: "PoppinsMedium",
-                    fontSize: 15.0,
-                    color: kPrimaryColorBlue),
+              Container(
+                width: 150,
+                child: DropdownButton(
+                  isExpanded: true,
+                  hint: Text("Select Rating"),
+                  value: _selected,
+                  onChanged: (newValue) {
+                    setState(() {
+                      _selected = newValue;
+                      search = true;
+                      if(_selected == "⭐"){
+                        _selectedno = "1";
+                      }else if(_selected == "⭐⭐"){
+                        _selectedno = "2";
+                      } else if(_selected == "⭐⭐⭐"){
+                        _selectedno = "3";
+                      } else if(_selected == "⭐⭐⭐⭐"){
+                        _selectedno = "4";
+                      } else if(_selected == "⭐⭐⭐⭐⭐"){
+                        _selectedno = "5";
+                      } else {
+                        _selectedno = "";
+                      }
+                    });
+                  },
+                  items: _listStar.map((value) {
+                    return DropdownMenuItem(
+                      child: Text(value),
+                      value: value,
+                    );
+                  }).toList(),
+                ),
               ),
             ],
           ),
-          Container(
-            width: size.width * 0.95,
-            padding:
-                EdgeInsets.only(top: 0.0, bottom: 0.0, left: 0.0, right: 0.0),
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(32),
-            ),
-            child: TextField(
-              controller: query,
-              keyboardType:
-                  (search == true) ? TextInputType.number : TextInputType.text,
-              onChanged: (value) {
-                getBillInfoList();
-                setState(() {});
-              },
-              style: TextStyle(
-                  fontFamily: "PoppinsMedium",
-                  fontSize: 15.0,
-                  color: kPrimaryColorBlue),
-              decoration: InputDecoration(
-                border: InputBorder.none,
-                counterStyle: TextStyle(
-                  height: double.minPositive,
-                ),
-                counterText: "",
-                contentPadding: const EdgeInsets.symmetric(
-                    vertical: 13.0, horizontal: 20.0),
-                enabledBorder: OutlineInputBorder(
-                  borderSide: BorderSide(color: kPrimaryColorBlue, width: 1.0),
-                  borderRadius: const BorderRadius.all(Radius.circular(35.0)),
-                ),
-                focusedBorder: new OutlineInputBorder(
-                  borderSide: BorderSide(color: kPrimaryColorBlue, width: 1.0),
-                  borderRadius: const BorderRadius.all(Radius.circular(35.0)),
-                ),
-                suffixIcon: GestureDetector(
-                  onTap: () {},
-                  child: Icon(
-                    CupertinoIcons.search,
-                    color: kPrimaryColorBlue,
-                    size: 25.0,
-                  ),
-                ),
-                hintText: "Search",
-                hintStyle: TextStyle(
-                    fontFamily: "PoppinsMedium",
-                    fontSize: 15.0,
-                    color: kPrimaryColorBlue),
-              ),
-            ),
-          ),
+          // Row(
+          //   children: [
+          //     Container(
+          //       child: Checkbox(
+          //         value: search,
+          //         onChanged: (value) {
+          //           setState(() {
+          //             search = value;
+          //             query.clear();
+          //           });
+          //         },
+          //       ),
+          //     ),
+          //     Text(
+          //       "Search By Ratings ( 1 to 5 )",
+          //       style: TextStyle(
+          //           fontFamily: "PoppinsMedium",
+          //           fontSize: 15.0,
+          //           color: kPrimaryColorBlue),
+          //     ),
+          //   ],
+          // ),
+          // Container(
+          //   width: size.width * 0.95,
+          //   padding:
+          //       EdgeInsets.only(top: 0.0, bottom: 0.0, left: 0.0, right: 0.0),
+          //   decoration: BoxDecoration(
+          //     borderRadius: BorderRadius.circular(32),
+          //   ),
+          //   child: TextField(
+          //     controller: query,
+          //     keyboardType:
+          //         (search == true) ? TextInputType.number : TextInputType.text,
+          //     onChanged: (value) {
+          //       getBillInfoList();
+          //       setState(() {});
+          //     },
+          //     style: TextStyle(
+          //         fontFamily: "PoppinsMedium",
+          //         fontSize: 15.0,
+          //         color: kPrimaryColorBlue),
+          //     decoration: InputDecoration(
+          //       border: InputBorder.none,
+          //       counterStyle: TextStyle(
+          //         height: double.minPositive,
+          //       ),
+          //       counterText: "",
+          //       contentPadding: const EdgeInsets.symmetric(
+          //           vertical: 13.0, horizontal: 20.0),
+          //       enabledBorder: OutlineInputBorder(
+          //         borderSide: BorderSide(color: kPrimaryColorBlue, width: 1.0),
+          //         borderRadius: const BorderRadius.all(Radius.circular(35.0)),
+          //       ),
+          //       focusedBorder: new OutlineInputBorder(
+          //         borderSide: BorderSide(color: kPrimaryColorBlue, width: 1.0),
+          //         borderRadius: const BorderRadius.all(Radius.circular(35.0)),
+          //       ),
+          //       suffixIcon: GestureDetector(
+          //         onTap: () {},
+          //         child: Icon(
+          //           CupertinoIcons.search,
+          //           color: kPrimaryColorBlue,
+          //           size: 25.0,
+          //         ),
+          //       ),
+          //       hintText: "Search",
+          //       hintStyle: TextStyle(
+          //           fontFamily: "PoppinsMedium",
+          //           fontSize: 15.0,
+          //           color: kPrimaryColorBlue),
+          //     ),
+          //   ),
+          // ),
+
+
+
           // Padding(
           //   padding: const EdgeInsets.all(15.0),
           //   child: FutureBuilder<List<Datum>>(
@@ -392,7 +444,7 @@ class ReviewsState extends State<Reviews> {
                         controller: _controller,
                         itemBuilder: (bui, index) {
                           return new Card(
-                            elevation: 5,
+                            elevation: 0.7,
                             child: ListTile(
                               dense: false,
                               title: Text(

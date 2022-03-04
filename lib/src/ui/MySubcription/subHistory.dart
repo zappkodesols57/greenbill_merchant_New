@@ -9,6 +9,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import 'newSubFile.dart';
+
 class subHistory extends StatefulWidget {
   @override
   subHistoryState createState() => subHistoryState();
@@ -120,7 +121,7 @@ class subHistoryState extends State<subHistory> {
                               width: double.maxFinite,
                               child: InkWell(
                                 child: Card(
-                                  elevation: 10,
+                                  elevation: 2,
                                   shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(10.0),
                                   ),

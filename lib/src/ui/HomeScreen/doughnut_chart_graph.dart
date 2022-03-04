@@ -21,57 +21,61 @@ class _DoughnutChartState extends State<DoughnutChart> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-        width: widget.size.width * 0.95,
-        height: widget.size.height * 0.3,
-        decoration: BoxDecoration(
-            borderRadius: BorderRadius.all(Radius.circular(30)),
-            color: Colors.white,
-            boxShadow: [
-              BoxShadow(
-                  color: Constants.softHighlightColor,
-                  offset: Offset(-10, -10),
-                  spreadRadius: 0,
-                  blurRadius: 10),
-              BoxShadow(
-                  color: Constants.softShadowColor,
-                  offset: Offset(5, 5),
-                  spreadRadius: 0,
-                  blurRadius: 10)
-            ]
-        ),
-        child: SfCircularChart(
-          title: ChartTitle(
-              text: widget.title,
-              textStyle: TextStyle(
-                color: kPrimaryColorBlue,
-                fontSize: widget.size.width * 0.04,
-                fontFamily: "PoppinsBold",
-              )
+    return Card(
+      elevation: 2,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
+      child: Container(
+          width: widget.size.width * 0.95,
+          height: widget.size.height * 0.3,
+          decoration: BoxDecoration(
+              borderRadius: BorderRadius.all(Radius.circular(30)),
+              color: Colors.white,
+              // boxShadow: [
+              //   BoxShadow(
+              //       color: Constants.softHighlightColor,
+              //       offset: Offset(-10, -10),
+              //       spreadRadius: 0,
+              //       blurRadius: 10),
+              //   BoxShadow(
+              //       color: Constants.softShadowColor,
+              //       offset: Offset(5, 5),
+              //       spreadRadius: 0,
+              //       blurRadius: 10)
+              // ]
           ),
-          legend: Legend(
-              isVisible: true,
-              position: LegendPosition.bottom,
-              overflowMode: LegendItemOverflowMode.wrap,
-              height: "${widget.size.width * 0.2}",
-              width: "${widget.size.width * 0.9}"
-          ),
-          centerY: '100%',
-          series: <DoughnutSeries<DoughnutChartData, String>>[
-            DoughnutSeries<DoughnutChartData, String>(
-                dataSource: widget.data,
-                innerRadius: '70%',
-                radius: '230%',
-                startAngle: startAngle,
-                endAngle: endAngle,
-                xValueMapper: (DoughnutChartData data, _) => data.x,
-                yValueMapper: (DoughnutChartData data, _) => double.parse(double.parse(data.y).toStringAsFixed(2)),
-                dataLabelMapper: (DoughnutChartData data, _) => data.text == "0"?"":data.text == "0.00"? "" :data.text,
-                dataLabelSettings: DataLabelSettings(
-                    isVisible: true, labelPosition: ChartDataLabelPosition.inside),)
-          ],
-          tooltipBehavior: TooltipBehavior(enable: true),
-        )
+          child: SfCircularChart(
+            title: ChartTitle(
+                text: widget.title,
+                textStyle: TextStyle(
+                  color: kPrimaryColorBlue,
+                  fontSize: widget.size.width * 0.04,
+                  fontFamily: "PoppinsBold",
+                )
+            ),
+            legend: Legend(
+                isVisible: true,
+                position: LegendPosition.bottom,
+                overflowMode: LegendItemOverflowMode.wrap,
+                height: "${widget.size.width * 0.2}",
+                width: "${widget.size.width * 0.9}"
+            ),
+            centerY: '100%',
+            series: <DoughnutSeries<DoughnutChartData, String>>[
+              DoughnutSeries<DoughnutChartData, String>(
+                  dataSource: widget.data,
+                  innerRadius: '70%',
+                  radius: '230%',
+                  startAngle: startAngle,
+                  endAngle: endAngle,
+                  xValueMapper: (DoughnutChartData data, _) => data.x,
+                  yValueMapper: (DoughnutChartData data, _) => double.parse(double.parse(data.y).toStringAsFixed(2)),
+                  dataLabelMapper: (DoughnutChartData data, _) => data.text == "0"?"":data.text == "0.00"? "" :data.text,
+                  dataLabelSettings: DataLabelSettings(
+                      isVisible: true, labelPosition: ChartDataLabelPosition.inside),)
+            ],
+            tooltipBehavior: TooltipBehavior(enable: true),
+          )
+      ),
     );
   }
 }
